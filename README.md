@@ -3,7 +3,7 @@
 Step 1:
 
 ```shell script
-> yarn
+> yarn install --no-lockfile
 ```
 
 Step 2:
