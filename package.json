@@ -1,0 +1,27 @@
+{
+  "name": "module-federation-examples-root",
+  "version": "0.0.0",
+  "description": "Examples showcasing Webpack 5's Module Federation",
+  "repository": "https://github.com/module-federation/module-federation-examples.git",
+  "author": "Zack Jackson <zackary.l.jackson@gmail.com> (https://github.com/ScriptedAlchemy)",
+  "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "dashboard-example/*",
+      "dashboard-plugin/*"
+    ]
+  },
+  "devDependencies": {
+    "husky": "4.2.5",
+    "lerna": "3.20.2",
+    "prettier": "2.0.4",
+    "pretty-quick": "2.0.1",
+    "concurrently": "5.2.0"
+  },
+  "scripts": {
+    "submodules": "git pull --recurse-submodules",
+    "prettier": "prettier --write \"**/*.{js,json,md,ts,tsx}\"",
+    "prettier:check": "prettier --list-different \"**/*.{js,json,md,ts,tsx}\""
+  }
+}
