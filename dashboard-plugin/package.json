@@ -12,6 +12,7 @@
     "test": "echo noop"
   },
   "dependencies": {
+    "flatted": "^2.0.2",
     "schema-utils": "^2.6.6",
     "webpack": "^5.0.0-beta.16",
     "webpack-sources": "^1.4.3"
