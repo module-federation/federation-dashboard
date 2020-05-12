@@ -1,0 +1,275 @@
+[
+  {
+    "id": "dsl",
+    "name": "dsl",
+    "overrides": [
+      {
+        "id": "react",
+        "name": "react",
+        "version": "react-16.13.1",
+        "location": "/Users/jherr/projects/federation-dashboard/node_modules/react-dom/cjs",
+        "applicationID": "dsl"
+      },
+      {
+        "id": "react-dom",
+        "name": "react-dom",
+        "version": "react-dom-16.13.1",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/dsl/src",
+        "applicationID": "dsl"
+      },
+      {
+        "id": "@emotion/core",
+        "name": "@emotion/core",
+        "version": "@emotion/core-undefined",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/dsl/src",
+        "applicationID": "dsl"
+      }
+    ],
+    "consumes": [],
+    "modules": [
+      {
+        "id": "dsl:Button",
+        "name": "Button",
+        "applicationID": "dsl",
+        "requires": [
+          "react",
+          "@emotion/core"
+        ],
+        "file": "./src/Button"
+      },
+      {
+        "id": "dsl:Carousel",
+        "name": "Carousel",
+        "applicationID": "dsl",
+        "requires": [
+          "react",
+          "@emotion/core"
+        ],
+        "file": "./src/Carousel"
+      },
+      {
+        "id": "dsl:Dialog",
+        "name": "Dialog",
+        "applicationID": "dsl",
+        "requires": [
+          "react",
+          "@emotion/core"
+        ],
+        "file": "./src/Dialog"
+      },
+      {
+        "id": "dsl:Slider",
+        "name": "Slider",
+        "applicationID": "dsl",
+        "requires": [
+          "react",
+          "@emotion/core"
+        ],
+        "file": "./src/Slider"
+      },
+      {
+        "id": "dsl:TextField",
+        "name": "TextField",
+        "applicationID": "dsl",
+        "requires": [
+          "react",
+          "@emotion/core"
+        ],
+        "file": "./src/TextField"
+      }
+    ]
+  },
+  {
+    "id": "home",
+    "name": "home",
+    "overrides": [
+      {
+        "id": "react",
+        "name": "react",
+        "version": "react-16.13.1",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/home",
+        "applicationID": "home"
+      },
+      {
+        "id": "react-dom",
+        "name": "react-dom",
+        "version": "react-dom-16.13.1",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/home",
+        "applicationID": "home"
+      },
+      {
+        "id": "lodash",
+        "name": "lodash",
+        "version": "lodash-undefined",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/home",
+        "applicationID": "home"
+      }
+    ],
+    "consumes": [
+      {
+        "consumingApplicationID": "home",
+        "applicationID": "nav",
+        "name": "Header"
+      },
+      {
+        "consumingApplicationID": "home",
+        "applicationID": "nav",
+        "name": "Footer"
+      },
+      {
+        "consumingApplicationID": "home",
+        "applicationID": "search",
+        "name": "SearchList"
+      },
+      {
+        "consumingApplicationID": "home",
+        "applicationID": "dsl",
+        "name": "Button"
+      },
+      {
+        "consumingApplicationID": "home",
+        "applicationID": "dsl",
+        "name": "Carousel"
+      }
+    ],
+    "modules": [
+      {
+        "id": "home:ProductCarousel",
+        "name": "ProductCarousel",
+        "applicationID": "home",
+        "requires": [
+          "react",
+          "lodash"
+        ],
+        "file": "./src/ProductCarousel"
+      },
+      {
+        "id": "home:HeroImage",
+        "name": "HeroImage",
+        "applicationID": "home",
+        "requires": [
+          "react"
+        ],
+        "file": "./src/HeroImage"
+      }
+    ]
+  },
+  {
+    "id": "search",
+    "name": "search",
+    "overrides": [
+      {
+        "id": "react",
+        "name": "react",
+        "version": "react-16.13.1",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/search",
+        "applicationID": "search"
+      },
+      {
+        "id": "react-dom",
+        "name": "react-dom",
+        "version": "react-dom-16.13.1",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/search",
+        "applicationID": "search"
+      }
+    ],
+    "consumes": [
+      {
+        "consumingApplicationID": "search",
+        "applicationID": "nav",
+        "name": "Header"
+      },
+      {
+        "consumingApplicationID": "search",
+        "applicationID": "nav",
+        "name": "Footer"
+      },
+      {
+        "consumingApplicationID": "search",
+        "applicationID": "home",
+        "name": "ProductCarousel"
+      }
+    ],
+    "modules": [
+      {
+        "id": "search:SearchList",
+        "name": "SearchList",
+        "applicationID": "search",
+        "requires": [
+          "react"
+        ],
+        "file": "./src/SearchList"
+      },
+      {
+        "id": "search:MiniSearch",
+        "name": "MiniSearch",
+        "applicationID": "search",
+        "requires": [
+          "react"
+        ],
+        "file": "./src/MiniSearch"
+      }
+    ]
+  },
+  {
+    "id": "nav",
+    "name": "nav",
+    "overrides": [
+      {
+        "id": "react",
+        "name": "react",
+        "version": "react-16.13.1",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/nav",
+        "applicationID": "nav"
+      },
+      {
+        "id": "react-dom",
+        "name": "react-dom",
+        "version": "react-dom-16.13.1",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/nav",
+        "applicationID": "nav"
+      },
+      {
+        "id": "@emotion/core",
+        "name": "@emotion/core",
+        "version": "@emotion/core-undefined",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/nav",
+        "applicationID": "nav"
+      }
+    ],
+    "consumes": [
+      {
+        "consumingApplicationID": "nav",
+        "applicationID": "dsl",
+        "name": "Button"
+      },
+      {
+        "consumingApplicationID": "nav",
+        "applicationID": "search",
+        "name": "MiniSearch"
+      }
+    ],
+    "modules": [
+      {
+        "id": "nav:Header",
+        "name": "Header",
+        "applicationID": "nav",
+        "requires": [
+          "react",
+          "@emotion/core"
+        ],
+        "file": "./src/Header"
+      },
+      {
+        "id": "nav:Footer",
+        "name": "Footer",
+        "applicationID": "nav",
+        "requires": [
+          "react",
+          "@emotion/core"
+        ],
+        "file": "./src/Footer"
+      }
+    ]
+  }
+]
