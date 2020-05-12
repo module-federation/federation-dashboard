@@ -9,7 +9,8 @@
   "workspaces": {
     "packages": [
       "dashboard-example/*",
-      "dashboard-plugin/*"
+      "dashboard-plugin/*",
+      "dashboard-fe/*"
     ]
   },
   "devDependencies": {
