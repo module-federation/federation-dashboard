@@ -3,6 +3,7 @@ import { ApolloServer, gql } from "apollo-server-micro";
 import home from "../../data/home.json";
 import search from "../../data/search.json";
 import dsl from "../../data/dsl.json";
+import nav from "../../data/nav.json";
 
 const importData = ({ federationRemoteEntry, modules }) => {
   const app = federationRemoteEntry.origins[0].loc;
@@ -110,7 +111,12 @@ const typeDefs = gql`
   }
 `;
 
-const apps = [importData(home), importData(search), importData(dsl)];
+const apps = [
+  importData(home),
+  importData(search),
+  importData(dsl),
+  importData(nav),
+];
 
 const resolvers = {
   Query: {

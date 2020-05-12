@@ -21,10 +21,10 @@
       {
         "identifier": "container entry [[\"ProductCarousel\",\"./src/ProductCarousel\"],[\"HeroImage\",\"./src/HeroImage\"]]",
         "name": "container entry",
-        "index": 14,
-        "preOrderIndex": 14,
-        "index2": 14,
-        "postOrderIndex": 14,
+        "index": 18,
+        "preOrderIndex": 18,
+        "index2": 18,
+        "postOrderIndex": 18,
         "size": 42,
         "sizes": { "javascript": 42 },
         "built": true,
@@ -79,10 +79,10 @@
       {
         "identifier": "external \"dsl\"",
         "name": "external \"dsl\"",
-        "index": 24,
-        "preOrderIndex": 24,
-        "index2": 23,
-        "postOrderIndex": 23,
+        "index": 28,
+        "preOrderIndex": 28,
+        "index2": 27,
+        "postOrderIndex": 27,
         "size": 42,
         "sizes": { "javascript": 42 },
         "built": true,
@@ -152,10 +152,10 @@
       {
         "identifier": "remote overrides 5356fa2433a0f1cfbf70cb5a2f298c27",
         "name": "remote overrides lodash-undefined = lodash, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-        "index": 17,
-        "preOrderIndex": 17,
-        "index2": 16,
-        "postOrderIndex": 16,
+        "index": 10,
+        "preOrderIndex": 10,
+        "index2": 7,
+        "postOrderIndex": 7,
         "size": 42,
         "sizes": { "javascript": 42 },
         "built": true,
@@ -213,6 +213,32 @@
             "userRequest": null,
             "moduleId": 121,
             "resolvedModuleId": 121
+          },
+          {
+            "moduleIdentifier": "remote webpack/container/reference/nav Footer 5356fa2433a0f1cfbf70cb5a2f298c27",
+            "module": "remote nav/Footer",
+            "moduleName": "remote nav/Footer",
+            "resolvedModuleIdentifier": "remote webpack/container/reference/nav Footer 5356fa2433a0f1cfbf70cb5a2f298c27",
+            "resolvedModule": "remote nav/Footer",
+            "type": "remote overrides",
+            "active": true,
+            "explanation": "",
+            "userRequest": null,
+            "moduleId": 381,
+            "resolvedModuleId": 381
+          },
+          {
+            "moduleIdentifier": "remote webpack/container/reference/nav Header 5356fa2433a0f1cfbf70cb5a2f298c27",
+            "module": "remote nav/Header",
+            "moduleName": "remote nav/Header",
+            "resolvedModuleIdentifier": "remote webpack/container/reference/nav Header 5356fa2433a0f1cfbf70cb5a2f298c27",
+            "resolvedModule": "remote nav/Header",
+            "type": "remote overrides",
+            "active": true,
+            "explanation": "",
+            "userRequest": null,
+            "moduleId": 458,
+            "resolvedModuleId": 458
           },
           {
             "moduleIdentifier": "remote webpack/container/reference/search SearchList 5356fa2433a0f1cfbf70cb5a2f298c27",
@@ -553,10 +579,10 @@
       {
         "identifier": "container entry [[\"ProductCarousel\",\"./src/ProductCarousel\"],[\"HeroImage\",\"./src/HeroImage\"]]",
         "name": "container entry",
-        "index": 14,
-        "preOrderIndex": 14,
-        "index2": 14,
-        "postOrderIndex": 14,
+        "index": 18,
+        "preOrderIndex": 18,
+        "index2": 18,
+        "postOrderIndex": 18,
         "size": 42,
         "sizes": { "javascript": 42 },
         "built": true,
@@ -611,10 +637,10 @@
       {
         "identifier": "external \"dsl\"",
         "name": "external \"dsl\"",
-        "index": 24,
-        "preOrderIndex": 24,
-        "index2": 23,
-        "postOrderIndex": 23,
+        "index": 28,
+        "preOrderIndex": 28,
+        "index2": 27,
+        "postOrderIndex": 27,
         "size": 42,
         "sizes": { "javascript": 42 },
         "built": true,
@@ -684,10 +710,10 @@
       {
         "identifier": "remote overrides 5356fa2433a0f1cfbf70cb5a2f298c27",
         "name": "remote overrides lodash-undefined = lodash, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-        "index": 17,
-        "preOrderIndex": 17,
-        "index2": 16,
-        "postOrderIndex": 16,
+        "index": 10,
+        "preOrderIndex": 10,
+        "index2": 7,
+        "postOrderIndex": 7,
         "size": 42,
         "sizes": { "javascript": 42 },
         "built": true,
@@ -745,6 +771,32 @@
             "userRequest": null,
             "moduleId": 121,
             "resolvedModuleId": 121
+          },
+          {
+            "moduleIdentifier": "remote webpack/container/reference/nav Footer 5356fa2433a0f1cfbf70cb5a2f298c27",
+            "module": "remote nav/Footer",
+            "moduleName": "remote nav/Footer",
+            "resolvedModuleIdentifier": "remote webpack/container/reference/nav Footer 5356fa2433a0f1cfbf70cb5a2f298c27",
+            "resolvedModule": "remote nav/Footer",
+            "type": "remote overrides",
+            "active": true,
+            "explanation": "",
+            "userRequest": null,
+            "moduleId": 381,
+            "resolvedModuleId": 381
+          },
+          {
+            "moduleIdentifier": "remote webpack/container/reference/nav Header 5356fa2433a0f1cfbf70cb5a2f298c27",
+            "module": "remote nav/Header",
+            "moduleName": "remote nav/Header",
+            "resolvedModuleIdentifier": "remote webpack/container/reference/nav Header 5356fa2433a0f1cfbf70cb5a2f298c27",
+            "resolvedModule": "remote nav/Header",
+            "type": "remote overrides",
+            "active": true,
+            "explanation": "",
+            "userRequest": null,
+            "moduleId": 458,
+            "resolvedModuleId": 458
           },
           {
             "moduleIdentifier": "remote webpack/container/reference/search SearchList 5356fa2433a0f1cfbf70cb5a2f298c27",
@@ -1086,15 +1138,15 @@
       { "module": "", "moduleIdentifier": "", "moduleName": "", "loc": "home" }
     ]
   },
-  "buildHash": "da0032d749c83667464d",
+  "buildHash": "9c0b21804b06ed2c3908",
   "modules": [
     {
       "identifier": "container entry [[\"ProductCarousel\",\"./src/ProductCarousel\"],[\"HeroImage\",\"./src/HeroImage\"]]",
       "name": "container entry",
-      "index": 14,
-      "preOrderIndex": 14,
-      "index2": 14,
-      "postOrderIndex": 14,
+      "index": 18,
+      "preOrderIndex": 18,
+      "index2": 18,
+      "postOrderIndex": 18,
       "size": 42,
       "sizes": { "javascript": 42 },
       "built": true,
@@ -1302,7 +1354,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "4:19-29",
+          "loc": "6:19-29",
           "moduleId": 183,
           "resolvedModuleId": null
         },
@@ -1316,7 +1368,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "6:31-50",
+          "loc": "8:31-50",
           "moduleId": 183,
           "resolvedModuleId": null
         },
@@ -1330,7 +1382,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "6:77-96",
+          "loc": "8:77-96",
           "moduleId": 183,
           "resolvedModuleId": null
         },
@@ -1344,7 +1396,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "6:141-160",
+          "loc": "8:125-144",
           "moduleId": 183,
           "resolvedModuleId": null
         },
@@ -1358,7 +1410,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "6:196-215",
+          "loc": "8:189-208",
           "moduleId": 183,
           "resolvedModuleId": null
         },
@@ -1372,7 +1424,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "6:247-266",
+          "loc": "8:244-263",
           "moduleId": 183,
           "resolvedModuleId": null
         },
@@ -1386,7 +1438,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "6:296-315",
+          "loc": "8:295-314",
           "moduleId": 183,
           "resolvedModuleId": null
         },
@@ -1400,7 +1452,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "6:316-330",
+          "loc": "8:344-363",
           "moduleId": 183,
           "resolvedModuleId": null
         },
@@ -1414,7 +1466,35 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "8:16-35",
+          "loc": "8:364-378",
+          "moduleId": 183,
+          "resolvedModuleId": null
+        },
+        {
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/index.js|d35fdbb6f281d3597a912e5db7446641",
+          "module": "./src/index.js + 2 modules",
+          "moduleName": "./src/index.js + 2 modules",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/App.js",
+          "resolvedModule": "./src/App.js",
+          "type": "harmony import specifier",
+          "active": true,
+          "explanation": "",
+          "userRequest": "react",
+          "loc": "10:16-35",
+          "moduleId": 183,
+          "resolvedModuleId": null
+        },
+        {
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/index.js|d35fdbb6f281d3597a912e5db7446641",
+          "module": "./src/index.js + 2 modules",
+          "moduleName": "./src/index.js + 2 modules",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/App.js",
+          "resolvedModule": "./src/App.js",
+          "type": "harmony import specifier",
+          "active": true,
+          "explanation": "",
+          "userRequest": "react",
+          "loc": "10:69-88",
           "moduleId": 183,
           "resolvedModuleId": null
         },
@@ -1583,10 +1663,10 @@
     {
       "identifier": "overridable|react-dom-16.13.1|/Users/jherr/projects/federation-dashboard/dashboard-example/home/src|react-dom",
       "name": "overridable react-dom-16.13.1 -> react-dom",
-      "index": 8,
-      "preOrderIndex": 8,
-      "index2": 12,
-      "postOrderIndex": 12,
+      "index": 12,
+      "preOrderIndex": 12,
+      "index2": 16,
+      "postOrderIndex": 16,
       "size": 42,
       "sizes": { "overridable": 42 },
       "built": true,
@@ -1646,12 +1726,152 @@
       "depth": 1
     },
     {
+      "identifier": "remote webpack/container/reference/nav Header 5356fa2433a0f1cfbf70cb5a2f298c27",
+      "name": "remote nav/Header",
+      "index": 8,
+      "preOrderIndex": 8,
+      "index2": 8,
+      "postOrderIndex": 8,
+      "size": 42,
+      "sizes": { "remote": 42 },
+      "built": true,
+      "optional": false,
+      "runtime": false,
+      "issuer": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/App.js",
+      "issuerName": "./src/App.js",
+      "issuerPath": [
+        {
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/index.js",
+          "name": "./src/index.js",
+          "id": null
+        },
+        {
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/App.js",
+          "name": "./src/App.js",
+          "id": null
+        }
+      ],
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "id": 458,
+      "issuerId": null,
+      "chunks": [179],
+      "assets": [],
+      "reasons": [
+        {
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/index.js|d35fdbb6f281d3597a912e5db7446641",
+          "module": "./src/index.js + 2 modules",
+          "moduleName": "./src/index.js + 2 modules",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/App.js",
+          "resolvedModule": "./src/App.js",
+          "type": "harmony side effect evaluation",
+          "active": true,
+          "explanation": "",
+          "userRequest": "nav/Header",
+          "loc": "4:0-32",
+          "moduleId": 183,
+          "resolvedModuleId": null
+        },
+        {
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/index.js|d35fdbb6f281d3597a912e5db7446641",
+          "module": "./src/index.js + 2 modules",
+          "moduleName": "./src/index.js + 2 modules",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/App.js",
+          "resolvedModule": "./src/App.js",
+          "type": "harmony import specifier",
+          "active": true,
+          "explanation": "",
+          "userRequest": "nav/Header",
+          "loc": "8:97-103",
+          "moduleId": 183,
+          "resolvedModuleId": null
+        }
+      ],
+      "usedExports": true,
+      "providedExports": null,
+      "optimizationBailout": [
+        "ModuleConcatenation bailout: Module is not an ECMAScript module"
+      ],
+      "depth": 2
+    },
+    {
+      "identifier": "remote webpack/container/reference/nav Footer 5356fa2433a0f1cfbf70cb5a2f298c27",
+      "name": "remote nav/Footer",
+      "index": 11,
+      "preOrderIndex": 11,
+      "index2": 9,
+      "postOrderIndex": 9,
+      "size": 42,
+      "sizes": { "remote": 42 },
+      "built": true,
+      "optional": false,
+      "runtime": false,
+      "issuer": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/App.js",
+      "issuerName": "./src/App.js",
+      "issuerPath": [
+        {
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/index.js",
+          "name": "./src/index.js",
+          "id": null
+        },
+        {
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/App.js",
+          "name": "./src/App.js",
+          "id": null
+        }
+      ],
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "id": 381,
+      "issuerId": null,
+      "chunks": [179],
+      "assets": [],
+      "reasons": [
+        {
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/index.js|d35fdbb6f281d3597a912e5db7446641",
+          "module": "./src/index.js + 2 modules",
+          "moduleName": "./src/index.js + 2 modules",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/App.js",
+          "resolvedModule": "./src/App.js",
+          "type": "harmony side effect evaluation",
+          "active": true,
+          "explanation": "",
+          "userRequest": "nav/Footer",
+          "loc": "5:0-32",
+          "moduleId": 183,
+          "resolvedModuleId": null
+        },
+        {
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/index.js|d35fdbb6f281d3597a912e5db7446641",
+          "module": "./src/index.js + 2 modules",
+          "moduleName": "./src/index.js + 2 modules",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/home/src/App.js",
+          "resolvedModule": "./src/App.js",
+          "type": "harmony import specifier",
+          "active": true,
+          "explanation": "",
+          "userRequest": "nav/Footer",
+          "loc": "10:89-95",
+          "moduleId": 183,
+          "resolvedModuleId": null
+        }
+      ],
+      "usedExports": true,
+      "providedExports": null,
+      "optimizationBailout": [
+        "ModuleConcatenation bailout: Module is not an ECMAScript module"
+      ],
+      "depth": 2
+    },
+    {
       "identifier": "remote webpack/container/reference/search SearchList 5356fa2433a0f1cfbf70cb5a2f298c27",
       "name": "remote search/SearchList",
-      "index": 15,
-      "preOrderIndex": 15,
-      "index2": 17,
-      "postOrderIndex": 17,
+      "index": 19,
+      "preOrderIndex": 19,
+      "index2": 20,
+      "postOrderIndex": 20,
       "size": 42,
       "sizes": { "remote": 42 },
       "built": true,
@@ -1689,7 +1909,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "search/SearchList",
-          "loc": "4:36-63",
+          "loc": "6:36-63",
           "moduleId": 183,
           "resolvedModuleId": null
         },
@@ -1718,10 +1938,10 @@
     {
       "identifier": "overridable|lodash-undefined|/Users/jherr/projects/federation-dashboard/dashboard-example/home/src|lodash",
       "name": "overridable lodash-undefined -> lodash",
-      "index": 19,
-      "preOrderIndex": 19,
-      "index2": 18,
-      "postOrderIndex": 18,
+      "index": 25,
+      "preOrderIndex": 25,
+      "index2": 24,
+      "postOrderIndex": 24,
       "size": 42,
       "sizes": { "overridable": 42 },
       "built": true,
@@ -1788,10 +2008,10 @@
     {
       "identifier": "remote webpack/container/reference/dsl Button 5356fa2433a0f1cfbf70cb5a2f298c27",
       "name": "remote dsl/Button",
-      "index": 23,
-      "preOrderIndex": 23,
-      "index2": 24,
-      "postOrderIndex": 24,
+      "index": 27,
+      "preOrderIndex": 27,
+      "index2": 28,
+      "postOrderIndex": 28,
       "size": 42,
       "sizes": { "remote": 42 },
       "built": true,
@@ -1844,10 +2064,10 @@
     {
       "identifier": "remote webpack/container/reference/dsl Carousel 5356fa2433a0f1cfbf70cb5a2f298c27",
       "name": "remote dsl/Carousel",
-      "index": 25,
-      "preOrderIndex": 25,
-      "index2": 25,
-      "postOrderIndex": 25,
+      "index": 29,
+      "preOrderIndex": 29,
+      "index2": 29,
+      "postOrderIndex": 29,
       "size": 42,
       "sizes": { "remote": 42 },
       "built": true,
@@ -1900,10 +2120,10 @@
     {
       "identifier": "remote overrides 5356fa2433a0f1cfbf70cb5a2f298c27",
       "name": "remote overrides lodash-undefined = lodash, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-      "index": 17,
-      "preOrderIndex": 17,
-      "index2": 16,
-      "postOrderIndex": 16,
+      "index": 10,
+      "preOrderIndex": 10,
+      "index2": 7,
+      "postOrderIndex": 7,
       "size": 42,
       "sizes": { "javascript": 42 },
       "built": true,
@@ -1963,6 +2183,32 @@
           "resolvedModuleId": 121
         },
         {
+          "moduleIdentifier": "remote webpack/container/reference/nav Footer 5356fa2433a0f1cfbf70cb5a2f298c27",
+          "module": "remote nav/Footer",
+          "moduleName": "remote nav/Footer",
+          "resolvedModuleIdentifier": "remote webpack/container/reference/nav Footer 5356fa2433a0f1cfbf70cb5a2f298c27",
+          "resolvedModule": "remote nav/Footer",
+          "type": "remote overrides",
+          "active": true,
+          "explanation": "",
+          "userRequest": null,
+          "moduleId": 381,
+          "resolvedModuleId": 381
+        },
+        {
+          "moduleIdentifier": "remote webpack/container/reference/nav Header 5356fa2433a0f1cfbf70cb5a2f298c27",
+          "module": "remote nav/Header",
+          "moduleName": "remote nav/Header",
+          "resolvedModuleIdentifier": "remote webpack/container/reference/nav Header 5356fa2433a0f1cfbf70cb5a2f298c27",
+          "resolvedModule": "remote nav/Header",
+          "type": "remote overrides",
+          "active": true,
+          "explanation": "",
+          "userRequest": null,
+          "moduleId": 458,
+          "resolvedModuleId": 458
+        },
+        {
           "moduleIdentifier": "remote webpack/container/reference/search SearchList 5356fa2433a0f1cfbf70cb5a2f298c27",
           "module": "remote search/SearchList",
           "moduleName": "remote search/SearchList",
@@ -1986,10 +2232,10 @@
     {
       "identifier": "overridable|react-16.13.1|/Users/jherr/projects/federation-dashboard/node_modules/react-dom/cjs|react",
       "name": "overridable react-16.13.1 -> react",
-      "index": 11,
-      "preOrderIndex": 11,
-      "index2": 7,
-      "postOrderIndex": 7,
+      "index": 15,
+      "preOrderIndex": 15,
+      "index2": 11,
+      "postOrderIndex": 11,
       "size": 42,
       "sizes": { "overridable": 42 },
       "built": true,
@@ -2052,10 +2298,10 @@
     {
       "identifier": "overridable|lodash-undefined|/Users/jherr/projects/federation-dashboard/dashboard-example/home|lodash",
       "name": "overridable lodash-undefined -> lodash",
-      "index": 20,
-      "preOrderIndex": 20,
-      "index2": 20,
-      "postOrderIndex": 20,
+      "index": 21,
+      "preOrderIndex": 21,
+      "index2": 21,
+      "postOrderIndex": 21,
       "size": 42,
       "sizes": { "overridable": 42 },
       "built": true,
@@ -2117,10 +2363,10 @@
     {
       "identifier": "overridable|react-16.13.1|/Users/jherr/projects/federation-dashboard/dashboard-example/home|react",
       "name": "overridable react-16.13.1 -> react",
-      "index": 21,
-      "preOrderIndex": 21,
-      "index2": 21,
-      "postOrderIndex": 21,
+      "index": 22,
+      "preOrderIndex": 22,
+      "index2": 22,
+      "postOrderIndex": 22,
       "size": 42,
       "sizes": { "overridable": 42 },
       "built": true,
@@ -2182,10 +2428,10 @@
     {
       "identifier": "overridable|react-dom-16.13.1|/Users/jherr/projects/federation-dashboard/dashboard-example/home|react-dom",
       "name": "overridable react-dom-16.13.1 -> react-dom",
-      "index": 22,
-      "preOrderIndex": 22,
-      "index2": 22,
-      "postOrderIndex": 22,
+      "index": 23,
+      "preOrderIndex": 23,
+      "index2": 23,
+      "postOrderIndex": 23,
       "size": 42,
       "sizes": { "overridable": 42 },
       "built": true,
@@ -2265,7 +2511,7 @@
       {
         "id": 33,
         "ids": [33],
-        "debugId": 1016,
+        "debugId": 1012,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -2295,7 +2541,7 @@
       {
         "id": 121,
         "ids": [121],
-        "debugId": 1011,
+        "debugId": 1014,
         "name": null,
         "idNameHints": {},
         "preventIntegration": false,
@@ -2310,7 +2556,7 @@
       {
         "id": 966,
         "ids": [966],
-        "debugId": 1007,
+        "debugId": 1005,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -2324,7 +2570,7 @@
       {
         "id": 643,
         "ids": [643],
-        "debugId": 1008,
+        "debugId": 1006,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -2338,7 +2584,7 @@
       {
         "id": 607,
         "ids": [607],
-        "debugId": 1009,
+        "debugId": 1007,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -2352,7 +2598,7 @@
       {
         "id": 635,
         "ids": [635],
-        "debugId": 1013,
+        "debugId": 1010,
         "idNameHints": { "0": "vendors" },
         "preventIntegration": false,
         "files": { "0": "635.js" },
@@ -2367,7 +2613,7 @@
       {
         "id": 784,
         "ids": [784, 292],
-        "debugId": 1012,
+        "debugId": 1011,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },
@@ -2396,7 +2642,7 @@
       {
         "id": 33,
         "ids": [33],
-        "debugId": 1016,
+        "debugId": 1012,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -2457,7 +2703,7 @@
       {
         "id": 869,
         "ids": [869],
-        "debugId": 1005,
+        "debugId": 1008,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "869.js" },
@@ -2471,7 +2717,7 @@
       {
         "id": 913,
         "ids": [913],
-        "debugId": 1006,
+        "debugId": 1009,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "913.js" },
@@ -2485,7 +2731,7 @@
       {
         "id": 265,
         "ids": [265],
-        "debugId": 1010,
+        "debugId": 1013,
         "name": null,
         "idNameHints": {},
         "preventIntegration": false,
@@ -2500,7 +2746,7 @@
       {
         "id": 121,
         "ids": [121],
-        "debugId": 1011,
+        "debugId": 1014,
         "name": null,
         "idNameHints": {},
         "preventIntegration": false,
@@ -2515,7 +2761,7 @@
       {
         "id": 784,
         "ids": [784, 292],
-        "debugId": 1012,
+        "debugId": 1011,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },
@@ -2529,7 +2775,7 @@
       {
         "id": 635,
         "ids": [635],
-        "debugId": 1013,
+        "debugId": 1010,
         "idNameHints": { "0": "vendors" },
         "preventIntegration": false,
         "files": { "0": "635.js" },
@@ -2544,7 +2790,7 @@
       {
         "id": 966,
         "ids": [966],
-        "debugId": 1007,
+        "debugId": 1005,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -2558,7 +2804,7 @@
       {
         "id": 643,
         "ids": [643],
-        "debugId": 1008,
+        "debugId": 1006,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -2572,7 +2818,7 @@
       {
         "id": 607,
         "ids": [607],
-        "debugId": 1009,
+        "debugId": 1007,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -2601,7 +2847,7 @@
       {
         "id": 33,
         "ids": [33],
-        "debugId": 1016,
+        "debugId": 1012,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -2631,7 +2877,7 @@
       {
         "id": 265,
         "ids": [265],
-        "debugId": 1010,
+        "debugId": 1013,
         "name": null,
         "idNameHints": {},
         "preventIntegration": false,
@@ -2646,7 +2892,7 @@
       {
         "id": 966,
         "ids": [966],
-        "debugId": 1007,
+        "debugId": 1005,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -2660,7 +2906,7 @@
       {
         "id": 643,
         "ids": [643],
-        "debugId": 1008,
+        "debugId": 1006,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -2674,7 +2920,7 @@
       {
         "id": 607,
         "ids": [607],
-        "debugId": 1009,
+        "debugId": 1007,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -2688,7 +2934,7 @@
       {
         "id": 635,
         "ids": [635],
-        "debugId": 1013,
+        "debugId": 1010,
         "idNameHints": { "0": "vendors" },
         "preventIntegration": false,
         "files": { "0": "635.js" },
@@ -2703,7 +2949,7 @@
       {
         "id": 784,
         "ids": [784, 292],
-        "debugId": 1012,
+        "debugId": 1011,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },
@@ -2732,7 +2978,7 @@
       {
         "id": 33,
         "ids": [33],
-        "debugId": 1016,
+        "debugId": 1012,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -2793,7 +3039,7 @@
       {
         "id": 33,
         "ids": [33],
-        "debugId": 1016,
+        "debugId": 1012,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -2838,7 +3084,7 @@
       {
         "id": 869,
         "ids": [869],
-        "debugId": 1005,
+        "debugId": 1008,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "869.js" },
@@ -2852,7 +3098,7 @@
       {
         "id": 913,
         "ids": [913],
-        "debugId": 1006,
+        "debugId": 1009,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "913.js" },
@@ -2866,7 +3112,7 @@
       {
         "id": 265,
         "ids": [265],
-        "debugId": 1010,
+        "debugId": 1013,
         "name": null,
         "idNameHints": {},
         "preventIntegration": false,
@@ -2881,7 +3127,7 @@
       {
         "id": 121,
         "ids": [121],
-        "debugId": 1011,
+        "debugId": 1014,
         "name": null,
         "idNameHints": {},
         "preventIntegration": false,
@@ -2896,7 +3142,7 @@
       {
         "id": 784,
         "ids": [784, 292],
-        "debugId": 1012,
+        "debugId": 1011,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },
@@ -2910,7 +3156,7 @@
       {
         "id": 635,
         "ids": [635],
-        "debugId": 1013,
+        "debugId": 1010,
         "idNameHints": { "0": "vendors" },
         "preventIntegration": false,
         "files": { "0": "635.js" },
@@ -2925,7 +3171,7 @@
       {
         "id": 966,
         "ids": [966],
-        "debugId": 1007,
+        "debugId": 1005,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -2939,7 +3185,7 @@
       {
         "id": 643,
         "ids": [643],
-        "debugId": 1008,
+        "debugId": 1006,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -2953,7 +3199,7 @@
       {
         "id": 607,
         "ids": [607],
-        "debugId": 1009,
+        "debugId": 1007,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -2982,7 +3228,7 @@
       {
         "id": 33,
         "ids": [33],
-        "debugId": 1016,
+        "debugId": 1012,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -3012,7 +3258,7 @@
       {
         "id": 607,
         "ids": [607],
-        "debugId": 1009,
+        "debugId": 1007,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -3041,7 +3287,7 @@
       {
         "id": 33,
         "ids": [33],
-        "debugId": 1016,
+        "debugId": 1012,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -3071,7 +3317,7 @@
       {
         "id": 635,
         "ids": [635],
-        "debugId": 1013,
+        "debugId": 1010,
         "idNameHints": { "0": "vendors" },
         "preventIntegration": false,
         "files": { "0": "635.js" },
@@ -3088,7 +3334,7 @@
       {
         "id": 643,
         "ids": [643],
-        "debugId": 1008,
+        "debugId": 1006,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -3102,7 +3348,7 @@
       {
         "id": 784,
         "ids": [784, 292],
-        "debugId": 1012,
+        "debugId": 1011,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },
@@ -3118,7 +3364,7 @@
       {
         "id": 784,
         "ids": [784, 292],
-        "debugId": 1012,
+        "debugId": 1011,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },
@@ -3149,7 +3395,7 @@
       {
         "id": 869,
         "ids": [869],
-        "debugId": 1005,
+        "debugId": 1008,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "869.js" },
@@ -3163,7 +3409,7 @@
       {
         "id": 265,
         "ids": [265],
-        "debugId": 1010,
+        "debugId": 1013,
         "name": null,
         "idNameHints": {},
         "preventIntegration": false,
@@ -3178,7 +3424,7 @@
       {
         "id": 121,
         "ids": [121],
-        "debugId": 1011,
+        "debugId": 1014,
         "name": null,
         "idNameHints": {},
         "preventIntegration": false,
@@ -3193,7 +3439,7 @@
       {
         "id": 784,
         "ids": [784, 292],
-        "debugId": 1012,
+        "debugId": 1011,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },
@@ -3207,7 +3453,7 @@
       {
         "id": 635,
         "ids": [635],
-        "debugId": 1013,
+        "debugId": 1010,
         "idNameHints": { "0": "vendors" },
         "preventIntegration": false,
         "files": { "0": "635.js" },
@@ -3222,7 +3468,7 @@
       {
         "id": 966,
         "ids": [966],
-        "debugId": 1007,
+        "debugId": 1005,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -3236,7 +3482,7 @@
       {
         "id": 643,
         "ids": [643],
-        "debugId": 1008,
+        "debugId": 1006,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -3250,7 +3496,7 @@
       {
         "id": 607,
         "ids": [607],
-        "debugId": 1009,
+        "debugId": 1007,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -3279,7 +3525,7 @@
       {
         "id": 33,
         "ids": [33],
-        "debugId": 1016,
+        "debugId": 1012,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -3324,7 +3570,7 @@
       {
         "id": 913,
         "ids": [913],
-        "debugId": 1006,
+        "debugId": 1009,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "913.js" },
@@ -3338,7 +3584,7 @@
       {
         "id": 784,
         "ids": [784, 292],
-        "debugId": 1012,
+        "debugId": 1011,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },
@@ -3354,7 +3600,7 @@
       {
         "id": 966,
         "ids": [966],
-        "debugId": 1007,
+        "debugId": 1005,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
@@ -3368,7 +3614,7 @@
       {
         "id": 635,
         "ids": [635],
-        "debugId": 1013,
+        "debugId": 1010,
         "idNameHints": { "0": "vendors" },
         "preventIntegration": false,
         "files": { "0": "635.js" },
