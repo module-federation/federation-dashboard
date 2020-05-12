@@ -8,11 +8,13 @@ import {
   Typography,
   makeStyles,
 } from "@material-ui/core";
-import Layout from "../components/Layout";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import UpArrow from "@material-ui/icons/PublishTwoTone";
 import DownArrow from "@material-ui/icons/CloudDownloadOutlined";
+import Link from "next/link";
+
+import Layout from "../components/Layout";
 
 const useStyles = makeStyles((theme) => ({
   headerRow: {
@@ -53,11 +55,12 @@ const GET_APPS = gql`
 const Applications = ({ applications }) => {
   const classes = useStyles();
   const modules = applications
-    .map(({ id, modules }) =>
+    .map(({ id, name, modules }) =>
       modules.map((mod) => ({
         ...mod,
         absoluteId: `${id}:${mod.name}`,
         applicationId: id,
+        applicationName: name,
       }))
     )
     .flat();
@@ -91,7 +94,7 @@ const Applications = ({ applications }) => {
           {applications.map(({ id, name }) => (
             <TableCell align="center" key={`application:${id}`}>
               <Typography variant="h5" className={classes.headerCell}>
-                {name}
+                <Link href={`/applications/${name}`}>{name}</Link>
               </Typography>
             </TableCell>
           ))}
@@ -107,10 +110,14 @@ const Applications = ({ applications }) => {
             <Typography variant="body1">Requires</Typography>
           </TableCell>
         </TableRow>
-        {modules.map(({ name, absoluteId, requires }) => (
+        {modules.map(({ name, absoluteId, applicationName, requires }) => (
           <TableRow key={`module:${absoluteId}`}>
             <TableCell align="right">
-              <Typography variant="body1">{name}</Typography>
+              <Typography variant="body1">
+                <Link href={`/applications/${applicationName}/${name}`}>
+                  {name}
+                </Link>
+              </Typography>
             </TableCell>
             {applications.map(({ id: appId, name }) => (
               <TableCell

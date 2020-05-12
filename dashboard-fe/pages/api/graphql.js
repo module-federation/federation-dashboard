@@ -124,16 +124,22 @@ const resolvers = {
       return apps;
     },
     modules(_, { name: nameFilter }) {
+      const filter = nameFilter
+        ? ({ name }) => name.includes(nameFilter)
+        : () => true;
       return apps
         .map(({ modules }) => modules)
         .flat()
-        .filter(({ name }) => name.includes(nameFilter));
+        .filter(filter);
     },
     consumes(_, { name: nameFilter }) {
+      const filter = nameFilter
+        ? ({ name }) => name.includes(nameFilter)
+        : () => true;
       return apps
         .map(({ consumes }) => consumes)
         .flat()
-        .filter(({ name }) => name.includes(nameFilter));
+        .filter(filter);
     },
   },
   Module: {
