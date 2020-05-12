@@ -21,10 +21,10 @@
       {
         "identifier": "container entry [[\"SearchList\",\"./src/SearchList\"],[\"MiniSearch\",\"./src/MiniSearch\"]]",
         "name": "container entry",
-        "index": 13,
-        "preOrderIndex": 13,
-        "index2": 13,
-        "postOrderIndex": 13,
+        "index": 17,
+        "preOrderIndex": 17,
+        "index2": 17,
+        "postOrderIndex": 17,
         "size": 42,
         "sizes": { "javascript": 42 },
         "built": true,
@@ -322,10 +322,10 @@
       {
         "identifier": "container entry [[\"SearchList\",\"./src/SearchList\"],[\"MiniSearch\",\"./src/MiniSearch\"]]",
         "name": "container entry",
-        "index": 13,
-        "preOrderIndex": 13,
-        "index2": 13,
-        "postOrderIndex": 13,
+        "index": 17,
+        "preOrderIndex": 17,
+        "index2": 17,
+        "postOrderIndex": 17,
         "size": 42,
         "sizes": { "javascript": 42 },
         "built": true,
@@ -629,15 +629,15 @@
       }
     ]
   },
-  "buildHash": "d14b2ef2d2c6bd8f716e",
+  "buildHash": "9ad3f699204ffdd9f6f3",
   "modules": [
     {
       "identifier": "container entry [[\"SearchList\",\"./src/SearchList\"],[\"MiniSearch\",\"./src/MiniSearch\"]]",
       "name": "container entry",
-      "index": 13,
-      "preOrderIndex": 13,
-      "index2": 13,
-      "postOrderIndex": 13,
+      "index": 17,
+      "preOrderIndex": 17,
+      "index2": 17,
+      "postOrderIndex": 17,
       "size": 42,
       "sizes": { "javascript": 42 },
       "built": true,
@@ -803,7 +803,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "3:24-34",
+          "loc": "5:24-34",
           "moduleId": 681,
           "resolvedModuleId": null
         },
@@ -817,7 +817,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "5:31-50",
+          "loc": "7:31-50",
           "moduleId": 681,
           "resolvedModuleId": null
         },
@@ -831,7 +831,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "5:77-96",
+          "loc": "7:77-96",
           "moduleId": 681,
           "resolvedModuleId": null
         },
@@ -845,7 +845,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "5:141-160",
+          "loc": "7:125-144",
           "moduleId": 681,
           "resolvedModuleId": null
         },
@@ -859,7 +859,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "5:196-215",
+          "loc": "7:189-208",
           "moduleId": 681,
           "resolvedModuleId": null
         },
@@ -873,7 +873,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "5:248-267",
+          "loc": "7:244-263",
           "moduleId": 681,
           "resolvedModuleId": null
         },
@@ -887,7 +887,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "5:268-282",
+          "loc": "7:296-315",
           "moduleId": 681,
           "resolvedModuleId": null
         },
@@ -901,7 +901,35 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "7:16-35",
+          "loc": "7:316-330",
+          "moduleId": 681,
+          "resolvedModuleId": null
+        },
+        {
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "module": "./src/index.js + 1 modules",
+          "moduleName": "./src/index.js + 1 modules",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModule": "./src/App.js",
+          "type": "harmony import specifier",
+          "active": true,
+          "explanation": "",
+          "userRequest": "react",
+          "loc": "9:16-35",
+          "moduleId": 681,
+          "resolvedModuleId": null
+        },
+        {
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "module": "./src/index.js + 1 modules",
+          "moduleName": "./src/index.js + 1 modules",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModule": "./src/App.js",
+          "type": "harmony import specifier",
+          "active": true,
+          "explanation": "",
+          "userRequest": "react",
+          "loc": "9:74-93",
           "moduleId": 681,
           "resolvedModuleId": null
         },
@@ -944,10 +972,10 @@
     {
       "identifier": "overridable|react-dom-16.13.1|/Users/jherr/projects/federation-dashboard/dashboard-example/search/src|react-dom",
       "name": "overridable react-dom-16.13.1 -> react-dom",
-      "index": 7,
-      "preOrderIndex": 7,
-      "index2": 11,
-      "postOrderIndex": 11,
+      "index": 11,
+      "preOrderIndex": 11,
+      "index2": 15,
+      "postOrderIndex": 15,
       "size": 42,
       "sizes": { "overridable": 42 },
       "built": true,
@@ -1007,12 +1035,152 @@
       "depth": 1
     },
     {
+      "identifier": "remote webpack/container/reference/nav Header 9b7844cc00bb90c750e95a8c3c9ed01e",
+      "name": "remote nav/Header",
+      "index": 7,
+      "preOrderIndex": 7,
+      "index2": 7,
+      "postOrderIndex": 7,
+      "size": 42,
+      "sizes": { "remote": 42 },
+      "built": true,
+      "optional": false,
+      "runtime": false,
+      "issuer": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
+      "issuerName": "./src/App.js",
+      "issuerPath": [
+        {
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js",
+          "name": "./src/index.js",
+          "id": null
+        },
+        {
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
+          "name": "./src/App.js",
+          "id": null
+        }
+      ],
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "id": 212,
+      "issuerId": null,
+      "chunks": [179],
+      "assets": [],
+      "reasons": [
+        {
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "module": "./src/index.js + 1 modules",
+          "moduleName": "./src/index.js + 1 modules",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModule": "./src/App.js",
+          "type": "harmony side effect evaluation",
+          "active": true,
+          "explanation": "",
+          "userRequest": "nav/Header",
+          "loc": "3:0-32",
+          "moduleId": 681,
+          "resolvedModuleId": null
+        },
+        {
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "module": "./src/index.js + 1 modules",
+          "moduleName": "./src/index.js + 1 modules",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModule": "./src/App.js",
+          "type": "harmony import specifier",
+          "active": true,
+          "explanation": "",
+          "userRequest": "nav/Header",
+          "loc": "7:97-103",
+          "moduleId": 681,
+          "resolvedModuleId": null
+        }
+      ],
+      "usedExports": true,
+      "providedExports": null,
+      "optimizationBailout": [
+        "ModuleConcatenation bailout: Module is not an ECMAScript module"
+      ],
+      "depth": 2
+    },
+    {
+      "identifier": "remote webpack/container/reference/nav Footer 9b7844cc00bb90c750e95a8c3c9ed01e",
+      "name": "remote nav/Footer",
+      "index": 10,
+      "preOrderIndex": 10,
+      "index2": 8,
+      "postOrderIndex": 8,
+      "size": 42,
+      "sizes": { "remote": 42 },
+      "built": true,
+      "optional": false,
+      "runtime": false,
+      "issuer": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
+      "issuerName": "./src/App.js",
+      "issuerPath": [
+        {
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js",
+          "name": "./src/index.js",
+          "id": null
+        },
+        {
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
+          "name": "./src/App.js",
+          "id": null
+        }
+      ],
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "id": 32,
+      "issuerId": null,
+      "chunks": [179],
+      "assets": [],
+      "reasons": [
+        {
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "module": "./src/index.js + 1 modules",
+          "moduleName": "./src/index.js + 1 modules",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModule": "./src/App.js",
+          "type": "harmony side effect evaluation",
+          "active": true,
+          "explanation": "",
+          "userRequest": "nav/Footer",
+          "loc": "4:0-32",
+          "moduleId": 681,
+          "resolvedModuleId": null
+        },
+        {
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "module": "./src/index.js + 1 modules",
+          "moduleName": "./src/index.js + 1 modules",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModule": "./src/App.js",
+          "type": "harmony import specifier",
+          "active": true,
+          "explanation": "",
+          "userRequest": "nav/Footer",
+          "loc": "9:94-100",
+          "moduleId": 681,
+          "resolvedModuleId": null
+        }
+      ],
+      "usedExports": true,
+      "providedExports": null,
+      "optimizationBailout": [
+        "ModuleConcatenation bailout: Module is not an ECMAScript module"
+      ],
+      "depth": 2
+    },
+    {
       "identifier": "remote webpack/container/reference/home ProductCarousel 9b7844cc00bb90c750e95a8c3c9ed01e",
       "name": "remote home/ProductCarousel",
-      "index": 14,
-      "preOrderIndex": 14,
-      "index2": 16,
-      "postOrderIndex": 16,
+      "index": 18,
+      "preOrderIndex": 18,
+      "index2": 19,
+      "postOrderIndex": 19,
       "size": 42,
       "sizes": { "remote": 42 },
       "built": true,
@@ -1050,7 +1218,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "home/ProductCarousel",
-          "loc": "3:41-71",
+          "loc": "5:41-71",
           "moduleId": 681,
           "resolvedModuleId": null
         }
@@ -1065,10 +1233,10 @@
     {
       "identifier": "remote overrides 9b7844cc00bb90c750e95a8c3c9ed01e",
       "name": "remote overrides react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-      "index": 16,
-      "preOrderIndex": 16,
-      "index2": 15,
-      "postOrderIndex": 15,
+      "index": 9,
+      "preOrderIndex": 9,
+      "index2": 6,
+      "postOrderIndex": 6,
       "size": 42,
       "sizes": { "javascript": 42 },
       "built": true,
@@ -1113,6 +1281,32 @@
           "userRequest": null,
           "moduleId": 802,
           "resolvedModuleId": 802
+        },
+        {
+          "moduleIdentifier": "remote webpack/container/reference/nav Footer 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "module": "remote nav/Footer",
+          "moduleName": "remote nav/Footer",
+          "resolvedModuleIdentifier": "remote webpack/container/reference/nav Footer 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "resolvedModule": "remote nav/Footer",
+          "type": "remote overrides",
+          "active": true,
+          "explanation": "",
+          "userRequest": null,
+          "moduleId": 32,
+          "resolvedModuleId": 32
+        },
+        {
+          "moduleIdentifier": "remote webpack/container/reference/nav Header 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "module": "remote nav/Header",
+          "moduleName": "remote nav/Header",
+          "resolvedModuleIdentifier": "remote webpack/container/reference/nav Header 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "resolvedModule": "remote nav/Header",
+          "type": "remote overrides",
+          "active": true,
+          "explanation": "",
+          "userRequest": null,
+          "moduleId": 212,
+          "resolvedModuleId": 212
         }
       ],
       "usedExports": true,
@@ -1125,10 +1319,10 @@
     {
       "identifier": "overridable|react-16.13.1|/Users/jherr/projects/federation-dashboard/node_modules/react-dom/cjs|react",
       "name": "overridable react-16.13.1 -> react",
-      "index": 10,
-      "preOrderIndex": 10,
-      "index2": 6,
-      "postOrderIndex": 6,
+      "index": 14,
+      "preOrderIndex": 14,
+      "index2": 10,
+      "postOrderIndex": 10,
       "size": 42,
       "sizes": { "overridable": 42 },
       "built": true,
@@ -1191,10 +1385,10 @@
     {
       "identifier": "overridable|react-16.13.1|/Users/jherr/projects/federation-dashboard/dashboard-example/search|react",
       "name": "overridable react-16.13.1 -> react",
-      "index": 18,
-      "preOrderIndex": 18,
-      "index2": 18,
-      "postOrderIndex": 18,
+      "index": 20,
+      "preOrderIndex": 20,
+      "index2": 20,
+      "postOrderIndex": 20,
       "size": 42,
       "sizes": { "overridable": 42 },
       "built": true,
@@ -1256,10 +1450,10 @@
     {
       "identifier": "overridable|react-dom-16.13.1|/Users/jherr/projects/federation-dashboard/dashboard-example/search|react-dom",
       "name": "overridable react-dom-16.13.1 -> react-dom",
-      "index": 19,
-      "preOrderIndex": 19,
-      "index2": 19,
-      "postOrderIndex": 19,
+      "index": 21,
+      "preOrderIndex": 21,
+      "index2": 21,
+      "postOrderIndex": 21,
       "size": 42,
       "sizes": { "overridable": 42 },
       "built": true,
@@ -1339,7 +1533,7 @@
       {
         "id": 259,
         "ids": [259],
-        "debugId": 1004,
+        "debugId": 1006,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "259.js" },
@@ -1353,7 +1547,7 @@
       {
         "id": 784,
         "ids": [784],
-        "debugId": 1008,
+        "debugId": 1010,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },
@@ -1384,7 +1578,7 @@
       {
         "id": 259,
         "ids": [259],
-        "debugId": 1004,
+        "debugId": 1006,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "259.js" },
@@ -1398,7 +1592,7 @@
       {
         "id": 489,
         "ids": [489],
-        "debugId": 1005,
+        "debugId": 1007,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "489.js" },
@@ -1412,7 +1606,7 @@
       {
         "id": 784,
         "ids": [784],
-        "debugId": 1008,
+        "debugId": 1010,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },
@@ -1459,7 +1653,7 @@
       {
         "id": 259,
         "ids": [259],
-        "debugId": 1004,
+        "debugId": 1006,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "259.js" },
@@ -1473,7 +1667,7 @@
       {
         "id": 489,
         "ids": [489],
-        "debugId": 1005,
+        "debugId": 1007,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "489.js" },
@@ -1487,7 +1681,7 @@
       {
         "id": 784,
         "ids": [784],
-        "debugId": 1008,
+        "debugId": 1010,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },
@@ -1518,7 +1712,7 @@
       {
         "id": 489,
         "ids": [489],
-        "debugId": 1005,
+        "debugId": 1007,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "489.js" },
@@ -1532,7 +1726,7 @@
       {
         "id": 784,
         "ids": [784],
-        "debugId": 1008,
+        "debugId": 1010,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },
@@ -1548,7 +1742,7 @@
       {
         "id": 784,
         "ids": [784],
-        "debugId": 1008,
+        "debugId": 1010,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },

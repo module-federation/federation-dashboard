@@ -35,6 +35,7 @@ module.exports = {
       library: { type: "var", name: "search" },
       filename: "remoteEntry.js",
       remotes: {
+        nav: "nav",
         home: "home",
       },
       exposes: {
