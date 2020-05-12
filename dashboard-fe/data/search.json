@@ -629,7 +629,7 @@
       }
     ]
   },
-  "buildHash": "ffc356c6beebada38b41",
+  "buildHash": "d14b2ef2d2c6bd8f716e",
   "modules": [
     {
       "identifier": "container entry [[\"SearchList\",\"./src/SearchList\"],[\"MiniSearch\",\"./src/MiniSearch\"]]",
@@ -803,7 +803,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "3:21-31",
+          "loc": "3:24-34",
           "moduleId": 681,
           "resolvedModuleId": null
         },
@@ -873,7 +873,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "5:249-268",
+          "loc": "5:248-267",
           "moduleId": 681,
           "resolvedModuleId": null
         },
@@ -887,7 +887,7 @@
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "loc": "5:269-283",
+          "loc": "5:268-282",
           "moduleId": 681,
           "resolvedModuleId": null
         },
@@ -1007,8 +1007,8 @@
       "depth": 1
     },
     {
-      "identifier": "remote webpack/container/reference/home Button 9b7844cc00bb90c750e95a8c3c9ed01e",
-      "name": "remote home/Button",
+      "identifier": "remote webpack/container/reference/home ProductCarousel 9b7844cc00bb90c750e95a8c3c9ed01e",
+      "name": "remote home/ProductCarousel",
       "index": 14,
       "preOrderIndex": 14,
       "index2": 16,
@@ -1035,9 +1035,9 @@
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 744,
+      "id": 802,
       "issuerId": null,
-      "chunks": [744],
+      "chunks": [802],
       "assets": [],
       "reasons": [
         {
@@ -1049,8 +1049,8 @@
           "type": "import()",
           "active": true,
           "explanation": "",
-          "userRequest": "home/Button",
-          "loc": "3:38-59",
+          "userRequest": "home/ProductCarousel",
+          "loc": "3:41-71",
           "moduleId": 681,
           "resolvedModuleId": null
         }
@@ -1074,8 +1074,8 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "remote webpack/container/reference/home Button 9b7844cc00bb90c750e95a8c3c9ed01e",
-      "issuerName": "remote home/Button",
+      "issuer": "remote webpack/container/reference/home ProductCarousel 9b7844cc00bb90c750e95a8c3c9ed01e",
+      "issuerName": "remote home/ProductCarousel",
       "issuerPath": [
         {
           "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js",
@@ -1088,31 +1088,31 @@
           "id": null
         },
         {
-          "identifier": "remote webpack/container/reference/home Button 9b7844cc00bb90c750e95a8c3c9ed01e",
-          "name": "remote home/Button",
-          "id": 744
+          "identifier": "remote webpack/container/reference/home ProductCarousel 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "name": "remote home/ProductCarousel",
+          "id": 802
         }
       ],
       "failed": false,
       "errors": 0,
       "warnings": 0,
       "id": 16,
-      "issuerId": 744,
+      "issuerId": 802,
       "chunks": [179],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "remote webpack/container/reference/home Button 9b7844cc00bb90c750e95a8c3c9ed01e",
-          "module": "remote home/Button",
-          "moduleName": "remote home/Button",
-          "resolvedModuleIdentifier": "remote webpack/container/reference/home Button 9b7844cc00bb90c750e95a8c3c9ed01e",
-          "resolvedModule": "remote home/Button",
+          "moduleIdentifier": "remote webpack/container/reference/home ProductCarousel 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "module": "remote home/ProductCarousel",
+          "moduleName": "remote home/ProductCarousel",
+          "resolvedModuleIdentifier": "remote webpack/container/reference/home ProductCarousel 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "resolvedModule": "remote home/ProductCarousel",
           "type": "remote overrides",
           "active": true,
           "explanation": "",
           "userRequest": null,
-          "moduleId": 744,
-          "resolvedModuleId": 744
+          "moduleId": 802,
+          "resolvedModuleId": 802
         }
       ],
       "usedExports": true,
@@ -1214,9 +1214,9 @@
           "id": null
         },
         {
-          "identifier": "remote webpack/container/reference/home Button 9b7844cc00bb90c750e95a8c3c9ed01e",
-          "name": "remote home/Button",
-          "id": 744
+          "identifier": "remote webpack/container/reference/home ProductCarousel 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "name": "remote home/ProductCarousel",
+          "id": 802
         },
         {
           "identifier": "remote overrides 9b7844cc00bb90c750e95a8c3c9ed01e",
@@ -1279,9 +1279,9 @@
           "id": null
         },
         {
-          "identifier": "remote webpack/container/reference/home Button 9b7844cc00bb90c750e95a8c3c9ed01e",
-          "name": "remote home/Button",
-          "id": 744
+          "identifier": "remote webpack/container/reference/home ProductCarousel 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "name": "remote home/ProductCarousel",
+          "id": 802
         },
         {
           "identifier": "remote overrides 9b7844cc00bb90c750e95a8c3c9ed01e",

@@ -1,4 +1,4 @@
-import LocalButton from "./Button";
+import HeroImage from "./HeroImage";
 import React from "react";
 import SubPage from "./SubPage";
 
@@ -8,7 +8,7 @@ const App = () => (
   <div>
     <h1>Bi-Directional</h1>
     <h2>App 1</h2>
-    <LocalButton />
+    <HeroImage />
     <SubPage />
     <React.Suspense fallback="Loading SearchList">
       <SearchList />
