@@ -1,15 +1,15 @@
-import LocalButton from "./SearchList";
+import SearchList from "./SearchList";
 import React from "react";
 
-const RemoteButton = React.lazy(() => import("home/Button"));
+const ProductCarousel = React.lazy(() => import("home/ProductCarousel"));
 
 const App = () => (
   <div>
     <h1>Bi-Directional</h1>
     <h2>App 2</h2>
-    <LocalButton />
-    <React.Suspense fallback="Loading Button">
-      <RemoteButton />
+    <SearchList />
+    <React.Suspense fallback="Loading ProductCarousel">
+      <ProductCarousel />
     </React.Suspense>
   </div>
 );

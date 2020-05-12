@@ -27,19 +27,19 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "home",
-      library: { type: "var", name: "home" },
+      name: "dsl",
+      library: { type: "var", name: "dsl" },
       filename: "remoteEntry.js",
-      remotes: {
-        search: "search",
-        dsl: "dsl",
-      },
+      remotes: {},
       exposes: {
-        ProductCarousel: "./src/ProductCarousel",
-        HeroImage: "./src/HeroImage",
+        Button: "./src/Button",
+        Carousel: "./src/Carousel",
+        Dialog: "./src/Dialog",
+        Slider: "./src/Slider",
+        TextField: "./src/TextField",
       },
       // sharing code based on the installed version, to allow for multiple vendors with different versions
-      shared: ["react", "react-dom", "lodash"].reduce((shared, pkg) => {
+      shared: ["react", "react-dom", "@emotion/core"].reduce((shared, pkg) => {
         // you can also trim the patch version off so you share at the feature version level
         // react-16.8, not react-16.8.3, Better vendor sharing will be available as you'd share 16.8.x
         Object.assign(shared, { [`${pkg}-${require(pkg).version}`]: pkg });
