@@ -31,14 +31,15 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "app2",
-      library: { type: "var", name: "app2" },
+      name: "search",
+      library: { type: "var", name: "search" },
       filename: "remoteEntry.js",
       remotes: {
-        app1: "app1",
+        home: "home",
       },
       exposes: {
-        SomeOtherButton: "./src/SomeOtherButton",
+        SearchList: "./src/SearchList",
+        MiniSearch: "./src/MiniSearch",
       },
       shared: sharedReduce,
     }),

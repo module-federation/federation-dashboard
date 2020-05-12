@@ -1,7 +1,7 @@
 import { ApolloServer, gql } from "apollo-server-micro";
 
-import app1 from "../../data/app1.json";
-import app2 from "../../data/app2.json";
+import home from "../../data/home.json";
+import search from "../../data/search.json";
 
 const importData = ({ federationRemoteEntry, modules }) => {
   const app = federationRemoteEntry.origins[0].loc;
@@ -109,7 +109,7 @@ const typeDefs = gql`
   }
 `;
 
-const apps = [importData(app1), importData(app2)];
+const apps = [importData(home), importData(search)];
 
 const resolvers = {
   Query: {
