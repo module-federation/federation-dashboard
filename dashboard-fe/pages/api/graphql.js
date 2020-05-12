@@ -55,7 +55,7 @@ const importData = ({ federationRemoteEntry, modules }) => {
       overrides[data[3]] = {
         id: data[3],
         name: data[3],
-        verson: data[1],
+        version: data[1],
         location: data[2],
         applicationID: app,
       };
@@ -78,21 +78,23 @@ const importData = ({ federationRemoteEntry, modules }) => {
 
 const typeDefs = gql`
   type Query {
-    applications: [Application!]!
-    modules(name: String): [Module!]!
-    consumes(name: String): [Consume!]!
+    applications(name: String): [Application!]!
+    modules(application: String, name: String): [Module!]!
+    consumes(application: String, name: String): [Consume!]!
   }
 
   type Module {
     id: ID!
     application: Application!
     name: String!
+    file: String
     requires: [Override!]!
   }
 
   type Override {
     id: ID!
     application: Application!
+    version: String
     name: String!
   }
 
@@ -120,23 +122,34 @@ const apps = [
 
 const resolvers = {
   Query: {
-    applications() {
-      return apps;
+    applications(_, { name: nameFilter }) {
+      const applicationFilter = nameFilter
+        ? ({ name }) => name.includes(nameFilter)
+        : () => true;
+      return apps.filter(applicationFilter);
     },
-    modules(_, { name: nameFilter }) {
+    modules(_, { application, name: nameFilter }) {
+      const applicationFilter = application
+        ? ({ name }) => name.includes(application)
+        : () => true;
       const filter = nameFilter
         ? ({ name }) => name.includes(nameFilter)
         : () => true;
       return apps
+        .filter(applicationFilter)
         .map(({ modules }) => modules)
         .flat()
         .filter(filter);
     },
-    consumes(_, { name: nameFilter }) {
+    consumes(_, { application, name: nameFilter }) {
+      const applicationFilter = application
+        ? ({ name }) => name.includes(application)
+        : () => true;
       const filter = nameFilter
         ? ({ name }) => name.includes(nameFilter)
         : () => true;
       return apps
+        .filter(applicationFilter)
         .map(({ consumes }) => consumes)
         .flat()
         .filter(filter);

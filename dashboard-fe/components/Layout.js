@@ -115,12 +115,12 @@ export default function Dashboard({ children }) {
         </Toolbar>
       </AppBar>
       <Grid container className={classes.content}>
-        <Grid xs={2} className={classes.drawerContainer}>
+        <Grid item xs={2} className={classes.drawerContainer}>
           <Paper variant="outlined" square>
             <SideBar />
           </Paper>
         </Grid>
-        <Grid xs={10} className={classes.contentContainer}>
+        <Grid item xs={10} className={classes.contentContainer}>
           {children}
         </Grid>
       </Grid>
