@@ -1,10 +1,16 @@
 import { createMuiTheme } from "@material-ui/core/styles";
-import { red } from "@material-ui/core/colors";
+
+const palette = {};
+if (
+  typeof window !== "undefined" &&
+  window.matchMedia &&
+  window.matchMedia("(prefers-color-scheme: dark)").matches
+) {
+  palette.type = "dark";
+}
 
 const theme = createMuiTheme({
-  palette: {
-    type: "dark",
-  },
+  palette,
 });
 
 export default theme;
