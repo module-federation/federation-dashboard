@@ -47,7 +47,9 @@ const GET_APPS = gql`
           name
         }
         name
-        usedIn
+        usedIn {
+          file
+        }
       }
     }
   }
