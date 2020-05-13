@@ -109,27 +109,49 @@
       {
         "consumingApplicationID": "home",
         "applicationID": "nav",
-        "name": "Header"
+        "name": "Header",
+        "usedIn": [
+          "./src/App.js"
+        ]
       },
       {
         "consumingApplicationID": "home",
         "applicationID": "nav",
-        "name": "Footer"
+        "name": "Footer",
+        "usedIn": [
+          "./src/App.js"
+        ]
       },
       {
         "consumingApplicationID": "home",
         "applicationID": "search",
-        "name": "SearchList"
+        "name": "SearchList",
+        "usedIn": [
+          "./src/App.js",
+          "./src/Page2.js",
+          "./src/Page3.js",
+          "./src/Page4.js",
+          "./src/SubPage.js"
+        ]
       },
       {
         "consumingApplicationID": "home",
         "applicationID": "dsl",
-        "name": "Button"
+        "name": "Button",
+        "usedIn": [
+          "./src/ProductCarousel.js",
+          "./src/Page2.js",
+          "./src/Page3.js",
+          "./src/Page4.js"
+        ]
       },
       {
         "consumingApplicationID": "home",
         "applicationID": "dsl",
-        "name": "Carousel"
+        "name": "Carousel",
+        "usedIn": [
+          "./src/ProductCarousel.js"
+        ]
       }
     ],
     "modules": [
@@ -177,17 +199,26 @@
       {
         "consumingApplicationID": "search",
         "applicationID": "nav",
-        "name": "Header"
+        "name": "Header",
+        "usedIn": [
+          "./src/App.js"
+        ]
       },
       {
         "consumingApplicationID": "search",
         "applicationID": "nav",
-        "name": "Footer"
+        "name": "Footer",
+        "usedIn": [
+          "./src/App.js"
+        ]
       },
       {
         "consumingApplicationID": "search",
         "applicationID": "home",
-        "name": "ProductCarousel"
+        "name": "ProductCarousel",
+        "usedIn": [
+          "./src/App.js"
+        ]
       }
     ],
     "modules": [
@@ -241,12 +272,18 @@
       {
         "consumingApplicationID": "nav",
         "applicationID": "dsl",
-        "name": "Button"
+        "name": "Button",
+        "usedIn": [
+          "./src/Header.js"
+        ]
       },
       {
         "consumingApplicationID": "nav",
         "applicationID": "search",
-        "name": "MiniSearch"
+        "name": "MiniSearch",
+        "usedIn": [
+          "./src/Header.js"
+        ]
       }
     ],
     "modules": [

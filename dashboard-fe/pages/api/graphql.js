@@ -28,6 +28,7 @@ const typeDefs = gql`
     consumingApplication: Application!
     application: Application!
     name: String!
+    usedIn: [String!]!
   }
 
   type Application {

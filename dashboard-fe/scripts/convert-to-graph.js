@@ -5,16 +5,27 @@ const importData = ({ federationRemoteEntry, modules }) => {
   const app = federationRemoteEntry.origins[0].loc;
   const overrides = {};
   const consumes = [];
+  const consumesByName = {};
   const modulesObj = {};
 
-  modules.forEach(({ identifier }) => {
+  modules.forEach(({ identifier, reasons }) => {
     const data = identifier.split(" ");
     if (data[0] === "remote") {
       if (data.length === 4) {
-        consumes.push({
+        const consume = {
           consumingApplicationID: app,
           applicationID: data[1].replace("webpack/container/reference/", ""),
           name: data[2],
+          usedIn: new Set(),
+        };
+        consumes.push(consume);
+        consumesByName[`${consume.applicationID}/${data[2]}`] = consume;
+      }
+      if (reasons) {
+        reasons.forEach(({ userRequest, resolvedModule, type }) => {
+          if (consumesByName[userRequest]) {
+            consumesByName[userRequest].usedIn.add(resolvedModule);
+          }
         });
       }
     } else if (data[0] === "container" && data[1] === "entry") {
@@ -62,7 +73,10 @@ const importData = ({ federationRemoteEntry, modules }) => {
     id: app,
     name: app,
     overrides: Object.values(overrides),
-    consumes,
+    consumes: consumes.map((con) => ({
+      ...con,
+      usedIn: Array.from(con.usedIn.values()),
+    })),
     modules: Object.values(modulesObj).map((mod) => ({
       ...mod,
       requires: Array.from(mod.requires.values()),

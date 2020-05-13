@@ -1,6 +1,9 @@
 import HeroImage from "./HeroImage";
 import React from "react";
 import SubPage from "./SubPage";
+import Page2 from "./Page2";
+import Page3 from "./Page3";
+import Page4 from "./Page4";
 
 import Header from "nav/Header";
 import Footer from "nav/Footer";
@@ -14,6 +17,9 @@ const App = () => (
     <h2>App 1</h2>
     <HeroImage />
     <SubPage />
+    <Page2 />
+    <Page3 />
+    <Page4 />
     <React.Suspense fallback="Loading SearchList">
       <SearchList />
     </React.Suspense>
