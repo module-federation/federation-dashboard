@@ -47,6 +47,7 @@ const GET_APPS = gql`
           name
         }
         name
+        usedIn
       }
     }
   }
@@ -67,15 +68,15 @@ const Applications = ({ applications }) => {
   const modulesById = Object.fromEntries(
     modules.map(({ id, name, applicationId }) => [
       `${applicationId}:${name}`,
-      { name, applicationId, applications: [] },
+      { name, applicationId, applications: {} },
     ])
   );
 
   applications.forEach(({ id: consumingApplication, consumes }) => {
-    consumes.forEach(({ name, application: { id: applicationId } }) => {
-      modulesById[`${applicationId}:${name}`].applications.push(
+    consumes.forEach(({ name, application: { id: applicationId }, usedIn }) => {
+      modulesById[`${applicationId}:${name}`].applications[
         consumingApplication
-      );
+      ] = { count: usedIn.length };
     });
   });
 
@@ -125,8 +126,13 @@ const Applications = ({ applications }) => {
                 key={`${name}:app:${appId}:mod:${absoluteId}`}
               >
                 {modulesById[absoluteId].applicationId === appId && <UpArrow />}
-                {modulesById[absoluteId].applications.includes(appId) && (
-                  <DownArrow />
+                {modulesById[absoluteId].applications[appId] && (
+                  <>
+                    <Typography>
+                      <DownArrow />{" "}
+                      {modulesById[absoluteId].applications[appId].count}
+                    </Typography>
+                  </>
                 )}
               </TableCell>
             ))}

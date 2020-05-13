@@ -56,6 +56,7 @@ const GET_APPS = gql`
           name
         }
         name
+        usedIn
       }
     }
   }
@@ -68,18 +69,24 @@ const ConsumesTable = ({ consumes }) => {
       <Typography variant="h6" className={classes.panelTitle}>
         Consumes
       </Typography>
-      <div>
-        {consumes.map(({ name, application }) => (
-          <div key={[application.id, name].join()}>
-            <Typography>
-              {" "}
-              <Link href={`/applications/${application.name}/${name}`}>
-                {name}
-              </Link>
-            </Typography>
-          </div>
+      <Table>
+        {consumes.map(({ name, application, usedIn }) => (
+          <TableRow key={[application.id, name].join()}>
+            <TableCell>
+              <Typography>
+                <Link href={`/applications/${application.name}/${name}`}>
+                  <a>{name}</a>
+                </Link>
+              </Typography>
+            </TableCell>
+            <TableCell>
+              {usedIn.map((file) => (
+                <Typography variant="body2">{file}</Typography>
+              ))}
+            </TableCell>
+          </TableRow>
         ))}
-      </div>
+      </Table>
     </>
   );
 };
