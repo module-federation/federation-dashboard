@@ -24,11 +24,16 @@ const typeDefs = gql`
     name: String!
   }
 
+  type FileLocation {
+    file: String!
+    url: String
+  }
+
   type Consume {
     consumingApplication: Application!
     application: Application!
     name: String!
-    usedIn: [String!]!
+    usedIn: [FileLocation!]!
   }
 
   type Application {
