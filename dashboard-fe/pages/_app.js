@@ -4,7 +4,7 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import Head from "next/head";
 
 const client = new ApolloClient({
-  uri: "http://127.0.0.1:3000/api/graphql",
+  uri: "http://localhost:3000/api/graphql",
 });
 
 function MyApp({ Component, pageProps }) {
