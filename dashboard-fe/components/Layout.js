@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import {
   makeStyles,
   CssBaseline,
@@ -6,18 +7,23 @@ import {
   Paper,
   List,
   ListItem,
+  Divider,
   ListItemText,
   ListItemIcon,
   ListSubheader,
   Typography,
   TextField,
-  Grid,
+  IconButton,
+  Drawer,
+  Container,
   fade,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import WebIcon from "@material-ui/icons/Web";
 import WidgetsIcon from "@material-ui/icons/Widgets";
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import Link from "next/link";
@@ -90,21 +96,81 @@ const SideBar = ({ data }) => {
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    display: "flex",
+  },
+  toolbar: {
+    paddingRight: 24, // keep right padding when drawer closed
+  },
+  toolbarIcon: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: "0 8px",
+    ...theme.mixins.toolbar,
+  },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: 36,
+  },
+  menuButtonHidden: {
+    display: "none",
   },
   title: {
     flexGrow: 1,
   },
-  drawer: {
+  drawerPaper: {
+    position: "relative",
+    whiteSpace: "nowrap",
     width: drawerWidth,
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
-  drawerContainer: {
-    padding: 5,
+  drawerPaperClose: {
+    overflowX: "hidden",
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    width: theme.spacing(7),
+    [theme.breakpoints.up("sm")]: {
+      width: theme.spacing(9),
+    },
   },
-  contentContainer: {
-    padding: 5,
+  appBarSpacer: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    height: "100vh",
+    overflow: "auto",
+  },
+  container: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+  },
+  paper: {
+    padding: theme.spacing(2),
+    display: "flex",
+    overflow: "auto",
+    flexDirection: "column",
+  },
+  fixedHeight: {
+    height: 240,
   },
   search: {
     position: "relative",
@@ -119,15 +185,21 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     padding: 5,
   },
-  toolbar: {
-    display: "flex",
-  },
 }));
 
 export default function Dashboard({ children }) {
   const { data } = useQuery(GET_SIDEBAR_DATA);
   const classes = useStyles();
   const router = useRouter();
+
+  const [open, setOpen] = React.useState(true);
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   const options = [];
   if (data) {
@@ -155,9 +227,30 @@ export default function Dashboard({ children }) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="static" className={classes.appBar}>
+      <AppBar
+        position="absolute"
+        className={clsx(classes.appBar, open && classes.appBarShift)}
+      >
         <Toolbar className={classes.toolbar}>
-          <Typography variant="h6" noWrap className={classes.title}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            className={clsx(
+              classes.menuButton,
+              open && classes.menuButtonHidden
+            )}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            className={classes.title}
+          >
             <strong>Federated Modules</strong> Dashboard
           </Typography>
           <Autocomplete
@@ -172,16 +265,27 @@ export default function Dashboard({ children }) {
           />
         </Toolbar>
       </AppBar>
-      <Grid container className={classes.content}>
-        <Grid item xs={2} className={classes.drawerContainer}>
-          <Paper variant="outlined" square>
-            <SideBar data={data} />
-          </Paper>
-        </Grid>
-        <Grid item xs={10} className={classes.contentContainer}>
+      <Drawer
+        variant="permanent"
+        classes={{
+          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+        }}
+        open={open}
+      >
+        <div className={classes.toolbarIcon}>
+          <IconButton onClick={handleDrawerClose}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+        <Divider />
+        <SideBar data={data} />
+      </Drawer>
+      <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        <Container maxWidth="lg" className={classes.container}>
           {children}
-        </Grid>
-      </Grid>
+        </Container>
+      </main>
     </div>
   );
 }
