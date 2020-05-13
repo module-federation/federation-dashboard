@@ -1,5 +1,5 @@
 {
-  "name": "@dashboard/app1",
+  "name": "@dashboard/search",
   "version": "0.0.0",
   "private": true,
   "devDependencies": {
@@ -14,9 +14,9 @@
     "@module-federation/dashboard-plugin": "file:../../dashboard-plugin"
   },
   "scripts": {
-    "start": "node --inspect ../../node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "build": "node ../../node_modules/webpack/bin/webpack.js --mode production",
-    "serve": "serve dist -p 3001",
+    "start": "webpack-dev-server",
+    "build": "webpack --mode production",
+    "serve": "serve dist -p 3002",
     "clean": "rm -rf dist"
   },
   "dependencies": {

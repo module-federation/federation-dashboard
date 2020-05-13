@@ -26,19 +26,21 @@ module.exports = {
     ],
   },
   plugins: [
-
     new ModuleFederationPlugin({
-      name: "app1",
-      library: { type: "var", name: "app1" },
+      name: "home",
+      library: { type: "var", name: "home" },
       filename: "remoteEntry.js",
       remotes: {
-        app2: "app2",
+        search: "search",
+        dsl: "dsl",
+        nav: "nav",
       },
       exposes: {
-        Button: "./src/Button",
+        ProductCarousel: "./src/ProductCarousel",
+        HeroImage: "./src/HeroImage",
       },
       // sharing code based on the installed version, to allow for multiple vendors with different versions
-      shared: ["react", "react-dom"].reduce((shared, pkg) => {
+      shared: ["react", "react-dom", "lodash"].reduce((shared, pkg) => {
         // you can also trim the patch version off so you share at the feature version level
         // react-16.8, not react-16.8.3, Better vendor sharing will be available as you'd share 16.8.x
         Object.assign(shared, { [`${pkg}-${require(pkg).version}`]: pkg });
@@ -56,5 +58,3 @@ module.exports = {
     }),
   ],
 };
-
-

@@ -1,21 +1,17 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
-
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
-const sharedReduce = ["react", "react-dom"].reduce((shared, pkg) => {
-  Object.assign(shared, { [`${pkg}-${require(pkg).version}`]: pkg });
-  return shared;
-}, {});
+
 module.exports = {
   entry: "./src/index",
   mode: "development",
   devServer: {
     contentBase: path.join(__dirname, "dist"),
-    port: 3002,
+    port: 3001,
   },
   output: {
-    publicPath: "http://localhost:3002/",
+    publicPath: "http://localhost:3001/",
   },
   module: {
     rules: [
@@ -31,16 +27,24 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "app2",
-      library: { type: "var", name: "app2" },
+      name: "nav",
+      library: { type: "var", name: "nav" },
       filename: "remoteEntry.js",
       remotes: {
-        app1: "app1",
+        dsl: "dsl",
+        search: "search",
       },
       exposes: {
-        SomeOtherButton: "./src/SomeOtherButton",
+        Header: "./src/Header",
+        Footer: "./src/Footer",
       },
-      shared: sharedReduce,
+      // sharing code based on the installed version, to allow for multiple vendors with different versions
+      shared: ["react", "react-dom", "@emotion/core"].reduce((shared, pkg) => {
+        // you can also trim the patch version off so you share at the feature version level
+        // react-16.8, not react-16.8.3, Better vendor sharing will be available as you'd share 16.8.x
+        Object.assign(shared, { [`${pkg}-${require(pkg).version}`]: pkg });
+        return shared;
+      }, {}),
     }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
