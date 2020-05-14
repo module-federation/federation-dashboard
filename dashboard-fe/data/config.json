@@ -1,0 +1,22 @@
+{
+  "dsl": {
+    "source": {
+      "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/dsl"
+    }
+  },
+  "nav": {
+    "source": {
+      "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav"
+    }
+  },
+  "search": {
+    "source": {
+      "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search"
+    }
+  },
+  "home": {
+    "source": {
+      "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home"
+    }
+  }
+}
