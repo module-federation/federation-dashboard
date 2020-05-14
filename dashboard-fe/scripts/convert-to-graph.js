@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const importData = ({ federationRemoteEntry, modules }) => {
+const importData = ({ federationRemoteEntry, modules }, config) => {
   const app = federationRemoteEntry.origins[0].loc;
   const overrides = {};
   const consumes = [];
@@ -75,7 +75,10 @@ const importData = ({ federationRemoteEntry, modules }) => {
     overrides: Object.values(overrides),
     consumes: consumes.map((con) => ({
       ...con,
-      usedIn: Array.from(con.usedIn.values()),
+      usedIn: Array.from(con.usedIn.values()).map((file) => ({
+        file,
+        url: `${config[app].source.url}/${file}`,
+      })),
     })),
     modules: Object.values(modulesObj).map((mod) => ({
       ...mod,
@@ -86,12 +89,16 @@ const importData = ({ federationRemoteEntry, modules }) => {
   return out;
 };
 
+const config = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "../data/config.json")).toString()
+);
+
 const graph = [];
 process.argv.slice(2).forEach((fname) => {
   const json = JSON.parse(
     fs.readFileSync(path.join(__dirname, "../data", fname)).toString()
   );
-  graph.push(importData(json));
+  graph.push(importData(json, config));
 });
 
 fs.writeFileSync(

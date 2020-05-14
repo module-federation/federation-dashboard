@@ -111,7 +111,10 @@
         "applicationID": "nav",
         "name": "Header",
         "usedIn": [
-          "./src/App.js"
+          {
+            "file": "./src/App.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home/./src/App.js"
+          }
         ]
       },
       {
@@ -119,7 +122,10 @@
         "applicationID": "nav",
         "name": "Footer",
         "usedIn": [
-          "./src/App.js"
+          {
+            "file": "./src/App.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home/./src/App.js"
+          }
         ]
       },
       {
@@ -127,11 +133,26 @@
         "applicationID": "search",
         "name": "SearchList",
         "usedIn": [
-          "./src/App.js",
-          "./src/Page2.js",
-          "./src/Page3.js",
-          "./src/Page4.js",
-          "./src/SubPage.js"
+          {
+            "file": "./src/App.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home/./src/App.js"
+          },
+          {
+            "file": "./src/Page2.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home/./src/Page2.js"
+          },
+          {
+            "file": "./src/Page3.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home/./src/Page3.js"
+          },
+          {
+            "file": "./src/Page4.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home/./src/Page4.js"
+          },
+          {
+            "file": "./src/SubPage.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home/./src/SubPage.js"
+          }
         ]
       },
       {
@@ -139,10 +160,22 @@
         "applicationID": "dsl",
         "name": "Button",
         "usedIn": [
-          "./src/ProductCarousel.js",
-          "./src/Page2.js",
-          "./src/Page3.js",
-          "./src/Page4.js"
+          {
+            "file": "./src/ProductCarousel.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home/./src/ProductCarousel.js"
+          },
+          {
+            "file": "./src/Page2.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home/./src/Page2.js"
+          },
+          {
+            "file": "./src/Page3.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home/./src/Page3.js"
+          },
+          {
+            "file": "./src/Page4.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home/./src/Page4.js"
+          }
         ]
       },
       {
@@ -150,7 +183,10 @@
         "applicationID": "dsl",
         "name": "Carousel",
         "usedIn": [
-          "./src/ProductCarousel.js"
+          {
+            "file": "./src/ProductCarousel.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home/./src/ProductCarousel.js"
+          }
         ]
       }
     ],
@@ -173,72 +209,6 @@
           "react"
         ],
         "file": "./src/HeroImage"
-      }
-    ]
-  },
-  {
-    "id": "search",
-    "name": "search",
-    "overrides": [
-      {
-        "id": "react",
-        "name": "react",
-        "version": "react-16.13.1",
-        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/search",
-        "applicationID": "search"
-      },
-      {
-        "id": "react-dom",
-        "name": "react-dom",
-        "version": "react-dom-16.13.1",
-        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/search",
-        "applicationID": "search"
-      }
-    ],
-    "consumes": [
-      {
-        "consumingApplicationID": "search",
-        "applicationID": "nav",
-        "name": "Header",
-        "usedIn": [
-          "./src/App.js"
-        ]
-      },
-      {
-        "consumingApplicationID": "search",
-        "applicationID": "nav",
-        "name": "Footer",
-        "usedIn": [
-          "./src/App.js"
-        ]
-      },
-      {
-        "consumingApplicationID": "search",
-        "applicationID": "home",
-        "name": "ProductCarousel",
-        "usedIn": [
-          "./src/App.js"
-        ]
-      }
-    ],
-    "modules": [
-      {
-        "id": "search:SearchList",
-        "name": "SearchList",
-        "applicationID": "search",
-        "requires": [
-          "react"
-        ],
-        "file": "./src/SearchList"
-      },
-      {
-        "id": "search:MiniSearch",
-        "name": "MiniSearch",
-        "applicationID": "search",
-        "requires": [
-          "react"
-        ],
-        "file": "./src/MiniSearch"
       }
     ]
   },
@@ -274,7 +244,10 @@
         "applicationID": "dsl",
         "name": "Button",
         "usedIn": [
-          "./src/Header.js"
+          {
+            "file": "./src/Header.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/./src/Header.js"
+          }
         ]
       },
       {
@@ -282,7 +255,10 @@
         "applicationID": "search",
         "name": "MiniSearch",
         "usedIn": [
-          "./src/Header.js"
+          {
+            "file": "./src/Header.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/./src/Header.js"
+          }
         ]
       }
     ],
@@ -306,6 +282,81 @@
           "@emotion/core"
         ],
         "file": "./src/Footer"
+      }
+    ]
+  },
+  {
+    "id": "search",
+    "name": "search",
+    "overrides": [
+      {
+        "id": "react",
+        "name": "react",
+        "version": "react-16.13.1",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/search",
+        "applicationID": "search"
+      },
+      {
+        "id": "react-dom",
+        "name": "react-dom",
+        "version": "react-dom-16.13.1",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/search",
+        "applicationID": "search"
+      }
+    ],
+    "consumes": [
+      {
+        "consumingApplicationID": "search",
+        "applicationID": "nav",
+        "name": "Header",
+        "usedIn": [
+          {
+            "file": "./src/App.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search/./src/App.js"
+          }
+        ]
+      },
+      {
+        "consumingApplicationID": "search",
+        "applicationID": "nav",
+        "name": "Footer",
+        "usedIn": [
+          {
+            "file": "./src/App.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search/./src/App.js"
+          }
+        ]
+      },
+      {
+        "consumingApplicationID": "search",
+        "applicationID": "home",
+        "name": "ProductCarousel",
+        "usedIn": [
+          {
+            "file": "./src/App.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search/./src/App.js"
+          }
+        ]
+      }
+    ],
+    "modules": [
+      {
+        "id": "search:SearchList",
+        "name": "SearchList",
+        "applicationID": "search",
+        "requires": [
+          "react"
+        ],
+        "file": "./src/SearchList"
+      },
+      {
+        "id": "search:MiniSearch",
+        "name": "MiniSearch",
+        "applicationID": "search",
+        "requires": [
+          "react"
+        ],
+        "file": "./src/MiniSearch"
       }
     ]
   }

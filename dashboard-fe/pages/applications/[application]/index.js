@@ -56,7 +56,10 @@ const GET_APPS = gql`
           name
         }
         name
-        usedIn
+        usedIn {
+          file
+          url
+        }
       }
     }
   }
@@ -80,8 +83,10 @@ const ConsumesTable = ({ consumes }) => {
               </Typography>
             </TableCell>
             <TableCell>
-              {usedIn.map((file) => (
-                <Typography variant="body2">{file}</Typography>
+              {usedIn.map(({ file, url }) => (
+                <Typography variant="body2">
+                  <a href={url}>{file}</a>
+                </Typography>
               ))}
             </TableCell>
           </TableRow>
