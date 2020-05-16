@@ -11,7 +11,8 @@
     "serve": "11.3.0",
     "webpack": "5.0.0-beta.16",
     "webpack-cli": "3.3.11",
-    "webpack-dev-server": "3.11.0"
+    "webpack-dev-server": "3.11.0",
+    "@module-federation/automatic-vendor-federation": "^1.0.1"
   },
   "scripts": {
     "start": "node --inspect ../../node_modules/webpack-dev-server/bin/webpack-dev-server.js",

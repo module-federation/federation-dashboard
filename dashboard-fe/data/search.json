@@ -5,18 +5,18 @@
     "initial": true,
     "entry": true,
     "recorded": false,
-    "size": 7111,
-    "sizes": { "javascript": 42, "runtime": 7069 },
+    "size": 7103,
+    "sizes": { "javascript": 42, "runtime": 7061 },
     "names": ["search"],
     "idHints": [],
     "files": ["remoteEntry.js"],
     "auxiliaryFiles": [],
-    "hash": "210b8e791a428e0d9360",
+    "hash": "e8ae8eaeb92bdb9ba776",
     "childrenByOrder": {},
     "id": 464,
     "siblings": [],
     "parents": [],
-    "children": [315, 342, 836],
+    "children": [210, 259, 489],
     "modules": [
       {
         "identifier": "container entry [[\"SearchList\",\"./src/SearchList\"],[\"MiniSearch\",\"./src/MiniSearch\"]]",
@@ -251,8 +251,8 @@
         "preOrderIndex": null,
         "index2": null,
         "postOrderIndex": null,
-        "size": 812,
-        "sizes": { "runtime": 812 },
+        "size": 804,
+        "sizes": { "runtime": 804 },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -552,8 +552,8 @@
         "preOrderIndex": null,
         "index2": null,
         "postOrderIndex": null,
-        "size": 812,
-        "sizes": { "runtime": 812 },
+        "size": 804,
+        "sizes": { "runtime": 804 },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -629,7 +629,7 @@
       }
     ]
   },
-  "buildHash": "4ab125c856b01f18ee4c",
+  "buildHash": "b9cf22d579d01f4a6b06",
   "modules": [
     {
       "identifier": "container entry [[\"SearchList\",\"./src/SearchList\"],[\"MiniSearch\",\"./src/MiniSearch\"]]",
@@ -690,8 +690,8 @@
       "depth": 0
     },
     {
-      "identifier": "overridable|react-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src|react",
-      "name": "overridable react-16.13.1 -> react",
+      "identifier": "overridable|react|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src|react",
+      "name": "overridable react -> react",
       "index": 3,
       "preOrderIndex": 3,
       "index2": 3,
@@ -701,7 +701,7 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/SearchList.js",
+      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/SearchList.js",
       "issuerName": "./src/SearchList.js",
       "issuerPath": [
         {
@@ -710,255 +710,255 @@
           "id": 228
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/SearchList.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/SearchList.js",
           "name": "./src/SearchList.js",
-          "id": 836
+          "id": 259
         }
       ],
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 342,
-      "issuerId": 836,
-      "chunks": [179, 342],
+      "id": 210,
+      "issuerId": 259,
+      "chunks": [179, 210],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
           "module": "./src/MiniSearch.js",
           "moduleName": "./src/MiniSearch.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
           "resolvedModule": "./src/MiniSearch.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "1:0-26",
-          "moduleId": 315,
-          "resolvedModuleId": 315
+          "moduleId": 489,
+          "resolvedModuleId": 489
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
           "module": "./src/MiniSearch.js",
           "moduleName": "./src/MiniSearch.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
           "resolvedModule": "./src/MiniSearch.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "8:38-57",
-          "moduleId": 315,
-          "resolvedModuleId": 315
+          "moduleId": 489,
+          "resolvedModuleId": 489
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/SearchList.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/SearchList.js",
           "module": "./src/SearchList.js",
           "moduleName": "./src/SearchList.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/SearchList.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/SearchList.js",
           "resolvedModule": "./src/SearchList.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "1:0-26",
-          "moduleId": 836,
-          "resolvedModuleId": 836
+          "moduleId": 259,
+          "resolvedModuleId": 259
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/SearchList.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/SearchList.js",
           "module": "./src/SearchList.js",
           "moduleName": "./src/SearchList.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/SearchList.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/SearchList.js",
           "resolvedModule": "./src/SearchList.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "8:38-57",
-          "moduleId": 836,
-          "resolvedModuleId": 836
+          "moduleId": 259,
+          "resolvedModuleId": 259
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "2:0-26",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "5:24-34",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "7:31-50",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "7:77-96",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "7:125-144",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "7:189-208",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "7:244-263",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "7:296-315",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "7:316-330",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "9:16-35",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "9:74-93",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
           "resolvedModule": "./src/index.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "2:0-26",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
           "resolvedModule": "./src/index.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "4:30-49",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         }
       ],
@@ -970,8 +970,8 @@
       "depth": 1
     },
     {
-      "identifier": "overridable|react-dom-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src|react-dom",
-      "name": "overridable react-dom-16.13.1 -> react-dom",
+      "identifier": "overridable|react-dom|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src|react-dom",
+      "name": "overridable react-dom -> react-dom",
       "index": 11,
       "preOrderIndex": 11,
       "index2": 15,
@@ -981,11 +981,11 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
+      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
       "issuerName": "./src/index.js",
       "issuerPath": [
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
           "name": "./src/index.js",
           "id": null
         }
@@ -993,37 +993,37 @@
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 776,
+      "id": 614,
       "issuerId": null,
       "chunks": [179],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
           "resolvedModule": "./src/index.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react-dom",
           "loc": "3:0-33",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
           "resolvedModule": "./src/index.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react-dom",
           "loc": "4:0-15",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         }
       ],
@@ -1035,7 +1035,7 @@
       "depth": 1
     },
     {
-      "identifier": "remote webpack/container/reference/nav Header 9b7844cc00bb90c750e95a8c3c9ed01e",
+      "identifier": "remote webpack/container/reference/nav Header a46c3ece801ce2a74f55f91f7ab6d9b0",
       "name": "remote nav/Header",
       "index": 7,
       "preOrderIndex": 7,
@@ -1046,16 +1046,16 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
       "issuerName": "./src/App.js",
       "issuerPath": [
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
           "name": "./src/index.js",
           "id": null
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "name": "./src/App.js",
           "id": null
         }
@@ -1063,37 +1063,37 @@
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 212,
+      "id": 385,
       "issuerId": null,
       "chunks": [179],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "nav/Header",
           "loc": "3:0-32",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "nav/Header",
           "loc": "7:97-103",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         }
       ],
@@ -1105,7 +1105,7 @@
       "depth": 2
     },
     {
-      "identifier": "remote webpack/container/reference/nav Footer 9b7844cc00bb90c750e95a8c3c9ed01e",
+      "identifier": "remote webpack/container/reference/nav Footer a46c3ece801ce2a74f55f91f7ab6d9b0",
       "name": "remote nav/Footer",
       "index": 10,
       "preOrderIndex": 10,
@@ -1116,16 +1116,16 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
       "issuerName": "./src/App.js",
       "issuerPath": [
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
           "name": "./src/index.js",
           "id": null
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "name": "./src/App.js",
           "id": null
         }
@@ -1133,37 +1133,37 @@
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 32,
+      "id": 912,
       "issuerId": null,
       "chunks": [179],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "nav/Footer",
           "loc": "4:0-32",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "nav/Footer",
           "loc": "9:94-100",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         }
       ],
@@ -1175,7 +1175,7 @@
       "depth": 2
     },
     {
-      "identifier": "remote webpack/container/reference/home ProductCarousel 9b7844cc00bb90c750e95a8c3c9ed01e",
+      "identifier": "remote webpack/container/reference/home ProductCarousel a46c3ece801ce2a74f55f91f7ab6d9b0",
       "name": "remote home/ProductCarousel",
       "index": 18,
       "preOrderIndex": 18,
@@ -1186,16 +1186,16 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
       "issuerName": "./src/App.js",
       "issuerPath": [
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
           "name": "./src/index.js",
           "id": null
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "name": "./src/App.js",
           "id": null
         }
@@ -1203,23 +1203,23 @@
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 802,
+      "id": 461,
       "issuerId": null,
-      "chunks": [802],
+      "chunks": [461],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "import()",
           "active": true,
           "explanation": "",
           "userRequest": "home/ProductCarousel",
           "loc": "5:41-71",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         }
       ],
@@ -1231,8 +1231,8 @@
       "depth": 2
     },
     {
-      "identifier": "remote overrides 9b7844cc00bb90c750e95a8c3c9ed01e",
-      "name": "remote overrides react-16.13.1 = react, react-dom-16.13.1 = react-dom",
+      "identifier": "remote overrides a46c3ece801ce2a74f55f91f7ab6d9b0",
+      "name": "remote overrides react = react, react-dom = react-dom",
       "index": 9,
       "preOrderIndex": 9,
       "index2": 6,
@@ -1242,71 +1242,71 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "remote webpack/container/reference/home ProductCarousel 9b7844cc00bb90c750e95a8c3c9ed01e",
+      "issuer": "remote webpack/container/reference/home ProductCarousel a46c3ece801ce2a74f55f91f7ab6d9b0",
       "issuerName": "remote home/ProductCarousel",
       "issuerPath": [
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
           "name": "./src/index.js",
           "id": null
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "name": "./src/App.js",
           "id": null
         },
         {
-          "identifier": "remote webpack/container/reference/home ProductCarousel 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "identifier": "remote webpack/container/reference/home ProductCarousel a46c3ece801ce2a74f55f91f7ab6d9b0",
           "name": "remote home/ProductCarousel",
-          "id": 802
+          "id": 461
         }
       ],
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 16,
-      "issuerId": 802,
+      "id": 9,
+      "issuerId": 461,
       "chunks": [179],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "remote webpack/container/reference/home ProductCarousel 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "moduleIdentifier": "remote webpack/container/reference/home ProductCarousel a46c3ece801ce2a74f55f91f7ab6d9b0",
           "module": "remote home/ProductCarousel",
           "moduleName": "remote home/ProductCarousel",
-          "resolvedModuleIdentifier": "remote webpack/container/reference/home ProductCarousel 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "resolvedModuleIdentifier": "remote webpack/container/reference/home ProductCarousel a46c3ece801ce2a74f55f91f7ab6d9b0",
           "resolvedModule": "remote home/ProductCarousel",
           "type": "remote overrides",
           "active": true,
           "explanation": "",
           "userRequest": null,
-          "moduleId": 802,
-          "resolvedModuleId": 802
+          "moduleId": 461,
+          "resolvedModuleId": 461
         },
         {
-          "moduleIdentifier": "remote webpack/container/reference/nav Footer 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "moduleIdentifier": "remote webpack/container/reference/nav Footer a46c3ece801ce2a74f55f91f7ab6d9b0",
           "module": "remote nav/Footer",
           "moduleName": "remote nav/Footer",
-          "resolvedModuleIdentifier": "remote webpack/container/reference/nav Footer 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "resolvedModuleIdentifier": "remote webpack/container/reference/nav Footer a46c3ece801ce2a74f55f91f7ab6d9b0",
           "resolvedModule": "remote nav/Footer",
           "type": "remote overrides",
           "active": true,
           "explanation": "",
           "userRequest": null,
-          "moduleId": 32,
-          "resolvedModuleId": 32
+          "moduleId": 912,
+          "resolvedModuleId": 912
         },
         {
-          "moduleIdentifier": "remote webpack/container/reference/nav Header 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "moduleIdentifier": "remote webpack/container/reference/nav Header a46c3ece801ce2a74f55f91f7ab6d9b0",
           "module": "remote nav/Header",
           "moduleName": "remote nav/Header",
-          "resolvedModuleIdentifier": "remote webpack/container/reference/nav Header 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "resolvedModuleIdentifier": "remote webpack/container/reference/nav Header a46c3ece801ce2a74f55f91f7ab6d9b0",
           "resolvedModule": "remote nav/Header",
           "type": "remote overrides",
           "active": true,
           "explanation": "",
           "userRequest": null,
-          "moduleId": 212,
-          "resolvedModuleId": 212
+          "moduleId": 385,
+          "resolvedModuleId": 385
         }
       ],
       "usedExports": true,
@@ -1317,8 +1317,8 @@
       "depth": 3
     },
     {
-      "identifier": "overridable|react-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/node_modules/react-dom/cjs|react",
-      "name": "overridable react-16.13.1 -> react",
+      "identifier": "overridable|react|/Volumes/zack_dev/OSS/federation-dashboard/node_modules/react-dom/cjs|react",
+      "name": "overridable react -> react",
       "index": 14,
       "preOrderIndex": 14,
       "index2": 10,
@@ -1332,14 +1332,14 @@
       "issuerName": "../../node_modules/react-dom/cjs/react-dom.production.min.js",
       "issuerPath": [
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
           "name": "./src/index.js",
           "id": null
         },
         {
-          "identifier": "overridable|react-dom-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src|react-dom",
-          "name": "overridable react-dom-16.13.1 -> react-dom",
-          "id": 776
+          "identifier": "overridable|react-dom|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src|react-dom",
+          "name": "overridable react-dom -> react-dom",
+          "id": 614
         },
         {
           "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/react-dom/index.js",
@@ -1355,7 +1355,7 @@
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 33,
+      "id": 961,
       "issuerId": 967,
       "chunks": [179],
       "assets": [],
@@ -1383,8 +1383,8 @@
       "depth": 4
     },
     {
-      "identifier": "overridable|react-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search|react",
-      "name": "overridable react-16.13.1 -> react",
+      "identifier": "overridable|react|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search|react",
+      "name": "overridable react -> react",
       "index": 20,
       "preOrderIndex": 20,
       "index2": 20,
@@ -1394,50 +1394,50 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "remote overrides 9b7844cc00bb90c750e95a8c3c9ed01e",
-      "issuerName": "remote overrides react-16.13.1 = react, react-dom-16.13.1 = react-dom",
+      "issuer": "remote overrides a46c3ece801ce2a74f55f91f7ab6d9b0",
+      "issuerName": "remote overrides react = react, react-dom = react-dom",
       "issuerPath": [
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
           "name": "./src/index.js",
           "id": null
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "name": "./src/App.js",
           "id": null
         },
         {
-          "identifier": "remote webpack/container/reference/home ProductCarousel 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "identifier": "remote webpack/container/reference/home ProductCarousel a46c3ece801ce2a74f55f91f7ab6d9b0",
           "name": "remote home/ProductCarousel",
-          "id": 802
+          "id": 461
         },
         {
-          "identifier": "remote overrides 9b7844cc00bb90c750e95a8c3c9ed01e",
-          "name": "remote overrides react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-          "id": 16
+          "identifier": "remote overrides a46c3ece801ce2a74f55f91f7ab6d9b0",
+          "name": "remote overrides react = react, react-dom = react-dom",
+          "id": 9
         }
       ],
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 643,
-      "issuerId": 16,
-      "chunks": [643],
+      "id": 391,
+      "issuerId": 9,
+      "chunks": [391],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "remote overrides 9b7844cc00bb90c750e95a8c3c9ed01e",
-          "module": "remote overrides react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-          "moduleName": "remote overrides react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-          "resolvedModuleIdentifier": "remote overrides 9b7844cc00bb90c750e95a8c3c9ed01e",
-          "resolvedModule": "remote overrides react-16.13.1 = react, react-dom-16.13.1 = react-dom",
+          "moduleIdentifier": "remote overrides a46c3ece801ce2a74f55f91f7ab6d9b0",
+          "module": "remote overrides react = react, react-dom = react-dom",
+          "moduleName": "remote overrides react = react, react-dom = react-dom",
+          "resolvedModuleIdentifier": "remote overrides a46c3ece801ce2a74f55f91f7ab6d9b0",
+          "resolvedModule": "remote overrides react = react, react-dom = react-dom",
           "type": "remote override",
           "active": true,
           "explanation": "",
           "userRequest": "react",
-          "moduleId": 16,
-          "resolvedModuleId": 16
+          "moduleId": 9,
+          "resolvedModuleId": 9
         }
       ],
       "usedExports": true,
@@ -1448,8 +1448,8 @@
       "depth": 4
     },
     {
-      "identifier": "overridable|react-dom-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search|react-dom",
-      "name": "overridable react-dom-16.13.1 -> react-dom",
+      "identifier": "overridable|react-dom|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search|react-dom",
+      "name": "overridable react-dom -> react-dom",
       "index": 21,
       "preOrderIndex": 21,
       "index2": 21,
@@ -1459,50 +1459,50 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "remote overrides 9b7844cc00bb90c750e95a8c3c9ed01e",
-      "issuerName": "remote overrides react-16.13.1 = react, react-dom-16.13.1 = react-dom",
+      "issuer": "remote overrides a46c3ece801ce2a74f55f91f7ab6d9b0",
+      "issuerName": "remote overrides react = react, react-dom = react-dom",
       "issuerPath": [
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/index.js",
           "name": "./src/index.js",
           "id": null
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search/src/App.js",
           "name": "./src/App.js",
           "id": null
         },
         {
-          "identifier": "remote webpack/container/reference/home ProductCarousel 9b7844cc00bb90c750e95a8c3c9ed01e",
+          "identifier": "remote webpack/container/reference/home ProductCarousel a46c3ece801ce2a74f55f91f7ab6d9b0",
           "name": "remote home/ProductCarousel",
-          "id": 802
+          "id": 461
         },
         {
-          "identifier": "remote overrides 9b7844cc00bb90c750e95a8c3c9ed01e",
-          "name": "remote overrides react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-          "id": 16
+          "identifier": "remote overrides a46c3ece801ce2a74f55f91f7ab6d9b0",
+          "name": "remote overrides react = react, react-dom = react-dom",
+          "id": 9
         }
       ],
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 607,
-      "issuerId": 16,
-      "chunks": [607],
+      "id": 799,
+      "issuerId": 9,
+      "chunks": [799],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "remote overrides 9b7844cc00bb90c750e95a8c3c9ed01e",
-          "module": "remote overrides react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-          "moduleName": "remote overrides react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-          "resolvedModuleIdentifier": "remote overrides 9b7844cc00bb90c750e95a8c3c9ed01e",
-          "resolvedModule": "remote overrides react-16.13.1 = react, react-dom-16.13.1 = react-dom",
+          "moduleIdentifier": "remote overrides a46c3ece801ce2a74f55f91f7ab6d9b0",
+          "module": "remote overrides react = react, react-dom = react-dom",
+          "moduleName": "remote overrides react = react, react-dom = react-dom",
+          "resolvedModuleIdentifier": "remote overrides a46c3ece801ce2a74f55f91f7ab6d9b0",
+          "resolvedModule": "remote overrides react = react, react-dom = react-dom",
           "type": "remote override",
           "active": true,
           "explanation": "",
           "userRequest": "react-dom",
-          "moduleId": 16,
-          "resolvedModuleId": 16
+          "moduleId": 9,
+          "resolvedModuleId": 9
         }
       ],
       "usedExports": true,
@@ -1514,34 +1514,48 @@
     }
   ],
   "chunkDependencies": {
-    "315": [
+    "210": [
       {
-        "id": 342,
-        "ids": [342],
+        "id": 210,
+        "ids": [210],
         "debugId": 1011,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "b85b9f21e358867f56afe2dd1641a92a",
-        "contentHash": { "javascript": "69f3f344bcfea79968a9" },
-        "renderedHash": "b85b9f21e358867f56af",
+        "hash": "3a05fbf0e0b7b5729553da5b008878fb",
+        "contentHash": { "javascript": "4b310956b726e832117d" },
+        "renderedHash": "3a05fbf0e0b7b5729553",
         "chunkReason": "split chunk (cache group: default)",
         "extraAsync": false
       },
       {
-        "id": 315,
-        "ids": [315],
+        "id": 259,
+        "ids": [259],
+        "debugId": 1006,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": { "0": "259.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "92200e5d75ec30d35e534fe7cee31a45",
+        "contentHash": { "javascript": "96052189d03dfdbae0ae" },
+        "renderedHash": "92200e5d75ec30d35e53",
+        "extraAsync": false
+      },
+      {
+        "id": 489,
+        "ids": [489],
         "debugId": 1007,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "315.js" },
+        "files": { "0": "489.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "21693371a5beff0f3386af0611ec3de7",
-        "contentHash": { "javascript": "9b3d9c1e5f4a3d354815" },
-        "renderedHash": "21693371a5beff0f3386",
+        "hash": "f95169ae35e6333f7258a9589829add2",
+        "contentHash": { "javascript": "b2ce98ca2f4fd0a9fe77" },
+        "renderedHash": "f95169ae35e6333f7258",
         "extraAsync": false
       },
       {
@@ -1559,48 +1573,34 @@
         "extraAsync": false
       }
     ],
-    "342": [
+    "259": [
       {
-        "id": 342,
-        "ids": [342],
+        "id": 210,
+        "ids": [210],
         "debugId": 1011,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "b85b9f21e358867f56afe2dd1641a92a",
-        "contentHash": { "javascript": "69f3f344bcfea79968a9" },
-        "renderedHash": "b85b9f21e358867f56af",
+        "hash": "3a05fbf0e0b7b5729553da5b008878fb",
+        "contentHash": { "javascript": "4b310956b726e832117d" },
+        "renderedHash": "3a05fbf0e0b7b5729553",
         "chunkReason": "split chunk (cache group: default)",
         "extraAsync": false
       },
       {
-        "id": 836,
-        "ids": [836],
+        "id": 259,
+        "ids": [259],
         "debugId": 1006,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "836.js" },
+        "files": { "0": "259.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "15f9a804283519a99815806547b64304",
-        "contentHash": { "javascript": "b72a6eef009732914fc2" },
-        "renderedHash": "15f9a804283519a99815",
-        "extraAsync": false
-      },
-      {
-        "id": 315,
-        "ids": [315],
-        "debugId": 1007,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "315.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "21693371a5beff0f3386af0611ec3de7",
-        "contentHash": { "javascript": "9b3d9c1e5f4a3d354815" },
-        "renderedHash": "21693371a5beff0f3386",
+        "hash": "92200e5d75ec30d35e534fe7cee31a45",
+        "contentHash": { "javascript": "96052189d03dfdbae0ae" },
+        "renderedHash": "92200e5d75ec30d35e53",
         "extraAsync": false
       },
       {
@@ -1630,52 +1630,97 @@
         "files": { "0": "remoteEntry.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "210b8e791a428e0d93606388349e8fe5",
-        "contentHash": { "javascript": "93227a3593e8cd088bcf" },
-        "renderedHash": "210b8e791a428e0d9360",
+        "hash": "e8ae8eaeb92bdb9ba776e8bb0a3712fd",
+        "contentHash": { "javascript": "8a3f04f5137c0f736346" },
+        "renderedHash": "e8ae8eaeb92bdb9ba776",
         "extraAsync": false
       },
       {
-        "id": 342,
-        "ids": [342],
+        "id": 210,
+        "ids": [210],
         "debugId": 1011,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "b85b9f21e358867f56afe2dd1641a92a",
-        "contentHash": { "javascript": "69f3f344bcfea79968a9" },
-        "renderedHash": "b85b9f21e358867f56af",
+        "hash": "3a05fbf0e0b7b5729553da5b008878fb",
+        "contentHash": { "javascript": "4b310956b726e832117d" },
+        "renderedHash": "3a05fbf0e0b7b5729553",
         "chunkReason": "split chunk (cache group: default)",
         "extraAsync": false
       },
       {
-        "id": 836,
-        "ids": [836],
+        "id": 259,
+        "ids": [259],
         "debugId": 1006,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "836.js" },
+        "files": { "0": "259.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "15f9a804283519a99815806547b64304",
-        "contentHash": { "javascript": "b72a6eef009732914fc2" },
-        "renderedHash": "15f9a804283519a99815",
+        "hash": "92200e5d75ec30d35e534fe7cee31a45",
+        "contentHash": { "javascript": "96052189d03dfdbae0ae" },
+        "renderedHash": "92200e5d75ec30d35e53",
         "extraAsync": false
       },
       {
-        "id": 315,
-        "ids": [315],
+        "id": 489,
+        "ids": [489],
         "debugId": 1007,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "315.js" },
+        "files": { "0": "489.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "21693371a5beff0f3386af0611ec3de7",
-        "contentHash": { "javascript": "9b3d9c1e5f4a3d354815" },
-        "renderedHash": "21693371a5beff0f3386",
+        "hash": "f95169ae35e6333f7258a9589829add2",
+        "contentHash": { "javascript": "b2ce98ca2f4fd0a9fe77" },
+        "renderedHash": "f95169ae35e6333f7258",
+        "extraAsync": false
+      },
+      {
+        "id": 784,
+        "ids": [784],
+        "debugId": 1010,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": { "0": "784.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "d710d0130e480e8ca2eea200e0543675",
+        "contentHash": { "javascript": "ba2403f87e1fa59c0e61" },
+        "renderedHash": "d710d0130e480e8ca2ee",
+        "extraAsync": false
+      }
+    ],
+    "489": [
+      {
+        "id": 210,
+        "ids": [210],
+        "debugId": 1011,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "3a05fbf0e0b7b5729553da5b008878fb",
+        "contentHash": { "javascript": "4b310956b726e832117d" },
+        "renderedHash": "3a05fbf0e0b7b5729553",
+        "chunkReason": "split chunk (cache group: default)",
+        "extraAsync": false
+      },
+      {
+        "id": 489,
+        "ids": [489],
+        "debugId": 1007,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": { "0": "489.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "f95169ae35e6333f7258a9589829add2",
+        "contentHash": { "javascript": "b2ce98ca2f4fd0a9fe77" },
+        "renderedHash": "f95169ae35e6333f7258",
         "extraAsync": false
       },
       {
@@ -1694,51 +1739,6 @@
       }
     ],
     "784": [
-      {
-        "id": 784,
-        "ids": [784],
-        "debugId": 1010,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "784.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "d710d0130e480e8ca2eea200e0543675",
-        "contentHash": { "javascript": "ba2403f87e1fa59c0e61" },
-        "renderedHash": "d710d0130e480e8ca2ee",
-        "extraAsync": false
-      }
-    ],
-    "836": [
-      {
-        "id": 342,
-        "ids": [342],
-        "debugId": 1011,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": {},
-        "auxiliaryFiles": {},
-        "rendered": false,
-        "hash": "b85b9f21e358867f56afe2dd1641a92a",
-        "contentHash": { "javascript": "69f3f344bcfea79968a9" },
-        "renderedHash": "b85b9f21e358867f56af",
-        "chunkReason": "split chunk (cache group: default)",
-        "extraAsync": false
-      },
-      {
-        "id": 836,
-        "ids": [836],
-        "debugId": 1006,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "836.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "15f9a804283519a99815806547b64304",
-        "contentHash": { "javascript": "b72a6eef009732914fc2" },
-        "renderedHash": "15f9a804283519a99815",
-        "extraAsync": false
-      },
       {
         "id": 784,
         "ids": [784],

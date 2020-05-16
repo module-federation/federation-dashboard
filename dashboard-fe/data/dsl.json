@@ -5,18 +5,21 @@
     "initial": true,
     "entry": true,
     "recorded": false,
-    "size": 6354,
-    "sizes": { "javascript": 42, "runtime": 6312 },
+    "size": 6324,
+    "sizes": {
+      "javascript": 42,
+      "runtime": 6282
+    },
     "names": ["dsl"],
     "idHints": [],
     "files": ["remoteEntry.js"],
     "auxiliaryFiles": [],
-    "hash": "deb8c542fe50779770a4",
+    "hash": "f5825cc1bbf02c621212",
     "childrenByOrder": {},
     "id": 365,
     "siblings": [],
     "parents": [],
-    "children": [154, 292, 361, 565, 722, 921],
+    "children": [591, 602, 627, 757, 786, 863],
     "modules": [
       {
         "identifier": "container entry [[\"Button\",\"./src/Button\"],[\"Carousel\",\"./src/Carousel\"],[\"Dialog\",\"./src/Dialog\"],[\"Slider\",\"./src/Slider\"],[\"TextField\",\"./src/TextField\"]]",
@@ -26,7 +29,9 @@
         "index2": 31,
         "postOrderIndex": 31,
         "size": 42,
-        "sizes": { "javascript": 42 },
+        "sizes": {
+          "javascript": 42
+        },
         "built": true,
         "optional": false,
         "runtime": false,
@@ -84,7 +89,9 @@
         "index2": null,
         "postOrderIndex": null,
         "size": 263,
-        "sizes": { "runtime": 263 },
+        "sizes": {
+          "runtime": 263
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -108,7 +115,9 @@
         "index2": null,
         "postOrderIndex": null,
         "size": 308,
-        "sizes": { "runtime": 308 },
+        "sizes": {
+          "runtime": 308
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -132,7 +141,9 @@
         "index2": null,
         "postOrderIndex": null,
         "size": 326,
-        "sizes": { "runtime": 326 },
+        "sizes": {
+          "runtime": 326
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -156,7 +167,9 @@
         "index2": null,
         "postOrderIndex": null,
         "size": 167,
-        "sizes": { "runtime": 167 },
+        "sizes": {
+          "runtime": 167
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -180,7 +193,9 @@
         "index2": null,
         "postOrderIndex": null,
         "size": 86,
-        "sizes": { "runtime": 86 },
+        "sizes": {
+          "runtime": 86
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -203,8 +218,10 @@
         "preOrderIndex": null,
         "index2": null,
         "postOrderIndex": null,
-        "size": 3701,
-        "sizes": { "runtime": 3701 },
+        "size": 3702,
+        "sizes": {
+          "runtime": 3702
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -228,7 +245,9 @@
         "index2": null,
         "postOrderIndex": null,
         "size": 274,
-        "sizes": { "runtime": 274 },
+        "sizes": {
+          "runtime": 274
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -251,8 +270,10 @@
         "preOrderIndex": null,
         "index2": null,
         "postOrderIndex": null,
-        "size": 1138,
-        "sizes": { "runtime": 1138 },
+        "size": 1107,
+        "sizes": {
+          "runtime": 1107
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -276,7 +297,9 @@
         "index2": null,
         "postOrderIndex": null,
         "size": 49,
-        "sizes": { "runtime": 49 },
+        "sizes": {
+          "runtime": 49
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -303,7 +326,9 @@
         "index2": 31,
         "postOrderIndex": 31,
         "size": 42,
-        "sizes": { "javascript": 42 },
+        "sizes": {
+          "javascript": 42
+        },
         "built": true,
         "optional": false,
         "runtime": false,
@@ -361,7 +386,9 @@
         "index2": null,
         "postOrderIndex": null,
         "size": 263,
-        "sizes": { "runtime": 263 },
+        "sizes": {
+          "runtime": 263
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -385,7 +412,9 @@
         "index2": null,
         "postOrderIndex": null,
         "size": 308,
-        "sizes": { "runtime": 308 },
+        "sizes": {
+          "runtime": 308
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -409,7 +438,9 @@
         "index2": null,
         "postOrderIndex": null,
         "size": 326,
-        "sizes": { "runtime": 326 },
+        "sizes": {
+          "runtime": 326
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -433,7 +464,9 @@
         "index2": null,
         "postOrderIndex": null,
         "size": 167,
-        "sizes": { "runtime": 167 },
+        "sizes": {
+          "runtime": 167
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -457,7 +490,9 @@
         "index2": null,
         "postOrderIndex": null,
         "size": 86,
-        "sizes": { "runtime": 86 },
+        "sizes": {
+          "runtime": 86
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -480,8 +515,10 @@
         "preOrderIndex": null,
         "index2": null,
         "postOrderIndex": null,
-        "size": 3701,
-        "sizes": { "runtime": 3701 },
+        "size": 3702,
+        "sizes": {
+          "runtime": 3702
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -505,7 +542,9 @@
         "index2": null,
         "postOrderIndex": null,
         "size": 274,
-        "sizes": { "runtime": 274 },
+        "sizes": {
+          "runtime": 274
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -528,8 +567,10 @@
         "preOrderIndex": null,
         "index2": null,
         "postOrderIndex": null,
-        "size": 1138,
-        "sizes": { "runtime": 1138 },
+        "size": 1107,
+        "sizes": {
+          "runtime": 1107
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -553,7 +594,9 @@
         "index2": null,
         "postOrderIndex": null,
         "size": 49,
-        "sizes": { "runtime": 49 },
+        "sizes": {
+          "runtime": 49
+        },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -573,10 +616,15 @@
     "filteredRootModules": 0,
     "nonRootModules": 0,
     "origins": [
-      { "module": "", "moduleIdentifier": "", "moduleName": "", "loc": "dsl" }
+      {
+        "module": "",
+        "moduleIdentifier": "",
+        "moduleName": "",
+        "loc": "dsl"
+      }
     ]
   },
-  "buildHash": "fe97d005aa2bbacc6ecb",
+  "buildHash": "8368f3667bbb22a810bd",
   "modules": [
     {
       "identifier": "container entry [[\"Button\",\"./src/Button\"],[\"Carousel\",\"./src/Carousel\"],[\"Dialog\",\"./src/Dialog\"],[\"Slider\",\"./src/Slider\"],[\"TextField\",\"./src/TextField\"]]",
@@ -586,7 +634,9 @@
       "index2": 31,
       "postOrderIndex": 31,
       "size": 42,
-      "sizes": { "javascript": 42 },
+      "sizes": {
+        "javascript": 42
+      },
       "built": true,
       "optional": false,
       "runtime": false,
@@ -637,19 +687,21 @@
       "depth": 0
     },
     {
-      "identifier": "overridable|react-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src|react",
-      "name": "overridable react-16.13.1 -> react",
+      "identifier": "overridable|react|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src|react",
+      "name": "overridable react -> react",
       "index": 3,
       "preOrderIndex": 3,
       "index2": 3,
       "postOrderIndex": 3,
       "size": 42,
-      "sizes": { "overridable": 42 },
+      "sizes": {
+        "overridable": 42
+      },
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
-      "issuerName": "./src/Button.js",
+      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
+      "issuerName": "./src/TextField.js",
       "issuerPath": [
         {
           "identifier": "container entry [[\"Button\",\"./src/Button\"],[\"Carousel\",\"./src/Carousel\"],[\"Dialog\",\"./src/Dialog\"],[\"Slider\",\"./src/Slider\"],[\"TextField\",\"./src/TextField\"]]",
@@ -657,283 +709,283 @@
           "id": 338
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
-          "name": "./src/Button.js",
-          "id": 921
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
+          "name": "./src/TextField.js",
+          "id": 602
         }
       ],
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 342,
-      "issuerId": 921,
-      "chunks": [179, 361],
+      "id": 210,
+      "issuerId": 602,
+      "chunks": [179, 591],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
           "module": "./src/Button.js",
           "moduleName": "./src/Button.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
           "resolvedModule": "./src/Button.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "1:0-26",
-          "moduleId": 921,
-          "resolvedModuleId": 921
+          "moduleId": 757,
+          "resolvedModuleId": 757
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
           "module": "./src/Button.js",
           "moduleName": "./src/Button.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
           "resolvedModule": "./src/Button.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "9:34-53",
-          "moduleId": 921,
-          "resolvedModuleId": 921
+          "moduleId": 757,
+          "resolvedModuleId": 757
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Carousel.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Carousel.js",
           "module": "./src/Carousel.js",
           "moduleName": "./src/Carousel.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Carousel.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Carousel.js",
           "resolvedModule": "./src/Carousel.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "1:0-26",
-          "moduleId": 292,
-          "resolvedModuleId": 292
+          "moduleId": 627,
+          "resolvedModuleId": 627
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Carousel.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Carousel.js",
           "module": "./src/Carousel.js",
           "moduleName": "./src/Carousel.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Carousel.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Carousel.js",
           "resolvedModule": "./src/Carousel.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "9:36-55",
-          "moduleId": 292,
-          "resolvedModuleId": 292
+          "moduleId": 627,
+          "resolvedModuleId": 627
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Dialog.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Dialog.js",
           "module": "./src/Dialog.js",
           "moduleName": "./src/Dialog.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Dialog.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Dialog.js",
           "resolvedModule": "./src/Dialog.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "1:0-26",
-          "moduleId": 154,
-          "resolvedModuleId": 154
+          "moduleId": 863,
+          "resolvedModuleId": 863
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Dialog.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Dialog.js",
           "module": "./src/Dialog.js",
           "moduleName": "./src/Dialog.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Dialog.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Dialog.js",
           "resolvedModule": "./src/Dialog.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "9:34-53",
-          "moduleId": 154,
-          "resolvedModuleId": 154
+          "moduleId": 863,
+          "resolvedModuleId": 863
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Slider.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Slider.js",
           "module": "./src/Slider.js",
           "moduleName": "./src/Slider.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Slider.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Slider.js",
           "resolvedModule": "./src/Slider.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "1:0-26",
-          "moduleId": 722,
-          "resolvedModuleId": 722
+          "moduleId": 786,
+          "resolvedModuleId": 786
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Slider.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Slider.js",
           "module": "./src/Slider.js",
           "moduleName": "./src/Slider.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Slider.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Slider.js",
           "resolvedModule": "./src/Slider.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "9:34-53",
-          "moduleId": 722,
-          "resolvedModuleId": 722
+          "moduleId": 786,
+          "resolvedModuleId": 786
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
           "module": "./src/TextField.js",
           "moduleName": "./src/TextField.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
           "resolvedModule": "./src/TextField.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "1:0-26",
-          "moduleId": 565,
-          "resolvedModuleId": 565
+          "moduleId": 602,
+          "resolvedModuleId": 602
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
           "module": "./src/TextField.js",
           "moduleName": "./src/TextField.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
           "resolvedModule": "./src/TextField.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "9:37-56",
-          "moduleId": 565,
-          "resolvedModuleId": 565
+          "moduleId": 602,
+          "resolvedModuleId": 602
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "6:0-26",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "8:31-50",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "8:77-96",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "8:125-144",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "8:175-194",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "8:223-242",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "8:271-290",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js",
           "resolvedModule": "./src/index.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "2:0-26",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js",
           "resolvedModule": "./src/index.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "4:30-49",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         }
       ],
@@ -945,22 +997,24 @@
       "depth": 1
     },
     {
-      "identifier": "overridable|react-dom-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src|react-dom",
-      "name": "overridable react-dom-16.13.1 -> react-dom",
+      "identifier": "overridable|react-dom|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src|react-dom",
+      "name": "overridable react-dom -> react-dom",
       "index": 25,
       "preOrderIndex": 25,
       "index2": 29,
       "postOrderIndex": 29,
       "size": 42,
-      "sizes": { "overridable": 42 },
+      "sizes": {
+        "overridable": 42
+      },
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js",
+      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js",
       "issuerName": "./src/index.js",
       "issuerPath": [
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js",
           "name": "./src/index.js",
           "id": null
         }
@@ -968,37 +1022,37 @@
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 776,
+      "id": 614,
       "issuerId": null,
       "chunks": [179],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js",
           "resolvedModule": "./src/index.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react-dom",
           "loc": "3:0-33",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js",
           "resolvedModule": "./src/index.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react-dom",
           "loc": "4:0-15",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         }
       ],
@@ -1010,19 +1064,21 @@
       "depth": 1
     },
     {
-      "identifier": "overridable|@emotion/core-undefined|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src|@emotion/core",
-      "name": "overridable @emotion/core-undefined -> @emotion/core",
+      "identifier": "overridable|@emotion/core|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src|@emotion/core",
+      "name": "overridable @emotion/core -> @emotion/core",
       "index": 7,
       "preOrderIndex": 7,
       "index2": 17,
       "postOrderIndex": 17,
       "size": 42,
-      "sizes": { "overridable": 42 },
+      "sizes": {
+        "overridable": 42
+      },
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
-      "issuerName": "./src/Button.js",
+      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
+      "issuerName": "./src/TextField.js",
       "issuerPath": [
         {
           "identifier": "container entry [[\"Button\",\"./src/Button\"],[\"Carousel\",\"./src/Carousel\"],[\"Dialog\",\"./src/Dialog\"],[\"Slider\",\"./src/Slider\"],[\"TextField\",\"./src/TextField\"]]",
@@ -1030,158 +1086,158 @@
           "id": 338
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
-          "name": "./src/Button.js",
-          "id": 921
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
+          "name": "./src/TextField.js",
+          "id": 602
         }
       ],
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 265,
-      "issuerId": 921,
-      "chunks": [179, 361],
+      "id": 792,
+      "issuerId": 602,
+      "chunks": [179, 591],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
           "module": "./src/Button.js",
           "moduleName": "./src/Button.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
           "resolvedModule": "./src/Button.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "@emotion/core",
           "loc": "2:0-32",
-          "moduleId": 921,
-          "resolvedModuleId": 921
+          "moduleId": 757,
+          "resolvedModuleId": 757
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
           "module": "./src/Button.js",
           "moduleName": "./src/Button.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
           "resolvedModule": "./src/Button.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "@emotion/core",
           "loc": "3:14-17",
-          "moduleId": 921,
-          "resolvedModuleId": 921
+          "moduleId": 757,
+          "resolvedModuleId": 757
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Carousel.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Carousel.js",
           "module": "./src/Carousel.js",
           "moduleName": "./src/Carousel.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Carousel.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Carousel.js",
           "resolvedModule": "./src/Carousel.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "@emotion/core",
           "loc": "2:0-32",
-          "moduleId": 292,
-          "resolvedModuleId": 292
+          "moduleId": 627,
+          "resolvedModuleId": 627
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Carousel.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Carousel.js",
           "module": "./src/Carousel.js",
           "moduleName": "./src/Carousel.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Carousel.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Carousel.js",
           "resolvedModule": "./src/Carousel.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "@emotion/core",
           "loc": "3:14-17",
-          "moduleId": 292,
-          "resolvedModuleId": 292
+          "moduleId": 627,
+          "resolvedModuleId": 627
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Dialog.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Dialog.js",
           "module": "./src/Dialog.js",
           "moduleName": "./src/Dialog.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Dialog.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Dialog.js",
           "resolvedModule": "./src/Dialog.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "@emotion/core",
           "loc": "2:0-32",
-          "moduleId": 154,
-          "resolvedModuleId": 154
+          "moduleId": 863,
+          "resolvedModuleId": 863
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Dialog.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Dialog.js",
           "module": "./src/Dialog.js",
           "moduleName": "./src/Dialog.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Dialog.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Dialog.js",
           "resolvedModule": "./src/Dialog.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "@emotion/core",
           "loc": "3:14-17",
-          "moduleId": 154,
-          "resolvedModuleId": 154
+          "moduleId": 863,
+          "resolvedModuleId": 863
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Slider.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Slider.js",
           "module": "./src/Slider.js",
           "moduleName": "./src/Slider.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Slider.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Slider.js",
           "resolvedModule": "./src/Slider.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "@emotion/core",
           "loc": "2:0-32",
-          "moduleId": 722,
-          "resolvedModuleId": 722
+          "moduleId": 786,
+          "resolvedModuleId": 786
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Slider.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Slider.js",
           "module": "./src/Slider.js",
           "moduleName": "./src/Slider.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Slider.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Slider.js",
           "resolvedModule": "./src/Slider.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "@emotion/core",
           "loc": "3:14-17",
-          "moduleId": 722,
-          "resolvedModuleId": 722
+          "moduleId": 786,
+          "resolvedModuleId": 786
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
           "module": "./src/TextField.js",
           "moduleName": "./src/TextField.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
           "resolvedModule": "./src/TextField.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "@emotion/core",
           "loc": "2:0-32",
-          "moduleId": 565,
-          "resolvedModuleId": 565
+          "moduleId": 602,
+          "resolvedModuleId": 602
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
           "module": "./src/TextField.js",
           "moduleName": "./src/TextField.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
           "resolvedModule": "./src/TextField.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "@emotion/core",
           "loc": "3:14-17",
-          "moduleId": 565,
-          "resolvedModuleId": 565
+          "moduleId": 602,
+          "resolvedModuleId": 602
         }
       ],
       "usedExports": true,
@@ -1192,14 +1248,16 @@
       "depth": 2
     },
     {
-      "identifier": "overridable|react-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/node_modules/@emotion/core/dist|react",
-      "name": "overridable react-16.13.1 -> react",
+      "identifier": "overridable|react|/Volumes/zack_dev/OSS/federation-dashboard/node_modules/@emotion/core/dist|react",
+      "name": "overridable react -> react",
       "index": 10,
       "preOrderIndex": 10,
       "index2": 5,
       "postOrderIndex": 5,
       "size": 42,
-      "sizes": { "overridable": 42 },
+      "sizes": {
+        "overridable": 42
+      },
       "built": true,
       "optional": false,
       "runtime": false,
@@ -1212,14 +1270,14 @@
           "id": 338
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/Button.js",
-          "name": "./src/Button.js",
-          "id": 921
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/TextField.js",
+          "name": "./src/TextField.js",
+          "id": 602
         },
         {
-          "identifier": "overridable|@emotion/core-undefined|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src|@emotion/core",
-          "name": "overridable @emotion/core-undefined -> @emotion/core",
-          "id": 265
+          "identifier": "overridable|@emotion/core|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src|@emotion/core",
+          "name": "overridable @emotion/core -> @emotion/core",
+          "id": 792
         },
         {
           "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/@emotion/core/dist/core.browser.esm.js",
@@ -1230,9 +1288,9 @@
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 363,
+      "id": 11,
       "issuerId": null,
-      "chunks": [179, 363],
+      "chunks": [11, 179],
       "assets": [],
       "reasons": [
         {
@@ -1445,14 +1503,16 @@
       "depth": 4
     },
     {
-      "identifier": "overridable|react-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/node_modules/react-dom/cjs|react",
-      "name": "overridable react-16.13.1 -> react",
+      "identifier": "overridable|react|/Volumes/zack_dev/OSS/federation-dashboard/node_modules/react-dom/cjs|react",
+      "name": "overridable react -> react",
       "index": 28,
       "preOrderIndex": 28,
       "index2": 24,
       "postOrderIndex": 24,
       "size": 42,
-      "sizes": { "overridable": 42 },
+      "sizes": {
+        "overridable": 42
+      },
       "built": true,
       "optional": false,
       "runtime": false,
@@ -1460,14 +1520,14 @@
       "issuerName": "../../node_modules/react-dom/cjs/react-dom.production.min.js",
       "issuerPath": [
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src/index.js",
           "name": "./src/index.js",
           "id": null
         },
         {
-          "identifier": "overridable|react-dom-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src|react-dom",
-          "name": "overridable react-dom-16.13.1 -> react-dom",
-          "id": 776
+          "identifier": "overridable|react-dom|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src|react-dom",
+          "name": "overridable react-dom -> react-dom",
+          "id": 614
         },
         {
           "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/react-dom/index.js",
@@ -1483,7 +1543,7 @@
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 33,
+      "id": 240,
       "issuerId": 967,
       "chunks": [179],
       "assets": [],
@@ -1512,34 +1572,42 @@
     }
   ],
   "chunkDependencies": {
-    "154": [
+    "11": [
       {
-        "id": 361,
-        "ids": [361],
-        "debugId": 1012,
+        "id": 961,
+        "ids": [961],
+        "debugId": 1011,
+        "idNameHints": {
+          "0": "vendors"
+        },
+        "preventIntegration": false,
+        "files": {
+          "0": "961.js"
+        },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "079c49a53f392f283a10d400f7b09f5f",
+        "contentHash": {
+          "javascript": "101841fd15037ac08c06"
+        },
+        "renderedHash": "079c49a53f392f283a10",
+        "chunkReason": "split chunk (cache group: defaultVendors)",
+        "extraAsync": false
+      },
+      {
+        "id": 11,
+        "ids": [11],
+        "debugId": 1009,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "8d19f8bf4109f90f1ba9f29d94a38db4",
-        "contentHash": { "javascript": "1e24284e081318537d12" },
-        "renderedHash": "8d19f8bf4109f90f1ba9",
-        "chunkReason": "split chunk (cache group: default)",
-        "extraAsync": false
-      },
-      {
-        "id": 154,
-        "ids": [154],
-        "debugId": 1005,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "154.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "e8da9f8f4432deea7590d12a62d59f35",
-        "contentHash": { "javascript": "16b9b1d66f1e2a62f167" },
-        "renderedHash": "e8da9f8f4432deea7590",
+        "hash": "3000cab789e2444a2bb4c6ab098cc092",
+        "contentHash": {
+          "javascript": "3f89cdbbe84aeb4664e0"
+        },
+        "renderedHash": "3000cab789e2444a2bb4",
         "extraAsync": false
       },
       {
@@ -1548,289 +1616,15 @@
         "debugId": 1008,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "784.js" },
+        "files": {
+          "0": "784.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
         "hash": "02eb4753b14eb44489c0712bd6e4d2bd",
-        "contentHash": { "javascript": "74f317dfd4601787444a" },
-        "renderedHash": "02eb4753b14eb44489c0",
-        "extraAsync": false
-      },
-      {
-        "id": 961,
-        "ids": [961],
-        "debugId": 1011,
-        "idNameHints": { "0": "vendors" },
-        "preventIntegration": false,
-        "files": { "0": "961.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "f9cf824e5295c619d1d492dfb1c3f9bd",
-        "contentHash": { "javascript": "838e3f78e2d2c7d4c08a" },
-        "renderedHash": "f9cf824e5295c619d1d4",
-        "chunkReason": "split chunk (cache group: defaultVendors)",
-        "extraAsync": false
-      },
-      {
-        "id": 363,
-        "ids": [363],
-        "debugId": 1009,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": {},
-        "auxiliaryFiles": {},
-        "rendered": false,
-        "hash": "3a2d9a9f74b64c3949697818cd7af17f",
-        "contentHash": { "javascript": "325a4d518a6f10162f3a" },
-        "renderedHash": "3a2d9a9f74b64c394969",
-        "extraAsync": false
-      }
-    ],
-    "292": [
-      {
-        "id": 361,
-        "ids": [361],
-        "debugId": 1012,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": {},
-        "auxiliaryFiles": {},
-        "rendered": false,
-        "hash": "8d19f8bf4109f90f1ba9f29d94a38db4",
-        "contentHash": { "javascript": "1e24284e081318537d12" },
-        "renderedHash": "8d19f8bf4109f90f1ba9",
-        "chunkReason": "split chunk (cache group: default)",
-        "extraAsync": false
-      },
-      {
-        "id": 292,
-        "ids": [292],
-        "debugId": 1004,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "292.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "2e93cb859c3e1a8c7ca5d27cd44cf488",
-        "contentHash": { "javascript": "693aa4588e798dd9ddb9" },
-        "renderedHash": "2e93cb859c3e1a8c7ca5",
-        "extraAsync": false
-      },
-      {
-        "id": 784,
-        "ids": [784],
-        "debugId": 1008,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "784.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "02eb4753b14eb44489c0712bd6e4d2bd",
-        "contentHash": { "javascript": "74f317dfd4601787444a" },
-        "renderedHash": "02eb4753b14eb44489c0",
-        "extraAsync": false
-      },
-      {
-        "id": 961,
-        "ids": [961],
-        "debugId": 1011,
-        "idNameHints": { "0": "vendors" },
-        "preventIntegration": false,
-        "files": { "0": "961.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "f9cf824e5295c619d1d492dfb1c3f9bd",
-        "contentHash": { "javascript": "838e3f78e2d2c7d4c08a" },
-        "renderedHash": "f9cf824e5295c619d1d4",
-        "chunkReason": "split chunk (cache group: defaultVendors)",
-        "extraAsync": false
-      },
-      {
-        "id": 363,
-        "ids": [363],
-        "debugId": 1009,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": {},
-        "auxiliaryFiles": {},
-        "rendered": false,
-        "hash": "3a2d9a9f74b64c3949697818cd7af17f",
-        "contentHash": { "javascript": "325a4d518a6f10162f3a" },
-        "renderedHash": "3a2d9a9f74b64c394969",
-        "extraAsync": false
-      }
-    ],
-    "361": [
-      {
-        "id": 361,
-        "ids": [361],
-        "debugId": 1012,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": {},
-        "auxiliaryFiles": {},
-        "rendered": false,
-        "hash": "8d19f8bf4109f90f1ba9f29d94a38db4",
-        "contentHash": { "javascript": "1e24284e081318537d12" },
-        "renderedHash": "8d19f8bf4109f90f1ba9",
-        "chunkReason": "split chunk (cache group: default)",
-        "extraAsync": false
-      },
-      {
-        "id": 921,
-        "ids": [921],
-        "debugId": 1003,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "921.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "9ea0223e9ad34249c37182b543c457cc",
-        "contentHash": { "javascript": "c9dcb2a916bd3fc46c77" },
-        "renderedHash": "9ea0223e9ad34249c371",
-        "extraAsync": false
-      },
-      {
-        "id": 292,
-        "ids": [292],
-        "debugId": 1004,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "292.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "2e93cb859c3e1a8c7ca5d27cd44cf488",
-        "contentHash": { "javascript": "693aa4588e798dd9ddb9" },
-        "renderedHash": "2e93cb859c3e1a8c7ca5",
-        "extraAsync": false
-      },
-      {
-        "id": 154,
-        "ids": [154],
-        "debugId": 1005,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "154.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "e8da9f8f4432deea7590d12a62d59f35",
-        "contentHash": { "javascript": "16b9b1d66f1e2a62f167" },
-        "renderedHash": "e8da9f8f4432deea7590",
-        "extraAsync": false
-      },
-      {
-        "id": 722,
-        "ids": [722],
-        "debugId": 1006,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "722.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "0f2f1645748846027a170ebbb5775b37",
-        "contentHash": { "javascript": "a2c73042969176bc93ad" },
-        "renderedHash": "0f2f1645748846027a17",
-        "extraAsync": false
-      },
-      {
-        "id": 565,
-        "ids": [565],
-        "debugId": 1007,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "565.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "73a8b51dba0c922e47979301ce322cd2",
-        "contentHash": { "javascript": "3215b4784082e6f43bb2" },
-        "renderedHash": "73a8b51dba0c922e4797",
-        "extraAsync": false
-      },
-      {
-        "id": 784,
-        "ids": [784],
-        "debugId": 1008,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "784.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "02eb4753b14eb44489c0712bd6e4d2bd",
-        "contentHash": { "javascript": "74f317dfd4601787444a" },
-        "renderedHash": "02eb4753b14eb44489c0",
-        "extraAsync": false
-      },
-      {
-        "id": 961,
-        "ids": [961],
-        "debugId": 1011,
-        "idNameHints": { "0": "vendors" },
-        "preventIntegration": false,
-        "files": { "0": "961.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "f9cf824e5295c619d1d492dfb1c3f9bd",
-        "contentHash": { "javascript": "838e3f78e2d2c7d4c08a" },
-        "renderedHash": "f9cf824e5295c619d1d4",
-        "chunkReason": "split chunk (cache group: defaultVendors)",
-        "extraAsync": false
-      },
-      {
-        "id": 363,
-        "ids": [363],
-        "debugId": 1009,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": {},
-        "auxiliaryFiles": {},
-        "rendered": false,
-        "hash": "3a2d9a9f74b64c3949697818cd7af17f",
-        "contentHash": { "javascript": "325a4d518a6f10162f3a" },
-        "renderedHash": "3a2d9a9f74b64c394969",
-        "extraAsync": false
-      }
-    ],
-    "363": [
-      {
-        "id": 961,
-        "ids": [961],
-        "debugId": 1011,
-        "idNameHints": { "0": "vendors" },
-        "preventIntegration": false,
-        "files": { "0": "961.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "f9cf824e5295c619d1d492dfb1c3f9bd",
-        "contentHash": { "javascript": "838e3f78e2d2c7d4c08a" },
-        "renderedHash": "f9cf824e5295c619d1d4",
-        "chunkReason": "split chunk (cache group: defaultVendors)",
-        "extraAsync": false
-      },
-      {
-        "id": 363,
-        "ids": [363],
-        "debugId": 1009,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": {},
-        "auxiliaryFiles": {},
-        "rendered": false,
-        "hash": "3a2d9a9f74b64c3949697818cd7af17f",
-        "contentHash": { "javascript": "325a4d518a6f10162f3a" },
-        "renderedHash": "3a2d9a9f74b64c394969",
-        "extraAsync": false
-      },
-      {
-        "id": 784,
-        "ids": [784],
-        "debugId": 1008,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "784.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "02eb4753b14eb44489c0712bd6e4d2bd",
-        "contentHash": { "javascript": "74f317dfd4601787444a" },
+        "contentHash": {
+          "javascript": "74f317dfd4601787444a"
+        },
         "renderedHash": "02eb4753b14eb44489c0",
         "extraAsync": false
       }
@@ -1844,97 +1638,123 @@
         "idNameHints": {},
         "preventIntegration": false,
         "filenameTemplate": "remoteEntry.js",
-        "files": { "0": "remoteEntry.js" },
+        "files": {
+          "0": "remoteEntry.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "deb8c542fe50779770a46a2dc79fcfa7",
-        "contentHash": { "javascript": "c7fce6dede739e6193b6" },
-        "renderedHash": "deb8c542fe50779770a4",
+        "hash": "f5825cc1bbf02c62121273659c6f9000",
+        "contentHash": {
+          "javascript": "853d87db2513a49222a2"
+        },
+        "renderedHash": "f5825cc1bbf02c621212",
         "extraAsync": false
       },
       {
-        "id": 361,
-        "ids": [361],
+        "id": 591,
+        "ids": [591],
         "debugId": 1012,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "8d19f8bf4109f90f1ba9f29d94a38db4",
-        "contentHash": { "javascript": "1e24284e081318537d12" },
-        "renderedHash": "8d19f8bf4109f90f1ba9",
+        "hash": "a59d7f2ad394e3f9134e11e00848a2f4",
+        "contentHash": {
+          "javascript": "8792a265f057972ea94c"
+        },
+        "renderedHash": "a59d7f2ad394e3f9134e",
         "chunkReason": "split chunk (cache group: default)",
         "extraAsync": false
       },
       {
-        "id": 921,
-        "ids": [921],
+        "id": 757,
+        "ids": [757],
         "debugId": 1003,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "921.js" },
+        "files": {
+          "0": "757.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "9ea0223e9ad34249c37182b543c457cc",
-        "contentHash": { "javascript": "c9dcb2a916bd3fc46c77" },
-        "renderedHash": "9ea0223e9ad34249c371",
+        "hash": "79d9d5a0e451b2950a1fa8e6d4e991cc",
+        "contentHash": {
+          "javascript": "bd4900d4c79079877764"
+        },
+        "renderedHash": "79d9d5a0e451b2950a1f",
         "extraAsync": false
       },
       {
-        "id": 292,
-        "ids": [292],
+        "id": 627,
+        "ids": [627],
         "debugId": 1004,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "292.js" },
+        "files": {
+          "0": "627.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "2e93cb859c3e1a8c7ca5d27cd44cf488",
-        "contentHash": { "javascript": "693aa4588e798dd9ddb9" },
-        "renderedHash": "2e93cb859c3e1a8c7ca5",
+        "hash": "744d501047971b7d60f9dc5af312af12",
+        "contentHash": {
+          "javascript": "f6fd4131e474be50368a"
+        },
+        "renderedHash": "744d501047971b7d60f9",
         "extraAsync": false
       },
       {
-        "id": 154,
-        "ids": [154],
+        "id": 863,
+        "ids": [863],
         "debugId": 1005,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "154.js" },
+        "files": {
+          "0": "863.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "e8da9f8f4432deea7590d12a62d59f35",
-        "contentHash": { "javascript": "16b9b1d66f1e2a62f167" },
-        "renderedHash": "e8da9f8f4432deea7590",
+        "hash": "b1745e76fc3b828154588b89c125179f",
+        "contentHash": {
+          "javascript": "c9ed346d7b4d45b632c7"
+        },
+        "renderedHash": "b1745e76fc3b82815458",
         "extraAsync": false
       },
       {
-        "id": 722,
-        "ids": [722],
+        "id": 786,
+        "ids": [786],
         "debugId": 1006,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "722.js" },
+        "files": {
+          "0": "786.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "0f2f1645748846027a170ebbb5775b37",
-        "contentHash": { "javascript": "a2c73042969176bc93ad" },
-        "renderedHash": "0f2f1645748846027a17",
+        "hash": "309ebbce920c9b7b28bebbfee49ca3d4",
+        "contentHash": {
+          "javascript": "bb7f98a6509baedb9deb"
+        },
+        "renderedHash": "309ebbce920c9b7b28be",
         "extraAsync": false
       },
       {
-        "id": 565,
-        "ids": [565],
+        "id": 602,
+        "ids": [602],
         "debugId": 1007,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "565.js" },
+        "files": {
+          "0": "602.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "73a8b51dba0c922e47979301ce322cd2",
-        "contentHash": { "javascript": "3215b4784082e6f43bb2" },
-        "renderedHash": "73a8b51dba0c922e4797",
+        "hash": "5d26a6ec54767adb26be4320b31912dd",
+        "contentHash": {
+          "javascript": "723f3978a5c2b2f256ee"
+        },
+        "renderedHash": "5d26a6ec54767adb26be",
         "extraAsync": false
       },
       {
@@ -1943,11 +1763,15 @@
         "debugId": 1008,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "784.js" },
+        "files": {
+          "0": "784.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
         "hash": "02eb4753b14eb44489c0712bd6e4d2bd",
-        "contentHash": { "javascript": "74f317dfd4601787444a" },
+        "contentHash": {
+          "javascript": "74f317dfd4601787444a"
+        },
         "renderedHash": "02eb4753b14eb44489c0",
         "extraAsync": false
       },
@@ -1955,60 +1779,146 @@
         "id": 961,
         "ids": [961],
         "debugId": 1011,
-        "idNameHints": { "0": "vendors" },
+        "idNameHints": {
+          "0": "vendors"
+        },
         "preventIntegration": false,
-        "files": { "0": "961.js" },
+        "files": {
+          "0": "961.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "f9cf824e5295c619d1d492dfb1c3f9bd",
-        "contentHash": { "javascript": "838e3f78e2d2c7d4c08a" },
-        "renderedHash": "f9cf824e5295c619d1d4",
+        "hash": "079c49a53f392f283a10d400f7b09f5f",
+        "contentHash": {
+          "javascript": "101841fd15037ac08c06"
+        },
+        "renderedHash": "079c49a53f392f283a10",
         "chunkReason": "split chunk (cache group: defaultVendors)",
         "extraAsync": false
       },
       {
-        "id": 363,
-        "ids": [363],
+        "id": 11,
+        "ids": [11],
         "debugId": 1009,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "3a2d9a9f74b64c3949697818cd7af17f",
-        "contentHash": { "javascript": "325a4d518a6f10162f3a" },
-        "renderedHash": "3a2d9a9f74b64c394969",
+        "hash": "3000cab789e2444a2bb4c6ab098cc092",
+        "contentHash": {
+          "javascript": "3f89cdbbe84aeb4664e0"
+        },
+        "renderedHash": "3000cab789e2444a2bb4",
         "extraAsync": false
       }
     ],
-    "565": [
+    "591": [
       {
-        "id": 361,
-        "ids": [361],
+        "id": 591,
+        "ids": [591],
         "debugId": 1012,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "8d19f8bf4109f90f1ba9f29d94a38db4",
-        "contentHash": { "javascript": "1e24284e081318537d12" },
-        "renderedHash": "8d19f8bf4109f90f1ba9",
+        "hash": "a59d7f2ad394e3f9134e11e00848a2f4",
+        "contentHash": {
+          "javascript": "8792a265f057972ea94c"
+        },
+        "renderedHash": "a59d7f2ad394e3f9134e",
         "chunkReason": "split chunk (cache group: default)",
         "extraAsync": false
       },
       {
-        "id": 565,
-        "ids": [565],
+        "id": 757,
+        "ids": [757],
+        "debugId": 1003,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {
+          "0": "757.js"
+        },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "79d9d5a0e451b2950a1fa8e6d4e991cc",
+        "contentHash": {
+          "javascript": "bd4900d4c79079877764"
+        },
+        "renderedHash": "79d9d5a0e451b2950a1f",
+        "extraAsync": false
+      },
+      {
+        "id": 627,
+        "ids": [627],
+        "debugId": 1004,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {
+          "0": "627.js"
+        },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "744d501047971b7d60f9dc5af312af12",
+        "contentHash": {
+          "javascript": "f6fd4131e474be50368a"
+        },
+        "renderedHash": "744d501047971b7d60f9",
+        "extraAsync": false
+      },
+      {
+        "id": 863,
+        "ids": [863],
+        "debugId": 1005,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {
+          "0": "863.js"
+        },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "b1745e76fc3b828154588b89c125179f",
+        "contentHash": {
+          "javascript": "c9ed346d7b4d45b632c7"
+        },
+        "renderedHash": "b1745e76fc3b82815458",
+        "extraAsync": false
+      },
+      {
+        "id": 786,
+        "ids": [786],
+        "debugId": 1006,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {
+          "0": "786.js"
+        },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "309ebbce920c9b7b28bebbfee49ca3d4",
+        "contentHash": {
+          "javascript": "bb7f98a6509baedb9deb"
+        },
+        "renderedHash": "309ebbce920c9b7b28be",
+        "extraAsync": false
+      },
+      {
+        "id": 602,
+        "ids": [602],
         "debugId": 1007,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "565.js" },
+        "files": {
+          "0": "602.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "73a8b51dba0c922e47979301ce322cd2",
-        "contentHash": { "javascript": "3215b4784082e6f43bb2" },
-        "renderedHash": "73a8b51dba0c922e4797",
+        "hash": "5d26a6ec54767adb26be4320b31912dd",
+        "contentHash": {
+          "javascript": "723f3978a5c2b2f256ee"
+        },
+        "renderedHash": "5d26a6ec54767adb26be",
         "extraAsync": false
       },
       {
@@ -2017,11 +1927,15 @@
         "debugId": 1008,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "784.js" },
+        "files": {
+          "0": "784.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
         "hash": "02eb4753b14eb44489c0712bd6e4d2bd",
-        "contentHash": { "javascript": "74f317dfd4601787444a" },
+        "contentHash": {
+          "javascript": "74f317dfd4601787444a"
+        },
         "renderedHash": "02eb4753b14eb44489c0",
         "extraAsync": false
       },
@@ -2029,60 +1943,74 @@
         "id": 961,
         "ids": [961],
         "debugId": 1011,
-        "idNameHints": { "0": "vendors" },
+        "idNameHints": {
+          "0": "vendors"
+        },
         "preventIntegration": false,
-        "files": { "0": "961.js" },
+        "files": {
+          "0": "961.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "f9cf824e5295c619d1d492dfb1c3f9bd",
-        "contentHash": { "javascript": "838e3f78e2d2c7d4c08a" },
-        "renderedHash": "f9cf824e5295c619d1d4",
+        "hash": "079c49a53f392f283a10d400f7b09f5f",
+        "contentHash": {
+          "javascript": "101841fd15037ac08c06"
+        },
+        "renderedHash": "079c49a53f392f283a10",
         "chunkReason": "split chunk (cache group: defaultVendors)",
         "extraAsync": false
       },
       {
-        "id": 363,
-        "ids": [363],
+        "id": 11,
+        "ids": [11],
         "debugId": 1009,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "3a2d9a9f74b64c3949697818cd7af17f",
-        "contentHash": { "javascript": "325a4d518a6f10162f3a" },
-        "renderedHash": "3a2d9a9f74b64c394969",
+        "hash": "3000cab789e2444a2bb4c6ab098cc092",
+        "contentHash": {
+          "javascript": "3f89cdbbe84aeb4664e0"
+        },
+        "renderedHash": "3000cab789e2444a2bb4",
         "extraAsync": false
       }
     ],
-    "722": [
+    "602": [
       {
-        "id": 361,
-        "ids": [361],
+        "id": 591,
+        "ids": [591],
         "debugId": 1012,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "8d19f8bf4109f90f1ba9f29d94a38db4",
-        "contentHash": { "javascript": "1e24284e081318537d12" },
-        "renderedHash": "8d19f8bf4109f90f1ba9",
+        "hash": "a59d7f2ad394e3f9134e11e00848a2f4",
+        "contentHash": {
+          "javascript": "8792a265f057972ea94c"
+        },
+        "renderedHash": "a59d7f2ad394e3f9134e",
         "chunkReason": "split chunk (cache group: default)",
         "extraAsync": false
       },
       {
-        "id": 722,
-        "ids": [722],
-        "debugId": 1006,
+        "id": 602,
+        "ids": [602],
+        "debugId": 1007,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "722.js" },
+        "files": {
+          "0": "602.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "0f2f1645748846027a170ebbb5775b37",
-        "contentHash": { "javascript": "a2c73042969176bc93ad" },
-        "renderedHash": "0f2f1645748846027a17",
+        "hash": "5d26a6ec54767adb26be4320b31912dd",
+        "contentHash": {
+          "javascript": "723f3978a5c2b2f256ee"
+        },
+        "renderedHash": "5d26a6ec54767adb26be",
         "extraAsync": false
       },
       {
@@ -2091,11 +2019,15 @@
         "debugId": 1008,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "784.js" },
+        "files": {
+          "0": "784.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
         "hash": "02eb4753b14eb44489c0712bd6e4d2bd",
-        "contentHash": { "javascript": "74f317dfd4601787444a" },
+        "contentHash": {
+          "javascript": "74f317dfd4601787444a"
+        },
         "renderedHash": "02eb4753b14eb44489c0",
         "extraAsync": false
       },
@@ -2103,29 +2035,221 @@
         "id": 961,
         "ids": [961],
         "debugId": 1011,
-        "idNameHints": { "0": "vendors" },
+        "idNameHints": {
+          "0": "vendors"
+        },
         "preventIntegration": false,
-        "files": { "0": "961.js" },
+        "files": {
+          "0": "961.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "f9cf824e5295c619d1d492dfb1c3f9bd",
-        "contentHash": { "javascript": "838e3f78e2d2c7d4c08a" },
-        "renderedHash": "f9cf824e5295c619d1d4",
+        "hash": "079c49a53f392f283a10d400f7b09f5f",
+        "contentHash": {
+          "javascript": "101841fd15037ac08c06"
+        },
+        "renderedHash": "079c49a53f392f283a10",
         "chunkReason": "split chunk (cache group: defaultVendors)",
         "extraAsync": false
       },
       {
-        "id": 363,
-        "ids": [363],
+        "id": 11,
+        "ids": [11],
         "debugId": 1009,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "3a2d9a9f74b64c3949697818cd7af17f",
-        "contentHash": { "javascript": "325a4d518a6f10162f3a" },
-        "renderedHash": "3a2d9a9f74b64c394969",
+        "hash": "3000cab789e2444a2bb4c6ab098cc092",
+        "contentHash": {
+          "javascript": "3f89cdbbe84aeb4664e0"
+        },
+        "renderedHash": "3000cab789e2444a2bb4",
+        "extraAsync": false
+      }
+    ],
+    "627": [
+      {
+        "id": 591,
+        "ids": [591],
+        "debugId": 1012,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "a59d7f2ad394e3f9134e11e00848a2f4",
+        "contentHash": {
+          "javascript": "8792a265f057972ea94c"
+        },
+        "renderedHash": "a59d7f2ad394e3f9134e",
+        "chunkReason": "split chunk (cache group: default)",
+        "extraAsync": false
+      },
+      {
+        "id": 627,
+        "ids": [627],
+        "debugId": 1004,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {
+          "0": "627.js"
+        },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "744d501047971b7d60f9dc5af312af12",
+        "contentHash": {
+          "javascript": "f6fd4131e474be50368a"
+        },
+        "renderedHash": "744d501047971b7d60f9",
+        "extraAsync": false
+      },
+      {
+        "id": 784,
+        "ids": [784],
+        "debugId": 1008,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {
+          "0": "784.js"
+        },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "02eb4753b14eb44489c0712bd6e4d2bd",
+        "contentHash": {
+          "javascript": "74f317dfd4601787444a"
+        },
+        "renderedHash": "02eb4753b14eb44489c0",
+        "extraAsync": false
+      },
+      {
+        "id": 961,
+        "ids": [961],
+        "debugId": 1011,
+        "idNameHints": {
+          "0": "vendors"
+        },
+        "preventIntegration": false,
+        "files": {
+          "0": "961.js"
+        },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "079c49a53f392f283a10d400f7b09f5f",
+        "contentHash": {
+          "javascript": "101841fd15037ac08c06"
+        },
+        "renderedHash": "079c49a53f392f283a10",
+        "chunkReason": "split chunk (cache group: defaultVendors)",
+        "extraAsync": false
+      },
+      {
+        "id": 11,
+        "ids": [11],
+        "debugId": 1009,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "3000cab789e2444a2bb4c6ab098cc092",
+        "contentHash": {
+          "javascript": "3f89cdbbe84aeb4664e0"
+        },
+        "renderedHash": "3000cab789e2444a2bb4",
+        "extraAsync": false
+      }
+    ],
+    "757": [
+      {
+        "id": 591,
+        "ids": [591],
+        "debugId": 1012,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "a59d7f2ad394e3f9134e11e00848a2f4",
+        "contentHash": {
+          "javascript": "8792a265f057972ea94c"
+        },
+        "renderedHash": "a59d7f2ad394e3f9134e",
+        "chunkReason": "split chunk (cache group: default)",
+        "extraAsync": false
+      },
+      {
+        "id": 757,
+        "ids": [757],
+        "debugId": 1003,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {
+          "0": "757.js"
+        },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "79d9d5a0e451b2950a1fa8e6d4e991cc",
+        "contentHash": {
+          "javascript": "bd4900d4c79079877764"
+        },
+        "renderedHash": "79d9d5a0e451b2950a1f",
+        "extraAsync": false
+      },
+      {
+        "id": 784,
+        "ids": [784],
+        "debugId": 1008,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {
+          "0": "784.js"
+        },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "02eb4753b14eb44489c0712bd6e4d2bd",
+        "contentHash": {
+          "javascript": "74f317dfd4601787444a"
+        },
+        "renderedHash": "02eb4753b14eb44489c0",
+        "extraAsync": false
+      },
+      {
+        "id": 961,
+        "ids": [961],
+        "debugId": 1011,
+        "idNameHints": {
+          "0": "vendors"
+        },
+        "preventIntegration": false,
+        "files": {
+          "0": "961.js"
+        },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "079c49a53f392f283a10d400f7b09f5f",
+        "contentHash": {
+          "javascript": "101841fd15037ac08c06"
+        },
+        "renderedHash": "079c49a53f392f283a10",
+        "chunkReason": "split chunk (cache group: defaultVendors)",
+        "extraAsync": false
+      },
+      {
+        "id": 11,
+        "ids": [11],
+        "debugId": 1009,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "3000cab789e2444a2bb4c6ab098cc092",
+        "contentHash": {
+          "javascript": "3f89cdbbe84aeb4664e0"
+        },
+        "renderedHash": "3000cab789e2444a2bb4",
         "extraAsync": false
       }
     ],
@@ -2136,43 +2260,53 @@
         "debugId": 1008,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "784.js" },
+        "files": {
+          "0": "784.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
         "hash": "02eb4753b14eb44489c0712bd6e4d2bd",
-        "contentHash": { "javascript": "74f317dfd4601787444a" },
+        "contentHash": {
+          "javascript": "74f317dfd4601787444a"
+        },
         "renderedHash": "02eb4753b14eb44489c0",
         "extraAsync": false
       }
     ],
-    "921": [
+    "786": [
       {
-        "id": 361,
-        "ids": [361],
+        "id": 591,
+        "ids": [591],
         "debugId": 1012,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "8d19f8bf4109f90f1ba9f29d94a38db4",
-        "contentHash": { "javascript": "1e24284e081318537d12" },
-        "renderedHash": "8d19f8bf4109f90f1ba9",
+        "hash": "a59d7f2ad394e3f9134e11e00848a2f4",
+        "contentHash": {
+          "javascript": "8792a265f057972ea94c"
+        },
+        "renderedHash": "a59d7f2ad394e3f9134e",
         "chunkReason": "split chunk (cache group: default)",
         "extraAsync": false
       },
       {
-        "id": 921,
-        "ids": [921],
-        "debugId": 1003,
+        "id": 786,
+        "ids": [786],
+        "debugId": 1006,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "921.js" },
+        "files": {
+          "0": "786.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "9ea0223e9ad34249c37182b543c457cc",
-        "contentHash": { "javascript": "c9dcb2a916bd3fc46c77" },
-        "renderedHash": "9ea0223e9ad34249c371",
+        "hash": "309ebbce920c9b7b28bebbfee49ca3d4",
+        "contentHash": {
+          "javascript": "bb7f98a6509baedb9deb"
+        },
+        "renderedHash": "309ebbce920c9b7b28be",
         "extraAsync": false
       },
       {
@@ -2181,11 +2315,15 @@
         "debugId": 1008,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "784.js" },
+        "files": {
+          "0": "784.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
         "hash": "02eb4753b14eb44489c0712bd6e4d2bd",
-        "contentHash": { "javascript": "74f317dfd4601787444a" },
+        "contentHash": {
+          "javascript": "74f317dfd4601787444a"
+        },
         "renderedHash": "02eb4753b14eb44489c0",
         "extraAsync": false
       },
@@ -2193,29 +2331,129 @@
         "id": 961,
         "ids": [961],
         "debugId": 1011,
-        "idNameHints": { "0": "vendors" },
+        "idNameHints": {
+          "0": "vendors"
+        },
         "preventIntegration": false,
-        "files": { "0": "961.js" },
+        "files": {
+          "0": "961.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "f9cf824e5295c619d1d492dfb1c3f9bd",
-        "contentHash": { "javascript": "838e3f78e2d2c7d4c08a" },
-        "renderedHash": "f9cf824e5295c619d1d4",
+        "hash": "079c49a53f392f283a10d400f7b09f5f",
+        "contentHash": {
+          "javascript": "101841fd15037ac08c06"
+        },
+        "renderedHash": "079c49a53f392f283a10",
         "chunkReason": "split chunk (cache group: defaultVendors)",
         "extraAsync": false
       },
       {
-        "id": 363,
-        "ids": [363],
+        "id": 11,
+        "ids": [11],
         "debugId": 1009,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "3a2d9a9f74b64c3949697818cd7af17f",
-        "contentHash": { "javascript": "325a4d518a6f10162f3a" },
-        "renderedHash": "3a2d9a9f74b64c394969",
+        "hash": "3000cab789e2444a2bb4c6ab098cc092",
+        "contentHash": {
+          "javascript": "3f89cdbbe84aeb4664e0"
+        },
+        "renderedHash": "3000cab789e2444a2bb4",
+        "extraAsync": false
+      }
+    ],
+    "863": [
+      {
+        "id": 591,
+        "ids": [591],
+        "debugId": 1012,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "a59d7f2ad394e3f9134e11e00848a2f4",
+        "contentHash": {
+          "javascript": "8792a265f057972ea94c"
+        },
+        "renderedHash": "a59d7f2ad394e3f9134e",
+        "chunkReason": "split chunk (cache group: default)",
+        "extraAsync": false
+      },
+      {
+        "id": 863,
+        "ids": [863],
+        "debugId": 1005,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {
+          "0": "863.js"
+        },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "b1745e76fc3b828154588b89c125179f",
+        "contentHash": {
+          "javascript": "c9ed346d7b4d45b632c7"
+        },
+        "renderedHash": "b1745e76fc3b82815458",
+        "extraAsync": false
+      },
+      {
+        "id": 784,
+        "ids": [784],
+        "debugId": 1008,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {
+          "0": "784.js"
+        },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "02eb4753b14eb44489c0712bd6e4d2bd",
+        "contentHash": {
+          "javascript": "74f317dfd4601787444a"
+        },
+        "renderedHash": "02eb4753b14eb44489c0",
+        "extraAsync": false
+      },
+      {
+        "id": 961,
+        "ids": [961],
+        "debugId": 1011,
+        "idNameHints": {
+          "0": "vendors"
+        },
+        "preventIntegration": false,
+        "files": {
+          "0": "961.js"
+        },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "079c49a53f392f283a10d400f7b09f5f",
+        "contentHash": {
+          "javascript": "101841fd15037ac08c06"
+        },
+        "renderedHash": "079c49a53f392f283a10",
+        "chunkReason": "split chunk (cache group: defaultVendors)",
+        "extraAsync": false
+      },
+      {
+        "id": 11,
+        "ids": [11],
+        "debugId": 1009,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "3000cab789e2444a2bb4c6ab098cc092",
+        "contentHash": {
+          "javascript": "3f89cdbbe84aeb4664e0"
+        },
+        "renderedHash": "3000cab789e2444a2bb4",
         "extraAsync": false
       }
     ],
@@ -2224,29 +2462,37 @@
         "id": 961,
         "ids": [961],
         "debugId": 1011,
-        "idNameHints": { "0": "vendors" },
+        "idNameHints": {
+          "0": "vendors"
+        },
         "preventIntegration": false,
-        "files": { "0": "961.js" },
+        "files": {
+          "0": "961.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "f9cf824e5295c619d1d492dfb1c3f9bd",
-        "contentHash": { "javascript": "838e3f78e2d2c7d4c08a" },
-        "renderedHash": "f9cf824e5295c619d1d4",
+        "hash": "079c49a53f392f283a10d400f7b09f5f",
+        "contentHash": {
+          "javascript": "101841fd15037ac08c06"
+        },
+        "renderedHash": "079c49a53f392f283a10",
         "chunkReason": "split chunk (cache group: defaultVendors)",
         "extraAsync": false
       },
       {
-        "id": 363,
-        "ids": [363],
+        "id": 11,
+        "ids": [11],
         "debugId": 1009,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "3a2d9a9f74b64c3949697818cd7af17f",
-        "contentHash": { "javascript": "325a4d518a6f10162f3a" },
-        "renderedHash": "3a2d9a9f74b64c394969",
+        "hash": "3000cab789e2444a2bb4c6ab098cc092",
+        "contentHash": {
+          "javascript": "3f89cdbbe84aeb4664e0"
+        },
+        "renderedHash": "3000cab789e2444a2bb4",
         "extraAsync": false
       },
       {
@@ -2255,11 +2501,15 @@
         "debugId": 1008,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "784.js" },
+        "files": {
+          "0": "784.js"
+        },
         "auxiliaryFiles": {},
         "rendered": true,
         "hash": "02eb4753b14eb44489c0712bd6e4d2bd",
-        "contentHash": { "javascript": "74f317dfd4601787444a" },
+        "contentHash": {
+          "javascript": "74f317dfd4601787444a"
+        },
         "renderedHash": "02eb4753b14eb44489c0",
         "extraAsync": false
       }

@@ -5,18 +5,18 @@
     "initial": true,
     "entry": true,
     "recorded": false,
-    "size": 8362,
-    "sizes": { "javascript": 168, "runtime": 8194 },
+    "size": 8795,
+    "sizes": { "javascript": 168, "runtime": 8627 },
     "names": ["nav"],
     "idHints": [],
     "files": ["remoteEntry.js"],
     "auxiliaryFiles": [],
-    "hash": "b92cb59681cdc421998d",
+    "hash": "842cd09132f157e3153b",
     "childrenByOrder": {},
     "id": 411,
     "siblings": [],
     "parents": [],
-    "children": [361, 471, 922],
+    "children": [254, 311, 592],
     "modules": [
       {
         "identifier": "container entry [[\"Header\",\"./src/Header\"],[\"Footer\",\"./src/Footer\"]]",
@@ -88,7 +88,7 @@
         "built": true,
         "optional": false,
         "runtime": false,
-        "issuer": "remote webpack/container/reference/dsl Button 5de9370a5611d2275b0d2dbe66520d10",
+        "issuer": "remote webpack/container/reference/dsl Button 941de8967747a43e9241e4cce3d1581d",
         "issuerName": "remote dsl/Button",
         "issuerPath": [
           {
@@ -97,36 +97,36 @@
             "id": 30
           },
           {
-            "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+            "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
             "name": "./src/Header.js",
-            "id": 471
+            "id": 254
           },
           {
-            "identifier": "remote webpack/container/reference/dsl Button 5de9370a5611d2275b0d2dbe66520d10",
+            "identifier": "remote webpack/container/reference/dsl Button 941de8967747a43e9241e4cce3d1581d",
             "name": "remote dsl/Button",
-            "id": 906
+            "id": 105
           }
         ],
         "failed": false,
         "errors": 0,
         "warnings": 0,
         "id": 789,
-        "issuerId": 906,
+        "issuerId": 105,
         "chunks": [179, 411],
         "assets": [],
         "reasons": [
           {
-            "moduleIdentifier": "remote webpack/container/reference/dsl Button 5de9370a5611d2275b0d2dbe66520d10",
+            "moduleIdentifier": "remote webpack/container/reference/dsl Button 941de8967747a43e9241e4cce3d1581d",
             "module": "remote dsl/Button",
             "moduleName": "remote dsl/Button",
-            "resolvedModuleIdentifier": "remote webpack/container/reference/dsl Button 5de9370a5611d2275b0d2dbe66520d10",
+            "resolvedModuleIdentifier": "remote webpack/container/reference/dsl Button 941de8967747a43e9241e4cce3d1581d",
             "resolvedModule": "remote dsl/Button",
             "type": "remote to external",
             "active": true,
             "explanation": "",
             "userRequest": "webpack/container/reference/dsl",
-            "moduleId": 906,
-            "resolvedModuleId": 906
+            "moduleId": 105,
+            "resolvedModuleId": 105
           }
         ],
         "usedExports": true,
@@ -148,7 +148,7 @@
         "built": true,
         "optional": false,
         "runtime": false,
-        "issuer": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+        "issuer": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
         "issuerName": "remote search/MiniSearch",
         "issuerPath": [
           {
@@ -157,36 +157,36 @@
             "id": 30
           },
           {
-            "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+            "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
             "name": "./src/Header.js",
-            "id": 471
+            "id": 254
           },
           {
-            "identifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+            "identifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
             "name": "remote search/MiniSearch",
-            "id": 545
+            "id": 521
           }
         ],
         "failed": false,
         "errors": 0,
         "warnings": 0,
         "id": 288,
-        "issuerId": 545,
+        "issuerId": 521,
         "chunks": [179, 411],
         "assets": [],
         "reasons": [
           {
-            "moduleIdentifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+            "moduleIdentifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
             "module": "remote search/MiniSearch",
             "moduleName": "remote search/MiniSearch",
-            "resolvedModuleIdentifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+            "resolvedModuleIdentifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
             "resolvedModule": "remote search/MiniSearch",
             "type": "remote to external",
             "active": true,
             "explanation": "",
             "userRequest": "webpack/container/reference/search",
-            "moduleId": 545,
-            "resolvedModuleId": 545
+            "moduleId": 521,
+            "resolvedModuleId": 521
           }
         ],
         "usedExports": true,
@@ -197,8 +197,8 @@
         "depth": 3
       },
       {
-        "identifier": "remote overrides 5de9370a5611d2275b0d2dbe66520d10",
-        "name": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
+        "identifier": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+        "name": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
         "index": 23,
         "preOrderIndex": 23,
         "index2": 19,
@@ -208,7 +208,7 @@
         "built": true,
         "optional": false,
         "runtime": false,
-        "issuer": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+        "issuer": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
         "issuerName": "remote search/MiniSearch",
         "issuerPath": [
           {
@@ -217,49 +217,49 @@
             "id": 30
           },
           {
-            "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+            "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
             "name": "./src/Header.js",
-            "id": 471
+            "id": 254
           },
           {
-            "identifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+            "identifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
             "name": "remote search/MiniSearch",
-            "id": 545
+            "id": 521
           }
         ],
         "failed": false,
         "errors": 0,
         "warnings": 0,
-        "id": 460,
-        "issuerId": 545,
+        "id": 331,
+        "issuerId": 521,
         "chunks": [179, 411],
         "assets": [],
         "reasons": [
           {
-            "moduleIdentifier": "remote webpack/container/reference/dsl Button 5de9370a5611d2275b0d2dbe66520d10",
+            "moduleIdentifier": "remote webpack/container/reference/dsl Button 941de8967747a43e9241e4cce3d1581d",
             "module": "remote dsl/Button",
             "moduleName": "remote dsl/Button",
-            "resolvedModuleIdentifier": "remote webpack/container/reference/dsl Button 5de9370a5611d2275b0d2dbe66520d10",
+            "resolvedModuleIdentifier": "remote webpack/container/reference/dsl Button 941de8967747a43e9241e4cce3d1581d",
             "resolvedModule": "remote dsl/Button",
             "type": "remote overrides",
             "active": true,
             "explanation": "",
             "userRequest": null,
-            "moduleId": 906,
-            "resolvedModuleId": 906
+            "moduleId": 105,
+            "resolvedModuleId": 105
           },
           {
-            "moduleIdentifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+            "moduleIdentifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
             "module": "remote search/MiniSearch",
             "moduleName": "remote search/MiniSearch",
-            "resolvedModuleIdentifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+            "resolvedModuleIdentifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
             "resolvedModule": "remote search/MiniSearch",
             "type": "remote overrides",
             "active": true,
             "explanation": "",
             "userRequest": null,
-            "moduleId": 545,
-            "resolvedModuleId": 545
+            "moduleId": 521,
+            "resolvedModuleId": 521
           }
         ],
         "usedExports": true,
@@ -366,6 +366,30 @@
         "depth": null
       },
       {
+        "identifier": "webpack/runtime/global",
+        "name": "webpack/runtime/global",
+        "index": null,
+        "preOrderIndex": null,
+        "index2": null,
+        "postOrderIndex": null,
+        "size": 221,
+        "sizes": { "runtime": 221 },
+        "built": false,
+        "optional": false,
+        "runtime": true,
+        "failed": false,
+        "errors": 0,
+        "warnings": 0,
+        "id": "",
+        "chunks": [411],
+        "assets": [],
+        "reasons": [],
+        "usedExports": null,
+        "providedExports": [],
+        "optimizationBailout": [],
+        "depth": null
+      },
+      {
         "identifier": "webpack/runtime/hasOwnProperty shorthand",
         "name": "webpack/runtime/hasOwnProperty shorthand",
         "index": null,
@@ -396,8 +420,8 @@
         "preOrderIndex": null,
         "index2": null,
         "postOrderIndex": null,
-        "size": 3719,
-        "sizes": { "runtime": 3719 },
+        "size": 3722,
+        "sizes": { "runtime": 3722 },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -438,14 +462,38 @@
         "depth": null
       },
       {
+        "identifier": "webpack/runtime/node module decorator",
+        "name": "webpack/runtime/node module decorator",
+        "index": null,
+        "preOrderIndex": null,
+        "index2": null,
+        "postOrderIndex": null,
+        "size": 123,
+        "sizes": { "runtime": 123 },
+        "built": false,
+        "optional": false,
+        "runtime": true,
+        "failed": false,
+        "errors": 0,
+        "warnings": 0,
+        "id": "",
+        "chunks": [411],
+        "assets": [],
+        "reasons": [],
+        "usedExports": null,
+        "providedExports": [],
+        "optimizationBailout": [],
+        "depth": null
+      },
+      {
         "identifier": "webpack/runtime/overridables",
         "name": "webpack/runtime/overridables",
         "index": null,
         "preOrderIndex": null,
         "index2": null,
         "postOrderIndex": null,
-        "size": 1805,
-        "sizes": { "runtime": 1805 },
+        "size": 1891,
+        "sizes": { "runtime": 1891 },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -582,7 +630,7 @@
         "built": true,
         "optional": false,
         "runtime": false,
-        "issuer": "remote webpack/container/reference/dsl Button 5de9370a5611d2275b0d2dbe66520d10",
+        "issuer": "remote webpack/container/reference/dsl Button 941de8967747a43e9241e4cce3d1581d",
         "issuerName": "remote dsl/Button",
         "issuerPath": [
           {
@@ -591,36 +639,36 @@
             "id": 30
           },
           {
-            "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+            "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
             "name": "./src/Header.js",
-            "id": 471
+            "id": 254
           },
           {
-            "identifier": "remote webpack/container/reference/dsl Button 5de9370a5611d2275b0d2dbe66520d10",
+            "identifier": "remote webpack/container/reference/dsl Button 941de8967747a43e9241e4cce3d1581d",
             "name": "remote dsl/Button",
-            "id": 906
+            "id": 105
           }
         ],
         "failed": false,
         "errors": 0,
         "warnings": 0,
         "id": 789,
-        "issuerId": 906,
+        "issuerId": 105,
         "chunks": [179, 411],
         "assets": [],
         "reasons": [
           {
-            "moduleIdentifier": "remote webpack/container/reference/dsl Button 5de9370a5611d2275b0d2dbe66520d10",
+            "moduleIdentifier": "remote webpack/container/reference/dsl Button 941de8967747a43e9241e4cce3d1581d",
             "module": "remote dsl/Button",
             "moduleName": "remote dsl/Button",
-            "resolvedModuleIdentifier": "remote webpack/container/reference/dsl Button 5de9370a5611d2275b0d2dbe66520d10",
+            "resolvedModuleIdentifier": "remote webpack/container/reference/dsl Button 941de8967747a43e9241e4cce3d1581d",
             "resolvedModule": "remote dsl/Button",
             "type": "remote to external",
             "active": true,
             "explanation": "",
             "userRequest": "webpack/container/reference/dsl",
-            "moduleId": 906,
-            "resolvedModuleId": 906
+            "moduleId": 105,
+            "resolvedModuleId": 105
           }
         ],
         "usedExports": true,
@@ -642,7 +690,7 @@
         "built": true,
         "optional": false,
         "runtime": false,
-        "issuer": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+        "issuer": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
         "issuerName": "remote search/MiniSearch",
         "issuerPath": [
           {
@@ -651,36 +699,36 @@
             "id": 30
           },
           {
-            "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+            "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
             "name": "./src/Header.js",
-            "id": 471
+            "id": 254
           },
           {
-            "identifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+            "identifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
             "name": "remote search/MiniSearch",
-            "id": 545
+            "id": 521
           }
         ],
         "failed": false,
         "errors": 0,
         "warnings": 0,
         "id": 288,
-        "issuerId": 545,
+        "issuerId": 521,
         "chunks": [179, 411],
         "assets": [],
         "reasons": [
           {
-            "moduleIdentifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+            "moduleIdentifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
             "module": "remote search/MiniSearch",
             "moduleName": "remote search/MiniSearch",
-            "resolvedModuleIdentifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+            "resolvedModuleIdentifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
             "resolvedModule": "remote search/MiniSearch",
             "type": "remote to external",
             "active": true,
             "explanation": "",
             "userRequest": "webpack/container/reference/search",
-            "moduleId": 545,
-            "resolvedModuleId": 545
+            "moduleId": 521,
+            "resolvedModuleId": 521
           }
         ],
         "usedExports": true,
@@ -691,8 +739,8 @@
         "depth": 3
       },
       {
-        "identifier": "remote overrides 5de9370a5611d2275b0d2dbe66520d10",
-        "name": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
+        "identifier": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+        "name": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
         "index": 23,
         "preOrderIndex": 23,
         "index2": 19,
@@ -702,7 +750,7 @@
         "built": true,
         "optional": false,
         "runtime": false,
-        "issuer": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+        "issuer": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
         "issuerName": "remote search/MiniSearch",
         "issuerPath": [
           {
@@ -711,49 +759,49 @@
             "id": 30
           },
           {
-            "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+            "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
             "name": "./src/Header.js",
-            "id": 471
+            "id": 254
           },
           {
-            "identifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+            "identifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
             "name": "remote search/MiniSearch",
-            "id": 545
+            "id": 521
           }
         ],
         "failed": false,
         "errors": 0,
         "warnings": 0,
-        "id": 460,
-        "issuerId": 545,
+        "id": 331,
+        "issuerId": 521,
         "chunks": [179, 411],
         "assets": [],
         "reasons": [
           {
-            "moduleIdentifier": "remote webpack/container/reference/dsl Button 5de9370a5611d2275b0d2dbe66520d10",
+            "moduleIdentifier": "remote webpack/container/reference/dsl Button 941de8967747a43e9241e4cce3d1581d",
             "module": "remote dsl/Button",
             "moduleName": "remote dsl/Button",
-            "resolvedModuleIdentifier": "remote webpack/container/reference/dsl Button 5de9370a5611d2275b0d2dbe66520d10",
+            "resolvedModuleIdentifier": "remote webpack/container/reference/dsl Button 941de8967747a43e9241e4cce3d1581d",
             "resolvedModule": "remote dsl/Button",
             "type": "remote overrides",
             "active": true,
             "explanation": "",
             "userRequest": null,
-            "moduleId": 906,
-            "resolvedModuleId": 906
+            "moduleId": 105,
+            "resolvedModuleId": 105
           },
           {
-            "moduleIdentifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+            "moduleIdentifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
             "module": "remote search/MiniSearch",
             "moduleName": "remote search/MiniSearch",
-            "resolvedModuleIdentifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+            "resolvedModuleIdentifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
             "resolvedModule": "remote search/MiniSearch",
             "type": "remote overrides",
             "active": true,
             "explanation": "",
             "userRequest": null,
-            "moduleId": 545,
-            "resolvedModuleId": 545
+            "moduleId": 521,
+            "resolvedModuleId": 521
           }
         ],
         "usedExports": true,
@@ -860,6 +908,30 @@
         "depth": null
       },
       {
+        "identifier": "webpack/runtime/global",
+        "name": "webpack/runtime/global",
+        "index": null,
+        "preOrderIndex": null,
+        "index2": null,
+        "postOrderIndex": null,
+        "size": 221,
+        "sizes": { "runtime": 221 },
+        "built": false,
+        "optional": false,
+        "runtime": true,
+        "failed": false,
+        "errors": 0,
+        "warnings": 0,
+        "id": "",
+        "chunks": [411],
+        "assets": [],
+        "reasons": [],
+        "usedExports": null,
+        "providedExports": [],
+        "optimizationBailout": [],
+        "depth": null
+      },
+      {
         "identifier": "webpack/runtime/hasOwnProperty shorthand",
         "name": "webpack/runtime/hasOwnProperty shorthand",
         "index": null,
@@ -890,8 +962,8 @@
         "preOrderIndex": null,
         "index2": null,
         "postOrderIndex": null,
-        "size": 3719,
-        "sizes": { "runtime": 3719 },
+        "size": 3722,
+        "sizes": { "runtime": 3722 },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -932,14 +1004,38 @@
         "depth": null
       },
       {
+        "identifier": "webpack/runtime/node module decorator",
+        "name": "webpack/runtime/node module decorator",
+        "index": null,
+        "preOrderIndex": null,
+        "index2": null,
+        "postOrderIndex": null,
+        "size": 123,
+        "sizes": { "runtime": 123 },
+        "built": false,
+        "optional": false,
+        "runtime": true,
+        "failed": false,
+        "errors": 0,
+        "warnings": 0,
+        "id": "",
+        "chunks": [411],
+        "assets": [],
+        "reasons": [],
+        "usedExports": null,
+        "providedExports": [],
+        "optimizationBailout": [],
+        "depth": null
+      },
+      {
         "identifier": "webpack/runtime/overridables",
         "name": "webpack/runtime/overridables",
         "index": null,
         "preOrderIndex": null,
         "index2": null,
         "postOrderIndex": null,
-        "size": 1805,
-        "sizes": { "runtime": 1805 },
+        "size": 1891,
+        "sizes": { "runtime": 1891 },
         "built": false,
         "optional": false,
         "runtime": true,
@@ -1010,7 +1106,7 @@
       { "module": "", "moduleIdentifier": "", "moduleName": "", "loc": "nav" }
     ]
   },
-  "buildHash": "ad0f31ce9436d44ca546",
+  "buildHash": "a48448ddaeb92a13cfee",
   "modules": [
     {
       "identifier": "container entry [[\"Header\",\"./src/Header\"],[\"Footer\",\"./src/Footer\"]]",
@@ -1071,8 +1167,8 @@
       "depth": 0
     },
     {
-      "identifier": "overridable|react-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src|react",
-      "name": "overridable react-16.13.1 -> react",
+      "identifier": "overridable|react|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src|react",
+      "name": "overridable react -> react",
       "index": 3,
       "preOrderIndex": 3,
       "index2": 3,
@@ -1082,7 +1178,7 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
       "issuerName": "./src/Header.js",
       "issuerPath": [
         {
@@ -1091,185 +1187,185 @@
           "id": 30
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "name": "./src/Header.js",
-          "id": 471
+          "id": 254
         }
       ],
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 342,
-      "issuerId": 471,
-      "chunks": [179, 361],
+      "id": 210,
+      "issuerId": 254,
+      "chunks": [179, 592],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Footer.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Footer.js",
           "module": "./src/Footer.js",
           "moduleName": "./src/Footer.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Footer.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Footer.js",
           "resolvedModule": "./src/Footer.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "1:0-26",
-          "moduleId": 922,
-          "resolvedModuleId": 922
+          "moduleId": 311,
+          "resolvedModuleId": 311
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Footer.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Footer.js",
           "module": "./src/Footer.js",
           "moduleName": "./src/Footer.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Footer.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Footer.js",
           "resolvedModule": "./src/Footer.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "9:34-53",
-          "moduleId": 922,
-          "resolvedModuleId": 922
+          "moduleId": 311,
+          "resolvedModuleId": 311
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "module": "./src/Header.js",
           "moduleName": "./src/Header.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "resolvedModule": "./src/Header.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "1:0-26",
-          "moduleId": 471,
-          "resolvedModuleId": 471
+          "moduleId": 254,
+          "resolvedModuleId": 254
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "module": "./src/Header.js",
           "moduleName": "./src/Header.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "resolvedModule": "./src/Header.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "11:34-53",
-          "moduleId": 471,
-          "resolvedModuleId": 471
+          "moduleId": 254,
+          "resolvedModuleId": 254
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "module": "./src/Header.js",
           "moduleName": "./src/Header.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "resolvedModule": "./src/Header.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "13:26-45",
-          "moduleId": 471,
-          "resolvedModuleId": 471
+          "moduleId": 254,
+          "resolvedModuleId": 254
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "module": "./src/Header.js",
           "moduleName": "./src/Header.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "resolvedModule": "./src/Header.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "13:74-93",
-          "moduleId": 471,
-          "resolvedModuleId": 471
+          "moduleId": 254,
+          "resolvedModuleId": 254
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "3:0-26",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "5:31-50",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "5:77-96",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/App.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "5:125-144",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js",
           "resolvedModule": "./src/index.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "2:0-26",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js",
           "resolvedModule": "./src/index.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react",
           "loc": "4:30-49",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         }
       ],
@@ -1281,8 +1377,8 @@
       "depth": 1
     },
     {
-      "identifier": "overridable|react-dom-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src|react-dom",
-      "name": "overridable react-dom-16.13.1 -> react-dom",
+      "identifier": "overridable|react-dom|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src|react-dom",
+      "name": "overridable react-dom -> react-dom",
       "index": 27,
       "preOrderIndex": 27,
       "index2": 31,
@@ -1292,11 +1388,11 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js",
+      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js",
       "issuerName": "./src/index.js",
       "issuerPath": [
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js",
           "name": "./src/index.js",
           "id": null
         }
@@ -1304,37 +1400,37 @@
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 776,
+      "id": 614,
       "issuerId": null,
       "chunks": [179],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js",
           "resolvedModule": "./src/index.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "react-dom",
           "loc": "3:0-33",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js|30960cda7c6a915c9a39d6b7ea21e661",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js",
           "resolvedModule": "./src/index.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "react-dom",
           "loc": "4:0-15",
-          "moduleId": 472,
+          "moduleId": 681,
           "resolvedModuleId": null
         }
       ],
@@ -1346,8 +1442,8 @@
       "depth": 1
     },
     {
-      "identifier": "overridable|@emotion/core-undefined|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src|@emotion/core",
-      "name": "overridable @emotion/core-undefined -> @emotion/core",
+      "identifier": "overridable|@emotion/core-10.0|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src|@emotion/core",
+      "name": "overridable @emotion/core-10.0 -> @emotion/core",
       "index": 7,
       "preOrderIndex": 7,
       "index2": 17,
@@ -1357,7 +1453,7 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
       "issuerName": "./src/Header.js",
       "issuerPath": [
         {
@@ -1366,74 +1462,74 @@
           "id": 30
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "name": "./src/Header.js",
-          "id": 471
+          "id": 254
         }
       ],
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 265,
-      "issuerId": 471,
-      "chunks": [179, 361],
+      "id": 684,
+      "issuerId": 254,
+      "chunks": [179, 592],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Footer.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Footer.js",
           "module": "./src/Footer.js",
           "moduleName": "./src/Footer.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Footer.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Footer.js",
           "resolvedModule": "./src/Footer.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "@emotion/core",
           "loc": "2:0-32",
-          "moduleId": 922,
-          "resolvedModuleId": 922
+          "moduleId": 311,
+          "resolvedModuleId": 311
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Footer.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Footer.js",
           "module": "./src/Footer.js",
           "moduleName": "./src/Footer.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Footer.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Footer.js",
           "resolvedModule": "./src/Footer.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "@emotion/core",
           "loc": "3:14-17",
-          "moduleId": 922,
-          "resolvedModuleId": 922
+          "moduleId": 311,
+          "resolvedModuleId": 311
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "module": "./src/Header.js",
           "moduleName": "./src/Header.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "resolvedModule": "./src/Header.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "@emotion/core",
           "loc": "2:0-32",
-          "moduleId": 471,
-          "resolvedModuleId": 471
+          "moduleId": 254,
+          "resolvedModuleId": 254
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "module": "./src/Header.js",
           "moduleName": "./src/Header.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "resolvedModule": "./src/Header.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "@emotion/core",
           "loc": "5:14-17",
-          "moduleId": 471,
-          "resolvedModuleId": 471
+          "moduleId": 254,
+          "resolvedModuleId": 254
         }
       ],
       "usedExports": true,
@@ -1444,7 +1540,7 @@
       "depth": 2
     },
     {
-      "identifier": "remote webpack/container/reference/dsl Button 5de9370a5611d2275b0d2dbe66520d10",
+      "identifier": "remote webpack/container/reference/dsl Button 941de8967747a43e9241e4cce3d1581d",
       "name": "remote dsl/Button",
       "index": 21,
       "preOrderIndex": 21,
@@ -1455,7 +1551,7 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
       "issuerName": "./src/Header.js",
       "issuerPath": [
         {
@@ -1464,46 +1560,46 @@
           "id": 30
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "name": "./src/Header.js",
-          "id": 471
+          "id": 254
         }
       ],
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 906,
-      "issuerId": 471,
-      "chunks": [179, 471],
+      "id": 105,
+      "issuerId": 254,
+      "chunks": [179, 254],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "module": "./src/Header.js",
           "moduleName": "./src/Header.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "resolvedModule": "./src/Header.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "dsl/Button",
           "loc": "3:0-32",
-          "moduleId": 471,
-          "resolvedModuleId": 471
+          "moduleId": 254,
+          "resolvedModuleId": 254
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "module": "./src/Header.js",
           "moduleName": "./src/Header.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "resolvedModule": "./src/Header.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "dsl/Button",
           "loc": "13:46-52",
-          "moduleId": 471,
-          "resolvedModuleId": 471
+          "moduleId": 254,
+          "resolvedModuleId": 254
         }
       ],
       "usedExports": true,
@@ -1514,7 +1610,7 @@
       "depth": 2
     },
     {
-      "identifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+      "identifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
       "name": "remote search/MiniSearch",
       "index": 24,
       "preOrderIndex": 24,
@@ -1525,7 +1621,7 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+      "issuer": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
       "issuerName": "./src/Header.js",
       "issuerPath": [
         {
@@ -1534,46 +1630,46 @@
           "id": 30
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "name": "./src/Header.js",
-          "id": 471
+          "id": 254
         }
       ],
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 545,
-      "issuerId": 471,
-      "chunks": [179, 471],
+      "id": 521,
+      "issuerId": 254,
+      "chunks": [179, 254],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "module": "./src/Header.js",
           "moduleName": "./src/Header.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "resolvedModule": "./src/Header.js",
           "type": "harmony side effect evaluation",
           "active": true,
           "explanation": "",
           "userRequest": "search/MiniSearch",
           "loc": "4:0-43",
-          "moduleId": 471,
-          "resolvedModuleId": 471
+          "moduleId": 254,
+          "resolvedModuleId": 254
         },
         {
-          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "moduleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "module": "./src/Header.js",
           "moduleName": "./src/Header.js",
-          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "resolvedModuleIdentifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "resolvedModule": "./src/Header.js",
           "type": "harmony import specifier",
           "active": true,
           "explanation": "",
           "userRequest": "search/MiniSearch",
           "loc": "13:94-104",
-          "moduleId": 471,
-          "resolvedModuleId": 471
+          "moduleId": 254,
+          "resolvedModuleId": 254
         }
       ],
       "usedExports": true,
@@ -1584,8 +1680,8 @@
       "depth": 2
     },
     {
-      "identifier": "remote overrides 5de9370a5611d2275b0d2dbe66520d10",
-      "name": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
+      "identifier": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+      "name": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
       "index": 23,
       "preOrderIndex": 23,
       "index2": 19,
@@ -1595,7 +1691,7 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+      "issuer": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
       "issuerName": "remote search/MiniSearch",
       "issuerPath": [
         {
@@ -1604,49 +1700,49 @@
           "id": 30
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "name": "./src/Header.js",
-          "id": 471
+          "id": 254
         },
         {
-          "identifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+          "identifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
           "name": "remote search/MiniSearch",
-          "id": 545
+          "id": 521
         }
       ],
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 460,
-      "issuerId": 545,
+      "id": 331,
+      "issuerId": 521,
       "chunks": [179, 411],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "remote webpack/container/reference/dsl Button 5de9370a5611d2275b0d2dbe66520d10",
+          "moduleIdentifier": "remote webpack/container/reference/dsl Button 941de8967747a43e9241e4cce3d1581d",
           "module": "remote dsl/Button",
           "moduleName": "remote dsl/Button",
-          "resolvedModuleIdentifier": "remote webpack/container/reference/dsl Button 5de9370a5611d2275b0d2dbe66520d10",
+          "resolvedModuleIdentifier": "remote webpack/container/reference/dsl Button 941de8967747a43e9241e4cce3d1581d",
           "resolvedModule": "remote dsl/Button",
           "type": "remote overrides",
           "active": true,
           "explanation": "",
           "userRequest": null,
-          "moduleId": 906,
-          "resolvedModuleId": 906
+          "moduleId": 105,
+          "resolvedModuleId": 105
         },
         {
-          "moduleIdentifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+          "moduleIdentifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
           "module": "remote search/MiniSearch",
           "moduleName": "remote search/MiniSearch",
-          "resolvedModuleIdentifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+          "resolvedModuleIdentifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
           "resolvedModule": "remote search/MiniSearch",
           "type": "remote overrides",
           "active": true,
           "explanation": "",
           "userRequest": null,
-          "moduleId": 545,
-          "resolvedModuleId": 545
+          "moduleId": 521,
+          "resolvedModuleId": 521
         }
       ],
       "usedExports": true,
@@ -1657,8 +1753,8 @@
       "depth": 3
     },
     {
-      "identifier": "overridable|react-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/node_modules/@emotion/core/dist|react",
-      "name": "overridable react-16.13.1 -> react",
+      "identifier": "overridable|react|/Volumes/zack_dev/OSS/federation-dashboard/node_modules/@emotion/core/dist|react",
+      "name": "overridable react -> react",
       "index": 10,
       "preOrderIndex": 10,
       "index2": 5,
@@ -1677,14 +1773,14 @@
           "id": 30
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "name": "./src/Header.js",
-          "id": 471
+          "id": 254
         },
         {
-          "identifier": "overridable|@emotion/core-undefined|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src|@emotion/core",
-          "name": "overridable @emotion/core-undefined -> @emotion/core",
-          "id": 265
+          "identifier": "overridable|@emotion/core-10.0|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src|@emotion/core",
+          "name": "overridable @emotion/core-10.0 -> @emotion/core",
+          "id": 684
         },
         {
           "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/@emotion/core/dist/core.browser.esm.js",
@@ -1695,9 +1791,9 @@
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 363,
+      "id": 11,
       "issuerId": null,
-      "chunks": [179, 363],
+      "chunks": [11, 179],
       "assets": [],
       "reasons": [
         {
@@ -1910,8 +2006,8 @@
       "depth": 4
     },
     {
-      "identifier": "overridable|react-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/node_modules/react-dom/cjs|react",
-      "name": "overridable react-16.13.1 -> react",
+      "identifier": "overridable|react|/Volumes/zack_dev/OSS/federation-dashboard/node_modules/react-dom/cjs|react",
+      "name": "overridable react -> react",
       "index": 30,
       "preOrderIndex": 30,
       "index2": 26,
@@ -1925,14 +2021,14 @@
       "issuerName": "../../node_modules/react-dom/cjs/react-dom.production.min.js",
       "issuerPath": [
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/index.js",
           "name": "./src/index.js",
           "id": null
         },
         {
-          "identifier": "overridable|react-dom-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src|react-dom",
-          "name": "overridable react-dom-16.13.1 -> react-dom",
-          "id": 776
+          "identifier": "overridable|react-dom|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src|react-dom",
+          "name": "overridable react-dom -> react-dom",
+          "id": 614
         },
         {
           "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/react-dom/index.js",
@@ -1948,9 +2044,9 @@
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 33,
+      "id": 240,
       "issuerId": 967,
-      "chunks": [33, 179],
+      "chunks": [179, 240],
       "assets": [],
       "reasons": [
         {
@@ -1976,8 +2072,8 @@
       "depth": 4
     },
     {
-      "identifier": "overridable|@emotion/core-undefined|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav|@emotion/core",
-      "name": "overridable @emotion/core-undefined -> @emotion/core",
+      "identifier": "overridable|@emotion/core-10.0|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav|@emotion/core",
+      "name": "overridable @emotion/core-10.0 -> @emotion/core",
       "index": 34,
       "preOrderIndex": 34,
       "index2": 34,
@@ -1987,8 +2083,8 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "remote overrides 5de9370a5611d2275b0d2dbe66520d10",
-      "issuerName": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
+      "issuer": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+      "issuerName": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
       "issuerPath": [
         {
           "identifier": "container entry [[\"Header\",\"./src/Header\"],[\"Footer\",\"./src/Footer\"]]",
@@ -1996,41 +2092,41 @@
           "id": 30
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "name": "./src/Header.js",
-          "id": 471
+          "id": 254
         },
         {
-          "identifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+          "identifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
           "name": "remote search/MiniSearch",
-          "id": 545
+          "id": 521
         },
         {
-          "identifier": "remote overrides 5de9370a5611d2275b0d2dbe66520d10",
-          "name": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-          "id": 460
+          "identifier": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+          "name": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
+          "id": 331
         }
       ],
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 790,
-      "issuerId": 460,
-      "chunks": [790],
+      "id": 97,
+      "issuerId": 331,
+      "chunks": [97],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "remote overrides 5de9370a5611d2275b0d2dbe66520d10",
-          "module": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-          "moduleName": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-          "resolvedModuleIdentifier": "remote overrides 5de9370a5611d2275b0d2dbe66520d10",
-          "resolvedModule": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
+          "moduleIdentifier": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+          "module": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
+          "moduleName": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
+          "resolvedModuleIdentifier": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+          "resolvedModule": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
           "type": "remote override",
           "active": true,
           "explanation": "",
           "userRequest": "@emotion/core",
-          "moduleId": 460,
-          "resolvedModuleId": 460
+          "moduleId": 331,
+          "resolvedModuleId": 331
         }
       ],
       "usedExports": true,
@@ -2041,8 +2137,8 @@
       "depth": 4
     },
     {
-      "identifier": "overridable|react-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav|react",
-      "name": "overridable react-16.13.1 -> react",
+      "identifier": "overridable|lodash-4.17|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav|lodash",
+      "name": "overridable lodash-4.17 -> lodash",
       "index": 35,
       "preOrderIndex": 35,
       "index2": 35,
@@ -2052,8 +2148,8 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "remote overrides 5de9370a5611d2275b0d2dbe66520d10",
-      "issuerName": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
+      "issuer": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+      "issuerName": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
       "issuerPath": [
         {
           "identifier": "container entry [[\"Header\",\"./src/Header\"],[\"Footer\",\"./src/Footer\"]]",
@@ -2061,41 +2157,41 @@
           "id": 30
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "name": "./src/Header.js",
-          "id": 471
+          "id": 254
         },
         {
-          "identifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+          "identifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
           "name": "remote search/MiniSearch",
-          "id": 545
+          "id": 521
         },
         {
-          "identifier": "remote overrides 5de9370a5611d2275b0d2dbe66520d10",
-          "name": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-          "id": 460
+          "identifier": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+          "name": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
+          "id": 331
         }
       ],
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 643,
-      "issuerId": 460,
-      "chunks": [643],
+      "id": 328,
+      "issuerId": 331,
+      "chunks": [328],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "remote overrides 5de9370a5611d2275b0d2dbe66520d10",
-          "module": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-          "moduleName": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-          "resolvedModuleIdentifier": "remote overrides 5de9370a5611d2275b0d2dbe66520d10",
-          "resolvedModule": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
+          "moduleIdentifier": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+          "module": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
+          "moduleName": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
+          "resolvedModuleIdentifier": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+          "resolvedModule": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
           "type": "remote override",
           "active": true,
           "explanation": "",
-          "userRequest": "react",
-          "moduleId": 460,
-          "resolvedModuleId": 460
+          "userRequest": "lodash",
+          "moduleId": 331,
+          "resolvedModuleId": 331
         }
       ],
       "usedExports": true,
@@ -2106,8 +2202,8 @@
       "depth": 4
     },
     {
-      "identifier": "overridable|react-dom-16.13.1|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav|react-dom",
-      "name": "overridable react-dom-16.13.1 -> react-dom",
+      "identifier": "overridable|react|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav|react",
+      "name": "overridable react -> react",
       "index": 36,
       "preOrderIndex": 36,
       "index2": 36,
@@ -2117,8 +2213,8 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "remote overrides 5de9370a5611d2275b0d2dbe66520d10",
-      "issuerName": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
+      "issuer": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+      "issuerName": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
       "issuerPath": [
         {
           "identifier": "container entry [[\"Header\",\"./src/Header\"],[\"Footer\",\"./src/Footer\"]]",
@@ -2126,41 +2222,106 @@
           "id": 30
         },
         {
-          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
           "name": "./src/Header.js",
-          "id": 471
+          "id": 254
         },
         {
-          "identifier": "remote webpack/container/reference/search MiniSearch 5de9370a5611d2275b0d2dbe66520d10",
+          "identifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
           "name": "remote search/MiniSearch",
-          "id": 545
+          "id": 521
         },
         {
-          "identifier": "remote overrides 5de9370a5611d2275b0d2dbe66520d10",
-          "name": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-          "id": 460
+          "identifier": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+          "name": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
+          "id": 331
         }
       ],
       "failed": false,
       "errors": 0,
       "warnings": 0,
-      "id": 607,
-      "issuerId": 460,
-      "chunks": [607],
+      "id": 391,
+      "issuerId": 331,
+      "chunks": [391],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "remote overrides 5de9370a5611d2275b0d2dbe66520d10",
-          "module": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-          "moduleName": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
-          "resolvedModuleIdentifier": "remote overrides 5de9370a5611d2275b0d2dbe66520d10",
-          "resolvedModule": "remote overrides @emotion/core-undefined = @emotion/core, react-16.13.1 = react, react-dom-16.13.1 = react-dom",
+          "moduleIdentifier": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+          "module": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
+          "moduleName": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
+          "resolvedModuleIdentifier": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+          "resolvedModule": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
+          "type": "remote override",
+          "active": true,
+          "explanation": "",
+          "userRequest": "react",
+          "moduleId": 331,
+          "resolvedModuleId": 331
+        }
+      ],
+      "usedExports": true,
+      "providedExports": null,
+      "optimizationBailout": [
+        "ModuleConcatenation bailout: Module is not an ECMAScript module"
+      ],
+      "depth": 4
+    },
+    {
+      "identifier": "overridable|react-dom|/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav|react-dom",
+      "name": "overridable react-dom -> react-dom",
+      "index": 37,
+      "preOrderIndex": 37,
+      "index2": 37,
+      "postOrderIndex": 37,
+      "size": 42,
+      "sizes": { "overridable": 42 },
+      "built": true,
+      "optional": false,
+      "runtime": false,
+      "issuer": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+      "issuerName": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
+      "issuerPath": [
+        {
+          "identifier": "container entry [[\"Header\",\"./src/Header\"],[\"Footer\",\"./src/Footer\"]]",
+          "name": "container entry",
+          "id": 30
+        },
+        {
+          "identifier": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/src/Header.js",
+          "name": "./src/Header.js",
+          "id": 254
+        },
+        {
+          "identifier": "remote webpack/container/reference/search MiniSearch 941de8967747a43e9241e4cce3d1581d",
+          "name": "remote search/MiniSearch",
+          "id": 521
+        },
+        {
+          "identifier": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+          "name": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
+          "id": 331
+        }
+      ],
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "id": 799,
+      "issuerId": 331,
+      "chunks": [799],
+      "assets": [],
+      "reasons": [
+        {
+          "moduleIdentifier": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+          "module": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
+          "moduleName": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
+          "resolvedModuleIdentifier": "remote overrides 941de8967747a43e9241e4cce3d1581d",
+          "resolvedModule": "remote overrides @emotion/core-10.0 = @emotion/core, lodash-4.17 = lodash, react = react, react-dom = react-dom",
           "type": "remote override",
           "active": true,
           "explanation": "",
           "userRequest": "react-dom",
-          "moduleId": 460,
-          "resolvedModuleId": 460
+          "moduleId": 331,
+          "resolvedModuleId": 331
         }
       ],
       "usedExports": true,
@@ -2172,40 +2333,332 @@
     }
   ],
   "chunkDependencies": {
-    "33": [
+    "11": [
       {
-        "id": 316,
-        "ids": [316],
-        "debugId": 1016,
+        "id": 961,
+        "ids": [961],
+        "debugId": 1017,
         "idNameHints": { "0": "vendors" },
         "preventIntegration": false,
-        "files": { "0": "316.js" },
+        "files": { "0": "961.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "0bf07063b4d5f780b8c50c5660bd3d47",
-        "contentHash": { "javascript": "9b0b9bc07d55caae94f6" },
-        "renderedHash": "0bf07063b4d5f780b8c5",
+        "hash": "025b1c722b60502b3000b9d9906cc66b",
+        "contentHash": { "javascript": "7fc7a004487d4f1c2eb4" },
+        "renderedHash": "025b1c722b60502b3000",
         "chunkReason": "split chunk (cache group: defaultVendors)",
         "extraAsync": false
       },
       {
-        "id": 33,
-        "ids": [33],
-        "debugId": 1010,
+        "id": 11,
+        "ids": [11],
+        "debugId": 1009,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "49400de8fc512577c81a00f2fc2572f3",
-        "contentHash": { "javascript": "028b02f9cfef1b62a280" },
-        "renderedHash": "49400de8fc512577c81a",
+        "hash": "4f3e77ab628d3d54da0748099c1dcbe1",
+        "contentHash": { "javascript": "07fa1de27563159c9de7" },
+        "renderedHash": "4f3e77ab628d3d54da07",
+        "extraAsync": false
+      },
+      {
+        "id": 784,
+        "ids": [784, 292],
+        "debugId": 1011,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": { "0": "784.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "6a9c193d9bbaedc709f3828467dfdcaa",
+        "contentHash": { "javascript": "c6ba80ed35e0114d6d7a" },
+        "renderedHash": "6a9c193d9bbaedc709f3",
+        "extraAsync": false
+      }
+    ],
+    "97": [
+      {
+        "id": 97,
+        "ids": [97],
+        "debugId": 1003,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "b317cd4fa43d0575ba62dbae64d87f35",
+        "contentHash": { "javascript": "7398804cd6451d236204" },
+        "renderedHash": "b317cd4fa43d0575ba62",
+        "extraAsync": false
+      },
+      {
+        "id": 961,
+        "ids": [961],
+        "debugId": 1017,
+        "idNameHints": { "0": "vendors" },
+        "preventIntegration": false,
+        "files": { "0": "961.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "025b1c722b60502b3000b9d9906cc66b",
+        "contentHash": { "javascript": "7fc7a004487d4f1c2eb4" },
+        "renderedHash": "025b1c722b60502b3000",
+        "chunkReason": "split chunk (cache group: defaultVendors)",
+        "extraAsync": false
+      },
+      {
+        "id": 11,
+        "ids": [11],
+        "debugId": 1009,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "4f3e77ab628d3d54da0748099c1dcbe1",
+        "contentHash": { "javascript": "07fa1de27563159c9de7" },
+        "renderedHash": "4f3e77ab628d3d54da07",
+        "extraAsync": false
+      },
+      {
+        "id": 784,
+        "ids": [784, 292],
+        "debugId": 1011,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": { "0": "784.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "6a9c193d9bbaedc709f3828467dfdcaa",
+        "contentHash": { "javascript": "c6ba80ed35e0114d6d7a" },
+        "renderedHash": "6a9c193d9bbaedc709f3",
+        "extraAsync": false
+      }
+    ],
+    "240": [
+      {
+        "id": 316,
+        "ids": [316],
+        "debugId": 1018,
+        "idNameHints": { "0": "vendors" },
+        "preventIntegration": false,
+        "files": { "0": "316.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "d86d16a86769bfa4e480d6b5c986198a",
+        "contentHash": { "javascript": "6991e8d3379bb3bf5719" },
+        "renderedHash": "d86d16a86769bfa4e480",
+        "chunkReason": "split chunk (cache group: defaultVendors)",
+        "extraAsync": false
+      },
+      {
+        "id": 240,
+        "ids": [240],
+        "debugId": 1012,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "e4a9d96e4128a69f4c40c2e385828f15",
+        "contentHash": { "javascript": "6184a691ccc1acd77838" },
+        "renderedHash": "e4a9d96e4128a69f4c40",
         "extraAsync": false
       },
       {
         "id": 292,
         "ids": [292],
-        "debugId": 1014,
+        "debugId": 1016,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": { "0": "292.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "9534ea597ff512af3dd2c5966ca1cf3e",
+        "contentHash": { "javascript": "4d8740c9ddbd10dd5ddd" },
+        "renderedHash": "9534ea597ff512af3dd2",
+        "extraAsync": false
+      }
+    ],
+    "254": [
+      {
+        "id": 592,
+        "ids": [592],
+        "debugId": 1019,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "1ad48b42a1d48a3c0efc423eb960c4ba",
+        "contentHash": { "javascript": "2a54f51bd63b4ea0460e" },
+        "renderedHash": "1ad48b42a1d48a3c0efc",
+        "chunkReason": "split chunk (cache group: default)",
+        "extraAsync": false
+      },
+      {
+        "id": 254,
+        "ids": [254],
+        "debugId": 1007,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": { "0": "254.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "01153188868cd2fe2b21496dd8fa8063",
+        "contentHash": { "javascript": "64a6b7be5eee944889ec" },
+        "renderedHash": "01153188868cd2fe2b21",
+        "extraAsync": false
+      },
+      {
+        "id": 784,
+        "ids": [784, 292],
+        "debugId": 1011,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": { "0": "784.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "6a9c193d9bbaedc709f3828467dfdcaa",
+        "contentHash": { "javascript": "c6ba80ed35e0114d6d7a" },
+        "renderedHash": "6a9c193d9bbaedc709f3",
+        "extraAsync": false
+      },
+      {
+        "id": 961,
+        "ids": [961],
+        "debugId": 1017,
+        "idNameHints": { "0": "vendors" },
+        "preventIntegration": false,
+        "files": { "0": "961.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "025b1c722b60502b3000b9d9906cc66b",
+        "contentHash": { "javascript": "7fc7a004487d4f1c2eb4" },
+        "renderedHash": "025b1c722b60502b3000",
+        "chunkReason": "split chunk (cache group: defaultVendors)",
+        "extraAsync": false
+      },
+      {
+        "id": 11,
+        "ids": [11],
+        "debugId": 1009,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "4f3e77ab628d3d54da0748099c1dcbe1",
+        "contentHash": { "javascript": "07fa1de27563159c9de7" },
+        "renderedHash": "4f3e77ab628d3d54da07",
+        "extraAsync": false
+      },
+      {
+        "id": 97,
+        "ids": [97],
+        "debugId": 1003,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "b317cd4fa43d0575ba62dbae64d87f35",
+        "contentHash": { "javascript": "7398804cd6451d236204" },
+        "renderedHash": "b317cd4fa43d0575ba62",
+        "extraAsync": false
+      },
+      {
+        "id": 328,
+        "ids": [328],
+        "debugId": 1004,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "86b4972835e5224672f6fa381f4e5b30",
+        "contentHash": { "javascript": "178b16405d6900d8c693" },
+        "renderedHash": "86b4972835e5224672f6",
+        "extraAsync": false
+      },
+      {
+        "id": 391,
+        "ids": [391],
+        "debugId": 1005,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "84428169f44caa020848d6e1b7b8d03a",
+        "contentHash": { "javascript": "137d207e41a904896829" },
+        "renderedHash": "84428169f44caa020848",
+        "extraAsync": false
+      },
+      {
+        "id": 799,
+        "ids": [799],
+        "debugId": 1006,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "c574446a0d964e414bf3000a5e1532fb",
+        "contentHash": { "javascript": "c46ce3cca07d9fad36ef" },
+        "renderedHash": "c574446a0d964e414bf3",
+        "extraAsync": false
+      },
+      {
+        "id": 635,
+        "ids": [635],
+        "debugId": 1010,
+        "idNameHints": { "0": "vendors" },
+        "preventIntegration": false,
+        "files": { "0": "635.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "c7499214acfbbdc6b445634268613e79",
+        "contentHash": { "javascript": "6c582e36243ebddc23c3" },
+        "renderedHash": "c7499214acfbbdc6b445",
+        "chunkReason": "reused as split chunk (cache group: defaultVendors)",
+        "extraAsync": false
+      },
+      {
+        "id": 316,
+        "ids": [316],
+        "debugId": 1018,
+        "idNameHints": { "0": "vendors" },
+        "preventIntegration": false,
+        "files": { "0": "316.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "d86d16a86769bfa4e480d6b5c986198a",
+        "contentHash": { "javascript": "6991e8d3379bb3bf5719" },
+        "renderedHash": "d86d16a86769bfa4e480",
+        "chunkReason": "split chunk (cache group: defaultVendors)",
+        "extraAsync": false
+      },
+      {
+        "id": 240,
+        "ids": [240],
+        "debugId": 1012,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "e4a9d96e4128a69f4c40c2e385828f15",
+        "contentHash": { "javascript": "6184a691ccc1acd77838" },
+        "renderedHash": "e4a9d96e4128a69f4c40",
+        "extraAsync": false
+      },
+      {
+        "id": 292,
+        "ids": [292],
+        "debugId": 1016,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "292.js" },
@@ -2221,52 +2674,7 @@
       {
         "id": 292,
         "ids": [292],
-        "debugId": 1014,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "292.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "9534ea597ff512af3dd2c5966ca1cf3e",
-        "contentHash": { "javascript": "4d8740c9ddbd10dd5ddd" },
-        "renderedHash": "9534ea597ff512af3dd2",
-        "extraAsync": false
-      }
-    ],
-    "316": [
-      {
-        "id": 316,
-        "ids": [316],
         "debugId": 1016,
-        "idNameHints": { "0": "vendors" },
-        "preventIntegration": false,
-        "files": { "0": "316.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "0bf07063b4d5f780b8c50c5660bd3d47",
-        "contentHash": { "javascript": "9b0b9bc07d55caae94f6" },
-        "renderedHash": "0bf07063b4d5f780b8c5",
-        "chunkReason": "split chunk (cache group: defaultVendors)",
-        "extraAsync": false
-      },
-      {
-        "id": 33,
-        "ids": [33],
-        "debugId": 1010,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": {},
-        "auxiliaryFiles": {},
-        "rendered": false,
-        "hash": "49400de8fc512577c81a00f2fc2572f3",
-        "contentHash": { "javascript": "028b02f9cfef1b62a280" },
-        "renderedHash": "49400de8fc512577c81a",
-        "extraAsync": false
-      },
-      {
-        "id": 292,
-        "ids": [292],
-        "debugId": 1014,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "292.js" },
@@ -2278,54 +2686,40 @@
         "extraAsync": false
       }
     ],
-    "361": [
+    "311": [
       {
-        "id": 361,
-        "ids": [361],
-        "debugId": 1017,
+        "id": 592,
+        "ids": [592],
+        "debugId": 1019,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "72301276ee5d4afd7325d2953beffee2",
-        "contentHash": { "javascript": "848616b8632bce68571d" },
-        "renderedHash": "72301276ee5d4afd7325",
+        "hash": "1ad48b42a1d48a3c0efc423eb960c4ba",
+        "contentHash": { "javascript": "2a54f51bd63b4ea0460e" },
+        "renderedHash": "1ad48b42a1d48a3c0efc",
         "chunkReason": "split chunk (cache group: default)",
         "extraAsync": false
       },
       {
-        "id": 471,
-        "ids": [471],
-        "debugId": 1006,
+        "id": 311,
+        "ids": [311],
+        "debugId": 1008,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "471.js" },
+        "files": { "0": "311.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "ed13bc26d33df6c71741c3c1a32ae6dc",
-        "contentHash": { "javascript": "870956a71965b9c4a5fb" },
-        "renderedHash": "ed13bc26d33df6c71741",
-        "extraAsync": false
-      },
-      {
-        "id": 922,
-        "ids": [922],
-        "debugId": 1007,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "922.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "6764e705a3e4fa850956a74eb30bd04c",
-        "contentHash": { "javascript": "70d0c0fa29cbb182b409" },
-        "renderedHash": "6764e705a3e4fa850956",
+        "hash": "e0b36d7b9c99a98ad9e1ce5df1959520",
+        "contentHash": { "javascript": "d68d9569e6e754519325" },
+        "renderedHash": "e0b36d7b9c99a98ad9e1",
         "extraAsync": false
       },
       {
         "id": 784,
         "ids": [784, 292],
-        "debugId": 1009,
+        "debugId": 1011,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },
@@ -2339,107 +2733,67 @@
       {
         "id": 961,
         "ids": [961],
-        "debugId": 1015,
+        "debugId": 1017,
         "idNameHints": { "0": "vendors" },
         "preventIntegration": false,
         "files": { "0": "961.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "a67c955237fe15963d82c74d176a3519",
-        "contentHash": { "javascript": "86f94f7a7fa596d624c7" },
-        "renderedHash": "a67c955237fe15963d82",
+        "hash": "025b1c722b60502b3000b9d9906cc66b",
+        "contentHash": { "javascript": "7fc7a004487d4f1c2eb4" },
+        "renderedHash": "025b1c722b60502b3000",
         "chunkReason": "split chunk (cache group: defaultVendors)",
         "extraAsync": false
       },
       {
-        "id": 363,
-        "ids": [363],
-        "debugId": 1008,
+        "id": 11,
+        "ids": [11],
+        "debugId": 1009,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "1ee9591d1082e9891f306fb7e25d8020",
-        "contentHash": { "javascript": "7def3bfb0dd1c9cbb715" },
-        "renderedHash": "1ee9591d1082e9891f30",
+        "hash": "4f3e77ab628d3d54da0748099c1dcbe1",
+        "contentHash": { "javascript": "07fa1de27563159c9de7" },
+        "renderedHash": "4f3e77ab628d3d54da07",
         "extraAsync": false
-      },
-      {
-        "id": 790,
-        "ids": [790],
-        "debugId": 1003,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": {},
-        "auxiliaryFiles": {},
-        "rendered": false,
-        "hash": "30a45a92b50327c35080224cda933195",
-        "contentHash": { "javascript": "febc0a37dc8cbda409c5" },
-        "renderedHash": "30a45a92b50327c35080",
-        "extraAsync": false
-      },
-      {
-        "id": 643,
-        "ids": [643],
-        "debugId": 1004,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": {},
-        "auxiliaryFiles": {},
-        "rendered": false,
-        "hash": "932dabfb3da8bb635b30324f0895d05a",
-        "contentHash": { "javascript": "2263af0b6dabbce7a0c0" },
-        "renderedHash": "932dabfb3da8bb635b30",
-        "extraAsync": false
-      },
-      {
-        "id": 607,
-        "ids": [607],
-        "debugId": 1005,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": {},
-        "auxiliaryFiles": {},
-        "rendered": false,
-        "hash": "f06a9b9ed8deb0f23fedee064b4139f7",
-        "contentHash": { "javascript": "dcac2e701bb8f11f9f6f" },
-        "renderedHash": "f06a9b9ed8deb0f23fed",
-        "extraAsync": false
-      },
+      }
+    ],
+    "316": [
       {
         "id": 316,
         "ids": [316],
-        "debugId": 1016,
+        "debugId": 1018,
         "idNameHints": { "0": "vendors" },
         "preventIntegration": false,
         "files": { "0": "316.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "0bf07063b4d5f780b8c50c5660bd3d47",
-        "contentHash": { "javascript": "9b0b9bc07d55caae94f6" },
-        "renderedHash": "0bf07063b4d5f780b8c5",
+        "hash": "d86d16a86769bfa4e480d6b5c986198a",
+        "contentHash": { "javascript": "6991e8d3379bb3bf5719" },
+        "renderedHash": "d86d16a86769bfa4e480",
         "chunkReason": "split chunk (cache group: defaultVendors)",
         "extraAsync": false
       },
       {
-        "id": 33,
-        "ids": [33],
-        "debugId": 1010,
+        "id": 240,
+        "ids": [240],
+        "debugId": 1012,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "49400de8fc512577c81a00f2fc2572f3",
-        "contentHash": { "javascript": "028b02f9cfef1b62a280" },
-        "renderedHash": "49400de8fc512577c81a",
+        "hash": "e4a9d96e4128a69f4c40c2e385828f15",
+        "contentHash": { "javascript": "6184a691ccc1acd77838" },
+        "renderedHash": "e4a9d96e4128a69f4c40",
         "extraAsync": false
       },
       {
         "id": 292,
         "ids": [292],
-        "debugId": 1014,
+        "debugId": 1016,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "292.js" },
@@ -2451,40 +2805,56 @@
         "extraAsync": false
       }
     ],
-    "363": [
+    "328": [
       {
-        "id": 961,
-        "ids": [961],
-        "debugId": 1015,
-        "idNameHints": { "0": "vendors" },
-        "preventIntegration": false,
-        "files": { "0": "961.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "a67c955237fe15963d82c74d176a3519",
-        "contentHash": { "javascript": "86f94f7a7fa596d624c7" },
-        "renderedHash": "a67c955237fe15963d82",
-        "chunkReason": "split chunk (cache group: defaultVendors)",
-        "extraAsync": false
-      },
-      {
-        "id": 363,
-        "ids": [363],
-        "debugId": 1008,
+        "id": 328,
+        "ids": [328],
+        "debugId": 1004,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "1ee9591d1082e9891f306fb7e25d8020",
-        "contentHash": { "javascript": "7def3bfb0dd1c9cbb715" },
-        "renderedHash": "1ee9591d1082e9891f30",
+        "hash": "86b4972835e5224672f6fa381f4e5b30",
+        "contentHash": { "javascript": "178b16405d6900d8c693" },
+        "renderedHash": "86b4972835e5224672f6",
+        "extraAsync": false
+      },
+      {
+        "id": 635,
+        "ids": [635],
+        "debugId": 1010,
+        "idNameHints": { "0": "vendors" },
+        "preventIntegration": false,
+        "files": { "0": "635.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "c7499214acfbbdc6b445634268613e79",
+        "contentHash": { "javascript": "6c582e36243ebddc23c3" },
+        "renderedHash": "c7499214acfbbdc6b445",
+        "chunkReason": "reused as split chunk (cache group: defaultVendors)",
+        "extraAsync": false
+      }
+    ],
+    "391": [
+      {
+        "id": 391,
+        "ids": [391],
+        "debugId": 1005,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "84428169f44caa020848d6e1b7b8d03a",
+        "contentHash": { "javascript": "137d207e41a904896829" },
+        "renderedHash": "84428169f44caa020848",
         "extraAsync": false
       },
       {
         "id": 784,
         "ids": [784, 292],
-        "debugId": 1009,
+        "debugId": 1011,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },
@@ -2508,58 +2878,58 @@
         "files": { "0": "remoteEntry.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "b92cb59681cdc421998d336936c006d2",
-        "contentHash": { "javascript": "e46b560956f7898201f0" },
-        "renderedHash": "b92cb59681cdc421998d",
+        "hash": "842cd09132f157e3153b18311bd3295e",
+        "contentHash": { "javascript": "879c51bc628aa93b5c6b" },
+        "renderedHash": "842cd09132f157e3153b",
         "extraAsync": false
       },
       {
-        "id": 361,
-        "ids": [361],
-        "debugId": 1017,
+        "id": 592,
+        "ids": [592],
+        "debugId": 1019,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "72301276ee5d4afd7325d2953beffee2",
-        "contentHash": { "javascript": "848616b8632bce68571d" },
-        "renderedHash": "72301276ee5d4afd7325",
+        "hash": "1ad48b42a1d48a3c0efc423eb960c4ba",
+        "contentHash": { "javascript": "2a54f51bd63b4ea0460e" },
+        "renderedHash": "1ad48b42a1d48a3c0efc",
         "chunkReason": "split chunk (cache group: default)",
         "extraAsync": false
       },
       {
-        "id": 471,
-        "ids": [471],
-        "debugId": 1006,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "471.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "ed13bc26d33df6c71741c3c1a32ae6dc",
-        "contentHash": { "javascript": "870956a71965b9c4a5fb" },
-        "renderedHash": "ed13bc26d33df6c71741",
-        "extraAsync": false
-      },
-      {
-        "id": 922,
-        "ids": [922],
+        "id": 254,
+        "ids": [254],
         "debugId": 1007,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "922.js" },
+        "files": { "0": "254.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "6764e705a3e4fa850956a74eb30bd04c",
-        "contentHash": { "javascript": "70d0c0fa29cbb182b409" },
-        "renderedHash": "6764e705a3e4fa850956",
+        "hash": "01153188868cd2fe2b21496dd8fa8063",
+        "contentHash": { "javascript": "64a6b7be5eee944889ec" },
+        "renderedHash": "01153188868cd2fe2b21",
+        "extraAsync": false
+      },
+      {
+        "id": 311,
+        "ids": [311],
+        "debugId": 1008,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": { "0": "311.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "e0b36d7b9c99a98ad9e1ce5df1959520",
+        "contentHash": { "javascript": "d68d9569e6e754519325" },
+        "renderedHash": "e0b36d7b9c99a98ad9e1",
         "extraAsync": false
       },
       {
         "id": 784,
         "ids": [784, 292],
-        "debugId": 1009,
+        "debugId": 1011,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },
@@ -2573,107 +2943,136 @@
       {
         "id": 961,
         "ids": [961],
-        "debugId": 1015,
+        "debugId": 1017,
         "idNameHints": { "0": "vendors" },
         "preventIntegration": false,
         "files": { "0": "961.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "a67c955237fe15963d82c74d176a3519",
-        "contentHash": { "javascript": "86f94f7a7fa596d624c7" },
-        "renderedHash": "a67c955237fe15963d82",
+        "hash": "025b1c722b60502b3000b9d9906cc66b",
+        "contentHash": { "javascript": "7fc7a004487d4f1c2eb4" },
+        "renderedHash": "025b1c722b60502b3000",
         "chunkReason": "split chunk (cache group: defaultVendors)",
         "extraAsync": false
       },
       {
-        "id": 363,
-        "ids": [363],
-        "debugId": 1008,
+        "id": 11,
+        "ids": [11],
+        "debugId": 1009,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "1ee9591d1082e9891f306fb7e25d8020",
-        "contentHash": { "javascript": "7def3bfb0dd1c9cbb715" },
-        "renderedHash": "1ee9591d1082e9891f30",
+        "hash": "4f3e77ab628d3d54da0748099c1dcbe1",
+        "contentHash": { "javascript": "07fa1de27563159c9de7" },
+        "renderedHash": "4f3e77ab628d3d54da07",
         "extraAsync": false
       },
       {
-        "id": 790,
-        "ids": [790],
+        "id": 97,
+        "ids": [97],
         "debugId": 1003,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "30a45a92b50327c35080224cda933195",
-        "contentHash": { "javascript": "febc0a37dc8cbda409c5" },
-        "renderedHash": "30a45a92b50327c35080",
+        "hash": "b317cd4fa43d0575ba62dbae64d87f35",
+        "contentHash": { "javascript": "7398804cd6451d236204" },
+        "renderedHash": "b317cd4fa43d0575ba62",
         "extraAsync": false
       },
       {
-        "id": 643,
-        "ids": [643],
+        "id": 328,
+        "ids": [328],
         "debugId": 1004,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "932dabfb3da8bb635b30324f0895d05a",
-        "contentHash": { "javascript": "2263af0b6dabbce7a0c0" },
-        "renderedHash": "932dabfb3da8bb635b30",
+        "hash": "86b4972835e5224672f6fa381f4e5b30",
+        "contentHash": { "javascript": "178b16405d6900d8c693" },
+        "renderedHash": "86b4972835e5224672f6",
         "extraAsync": false
       },
       {
-        "id": 607,
-        "ids": [607],
+        "id": 391,
+        "ids": [391],
         "debugId": 1005,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "f06a9b9ed8deb0f23fedee064b4139f7",
-        "contentHash": { "javascript": "dcac2e701bb8f11f9f6f" },
-        "renderedHash": "f06a9b9ed8deb0f23fed",
+        "hash": "84428169f44caa020848d6e1b7b8d03a",
+        "contentHash": { "javascript": "137d207e41a904896829" },
+        "renderedHash": "84428169f44caa020848",
         "extraAsync": false
       },
       {
-        "id": 316,
-        "ids": [316],
-        "debugId": 1016,
-        "idNameHints": { "0": "vendors" },
-        "preventIntegration": false,
-        "files": { "0": "316.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "0bf07063b4d5f780b8c50c5660bd3d47",
-        "contentHash": { "javascript": "9b0b9bc07d55caae94f6" },
-        "renderedHash": "0bf07063b4d5f780b8c5",
-        "chunkReason": "split chunk (cache group: defaultVendors)",
-        "extraAsync": false
-      },
-      {
-        "id": 33,
-        "ids": [33],
-        "debugId": 1010,
+        "id": 799,
+        "ids": [799],
+        "debugId": 1006,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "49400de8fc512577c81a00f2fc2572f3",
-        "contentHash": { "javascript": "028b02f9cfef1b62a280" },
-        "renderedHash": "49400de8fc512577c81a",
+        "hash": "c574446a0d964e414bf3000a5e1532fb",
+        "contentHash": { "javascript": "c46ce3cca07d9fad36ef" },
+        "renderedHash": "c574446a0d964e414bf3",
+        "extraAsync": false
+      },
+      {
+        "id": 635,
+        "ids": [635],
+        "debugId": 1010,
+        "idNameHints": { "0": "vendors" },
+        "preventIntegration": false,
+        "files": { "0": "635.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "c7499214acfbbdc6b445634268613e79",
+        "contentHash": { "javascript": "6c582e36243ebddc23c3" },
+        "renderedHash": "c7499214acfbbdc6b445",
+        "chunkReason": "reused as split chunk (cache group: defaultVendors)",
+        "extraAsync": false
+      },
+      {
+        "id": 316,
+        "ids": [316],
+        "debugId": 1018,
+        "idNameHints": { "0": "vendors" },
+        "preventIntegration": false,
+        "files": { "0": "316.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "d86d16a86769bfa4e480d6b5c986198a",
+        "contentHash": { "javascript": "6991e8d3379bb3bf5719" },
+        "renderedHash": "d86d16a86769bfa4e480",
+        "chunkReason": "split chunk (cache group: defaultVendors)",
+        "extraAsync": false
+      },
+      {
+        "id": 240,
+        "ids": [240],
+        "debugId": 1012,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "e4a9d96e4128a69f4c40c2e385828f15",
+        "contentHash": { "javascript": "6184a691ccc1acd77838" },
+        "renderedHash": "e4a9d96e4128a69f4c40",
         "extraAsync": false
       },
       {
         "id": 292,
         "ids": [292],
-        "debugId": 1014,
+        "debugId": 1016,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "292.js" },
@@ -2685,40 +3084,54 @@
         "extraAsync": false
       }
     ],
-    "471": [
+    "592": [
       {
-        "id": 361,
-        "ids": [361],
-        "debugId": 1017,
+        "id": 592,
+        "ids": [592],
+        "debugId": 1019,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "72301276ee5d4afd7325d2953beffee2",
-        "contentHash": { "javascript": "848616b8632bce68571d" },
-        "renderedHash": "72301276ee5d4afd7325",
+        "hash": "1ad48b42a1d48a3c0efc423eb960c4ba",
+        "contentHash": { "javascript": "2a54f51bd63b4ea0460e" },
+        "renderedHash": "1ad48b42a1d48a3c0efc",
         "chunkReason": "split chunk (cache group: default)",
         "extraAsync": false
       },
       {
-        "id": 471,
-        "ids": [471],
-        "debugId": 1006,
+        "id": 254,
+        "ids": [254],
+        "debugId": 1007,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "471.js" },
+        "files": { "0": "254.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "ed13bc26d33df6c71741c3c1a32ae6dc",
-        "contentHash": { "javascript": "870956a71965b9c4a5fb" },
-        "renderedHash": "ed13bc26d33df6c71741",
+        "hash": "01153188868cd2fe2b21496dd8fa8063",
+        "contentHash": { "javascript": "64a6b7be5eee944889ec" },
+        "renderedHash": "01153188868cd2fe2b21",
+        "extraAsync": false
+      },
+      {
+        "id": 311,
+        "ids": [311],
+        "debugId": 1008,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": { "0": "311.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "e0b36d7b9c99a98ad9e1ce5df1959520",
+        "contentHash": { "javascript": "d68d9569e6e754519325" },
+        "renderedHash": "e0b36d7b9c99a98ad9e1",
         "extraAsync": false
       },
       {
         "id": 784,
         "ids": [784, 292],
-        "debugId": 1009,
+        "debugId": 1011,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },
@@ -2732,107 +3145,136 @@
       {
         "id": 961,
         "ids": [961],
-        "debugId": 1015,
+        "debugId": 1017,
         "idNameHints": { "0": "vendors" },
         "preventIntegration": false,
         "files": { "0": "961.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "a67c955237fe15963d82c74d176a3519",
-        "contentHash": { "javascript": "86f94f7a7fa596d624c7" },
-        "renderedHash": "a67c955237fe15963d82",
+        "hash": "025b1c722b60502b3000b9d9906cc66b",
+        "contentHash": { "javascript": "7fc7a004487d4f1c2eb4" },
+        "renderedHash": "025b1c722b60502b3000",
         "chunkReason": "split chunk (cache group: defaultVendors)",
         "extraAsync": false
       },
       {
-        "id": 363,
-        "ids": [363],
-        "debugId": 1008,
+        "id": 11,
+        "ids": [11],
+        "debugId": 1009,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "1ee9591d1082e9891f306fb7e25d8020",
-        "contentHash": { "javascript": "7def3bfb0dd1c9cbb715" },
-        "renderedHash": "1ee9591d1082e9891f30",
+        "hash": "4f3e77ab628d3d54da0748099c1dcbe1",
+        "contentHash": { "javascript": "07fa1de27563159c9de7" },
+        "renderedHash": "4f3e77ab628d3d54da07",
         "extraAsync": false
       },
       {
-        "id": 790,
-        "ids": [790],
+        "id": 97,
+        "ids": [97],
         "debugId": 1003,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "30a45a92b50327c35080224cda933195",
-        "contentHash": { "javascript": "febc0a37dc8cbda409c5" },
-        "renderedHash": "30a45a92b50327c35080",
+        "hash": "b317cd4fa43d0575ba62dbae64d87f35",
+        "contentHash": { "javascript": "7398804cd6451d236204" },
+        "renderedHash": "b317cd4fa43d0575ba62",
         "extraAsync": false
       },
       {
-        "id": 643,
-        "ids": [643],
+        "id": 328,
+        "ids": [328],
         "debugId": 1004,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "932dabfb3da8bb635b30324f0895d05a",
-        "contentHash": { "javascript": "2263af0b6dabbce7a0c0" },
-        "renderedHash": "932dabfb3da8bb635b30",
+        "hash": "86b4972835e5224672f6fa381f4e5b30",
+        "contentHash": { "javascript": "178b16405d6900d8c693" },
+        "renderedHash": "86b4972835e5224672f6",
         "extraAsync": false
       },
       {
-        "id": 607,
-        "ids": [607],
+        "id": 391,
+        "ids": [391],
         "debugId": 1005,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "f06a9b9ed8deb0f23fedee064b4139f7",
-        "contentHash": { "javascript": "dcac2e701bb8f11f9f6f" },
-        "renderedHash": "f06a9b9ed8deb0f23fed",
+        "hash": "84428169f44caa020848d6e1b7b8d03a",
+        "contentHash": { "javascript": "137d207e41a904896829" },
+        "renderedHash": "84428169f44caa020848",
         "extraAsync": false
       },
       {
-        "id": 316,
-        "ids": [316],
-        "debugId": 1016,
-        "idNameHints": { "0": "vendors" },
-        "preventIntegration": false,
-        "files": { "0": "316.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "0bf07063b4d5f780b8c50c5660bd3d47",
-        "contentHash": { "javascript": "9b0b9bc07d55caae94f6" },
-        "renderedHash": "0bf07063b4d5f780b8c5",
-        "chunkReason": "split chunk (cache group: defaultVendors)",
-        "extraAsync": false
-      },
-      {
-        "id": 33,
-        "ids": [33],
-        "debugId": 1010,
+        "id": 799,
+        "ids": [799],
+        "debugId": 1006,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "49400de8fc512577c81a00f2fc2572f3",
-        "contentHash": { "javascript": "028b02f9cfef1b62a280" },
-        "renderedHash": "49400de8fc512577c81a",
+        "hash": "c574446a0d964e414bf3000a5e1532fb",
+        "contentHash": { "javascript": "c46ce3cca07d9fad36ef" },
+        "renderedHash": "c574446a0d964e414bf3",
+        "extraAsync": false
+      },
+      {
+        "id": 635,
+        "ids": [635],
+        "debugId": 1010,
+        "idNameHints": { "0": "vendors" },
+        "preventIntegration": false,
+        "files": { "0": "635.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "c7499214acfbbdc6b445634268613e79",
+        "contentHash": { "javascript": "6c582e36243ebddc23c3" },
+        "renderedHash": "c7499214acfbbdc6b445",
+        "chunkReason": "reused as split chunk (cache group: defaultVendors)",
+        "extraAsync": false
+      },
+      {
+        "id": 316,
+        "ids": [316],
+        "debugId": 1018,
+        "idNameHints": { "0": "vendors" },
+        "preventIntegration": false,
+        "files": { "0": "316.js" },
+        "auxiliaryFiles": {},
+        "rendered": true,
+        "hash": "d86d16a86769bfa4e480d6b5c986198a",
+        "contentHash": { "javascript": "6991e8d3379bb3bf5719" },
+        "renderedHash": "d86d16a86769bfa4e480",
+        "chunkReason": "split chunk (cache group: defaultVendors)",
+        "extraAsync": false
+      },
+      {
+        "id": 240,
+        "ids": [240],
+        "debugId": 1012,
+        "idNameHints": {},
+        "preventIntegration": false,
+        "files": {},
+        "auxiliaryFiles": {},
+        "rendered": false,
+        "hash": "e4a9d96e4128a69f4c40c2e385828f15",
+        "contentHash": { "javascript": "6184a691ccc1acd77838" },
+        "renderedHash": "e4a9d96e4128a69f4c40",
         "extraAsync": false
       },
       {
         "id": 292,
         "ids": [292],
-        "debugId": 1014,
+        "debugId": 1016,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "292.js" },
@@ -2844,92 +3286,20 @@
         "extraAsync": false
       }
     ],
-    "607": [
+    "635": [
       {
-        "id": 607,
-        "ids": [607],
-        "debugId": 1005,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": {},
-        "auxiliaryFiles": {},
-        "rendered": false,
-        "hash": "f06a9b9ed8deb0f23fedee064b4139f7",
-        "contentHash": { "javascript": "dcac2e701bb8f11f9f6f" },
-        "renderedHash": "f06a9b9ed8deb0f23fed",
-        "extraAsync": false
-      },
-      {
-        "id": 316,
-        "ids": [316],
-        "debugId": 1016,
+        "id": 635,
+        "ids": [635],
+        "debugId": 1010,
         "idNameHints": { "0": "vendors" },
         "preventIntegration": false,
-        "files": { "0": "316.js" },
+        "files": { "0": "635.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "0bf07063b4d5f780b8c50c5660bd3d47",
-        "contentHash": { "javascript": "9b0b9bc07d55caae94f6" },
-        "renderedHash": "0bf07063b4d5f780b8c5",
-        "chunkReason": "split chunk (cache group: defaultVendors)",
-        "extraAsync": false
-      },
-      {
-        "id": 33,
-        "ids": [33],
-        "debugId": 1010,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": {},
-        "auxiliaryFiles": {},
-        "rendered": false,
-        "hash": "49400de8fc512577c81a00f2fc2572f3",
-        "contentHash": { "javascript": "028b02f9cfef1b62a280" },
-        "renderedHash": "49400de8fc512577c81a",
-        "extraAsync": false
-      },
-      {
-        "id": 292,
-        "ids": [292],
-        "debugId": 1014,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "292.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "9534ea597ff512af3dd2c5966ca1cf3e",
-        "contentHash": { "javascript": "4d8740c9ddbd10dd5ddd" },
-        "renderedHash": "9534ea597ff512af3dd2",
-        "extraAsync": false
-      }
-    ],
-    "643": [
-      {
-        "id": 643,
-        "ids": [643],
-        "debugId": 1004,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": {},
-        "auxiliaryFiles": {},
-        "rendered": false,
-        "hash": "932dabfb3da8bb635b30324f0895d05a",
-        "contentHash": { "javascript": "2263af0b6dabbce7a0c0" },
-        "renderedHash": "932dabfb3da8bb635b30",
-        "extraAsync": false
-      },
-      {
-        "id": 784,
-        "ids": [784, 292],
-        "debugId": 1009,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "784.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "6a9c193d9bbaedc709f3828467dfdcaa",
-        "contentHash": { "javascript": "c6ba80ed35e0114d6d7a" },
-        "renderedHash": "6a9c193d9bbaedc709f3",
+        "hash": "c7499214acfbbdc6b445634268613e79",
+        "contentHash": { "javascript": "6c582e36243ebddc23c3" },
+        "renderedHash": "c7499214acfbbdc6b445",
+        "chunkReason": "reused as split chunk (cache group: defaultVendors)",
         "extraAsync": false
       }
     ],
@@ -2937,7 +3307,7 @@
       {
         "id": 784,
         "ids": [784, 292],
-        "debugId": 1009,
+        "debugId": 1011,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },
@@ -2949,136 +3319,62 @@
         "extraAsync": false
       }
     ],
-    "790": [
+    "799": [
       {
-        "id": 790,
-        "ids": [790],
-        "debugId": 1003,
+        "id": 799,
+        "ids": [799],
+        "debugId": 1006,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "30a45a92b50327c35080224cda933195",
-        "contentHash": { "javascript": "febc0a37dc8cbda409c5" },
-        "renderedHash": "30a45a92b50327c35080",
+        "hash": "c574446a0d964e414bf3000a5e1532fb",
+        "contentHash": { "javascript": "c46ce3cca07d9fad36ef" },
+        "renderedHash": "c574446a0d964e414bf3",
         "extraAsync": false
       },
       {
-        "id": 961,
-        "ids": [961],
-        "debugId": 1015,
+        "id": 316,
+        "ids": [316],
+        "debugId": 1018,
         "idNameHints": { "0": "vendors" },
         "preventIntegration": false,
-        "files": { "0": "961.js" },
+        "files": { "0": "316.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "a67c955237fe15963d82c74d176a3519",
-        "contentHash": { "javascript": "86f94f7a7fa596d624c7" },
-        "renderedHash": "a67c955237fe15963d82",
+        "hash": "d86d16a86769bfa4e480d6b5c986198a",
+        "contentHash": { "javascript": "6991e8d3379bb3bf5719" },
+        "renderedHash": "d86d16a86769bfa4e480",
         "chunkReason": "split chunk (cache group: defaultVendors)",
         "extraAsync": false
       },
       {
-        "id": 363,
-        "ids": [363],
-        "debugId": 1008,
+        "id": 240,
+        "ids": [240],
+        "debugId": 1012,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "1ee9591d1082e9891f306fb7e25d8020",
-        "contentHash": { "javascript": "7def3bfb0dd1c9cbb715" },
-        "renderedHash": "1ee9591d1082e9891f30",
+        "hash": "e4a9d96e4128a69f4c40c2e385828f15",
+        "contentHash": { "javascript": "6184a691ccc1acd77838" },
+        "renderedHash": "e4a9d96e4128a69f4c40",
         "extraAsync": false
       },
       {
-        "id": 784,
-        "ids": [784, 292],
-        "debugId": 1009,
+        "id": 292,
+        "ids": [292],
+        "debugId": 1016,
         "idNameHints": {},
         "preventIntegration": false,
-        "files": { "0": "784.js" },
+        "files": { "0": "292.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "6a9c193d9bbaedc709f3828467dfdcaa",
-        "contentHash": { "javascript": "c6ba80ed35e0114d6d7a" },
-        "renderedHash": "6a9c193d9bbaedc709f3",
-        "extraAsync": false
-      }
-    ],
-    "922": [
-      {
-        "id": 361,
-        "ids": [361],
-        "debugId": 1017,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": {},
-        "auxiliaryFiles": {},
-        "rendered": false,
-        "hash": "72301276ee5d4afd7325d2953beffee2",
-        "contentHash": { "javascript": "848616b8632bce68571d" },
-        "renderedHash": "72301276ee5d4afd7325",
-        "chunkReason": "split chunk (cache group: default)",
-        "extraAsync": false
-      },
-      {
-        "id": 922,
-        "ids": [922],
-        "debugId": 1007,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "922.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "6764e705a3e4fa850956a74eb30bd04c",
-        "contentHash": { "javascript": "70d0c0fa29cbb182b409" },
-        "renderedHash": "6764e705a3e4fa850956",
-        "extraAsync": false
-      },
-      {
-        "id": 784,
-        "ids": [784, 292],
-        "debugId": 1009,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": { "0": "784.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "6a9c193d9bbaedc709f3828467dfdcaa",
-        "contentHash": { "javascript": "c6ba80ed35e0114d6d7a" },
-        "renderedHash": "6a9c193d9bbaedc709f3",
-        "extraAsync": false
-      },
-      {
-        "id": 961,
-        "ids": [961],
-        "debugId": 1015,
-        "idNameHints": { "0": "vendors" },
-        "preventIntegration": false,
-        "files": { "0": "961.js" },
-        "auxiliaryFiles": {},
-        "rendered": true,
-        "hash": "a67c955237fe15963d82c74d176a3519",
-        "contentHash": { "javascript": "86f94f7a7fa596d624c7" },
-        "renderedHash": "a67c955237fe15963d82",
-        "chunkReason": "split chunk (cache group: defaultVendors)",
-        "extraAsync": false
-      },
-      {
-        "id": 363,
-        "ids": [363],
-        "debugId": 1008,
-        "idNameHints": {},
-        "preventIntegration": false,
-        "files": {},
-        "auxiliaryFiles": {},
-        "rendered": false,
-        "hash": "1ee9591d1082e9891f306fb7e25d8020",
-        "contentHash": { "javascript": "7def3bfb0dd1c9cbb715" },
-        "renderedHash": "1ee9591d1082e9891f30",
+        "hash": "9534ea597ff512af3dd2c5966ca1cf3e",
+        "contentHash": { "javascript": "4d8740c9ddbd10dd5ddd" },
+        "renderedHash": "9534ea597ff512af3dd2",
         "extraAsync": false
       }
     ],
@@ -3086,36 +3382,36 @@
       {
         "id": 961,
         "ids": [961],
-        "debugId": 1015,
+        "debugId": 1017,
         "idNameHints": { "0": "vendors" },
         "preventIntegration": false,
         "files": { "0": "961.js" },
         "auxiliaryFiles": {},
         "rendered": true,
-        "hash": "a67c955237fe15963d82c74d176a3519",
-        "contentHash": { "javascript": "86f94f7a7fa596d624c7" },
-        "renderedHash": "a67c955237fe15963d82",
+        "hash": "025b1c722b60502b3000b9d9906cc66b",
+        "contentHash": { "javascript": "7fc7a004487d4f1c2eb4" },
+        "renderedHash": "025b1c722b60502b3000",
         "chunkReason": "split chunk (cache group: defaultVendors)",
         "extraAsync": false
       },
       {
-        "id": 363,
-        "ids": [363],
-        "debugId": 1008,
+        "id": 11,
+        "ids": [11],
+        "debugId": 1009,
         "idNameHints": {},
         "preventIntegration": false,
         "files": {},
         "auxiliaryFiles": {},
         "rendered": false,
-        "hash": "1ee9591d1082e9891f306fb7e25d8020",
-        "contentHash": { "javascript": "7def3bfb0dd1c9cbb715" },
-        "renderedHash": "1ee9591d1082e9891f30",
+        "hash": "4f3e77ab628d3d54da0748099c1dcbe1",
+        "contentHash": { "javascript": "07fa1de27563159c9de7" },
+        "renderedHash": "4f3e77ab628d3d54da07",
         "extraAsync": false
       },
       {
         "id": 784,
         "ids": [784, 292],
-        "debugId": 1009,
+        "debugId": 1011,
         "idNameHints": {},
         "preventIntegration": false,
         "files": { "0": "784.js" },

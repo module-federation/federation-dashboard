@@ -2,6 +2,10 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
+const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
+const packageJson = require("./package.json");
+const exclude = ["babel", "plugin", "preset", "webpack", "loader", "serve"];
+const ignoreVersion = ["react", "react-dom"];
 
 module.exports = {
   entry: "./src/index",
@@ -40,12 +44,13 @@ module.exports = {
         HeroImage: "./src/HeroImage",
       },
       // sharing code based on the installed version, to allow for multiple vendors with different versions
-      shared: ["react", "react-dom", "lodash"].reduce((shared, pkg) => {
-        // you can also trim the patch version off so you share at the feature version level
-        // react-16.8, not react-16.8.3, Better vendor sharing will be available as you'd share 16.8.x
-        Object.assign(shared, { [`${pkg}-${require(pkg).version}`]: pkg });
-        return shared;
-      }, {}),
+      shared: AutomaticVendorFederation({
+        exclude,
+        ignoreVersion,
+        packageJson,
+        shareFrom: ["dependencies"],
+        ignorePatchVersion: true,
+      }),
     }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
