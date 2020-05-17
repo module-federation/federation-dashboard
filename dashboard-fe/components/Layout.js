@@ -20,6 +20,7 @@ import {
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import DashboardIcon from "@material-ui/icons/Dashboard";
+import PlusIcon from "@material-ui/icons/Add";
 import WebIcon from "@material-ui/icons/Web";
 import WidgetsIcon from "@material-ui/icons/Widgets";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -69,6 +70,14 @@ const SideBar = ({ data }) => {
               </ListItem>
             </Link>
           ))}
+          <Link href={`/applications/new`}>
+            <ListItem button>
+              <ListItemIcon>
+                <PlusIcon />
+              </ListItemIcon>
+              <ListItemText primary="New" />
+            </ListItem>
+          </Link>
         </>
       )}
       {data && (

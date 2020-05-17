@@ -72,6 +72,7 @@ const importData = ({ federationRemoteEntry, modules }, config) => {
   const out = {
     id: app,
     name: app,
+    remote: config[app].remote,
     overrides: Object.values(overrides),
     consumes: consumes.map((con) => ({
       ...con,

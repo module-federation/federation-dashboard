@@ -2,7 +2,7 @@ import Head from "next/head";
 import { makeStyles, Typography, Grid, Paper } from "@material-ui/core";
 import Link from "next/link";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import { useLazyQuery } from "@apollo/react-hooks";
 import { useRouter } from "next/router";
 import Layout from "../../../../components/Layout";
 
@@ -31,13 +31,18 @@ const GET_MODULES = gql`
 const ModulePage = () => {
   const classes = useStyles();
   const router = useRouter();
-  const { data } = useQuery(GET_MODULES, {
-    variables: {
-      name: router.query.module,
-      application: router.query.application,
-    },
-  });
-  console.log(data);
+  const [getData, { data }] = useLazyQuery(GET_MODULES);
+
+  React.useEffect(() => {
+    if (router.query.module && router.query.application) {
+      getData({
+        variables: {
+          name: router.query.module,
+          application: router.query.application,
+        },
+      });
+    }
+  }, [router]);
 
   return (
     <Layout>
