@@ -39,6 +39,7 @@ const typeDefs = gql`
   type Application {
     id: ID!
     name: String!
+    remote: String!
     modules: [Module!]!
     overrides: [Override!]!
     consumes: [Consume!]!
