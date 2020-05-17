@@ -24,30 +24,6 @@ const GET_APPS = gql`
   }
 `;
 
-/*
-    new ModuleFederationPlugin({
-      name: "dsl",
-      library: { type: "var", name: "dsl" },
-      filename: "remoteEntry.js",
-      remotes: {},
-      exposes: {
-        Button: "./src/Button",
-        Carousel: "./src/Carousel",
-        Dialog: "./src/Dialog",
-        Slider: "./src/Slider",
-        TextField: "./src/TextField",
-      },
-      // sharing code based on the installed version, to allow for multiple vendors with different versions
-      shared: AutomaticVendorFederation({
-        exclude,
-        ignoreVersion,
-        packageJson,
-        shareFrom: ["dependencies"],
-        ignorePatchVersion: true,
-      }),
-    }),
-*/
-
 const useStyles = makeStyles({
   container: {},
   codeWrapper: {
