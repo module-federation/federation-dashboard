@@ -6,21 +6,21 @@
       {
         "id": "react",
         "name": "react",
-        "version": "react-16.13.1",
+        "version": "react",
         "location": "/Volumes/zack_dev/OSS/federation-dashboard/node_modules/react-dom/cjs",
         "applicationID": "dsl"
       },
       {
         "id": "react-dom",
         "name": "react-dom",
-        "version": "react-dom-16.13.1",
+        "version": "react-dom",
         "location": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src",
         "applicationID": "dsl"
       },
       {
         "id": "@emotion/core",
         "name": "@emotion/core",
-        "version": "@emotion/core-undefined",
+        "version": "@emotion/core",
         "location": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/dsl/src",
         "applicationID": "dsl"
       }
@@ -71,21 +71,21 @@
       {
         "id": "react",
         "name": "react",
-        "version": "react-16.13.1",
+        "version": "react",
         "location": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/home",
         "applicationID": "home"
       },
       {
         "id": "react-dom",
         "name": "react-dom",
-        "version": "react-dom-16.13.1",
+        "version": "react-dom",
         "location": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/home",
         "applicationID": "home"
       },
       {
         "id": "lodash",
         "name": "lodash",
-        "version": "lodash-undefined",
+        "version": "lodash-4.17",
         "location": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/home",
         "applicationID": "home"
       }
@@ -199,14 +199,14 @@
       {
         "id": "react",
         "name": "react",
-        "version": "react-16.13.1",
+        "version": "react",
         "location": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search",
         "applicationID": "search"
       },
       {
         "id": "react-dom",
         "name": "react-dom",
-        "version": "react-dom-16.13.1",
+        "version": "react-dom",
         "location": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search",
         "applicationID": "search"
       }
@@ -270,21 +270,28 @@
       {
         "id": "react",
         "name": "react",
-        "version": "react-16.13.1",
+        "version": "react",
         "location": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav",
         "applicationID": "nav"
       },
       {
         "id": "react-dom",
         "name": "react-dom",
-        "version": "react-dom-16.13.1",
+        "version": "react-dom",
         "location": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav",
         "applicationID": "nav"
       },
       {
         "id": "@emotion/core",
         "name": "@emotion/core",
-        "version": "@emotion/core-undefined",
+        "version": "@emotion/core-10.0",
+        "location": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav",
+        "applicationID": "nav"
+      },
+      {
+        "id": "lodash",
+        "name": "lodash",
+        "version": "lodash-4.17",
         "location": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav",
         "applicationID": "nav"
       }
