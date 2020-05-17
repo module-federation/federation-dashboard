@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import Link from "next/link";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import { useLazyQuery } from "@apollo/react-hooks";
 import { useRouter } from "next/router";
 
 import Layout from "../../../components/Layout";
@@ -181,9 +181,15 @@ const ModulesTable = ({ application, modules }) => {
 const Application = () => {
   const classes = useStyles();
   const router = useRouter();
-  const { data } = useQuery(GET_APPS, {
-    variables: { name: router.query.application },
-  });
+  const [getData, { data }] = useLazyQuery(GET_APPS);
+
+  React.useEffect(() => {
+    if (router.query.application) {
+      getData({
+        variables: { name: router.query.application },
+      });
+    }
+  }, [router]);
 
   return (
     <Layout>

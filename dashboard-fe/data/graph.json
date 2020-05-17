@@ -2,6 +2,7 @@
   {
     "id": "dsl",
     "name": "dsl",
+    "remote": "http://assets.mycompany.com/dsl/remoteEntry.js",
     "overrides": [
       {
         "id": "react",
@@ -31,35 +32,50 @@
         "id": "dsl:Button",
         "name": "Button",
         "applicationID": "dsl",
-        "requires": ["react", "@emotion/core"],
+        "requires": [
+          "react",
+          "@emotion/core"
+        ],
         "file": "./src/Button"
       },
       {
         "id": "dsl:Carousel",
         "name": "Carousel",
         "applicationID": "dsl",
-        "requires": ["react", "@emotion/core"],
+        "requires": [
+          "react",
+          "@emotion/core"
+        ],
         "file": "./src/Carousel"
       },
       {
         "id": "dsl:Dialog",
         "name": "Dialog",
         "applicationID": "dsl",
-        "requires": ["react", "@emotion/core"],
+        "requires": [
+          "react",
+          "@emotion/core"
+        ],
         "file": "./src/Dialog"
       },
       {
         "id": "dsl:Slider",
         "name": "Slider",
         "applicationID": "dsl",
-        "requires": ["react", "@emotion/core"],
+        "requires": [
+          "react",
+          "@emotion/core"
+        ],
         "file": "./src/Slider"
       },
       {
         "id": "dsl:TextField",
         "name": "TextField",
         "applicationID": "dsl",
-        "requires": ["react", "@emotion/core"],
+        "requires": [
+          "react",
+          "@emotion/core"
+        ],
         "file": "./src/TextField"
       }
     ]
@@ -67,6 +83,7 @@
   {
     "id": "home",
     "name": "home",
+    "remote": "http://mycompany.com/home/remoteEntry.js",
     "overrides": [
       {
         "id": "react",
@@ -180,92 +197,27 @@
         "id": "home:ProductCarousel",
         "name": "ProductCarousel",
         "applicationID": "home",
-        "requires": ["react", "lodash"],
+        "requires": [
+          "react",
+          "lodash"
+        ],
         "file": "./src/ProductCarousel"
       },
       {
         "id": "home:HeroImage",
         "name": "HeroImage",
         "applicationID": "home",
-        "requires": ["react"],
+        "requires": [
+          "react"
+        ],
         "file": "./src/HeroImage"
-      }
-    ]
-  },
-  {
-    "id": "search",
-    "name": "search",
-    "overrides": [
-      {
-        "id": "react",
-        "name": "react",
-        "version": "react",
-        "location": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search",
-        "applicationID": "search"
-      },
-      {
-        "id": "react-dom",
-        "name": "react-dom",
-        "version": "react-dom",
-        "location": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search",
-        "applicationID": "search"
-      }
-    ],
-    "consumes": [
-      {
-        "consumingApplicationID": "search",
-        "applicationID": "nav",
-        "name": "Header",
-        "usedIn": [
-          {
-            "file": "./src/App.js",
-            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search/./src/App.js"
-          }
-        ]
-      },
-      {
-        "consumingApplicationID": "search",
-        "applicationID": "nav",
-        "name": "Footer",
-        "usedIn": [
-          {
-            "file": "./src/App.js",
-            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search/./src/App.js"
-          }
-        ]
-      },
-      {
-        "consumingApplicationID": "search",
-        "applicationID": "home",
-        "name": "ProductCarousel",
-        "usedIn": [
-          {
-            "file": "./src/App.js",
-            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search/./src/App.js"
-          }
-        ]
-      }
-    ],
-    "modules": [
-      {
-        "id": "search:SearchList",
-        "name": "SearchList",
-        "applicationID": "search",
-        "requires": ["react"],
-        "file": "./src/SearchList"
-      },
-      {
-        "id": "search:MiniSearch",
-        "name": "MiniSearch",
-        "applicationID": "search",
-        "requires": ["react"],
-        "file": "./src/MiniSearch"
       }
     ]
   },
   {
     "id": "nav",
     "name": "nav",
+    "remote": "http://assets.mycompany.com/nav/remoteEntry.js",
     "overrides": [
       {
         "id": "react",
@@ -325,15 +277,97 @@
         "id": "nav:Header",
         "name": "Header",
         "applicationID": "nav",
-        "requires": ["react", "@emotion/core"],
+        "requires": [
+          "react",
+          "@emotion/core"
+        ],
         "file": "./src/Header"
       },
       {
         "id": "nav:Footer",
         "name": "Footer",
         "applicationID": "nav",
-        "requires": ["react", "@emotion/core"],
+        "requires": [
+          "react",
+          "@emotion/core"
+        ],
         "file": "./src/Footer"
+      }
+    ]
+  },
+  {
+    "id": "search",
+    "name": "search",
+    "remote": "http://mycompany.com/search/remoteEntry.js",
+    "overrides": [
+      {
+        "id": "react",
+        "name": "react",
+        "version": "react",
+        "location": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search",
+        "applicationID": "search"
+      },
+      {
+        "id": "react-dom",
+        "name": "react-dom",
+        "version": "react-dom",
+        "location": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/search",
+        "applicationID": "search"
+      }
+    ],
+    "consumes": [
+      {
+        "consumingApplicationID": "search",
+        "applicationID": "nav",
+        "name": "Header",
+        "usedIn": [
+          {
+            "file": "./src/App.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search/./src/App.js"
+          }
+        ]
+      },
+      {
+        "consumingApplicationID": "search",
+        "applicationID": "nav",
+        "name": "Footer",
+        "usedIn": [
+          {
+            "file": "./src/App.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search/./src/App.js"
+          }
+        ]
+      },
+      {
+        "consumingApplicationID": "search",
+        "applicationID": "home",
+        "name": "ProductCarousel",
+        "usedIn": [
+          {
+            "file": "./src/App.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search/./src/App.js"
+          }
+        ]
+      }
+    ],
+    "modules": [
+      {
+        "id": "search:SearchList",
+        "name": "SearchList",
+        "applicationID": "search",
+        "requires": [
+          "react"
+        ],
+        "file": "./src/SearchList"
+      },
+      {
+        "id": "search:MiniSearch",
+        "name": "MiniSearch",
+        "applicationID": "search",
+        "requires": [
+          "react"
+        ],
+        "file": "./src/MiniSearch"
       }
     ]
   }
