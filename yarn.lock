@@ -1909,6 +1909,7 @@
 "@module-federation/dashboard-plugin@file:dashboard-plugin":
   version "1.0.0"
   dependencies:
+    "@module-federation/automatic-vendor-federation" "^1.0.1"
     flatted "^2.0.2"
     schema-utils "^2.6.6"
     webpack "^5.0.0-beta.16"

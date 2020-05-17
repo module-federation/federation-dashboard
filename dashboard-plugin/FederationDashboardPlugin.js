@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
+const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
 
 /** @typedef {import('webpack/lib/Compilation')} Compilation */
 /** @typedef {import('webpack/lib/Compiler')} Compiler */
@@ -48,7 +49,6 @@ class FederationDashboardPlugin {
           compilation.options.output.path,
           this._options.filename
         );
-
         const statsPath = path.join(
           compilation.options.output.path,
           "stats.json"
@@ -62,17 +62,22 @@ class FederationDashboardPlugin {
           ];
           return array.some((item) => item);
         });
-        const context = { require, fs };
-        vm.createContext(context);
+        const context = { require, fs, result: null };
+
         modules.forEach((module) => {
           if (module.reasons) {
             module.reasons.forEach((reason) => {
               if (reason.userRequest) {
-                const script = new vm.Script(
-                  `return require("${reason.userRequest}/package.json")`
-                );
+                // const sandbox = vm.createContext(context);
+                console.log(Object.create(reason));
 
-                console.log(script.runInContext(context));
+                debugger;
+                // const script = new vm.Script(
+                //   `result = require("${reason.userRequest}/package.json")`
+                // );
+
+                // script.runInContext(context);
+                // console.log(sandbox)
               }
             });
           }
@@ -94,14 +99,6 @@ class FederationDashboardPlugin {
             validChunkArray.push(chunk);
           }
         });
-
-        function isIterable(obj) {
-          // checks for null and undefined
-          if (obj == null) {
-            return false;
-          }
-          return typeof obj[Symbol.iterator] === "function";
-        }
 
         function mapToObjectRec(m) {
           let lo = {};
@@ -133,8 +130,25 @@ class FederationDashboardPlugin {
             [chunk.id]: stringifiableChunk,
           });
         }, {});
-
+        let packageJson, vendorFederation;
+        try {
+          packageJson = require(compilation.options.context + "/package.json");
+        } catch (e) {}
+        if (packageJson) {
+          vendorFederation = AutomaticVendorFederation({
+            exclude: [],
+            ignoreVersion: false,
+            packageJson,
+            shareFrom: [
+              "dependencies",
+              "devDependencies",
+              "optionalDependencies",
+            ],
+            ignorePatchVersion: true,
+          });
+        }
         const dashData = (this._dashData = JSON.stringify({
+          topLevelPackage: vendorFederation || null,
           publicPath: compilation.outputOptions.publicPath,
           federationRemoteEntry: RemoteEntryChunk,
           buildHash: stats.hash,

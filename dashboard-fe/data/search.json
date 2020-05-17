@@ -1,4 +1,18 @@
 {
+  "topLevelPackage": {
+    "react-16.13": "react",
+    "react-dom-16.13": "react-dom",
+    "@babel/core-7.9": "@babel/core",
+    "@babel/preset-react-7.9": "@babel/preset-react",
+    "babel-loader-8.1": "babel-loader",
+    "html-webpack-plugin-4.0.0-beta": "html-webpack-plugin",
+    "serve-11.3": "serve",
+    "webpack-5.0.0-beta": "webpack",
+    "webpack-cli-3.3": "webpack-cli",
+    "webpack-dev-server-3.11": "webpack-dev-server",
+    "@module-federation/automatic-vendor-federation-1.0": "@module-federation/automatic-vendor-federation",
+    "@module-federation/dashboard-plugin-1.0": "@module-federation/dashboard-plugin"
+  },
   "publicPath": "http://localhost:3002/",
   "federationRemoteEntry": {
     "rendered": true,
