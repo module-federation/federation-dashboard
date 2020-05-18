@@ -13,6 +13,7 @@ import { useForm, Controller } from "react-hook-form";
 import Layout from "../../components/Layout";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
+import { Code, CodeWrapper, GeneratedCode } from "../../components/Code";
 
 const GET_APPS = gql`
   {
@@ -26,22 +27,6 @@ const GET_APPS = gql`
 
 const useStyles = makeStyles({
   container: {},
-  codeWrapper: {
-    border: "1px solid #eee",
-    padding: 10,
-  },
-  code: {
-    fontFamily: "Courier, monospace",
-    whiteSpace: "pre",
-    fontStyle: "italic",
-    paddingTop: 10,
-    paddingBottom: 10,
-  },
-  generatedCode: {
-    fontFamily: "Courier, monospace",
-    whiteSpace: "pre",
-    fontWeight: "bold",
-  },
   configSection: {
     padding: 10,
     marginTop: 20,
@@ -206,13 +191,13 @@ const ignoreVersion = [${watch("ignoreVersion")
               <Typography variant="body1" className={classes.explanation}>
                 Add this code to your Webpack configuration file.
               </Typography>
-              <div className={classes.codeWrapper}>
-                <div className={classes.generatedCode}>
+              <CodeWrapper>
+                <GeneratedCode>
                   {`const { ModuleFederationPlugin } = require("webpack").container;`}
                   {automaticPreamble}
-                </div>
-                <div className={classes.code}>{`plugins: [`}</div>
-                <div className={classes.generatedCode}>
+                </GeneratedCode>
+                <Code>{`plugins: [`}</Code>
+                <GeneratedCode>
                   {`  new ModuleFederationPlugin({
     name: "${watch("name")}",
     library: { type: "var", name: "${watch("name")}" },
@@ -224,9 +209,9 @@ ${exposesCode}
     shared: [${sharedCode}]
   })  
 `}
-                  <div className={classes.code}>{`]`}</div>
-                </div>
-              </div>
+                </GeneratedCode>
+                <Code>{`]`}</Code>
+              </CodeWrapper>
             </Paper>
           </Grid>
           <Grid item xs={3}>
@@ -264,9 +249,9 @@ ${exposesCode}
                 <Typography variant="body1" className={classes.explanation}>
                   Add these script tags to your page template.
                 </Typography>
-                <div className={classes.codeWrapper}>
-                  <div className={classes.generatedCode}>{scriptTags}</div>
-                </div>
+                <CodeWrapper>
+                  <GeneratedCode>{scriptTags}</GeneratedCode>
+                </CodeWrapper>
               </Paper>
             )}
           </Grid>
