@@ -41,7 +41,7 @@ class FederationDashboardPlugin {
        * @param {Compilation} compilation
        * @param {function(err: Error | undefined):void} callback
        */
-      (compilation, callback) => {
+      async (compilation, callback) => {
         const stats = compilation.getStats().toJson();
         const liveStats = compilation.getStats();
 
@@ -62,26 +62,19 @@ class FederationDashboardPlugin {
           ];
           return array.some((item) => item);
         });
-        const context = { require, fs, result: null };
-        const directReasons = new WeakSet();
-        modules.forEach((module) => {
+        console.log(compilation.options);
+        const directReasons = new Set();
+        Array.from(modules).forEach((module) => {
           if (module.reasons) {
             module.reasons.forEach((reason) => {
               if (reason.userRequest) {
                 // const sandbox = vm.createContext(context);
                 const subsetPackage = require(reason.userRequest +
                   "/package.json");
-                directReasons.add({
-                  userRequest: reason,
-                  version: subsetPackage.version,
-                });
+
+                directReasons.add(subsetPackage);
               }
             });
-          }
-        });
-        stats.modules.foreach((module) => {
-          if (module.reasons) {
-            module.reasons.forEach((module) => {});
           }
         });
         const RemoteEntryChunk = stats.chunks.find((chunk) => {
@@ -141,6 +134,7 @@ class FederationDashboardPlugin {
             exclude: [],
             ignoreVersion: false,
             packageJson,
+            subPackages: Array.from(directReasons),
             shareFrom: [
               "dependencies",
               "devDependencies",
@@ -170,7 +164,9 @@ class FederationDashboardPlugin {
               resolve
             );
           }),
-        ]).then(() => callback());
+        ]).then(() => {
+          callback();
+        });
       }
     );
 
