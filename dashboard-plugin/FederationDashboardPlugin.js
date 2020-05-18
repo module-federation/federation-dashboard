@@ -62,7 +62,6 @@ class FederationDashboardPlugin {
           ];
           return array.some((item) => item);
         });
-        console.log(compilation.options);
         const directReasons = new Set();
         Array.from(modules).forEach((module) => {
           if (module.reasons) {
