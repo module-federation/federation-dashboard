@@ -63,23 +63,25 @@ class FederationDashboardPlugin {
           return array.some((item) => item);
         });
         const context = { require, fs, result: null };
-
+        const directReasons = new WeakSet();
         modules.forEach((module) => {
           if (module.reasons) {
             module.reasons.forEach((reason) => {
               if (reason.userRequest) {
                 // const sandbox = vm.createContext(context);
-                console.log(Object.create(reason));
-
-                debugger;
-                // const script = new vm.Script(
-                //   `result = require("${reason.userRequest}/package.json")`
-                // );
-
-                // script.runInContext(context);
-                // console.log(sandbox)
+                const subsetPackage = require(reason.userRequest +
+                  "/package.json");
+                directReasons.add({
+                  userRequest: reason,
+                  version: subsetPackage.version,
+                });
               }
             });
+          }
+        });
+        stats.modules.foreach((module) => {
+          if (module.reasons) {
+            module.reasons.forEach((module) => {});
           }
         });
         const RemoteEntryChunk = stats.chunks.find((chunk) => {
