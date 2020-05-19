@@ -366,11 +366,19 @@ const Home = () => {
         <Tab label="Dependency Graph" />
         <Tab label="Dependency Table" />
       </Tabs>
-      {data && value === 0 && <NodeGraph applications={data.applications} />}
-      {data && value === 1 && (
-        <ModuleChordChart applications={data.applications} />
+      {data && (
+        <>
+          <div style={{ display: value === 0 ? "block" : "none" }}>
+            <NodeGraph applications={data.applications} />
+          </div>
+          <div style={{ display: value === 1 ? "block" : "none" }}>
+            <ModuleChordChart applications={data.applications} />
+          </div>
+          <div style={{ display: value === 2 ? "block" : "none" }}>
+            <Applications applications={data.applications} />
+          </div>
+        </>
       )}
-      {data && value === 2 && <Applications applications={data.applications} />}
     </Layout>
   );
 };
