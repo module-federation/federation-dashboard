@@ -41,7 +41,7 @@ class FederationDashboardPlugin {
        * @param {Compilation} compilation
        * @param {function(err: Error | undefined):void} callback
        */
-      (compilation, callback) => {
+      async (compilation, callback) => {
         const stats = compilation.getStats().toJson();
         const liveStats = compilation.getStats();
 
@@ -62,22 +62,16 @@ class FederationDashboardPlugin {
           ];
           return array.some((item) => item);
         });
-        const context = { require, fs, result: null };
-
-        modules.forEach((module) => {
+        const directReasons = new Set();
+        Array.from(modules).forEach((module) => {
           if (module.reasons) {
             module.reasons.forEach((reason) => {
               if (reason.userRequest) {
                 // const sandbox = vm.createContext(context);
-                console.log(Object.create(reason));
+                const subsetPackage = require(reason.userRequest +
+                  "/package.json");
 
-                debugger;
-                // const script = new vm.Script(
-                //   `result = require("${reason.userRequest}/package.json")`
-                // );
-
-                // script.runInContext(context);
-                // console.log(sandbox)
+                directReasons.add(subsetPackage);
               }
             });
           }
@@ -139,6 +133,7 @@ class FederationDashboardPlugin {
             exclude: [],
             ignoreVersion: false,
             packageJson,
+            subPackages: Array.from(directReasons),
             shareFrom: [
               "dependencies",
               "devDependencies",
@@ -168,7 +163,9 @@ class FederationDashboardPlugin {
               resolve
             );
           }),
-        ]).then(() => callback());
+        ]).then(() => {
+          callback();
+        });
       }
     );
 
