@@ -73,24 +73,26 @@ const ConsumesTable = ({ consumes }) => {
         Consumes
       </Typography>
       <Table>
-        {consumes.map(({ name, application, usedIn }) => (
-          <TableRow key={[application.id, name].join()}>
-            <TableCell>
-              <Typography>
-                <Link href={`/applications/${application.name}/${name}`}>
-                  <a>{name}</a>
-                </Link>
-              </Typography>
-            </TableCell>
-            <TableCell>
-              {usedIn.map(({ file, url }) => (
-                <Typography variant="body2">
-                  <a href={url}>{file}</a>
+        {consumes
+          .filter(({ application }) => application)
+          .map(({ name, application, usedIn }) => (
+            <TableRow key={[application.id, name].join()}>
+              <TableCell>
+                <Typography>
+                  <Link href={`/applications/${application.name}/${name}`}>
+                    <a>{name}</a>
+                  </Link>
                 </Typography>
-              ))}
-            </TableCell>
-          </TableRow>
-        ))}
+              </TableCell>
+              <TableCell>
+                {usedIn.map(({ file, url }) => (
+                  <Typography variant="body2">
+                    <a href={url}>{file}</a>
+                  </Typography>
+                ))}
+              </TableCell>
+            </TableRow>
+          ))}
       </Table>
     </>
   );

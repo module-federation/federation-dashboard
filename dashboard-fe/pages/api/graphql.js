@@ -31,7 +31,7 @@ const typeDefs = gql`
 
   type Consume {
     consumingApplication: Application!
-    application: Application!
+    application: Application
     name: String!
     usedIn: [FileLocation!]!
   }
