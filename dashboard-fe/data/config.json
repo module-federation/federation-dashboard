@@ -1,4 +1,10 @@
 {
+  "utils": {
+    "source": {
+      "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/utils"
+    },
+    "remote": "http://assets.mycompany.com/utils/remoteEntry.js"
+  },
   "dsl": {
     "source": {
       "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/dsl"

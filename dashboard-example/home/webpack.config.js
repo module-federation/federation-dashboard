@@ -38,6 +38,7 @@ module.exports = {
         search: "search",
         dsl: "dsl",
         nav: "nav",
+        utils: "utils",
       },
       exposes: {
         ProductCarousel: "./src/ProductCarousel",
