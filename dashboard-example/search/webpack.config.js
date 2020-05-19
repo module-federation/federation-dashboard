@@ -37,6 +37,7 @@ module.exports = {
       remotes: {
         nav: "nav",
         home: "home",
+        utils: "utils",
       },
       exposes: {
         SearchList: "./src/SearchList",

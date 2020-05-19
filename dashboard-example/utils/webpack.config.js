@@ -1,11 +1,11 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
 const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
 const packageJson = require("./package.json");
 const exclude = ["babel", "plugin", "preset", "webpack", "loader", "serve"];
-const ignoreVersion = ["react", "react-dom"];
+const ignoreVersion = ["react", "react-dom", "@emotion/core"];
+
 module.exports = {
   entry: "./src/index",
   mode: "development",
@@ -30,19 +30,13 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "nav",
-      library: { type: "var", name: "nav" },
+      name: "utils",
+      library: { type: "var", name: "utils" },
       filename: "remoteEntry.js",
-      remotes: {
-        dsl: "dsl",
-        search: "search",
-        utils: "utils",
-      },
+      remotes: {},
       exposes: {
-        Header: "./src/Header",
-        Footer: "./src/Footer",
+        analytics: "./src/analytics",
       },
-      // sharing code based on the installed version, to allow for multiple vendors with different versions
       shared: AutomaticVendorFederation({
         exclude,
         ignoreVersion,
@@ -50,9 +44,6 @@ module.exports = {
         shareFrom: ["dependencies"],
         ignorePatchVersion: true,
       }),
-    }),
-    new HtmlWebpackPlugin({
-      template: "./public/index.html",
     }),
     new DashboardPlugin({
       filename: "dashboard.json",

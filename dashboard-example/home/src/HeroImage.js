@@ -1,4 +1,5 @@
 import React from "react";
+import sendMessage from "utils/analytics";
 
 const style = {
   background: "#800",
@@ -6,6 +7,9 @@ const style = {
   padding: 12,
 };
 
-const HeroImage = () => <img style={style}>App 1 img</img>;
+const HeroImage = () => {
+  sendMessage("loaded");
+  return <img style={style}>App 1 img</img>;
+};
 
 export default HeroImage;
