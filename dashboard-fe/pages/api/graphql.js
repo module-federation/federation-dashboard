@@ -15,6 +15,7 @@ const typeDefs = gql`
     name: String!
     file: String
     requires: [Override!]!
+    consumedBy: [Consume!]!
   }
 
   type Override {
@@ -90,6 +91,15 @@ const resolvers = {
       return requires.map((reqId) =>
         app.overrides.find(({ id }) => id === reqId)
       );
+    },
+    consumedBy({ applicationID, name }) {
+      return apps
+        .map(({ consumes }) => consumes)
+        .flat()
+        .filter(
+          ({ applicationID: conApp, name: conName }) =>
+            conApp === applicationID && conName === name
+        );
     },
   },
   Override: {
