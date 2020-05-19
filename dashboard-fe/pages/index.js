@@ -370,12 +370,8 @@ const useHomeStyles = makeStyles({
 
 const Home = () => {
   const { data } = useQuery(GET_APPS);
-  const [value, setValue] = React.useState(0);
+  const [currentTab, currentTabSet] = React.useState(0);
   const classes = useHomeStyles();
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   return (
     <Layout>
@@ -387,23 +383,23 @@ const Home = () => {
           {data.applications.length > 1 && (
             <>
               <Tabs
-                value={value}
-                onChange={handleChange}
+                value={currentTab}
+                onChange={(event, newValue) => {
+                  currentTabSet(newValue);
+                }}
                 aria-label="simple tabs example"
               >
-                {data.applications.length > 1 && <Tab label="Node Graph" />}
-                {data.applications.length > 1 && (
-                  <Tab label="Dependency Graph" />
-                )}
+                <Tab label="Node Graph" />
+                <Tab label="Dependency Graph" />
                 <Tab label="Dependency Table" />
               </Tabs>
-              <div style={{ display: value === 0 ? "block" : "none" }}>
+              <div style={{ display: currentTab === 0 ? "block" : "none" }}>
                 <NodeGraph applications={data.applications} />
               </div>
-              <div style={{ display: value === 1 ? "block" : "none" }}>
+              <div style={{ display: currentTab === 1 ? "block" : "none" }}>
                 <ModuleChordChart applications={data.applications} />
               </div>
-              <div style={{ display: value === 2 ? "block" : "none" }}>
+              <div style={{ display: currentTab === 2 ? "block" : "none" }}>
                 <Applications applications={data.applications} />
               </div>
             </>
