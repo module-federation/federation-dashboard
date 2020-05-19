@@ -16,6 +16,8 @@ import UpArrow from "@material-ui/icons/PublishTwoTone";
 import DownArrow from "@material-ui/icons/CloudDownloadOutlined";
 import Link from "next/link";
 import { ResponsiveChord } from "@nivo/chord";
+import { Graph } from "react-d3-graph";
+import { useRouter } from "next/router";
 
 import Layout from "../components/Layout";
 
@@ -261,6 +263,87 @@ const ModuleChordChart = ({ applications }) => {
   );
 };
 
+const NodeGraph = ({ applications }) => {
+  const router = useRouter();
+
+  const nodes = [];
+  const links = [];
+  applications.forEach(({ id: appId, name: appName, modules }) => {
+    nodes.push({
+      id: appId,
+      label: name,
+      size: 800,
+      symbolType: "triangle",
+    });
+    modules.forEach(({ id: moduleId, name: moduleName }) => {
+      nodes.push({
+        color: "lightblue",
+        id: moduleId,
+        label: moduleName,
+      });
+      links.push({
+        source: appId,
+        target: moduleId,
+      });
+    });
+  });
+  applications.forEach(({ id: appId, name: appName, consumes }) => {
+    consumes.forEach(
+      ({ application: { id: modApp }, name: modName, id: modId }) => {
+        links.push({
+          source: appId,
+          target: `${modApp}:${modName}`,
+        });
+      }
+    );
+  });
+  const data = {
+    nodes,
+    links,
+  };
+
+  const myConfig = {
+    width: 1200,
+    height: 800,
+    nodeHighlightBehavior: true,
+    node: {
+      color: "lightgreen",
+      size: 400,
+      fontSize: 12,
+      highlightStrokeColor: "blue",
+    },
+    d3: {
+      alphaTarget: 0.5,
+      gravity: -300,
+      linkLength: 150,
+      linkStrength: 0.5,
+      disableLinkForce: false,
+    },
+    link: {
+      highlightColor: "lightblue",
+    },
+    directed: true,
+    panAndZoom: true,
+  };
+  const onClickNode = (nodeId) => {
+    router.push(`/applications/${nodeId.replace(":", "/")}`);
+  };
+  return (
+    <div
+      style={{
+        marginTop: 50,
+      }}
+    >
+      <Graph
+        id="graph-id"
+        data={data}
+        config={myConfig}
+        onClickNode={onClickNode}
+      />
+    </div>
+  );
+};
+
 const Home = () => {
   const { data } = useQuery(GET_APPS);
   const [value, setValue] = React.useState(0);
@@ -279,13 +362,23 @@ const Home = () => {
         onChange={handleChange}
         aria-label="simple tabs example"
       >
+        <Tab label="Node Graph" />
         <Tab label="Dependency Graph" />
         <Tab label="Dependency Table" />
       </Tabs>
-      {data && value === 0 && (
-        <ModuleChordChart applications={data.applications} />
+      {data && (
+        <>
+          <div style={{ display: value === 0 ? "block" : "none" }}>
+            <NodeGraph applications={data.applications} />
+          </div>
+          <div style={{ display: value === 1 ? "block" : "none" }}>
+            <ModuleChordChart applications={data.applications} />
+          </div>
+          <div style={{ display: value === 2 ? "block" : "none" }}>
+            <Applications applications={data.applications} />
+          </div>
+        </>
       )}
-      {data && value === 1 && <Applications applications={data.applications} />}
     </Layout>
   );
 };
