@@ -270,29 +270,34 @@ const NodeGraph = ({ applications }) => {
   const links = [];
   applications.forEach(({ id: appId, name: appName, modules }) => {
     nodes.push({
+      color: "darkgreen",
       id: appId,
       label: name,
       size: 800,
-      symbolType: "triangle",
+      symbolType: "wye",
     });
     modules.forEach(({ id: moduleId, name: moduleName }) => {
       nodes.push({
-        color: "lightblue",
+        color: "darkblue",
         id: moduleId,
         label: moduleName,
+        symbolType: "diamond",
       });
       links.push({
         source: appId,
         target: moduleId,
+        color: "green",
+        type: "CURVE_SMOOTH",
       });
     });
   });
   applications.forEach(({ id: appId, name: appName, consumes }) => {
     consumes.forEach(
-      ({ application: { id: modApp }, name: modName, id: modId }) => {
+      ({ application: { id: modApp }, name: modName, id: modId, usedIn }) => {
         links.push({
           source: appId,
           target: `${modApp}:${modName}`,
+          type: "CURVE_SMOOTH",
         });
       }
     );
@@ -309,8 +314,10 @@ const NodeGraph = ({ applications }) => {
     node: {
       color: "lightgreen",
       size: 400,
-      fontSize: 12,
+      fontSize: 16,
       highlightStrokeColor: "blue",
+      highlightFontSize: 20,
+      highlightFontWeight: "bold",
     },
     d3: {
       alphaTarget: 0.5,
@@ -320,7 +327,10 @@ const NodeGraph = ({ applications }) => {
       disableLinkForce: false,
     },
     link: {
-      highlightColor: "lightblue",
+      highlightColor: "darkblue",
+      semanticStrokeWidth: true,
+      markerHeight: 8,
+      markerWidth: 8,
     },
     directed: true,
     panAndZoom: true,
