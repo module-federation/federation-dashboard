@@ -5,8 +5,19 @@
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "postinstall": "next build"
   },
+  "bin": {
+    "dashboard-fe": "./bin/dashboard-fe.js"
+  },
+  "contributors": [
+    {
+      "name": "Jack Herrington",
+      "email": "jherr@pobox.com",
+      "url": "http://jackherrington.com"
+    }
+  ],
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
     "@material-ui/core": "^4.9.13",

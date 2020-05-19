@@ -1,5 +1,13 @@
 import Head from "next/head";
-import { makeStyles, Typography, Grid, Paper } from "@material-ui/core";
+import {
+  makeStyles,
+  Typography,
+  Grid,
+  Paper,
+  Table,
+  TableRow,
+  TableCell,
+} from "@material-ui/core";
 import Link from "next/link";
 import gql from "graphql-tag";
 import { useLazyQuery } from "@apollo/react-hooks";
@@ -35,6 +43,16 @@ const GET_MODULES = gql`
       requires {
         name
       }
+      consumedBy {
+        consumingApplication {
+          name
+          id
+        }
+        usedIn {
+          file
+          url
+        }
+      }
     }
     applications(name: $app) {
       remote
@@ -42,6 +60,41 @@ const GET_MODULES = gql`
     }
   }
 `;
+
+const ConsumesTable = ({ consumed }) => {
+  const classes = useStyles();
+  return (
+    <>
+      <Typography variant="h6" className={classes.panelTitle}>
+        Used By
+      </Typography>
+      <Table>
+        {consumed
+          .filter(({ consumingApplication }) => consumingApplication)
+          .map(({ name, consumingApplication, usedIn }) => (
+            <TableRow key={[consumingApplication.id, name].join()}>
+              <TableCell>
+                <Typography>
+                  <Link
+                    href={`/applications/${consumingApplication.name}/${name}`}
+                  >
+                    <a>{consumingApplication.name}</a>
+                  </Link>
+                </Typography>
+              </TableCell>
+              <TableCell>
+                {usedIn.map(({ file, url }) => (
+                  <Typography variant="body2">
+                    <a href={url}>{file}</a>
+                  </Typography>
+                ))}
+              </TableCell>
+            </TableRow>
+          ))}
+      </Table>
+    </>
+  );
+};
 
 const ModulePage = () => {
   const classes = useStyles();
@@ -86,14 +139,21 @@ const ModulePage = () => {
                     <Typography>{mod.file}</Typography>
                   </Paper>
                 </Grid>
+                {mod.requires.length > 0 && (
+                  <Grid item xs={6}>
+                    <Paper elevation={3} className={classes.panel}>
+                      <Typography variant="h6" className={classes.panelTitle}>
+                        Requires
+                      </Typography>
+                      <Typography>
+                        {mod.requires.map(({ name }) => name).join()}
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                )}
                 <Grid item xs={6}>
                   <Paper elevation={3} className={classes.panel}>
-                    <Typography variant="h6" className={classes.panelTitle}>
-                      Requires
-                    </Typography>
-                    <Typography>
-                      {mod.requires.map(({ name }) => name).join()}
-                    </Typography>
+                    <ConsumesTable consumed={mod.consumedBy} />
                   </Paper>
                 </Grid>
               </Grid>

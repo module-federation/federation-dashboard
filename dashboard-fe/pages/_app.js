@@ -2,6 +2,7 @@ import "cross-fetch/polyfill";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
 import Head from "next/head";
+import Router from "next/router";
 
 const client = new ApolloClient({
   uri: "http://localhost:3000/api/graphql",
@@ -9,7 +10,6 @@ const client = new ApolloClient({
 
 function MyApp({ Component, pageProps }) {
   React.useEffect(() => {
-    // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
@@ -30,6 +30,20 @@ function MyApp({ Component, pageProps }) {
       </ApolloProvider>
     </React.Fragment>
   );
+}
+
+const isProduction = process.env.NODE_ENV === "production";
+
+if (!isProduction) {
+  Router.events.on("routeChangeComplete", () => {
+    const path = "/_next/static/chunks/styles.chunk.module.css";
+    const chunksSelector = `link[href*="${path}"]:not([rel=preload])`;
+    const chunksNodes = document.querySelectorAll(chunksSelector);
+    if (chunksNodes.length) {
+      const timestamp = new Date().valueOf();
+      chunksNodes[0].href = `${path}?ts=${timestamp}`;
+    }
+  });
 }
 
 export default MyApp;

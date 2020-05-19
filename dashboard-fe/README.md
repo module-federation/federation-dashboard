@@ -1,5 +1,4 @@
-Federated Modules Dashboard
-===========================
+# Federated Modules Dashboard
 
 # Installation
 
@@ -18,4 +17,11 @@ yarn dev
 ```
 yarn build
 yarn start
+```
+
+# Easy install
+
+```
+$ npm install -g dashboard-fe
+$ dashboard-fe
 ```

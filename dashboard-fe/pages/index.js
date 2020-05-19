@@ -80,11 +80,13 @@ const Applications = ({ applications }) => {
   );
 
   applications.forEach(({ id: consumingApplication, consumes }) => {
-    consumes.forEach(({ name, application: { id: applicationId }, usedIn }) => {
-      modulesById[`${applicationId}:${name}`].applications[
-        consumingApplication
-      ] = { count: usedIn.length };
-    });
+    consumes
+      .filter(({ application }) => application)
+      .forEach(({ name, application: { id: applicationId }, usedIn }) => {
+        modulesById[`${applicationId}:${name}`].applications[
+          consumingApplication
+        ] = { count: usedIn.length };
+      });
   });
 
   const overridesComplete = {};
@@ -102,7 +104,9 @@ const Applications = ({ applications }) => {
           {applications.map(({ id, name }) => (
             <TableCell align="center" key={`application:${id}`}>
               <Typography variant="h5" className={classes.headerCell}>
-                <Link href={`/applications/${name}`}>{name}</Link>
+                <Link href={`/applications/${name}`}>
+                  <a>{name}</a>
+                </Link>
               </Typography>
             </TableCell>
           ))}
@@ -123,7 +127,7 @@ const Applications = ({ applications }) => {
             <TableCell align="right">
               <Typography variant="body1">
                 <Link href={`/applications/${applicationName}/${name}`}>
-                  {name}
+                  <a>{name}</a>
                 </Link>
               </Typography>
             </TableCell>
@@ -191,11 +195,13 @@ const ModuleChordChart = ({ applications }) => {
     });
   });
   applications.forEach(({ id, consumes }) => {
-    consumes.forEach(({ application: { name: appName }, name, usedIn }) => {
-      const modId = `${appName}/${name}`;
-      matrix[appById[id]][modulesById[modId]] = usedIn.length;
-      matrix[modulesById[modId]][appById[id]] = usedIn.length;
-    });
+    consumes
+      .filter(({ application }) => application)
+      .forEach(({ application: { name: appName }, name, usedIn }) => {
+        const modId = `${appName}/${name}`;
+        matrix[appById[id]][modulesById[modId]] = usedIn.length;
+        matrix[modulesById[modId]][appById[id]] = usedIn.length;
+      });
   });
 
   return (
@@ -292,15 +298,17 @@ const NodeGraph = ({ applications }) => {
     });
   });
   applications.forEach(({ id: appId, name: appName, consumes }) => {
-    consumes.forEach(
-      ({ application: { id: modApp }, name: modName, id: modId, usedIn }) => {
-        links.push({
-          source: appId,
-          target: `${modApp}:${modName}`,
-          type: "CURVE_SMOOTH",
-        });
-      }
-    );
+    consumes
+      .filter(({ application }) => application)
+      .forEach(
+        ({ application: { id: modApp }, name: modName, id: modId, usedIn }) => {
+          links.push({
+            source: appId,
+            target: `${modApp}:${modName}`,
+            type: "CURVE_SMOOTH",
+          });
+        }
+      );
   });
   const data = {
     nodes,
@@ -354,39 +362,78 @@ const NodeGraph = ({ applications }) => {
   );
 };
 
+const useHomeStyles = makeStyles({
+  helpParagraph: {
+    marginTop: "1em",
+  },
+});
+
 const Home = () => {
   const { data } = useQuery(GET_APPS);
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const [currentTab, currentTabSet] = React.useState(0);
+  const classes = useHomeStyles();
 
   return (
     <Layout>
       <Head>
         <title>Federated Modules Dashboard</title>
       </Head>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        aria-label="simple tabs example"
-      >
-        <Tab label="Node Graph" />
-        <Tab label="Dependency Graph" />
-        <Tab label="Dependency Table" />
-      </Tabs>
-      {data && (
+      {data && data.applications.length > 0 && (
         <>
-          <div style={{ display: value === 0 ? "block" : "none" }}>
-            <NodeGraph applications={data.applications} />
-          </div>
-          <div style={{ display: value === 1 ? "block" : "none" }}>
-            <ModuleChordChart applications={data.applications} />
-          </div>
-          <div style={{ display: value === 2 ? "block" : "none" }}>
+          {data.applications.length > 1 && (
+            <>
+              <Tabs
+                value={currentTab}
+                onChange={(event, newValue) => {
+                  currentTabSet(newValue);
+                }}
+                aria-label="simple tabs example"
+              >
+                <Tab label="Node Graph" />
+                <Tab label="Dependency Graph" />
+                <Tab label="Dependency Table" />
+              </Tabs>
+              <div style={{ display: currentTab === 0 ? "block" : "none" }}>
+                <NodeGraph applications={data.applications} />
+              </div>
+              <div style={{ display: currentTab === 1 ? "block" : "none" }}>
+                <ModuleChordChart applications={data.applications} />
+              </div>
+              <div style={{ display: currentTab === 2 ? "block" : "none" }}>
+                <Applications applications={data.applications} />
+              </div>
+            </>
+          )}
+          {data.applications.length === 1 && (
             <Applications applications={data.applications} />
-          </div>
+          )}
+        </>
+      )}
+      {data && data.applications.length === 0 && (
+        <>
+          <Typography variant="h5">
+            Get Started With Federated Modules
+          </Typography>
+          <Typography className={classes.helpParagraph}>
+            If you already have applications that create or consume Federated
+            Modules then you can import their metadata into this dashboard using
+            the{" "}
+            <a
+              href="https://npmjs.com/package/@module-federation/dashboard-plugin"
+              target="_blank"
+            >
+              @module-federation/dashboard-plugin
+            </a>
+            .
+          </Typography>
+          <Typography className={classes.helpParagraph}>
+            If you have an application that you want to configure to import or
+            export Federated Modules then use the{" "}
+            <Link href="/applications/new">
+              <a>Configuration Wizard</a>
+            </Link>
+            .
+          </Typography>
         </>
       )}
     </Layout>
