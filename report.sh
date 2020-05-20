@@ -1,7 +1,7 @@
+# The `dashboard-fe` server needs to be up and running to do this
 (cd dashboard-example && yarn build)
-cp dashboard-example/utils/dist/dashboard.json dashboard-fe/data/utils.json
-cp dashboard-example/dsl/dist/dashboard.json dashboard-fe/data/dsl.json
-cp dashboard-example/home/dist/dashboard.json dashboard-fe/data/home.json
-cp dashboard-example/search/dist/dashboard.json dashboard-fe/data/search.json
-cp dashboard-example/nav/dist/dashboard.json dashboard-fe/data/nav.json
-node dashboard-fe/scripts/convert-to-graph.js dsl.json home.json search.json nav.json utils.json
+curl "http://localhost:3000/api/update" -X POST -d @dashboard-example/utils/dist/dashboard.json -H "Content-type: application/json"
+curl "http://localhost:3000/api/update" -X POST -d @dashboard-example/dsl/dist/dashboard.json -H "Content-type: application/json"
+curl "http://localhost:3000/api/update" -X POST -d @dashboard-example/home/dist/dashboard.json -H "Content-type: application/json"
+curl "http://localhost:3000/api/update" -X POST -d @dashboard-example/search/dist/dashboard.json -H "Content-type: application/json"
+curl "http://localhost:3000/api/update" -X POST -d @dashboard-example/nav/dist/dashboard.json -H "Content-type: application/json"

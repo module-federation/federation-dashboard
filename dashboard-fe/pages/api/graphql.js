@@ -1,6 +1,6 @@
 import { ApolloServer, gql } from "apollo-server-micro";
 
-import apps from "../../data/graph.json";
+import getApplications from "./db";
 
 const typeDefs = gql`
   type Query {
@@ -61,7 +61,7 @@ const resolvers = {
       const applicationFilter = nameFilter
         ? ({ name }) => name.includes(nameFilter)
         : () => true;
-      return apps.filter(applicationFilter);
+      return getApplications().filter(applicationFilter);
     },
     modules(_, { application, name: nameFilter }) {
       const applicationFilter = application
@@ -70,7 +70,7 @@ const resolvers = {
       const filter = nameFilter
         ? ({ name }) => name.includes(nameFilter)
         : () => true;
-      return apps
+      return getApplications()
         .filter(applicationFilter)
         .map(({ modules }) => modules)
         .flat()
@@ -83,7 +83,7 @@ const resolvers = {
       const filter = nameFilter
         ? ({ name }) => name.includes(nameFilter)
         : () => true;
-      return apps
+      return getApplications()
         .filter(applicationFilter)
         .map(({ consumes }) => consumes)
         .flat()
@@ -92,16 +92,16 @@ const resolvers = {
   },
   Module: {
     application({ applicationID }) {
-      return apps.find(({ id }) => id === applicationID);
+      return getApplications().find(({ id }) => id === applicationID);
     },
     requires({ requires, applicationID }) {
-      const app = apps.find(({ id }) => id === applicationID);
+      const app = getApplications().find(({ id }) => id === applicationID);
       return requires.map((reqId) =>
         app.overrides.find(({ id }) => id === reqId)
       );
     },
     consumedBy({ applicationID, name }) {
-      return apps
+      return getApplications()
         .map(({ consumes }) => consumes)
         .flat()
         .filter(
@@ -112,15 +112,15 @@ const resolvers = {
   },
   Override: {
     application({ applicationID }) {
-      return apps.find(({ id }) => id === applicationID);
+      return getApplications().find(({ id }) => id === applicationID);
     },
   },
   Consume: {
     consumingApplication({ consumingApplicationID }) {
-      return apps.find(({ id }) => id === consumingApplicationID);
+      return getApplications().find(({ id }) => id === consumingApplicationID);
     },
     application({ applicationID }) {
-      return apps.find(({ id }) => id === applicationID);
+      return getApplications().find(({ id }) => id === applicationID);
     },
   },
 };
