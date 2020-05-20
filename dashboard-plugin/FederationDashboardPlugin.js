@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
 const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
+const parseOptions = require("webpack/lib/container/parseOptions");
 
 /** @typedef {import('webpack/lib/Compilation')} Compilation */
 /** @typedef {import('webpack/lib/Compiler')} Compiler */
@@ -68,10 +69,12 @@ class FederationDashboardPlugin {
             module.reasons.forEach((reason) => {
               if (reason.userRequest) {
                 // const sandbox = vm.createContext(context);
-                const subsetPackage = require(reason.userRequest +
-                  "/package.json");
+                try {
+                  const subsetPackage = require(reason.userRequest +
+                    "/package.json");
 
-                directReasons.add(subsetPackage);
+                  directReasons.add(subsetPackage);
+                } catch (e) {}
               }
             });
           }
