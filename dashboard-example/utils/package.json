@@ -19,6 +19,5 @@
     "serve": "serve dist -p 3001",
     "clean": "rm -rf dist"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
