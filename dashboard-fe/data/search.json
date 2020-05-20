@@ -1,17 +1,19 @@
 {
   "topLevelPackage": {
-    "react-16.13": "react",
-    "react-dom-16.13": "react-dom",
-    "@babel/core-7.9": "@babel/core",
-    "@babel/preset-react-7.9": "@babel/preset-react",
-    "babel-loader-8.1": "babel-loader",
-    "html-webpack-plugin-4.0.0-beta": "html-webpack-plugin",
-    "serve-11.3": "serve",
-    "webpack-5.0.0-beta": "webpack",
-    "webpack-cli-3.3": "webpack-cli",
-    "webpack-dev-server-3.11": "webpack-dev-server",
-    "@module-federation/automatic-vendor-federation-1.0": "@module-federation/automatic-vendor-federation",
-    "@module-federation/dashboard-plugin-1.0": "@module-federation/dashboard-plugin"
+    "dependencies": { "react-16.13": "react", "react-dom-16.13": "react-dom" },
+    "devDependencies": {
+      "@babel/core-7.9": "@babel/core",
+      "@babel/preset-react-7.9": "@babel/preset-react",
+      "babel-loader-8.1": "babel-loader",
+      "html-webpack-plugin-4.0.0-beta": "html-webpack-plugin",
+      "serve-11.3": "serve",
+      "webpack-5.0.0-beta": "webpack",
+      "webpack-cli-3.3": "webpack-cli",
+      "webpack-dev-server-3.11": "webpack-dev-server",
+      "@module-federation/automatic-vendor-federation-1.0": "@module-federation/automatic-vendor-federation",
+      "@module-federation/dashboard-plugin-1.0": "@module-federation/dashboard-plugin"
+    },
+    "optionalDependencies": {}
   },
   "publicPath": "http://localhost:3002/",
   "federationRemoteEntry": {
@@ -643,7 +645,7 @@
       }
     ]
   },
-  "buildHash": "21f111b1b0c9c4c53dd5",
+  "buildHash": "e1534aba138ec13a6653",
   "modules": [
     {
       "identifier": "container entry [[\"SearchList\",\"./src/SearchList\"],[\"MiniSearch\",\"./src/MiniSearch\"]]",
@@ -704,7 +706,7 @@
       "depth": 0
     },
     {
-      "identifier": "overridable|react|/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src|react",
+      "identifier": "overridable|react|/Users/jherr/projects/federation-dashboard/dashboard-example/search/src|react",
       "name": "overridable react -> react",
       "index": 3,
       "preOrderIndex": 3,
@@ -715,8 +717,8 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/SearchList.js",
-      "issuerName": "./src/SearchList.js",
+      "issuer": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
+      "issuerName": "./src/MiniSearch.js",
       "issuerPath": [
         {
           "identifier": "container entry [[\"SearchList\",\"./src/SearchList\"],[\"MiniSearch\",\"./src/MiniSearch\"]]",
@@ -724,24 +726,24 @@
           "id": 228
         },
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/SearchList.js",
-          "name": "./src/SearchList.js",
-          "id": 259
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
+          "name": "./src/MiniSearch.js",
+          "id": 489
         }
       ],
       "failed": false,
       "errors": 0,
       "warnings": 0,
       "id": 210,
-      "issuerId": 259,
+      "issuerId": 489,
       "chunks": [179, 210],
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
           "module": "./src/MiniSearch.js",
           "moduleName": "./src/MiniSearch.js",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
           "resolvedModule": "./src/MiniSearch.js",
           "type": "harmony side effect evaluation",
           "active": true,
@@ -752,10 +754,10 @@
           "resolvedModuleId": 489
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
           "module": "./src/MiniSearch.js",
           "moduleName": "./src/MiniSearch.js",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/MiniSearch.js",
           "resolvedModule": "./src/MiniSearch.js",
           "type": "harmony import specifier",
           "active": true,
@@ -766,10 +768,10 @@
           "resolvedModuleId": 489
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/SearchList.js",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/SearchList.js",
           "module": "./src/SearchList.js",
           "moduleName": "./src/SearchList.js",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/SearchList.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/SearchList.js",
           "resolvedModule": "./src/SearchList.js",
           "type": "harmony side effect evaluation",
           "active": true,
@@ -780,10 +782,10 @@
           "resolvedModuleId": 259
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/SearchList.js",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/SearchList.js",
           "module": "./src/SearchList.js",
           "moduleName": "./src/SearchList.js",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/SearchList.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/SearchList.js",
           "resolvedModule": "./src/SearchList.js",
           "type": "harmony import specifier",
           "active": true,
@@ -794,10 +796,10 @@
           "resolvedModuleId": 259
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony side effect evaluation",
           "active": true,
@@ -808,10 +810,10 @@
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
@@ -822,10 +824,10 @@
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
@@ -836,10 +838,10 @@
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
@@ -850,10 +852,10 @@
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
@@ -864,10 +866,10 @@
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
@@ -878,10 +880,10 @@
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
@@ -892,10 +894,10 @@
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
@@ -906,10 +908,10 @@
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
@@ -920,10 +922,10 @@
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
@@ -934,10 +936,10 @@
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
@@ -948,10 +950,10 @@
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js",
           "resolvedModule": "./src/index.js",
           "type": "harmony side effect evaluation",
           "active": true,
@@ -962,10 +964,10 @@
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js",
           "resolvedModule": "./src/index.js",
           "type": "harmony import specifier",
           "active": true,
@@ -984,7 +986,7 @@
       "depth": 1
     },
     {
-      "identifier": "overridable|react-dom|/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src|react-dom",
+      "identifier": "overridable|react-dom|/Users/jherr/projects/federation-dashboard/dashboard-example/search/src|react-dom",
       "name": "overridable react-dom -> react-dom",
       "index": 13,
       "preOrderIndex": 13,
@@ -995,11 +997,11 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js",
+      "issuer": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js",
       "issuerName": "./src/index.js",
       "issuerPath": [
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js",
           "name": "./src/index.js",
           "id": null
         }
@@ -1013,10 +1015,10 @@
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js",
           "resolvedModule": "./src/index.js",
           "type": "harmony side effect evaluation",
           "active": true,
@@ -1027,10 +1029,10 @@
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js",
           "resolvedModule": "./src/index.js",
           "type": "harmony import specifier",
           "active": true,
@@ -1060,16 +1062,16 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+      "issuer": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
       "issuerName": "./src/App.js",
       "issuerPath": [
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js",
           "name": "./src/index.js",
           "id": null
         },
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "name": "./src/App.js",
           "id": null
         }
@@ -1083,10 +1085,10 @@
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony side effect evaluation",
           "active": true,
@@ -1097,10 +1099,10 @@
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
@@ -1130,16 +1132,16 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+      "issuer": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
       "issuerName": "./src/App.js",
       "issuerPath": [
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js",
           "name": "./src/index.js",
           "id": null
         },
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "name": "./src/App.js",
           "id": null
         }
@@ -1153,10 +1155,10 @@
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony side effect evaluation",
           "active": true,
@@ -1167,10 +1169,10 @@
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
@@ -1200,16 +1202,16 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+      "issuer": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
       "issuerName": "./src/App.js",
       "issuerPath": [
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js",
           "name": "./src/index.js",
           "id": null
         },
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "name": "./src/App.js",
           "id": null
         }
@@ -1223,10 +1225,10 @@
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony side effect evaluation",
           "active": true,
@@ -1237,10 +1239,10 @@
           "resolvedModuleId": null
         },
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "harmony import specifier",
           "active": true,
@@ -1270,16 +1272,16 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+      "issuer": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
       "issuerName": "./src/App.js",
       "issuerPath": [
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js",
           "name": "./src/index.js",
           "id": null
         },
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "name": "./src/App.js",
           "id": null
         }
@@ -1293,10 +1295,10 @@
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js|aec9ca3fac44eee715616af83971e35c",
           "module": "./src/index.js + 1 modules",
           "moduleName": "./src/index.js + 1 modules",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "resolvedModule": "./src/App.js",
           "type": "import()",
           "active": true,
@@ -1330,12 +1332,12 @@
       "issuerName": "remote home/ProductCarousel",
       "issuerPath": [
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js",
           "name": "./src/index.js",
           "id": null
         },
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "name": "./src/App.js",
           "id": null
         },
@@ -1414,7 +1416,7 @@
       "depth": 3
     },
     {
-      "identifier": "overridable|react|/Volumes/lulu_dev/federation-dashboard/node_modules/react-dom/cjs|react",
+      "identifier": "overridable|react|/Users/jherr/projects/federation-dashboard/node_modules/react-dom/cjs|react",
       "name": "overridable react -> react",
       "index": 16,
       "preOrderIndex": 16,
@@ -1425,26 +1427,26 @@
       "built": true,
       "optional": false,
       "runtime": false,
-      "issuer": "/Volumes/lulu_dev/federation-dashboard/node_modules/react-dom/cjs/react-dom.production.min.js",
+      "issuer": "/Users/jherr/projects/federation-dashboard/node_modules/react-dom/cjs/react-dom.production.min.js",
       "issuerName": "../../node_modules/react-dom/cjs/react-dom.production.min.js",
       "issuerPath": [
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js",
           "name": "./src/index.js",
           "id": null
         },
         {
-          "identifier": "overridable|react-dom|/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src|react-dom",
+          "identifier": "overridable|react-dom|/Users/jherr/projects/federation-dashboard/dashboard-example/search/src|react-dom",
           "name": "overridable react-dom -> react-dom",
           "id": 614
         },
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/react-dom/index.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/react-dom/index.js",
           "name": "../../node_modules/react-dom/index.js",
           "id": 316
         },
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/react-dom/cjs/react-dom.production.min.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/react-dom/cjs/react-dom.production.min.js",
           "name": "../../node_modules/react-dom/cjs/react-dom.production.min.js",
           "id": 967
         }
@@ -1458,10 +1460,10 @@
       "assets": [],
       "reasons": [
         {
-          "moduleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/react-dom/cjs/react-dom.production.min.js",
+          "moduleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/react-dom/cjs/react-dom.production.min.js",
           "module": "../../node_modules/react-dom/cjs/react-dom.production.min.js",
           "moduleName": "../../node_modules/react-dom/cjs/react-dom.production.min.js",
-          "resolvedModuleIdentifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/react-dom/cjs/react-dom.production.min.js",
+          "resolvedModuleIdentifier": "/Users/jherr/projects/federation-dashboard/node_modules/react-dom/cjs/react-dom.production.min.js",
           "resolvedModule": "../../node_modules/react-dom/cjs/react-dom.production.min.js",
           "type": "cjs require",
           "active": true,
@@ -1480,7 +1482,7 @@
       "depth": 4
     },
     {
-      "identifier": "overridable|react|/Volumes/lulu_dev/federation-dashboard/dashboard-example/search|react",
+      "identifier": "overridable|react|/Users/jherr/projects/federation-dashboard/dashboard-example/search|react",
       "name": "overridable react -> react",
       "index": 22,
       "preOrderIndex": 22,
@@ -1495,12 +1497,12 @@
       "issuerName": "remote overrides react = react, react-dom = react-dom",
       "issuerPath": [
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js",
           "name": "./src/index.js",
           "id": null
         },
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "name": "./src/App.js",
           "id": null
         },
@@ -1545,7 +1547,7 @@
       "depth": 4
     },
     {
-      "identifier": "overridable|react-dom|/Volumes/lulu_dev/federation-dashboard/dashboard-example/search|react-dom",
+      "identifier": "overridable|react-dom|/Users/jherr/projects/federation-dashboard/dashboard-example/search|react-dom",
       "name": "overridable react-dom -> react-dom",
       "index": 23,
       "preOrderIndex": 23,
@@ -1560,12 +1562,12 @@
       "issuerName": "remote overrides react = react, react-dom = react-dom",
       "issuerPath": [
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/index.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/index.js",
           "name": "./src/index.js",
           "id": null
         },
         {
-          "identifier": "/Volumes/lulu_dev/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/src/App.js",
+          "identifier": "/Users/jherr/projects/federation-dashboard/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0]!/Users/jherr/projects/federation-dashboard/dashboard-example/search/src/App.js",
           "name": "./src/App.js",
           "id": null
         },

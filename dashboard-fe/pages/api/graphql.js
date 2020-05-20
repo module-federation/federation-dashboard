@@ -37,7 +37,15 @@ const typeDefs = gql`
     usedIn: [FileLocation!]!
   }
 
+  type Dependency {
+    name: String!
+    version: String!
+  }
+
   type Application {
+    dependencies: [Dependency!]!
+    devDependencies: [Dependency!]!
+    optionalDependencies: [Dependency!]!
     id: ID!
     name: String!
     remote: String!

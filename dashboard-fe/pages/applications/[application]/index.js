@@ -14,6 +14,7 @@ import Link from "next/link";
 import gql from "graphql-tag";
 import { useLazyQuery } from "@apollo/react-hooks";
 import { useRouter } from "next/router";
+import clsx from "clsx";
 
 import Layout from "../../../components/Layout";
 
@@ -28,6 +29,12 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
   },
   panelTitle: {
+    fontWeight: "bold",
+  },
+  dependenciesTable: {
+    marginBottom: "3em",
+  },
+  overridden: {
     fontWeight: "bold",
   },
 }));
@@ -60,6 +67,18 @@ const GET_APPS = gql`
           file
           url
         }
+      }
+      dependencies {
+        name
+        version
+      }
+      devDependencies {
+        name
+        version
+      }
+      optionalDependencies {
+        name
+        version
       }
     }
   }
@@ -98,12 +117,60 @@ const ConsumesTable = ({ consumes }) => {
   );
 };
 
+const DependenciesTable = ({ title, dependencies, overrides }) => {
+  const classes = useStyles();
+  return (
+    <div className={classes.dependenciesTable}>
+      <Typography variant="h6" className={classes.panelTitle}>
+        {title}
+      </Typography>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              <Typography>Name</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>Version</Typography>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {dependencies.map(({ name, version }) => {
+            const isOverride =
+              overrides.find(({ name: overName }) => overName === name) !==
+              undefined;
+            return (
+              <TableRow key={[title, name, version].join()}>
+                <TableCell>
+                  <Typography
+                    className={clsx({ [classes.overridden]: isOverride })}
+                  >
+                    {name}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography
+                    className={clsx({ [classes.overridden]: isOverride })}
+                  >
+                    {version}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </div>
+  );
+};
+
 const OverridesTable = ({ overrides }) => {
   const classes = useStyles();
   return (
     <>
       <Typography variant="h6" className={classes.panelTitle}>
-        Overrides
+        Shared
       </Typography>
       <Table>
         <TableHead>
@@ -133,8 +200,12 @@ const OverridesTable = ({ overrides }) => {
   );
 };
 
-const ModulesTable = ({ application, modules }) => {
+const ModulesTable = ({ application, modules, overrides }) => {
   const classes = useStyles();
+  const findVersion = (name) => {
+    let ov = overrides.find(({ name: ovName }) => ovName === name);
+    return ov ? ` (${ov.version})` : "";
+  };
   return (
     <>
       <Typography variant="h6" className={classes.panelTitle}>
@@ -169,7 +240,9 @@ const ModulesTable = ({ application, modules }) => {
               </TableCell>
               <TableCell>
                 <Typography>
-                  {requires.map(({ name }) => name).join(", ")}
+                  {requires
+                    .map(({ name }) => `${name}${findVersion(name)}`)
+                    .join(", ")}
                 </Typography>
               </TableCell>
             </TableRow>
@@ -211,6 +284,7 @@ const Application = () => {
                     <ModulesTable
                       application={application}
                       modules={application.modules}
+                      overrides={application.overrides}
                     />
                   </Paper>
                 </Grid>
@@ -221,9 +295,37 @@ const Application = () => {
                   </Paper>
                 </Grid>
 
+                {application.consumes.length > 0 && (
+                  <Grid item xs={6}>
+                    <Paper className={classes.panel} elevation={3}>
+                      <ConsumesTable consumes={application.consumes} />
+                    </Paper>
+                  </Grid>
+                )}
+
                 <Grid item xs={6}>
                   <Paper className={classes.panel} elevation={3}>
-                    <ConsumesTable consumes={application.consumes} />
+                    {application.dependencies.length > 0 && (
+                      <DependenciesTable
+                        title="Direct Dependencies"
+                        dependencies={application.dependencies}
+                        overrides={application.overrides}
+                      />
+                    )}
+                    {application.devDependencies.length > 0 && (
+                      <DependenciesTable
+                        title="Development Dependencies"
+                        dependencies={application.devDependencies}
+                        overrides={application.overrides}
+                      />
+                    )}
+                    {application.optionalDependencies.length > 0 && (
+                      <DependenciesTable
+                        title="Optional Dependencies"
+                        dependencies={application.optionalDependencies}
+                        overrides={application.overrides}
+                      />
+                    )}
                   </Paper>
                 </Grid>
               </Grid>

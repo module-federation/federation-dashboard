@@ -45,6 +45,7 @@ const GET_APPS = gql`
       overrides {
         id
         name
+        version
       }
       consumes {
         application {
@@ -96,6 +97,12 @@ const Applications = ({ applications }) => {
     })
   );
 
+  const findVersion = (applicationId, name) => {
+    const { overrides } = applications.find(({ id }) => id === applicationId);
+    let ov = overrides.find(({ name: ovName }) => ovName === name);
+    return ov ? ` (${ov.version})` : "";
+  };
+
   return (
     <Table aria-label="simple table">
       <TableHead>
@@ -122,38 +129,46 @@ const Applications = ({ applications }) => {
             <Typography variant="body1">Requires</Typography>
           </TableCell>
         </TableRow>
-        {modules.map(({ name, absoluteId, applicationName, requires }) => (
-          <TableRow key={`module:${absoluteId}`}>
-            <TableCell align="right">
-              <Typography variant="body1">
-                <Link href={`/applications/${applicationName}/${name}`}>
-                  <a>{name}</a>
-                </Link>
-              </Typography>
-            </TableCell>
-            {applications.map(({ id: appId, name }) => (
-              <TableCell
-                align="center"
-                key={`${name}:app:${appId}:mod:${absoluteId}`}
-              >
-                {modulesById[absoluteId].applicationId === appId && <UpArrow />}
-                {modulesById[absoluteId].applications[appId] && (
-                  <>
-                    <Typography>
-                      <DownArrow />{" "}
-                      {modulesById[absoluteId].applications[appId].count}
-                    </Typography>
-                  </>
-                )}
+        {modules.map(
+          ({ name, absoluteId, applicationName, requires, applicationId }) => (
+            <TableRow key={`module:${absoluteId}`}>
+              <TableCell align="right">
+                <Typography variant="body1">
+                  <Link href={`/applications/${applicationName}/${name}`}>
+                    <a>{name}</a>
+                  </Link>
+                </Typography>
               </TableCell>
-            ))}
-            <TableCell align="left">
-              <Typography variant="body1">
-                {requires.map(({ name }) => name).join(", ")}
-              </Typography>
-            </TableCell>
-          </TableRow>
-        ))}
+              {applications.map(({ id: appId, name }) => (
+                <TableCell
+                  align="center"
+                  key={`${name}:app:${appId}:mod:${absoluteId}`}
+                >
+                  {modulesById[absoluteId].applicationId === appId && (
+                    <UpArrow />
+                  )}
+                  {modulesById[absoluteId].applications[appId] && (
+                    <>
+                      <Typography>
+                        <DownArrow />{" "}
+                        {modulesById[absoluteId].applications[appId].count}
+                      </Typography>
+                    </>
+                  )}
+                </TableCell>
+              ))}
+              <TableCell align="left" width="5%">
+                <Typography variant="body1" noWrap>
+                  {requires
+                    .map(
+                      ({ name }) => `${name}${findVersion(applicationId, name)}`
+                    )
+                    .join(", ")}
+                </Typography>
+              </TableCell>
+            </TableRow>
+          )
+        )}
         <TableRow>
           <TableCell colSpan={applications.length + 2}>
             <Typography variant="h5">Overrides</Typography>
@@ -378,6 +393,7 @@ const Home = () => {
       <Head>
         <title>Federated Modules Dashboard</title>
       </Head>
+      <div style={{ height: 200 }}></div>
       {data && data.applications.length > 0 && (
         <>
           {data.applications.length > 1 && (
