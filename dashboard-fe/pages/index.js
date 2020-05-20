@@ -110,9 +110,9 @@ const Applications = ({ applications }) => {
           <TableCell />
           {applications.map(({ id, name }) => (
             <TableCell align="center" key={`application:${id}`}>
-              <Typography variant="h5" className={classes.headerCell}>
+              <Typography variant="h5">
                 <Link href={`/applications/${name}`}>
-                  <a>{name}</a>
+                  <a className={classes.headerCell}>{name}</a>
                 </Link>
               </Typography>
             </TableCell>
@@ -393,7 +393,6 @@ const Home = () => {
       <Head>
         <title>Federated Modules Dashboard</title>
       </Head>
-      <div style={{ height: 200 }}></div>
       {data && data.applications.length > 0 && (
         <>
           {data.applications.length > 1 && (
