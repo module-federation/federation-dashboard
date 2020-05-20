@@ -22,8 +22,7 @@
   },
   "scripts": {
     "submodules": "git pull --recurse-submodules",
-    "build": "yarn --force && yarn report",
-    "report": "/bin/zsh ./report.sh",
+    "build": "yarn --force",
     "start": "yarn --force && /bin/zsh ./report.sh && yarn --cwd ./dashboard-fe/ dev",
     "prettier": "prettier --write \"**/*.{js,json,md,ts,tsx}\"",
     "wipe": "find . -name \"node_modules\" -exec rm -rf '{}' +\nfind . -name \"yarn.lock\" -exec rm -rf '{}' +",

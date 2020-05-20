@@ -61,6 +61,209 @@
       }
     ],
     "optionalDependencies": [],
+    "id": "nav",
+    "name": "nav",
+    "remote": "http://assets.mycompany.com/nav/remoteEntry.js",
+    "overrides": [
+      {
+        "id": "react",
+        "name": "react",
+        "version": "16.13",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/nav",
+        "applicationID": "nav"
+      },
+      {
+        "id": "react-dom",
+        "name": "react-dom",
+        "version": "16.13",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/nav",
+        "applicationID": "nav"
+      },
+      {
+        "id": "@emotion/core",
+        "name": "@emotion/core",
+        "version": "10.0",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/nav",
+        "applicationID": "nav"
+      },
+      {
+        "id": "lodash",
+        "name": "lodash",
+        "version": "4.17",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/nav",
+        "applicationID": "nav"
+      }
+    ],
+    "consumes": [
+      {
+        "consumingApplicationID": "nav",
+        "applicationID": "dsl",
+        "name": "Button",
+        "usedIn": [
+          {
+            "file": "./src/Header.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/./src/Header.js"
+          }
+        ]
+      },
+      {
+        "consumingApplicationID": "nav",
+        "applicationID": "search",
+        "name": "MiniSearch",
+        "usedIn": [
+          {
+            "file": "./src/Header.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/./src/Header.js"
+          }
+        ]
+      },
+      {
+        "consumingApplicationID": "nav",
+        "applicationID": "utils",
+        "name": "analytics",
+        "usedIn": [
+          {
+            "file": "./src/App.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/./src/App.js"
+          }
+        ]
+      }
+    ],
+    "modules": [
+      {
+        "id": "nav:Header",
+        "name": "Header",
+        "applicationID": "nav",
+        "requires": ["react", "@emotion/core"],
+        "file": "./src/Header"
+      },
+      {
+        "id": "nav:Footer",
+        "name": "Footer",
+        "applicationID": "nav",
+        "requires": ["react", "@emotion/core"],
+        "file": "./src/Footer"
+      }
+    ]
+  },
+  {
+    "dependencies": [],
+    "devDependencies": [
+      {
+        "name": "@babel/core",
+        "version": "7.9"
+      },
+      {
+        "name": "@babel/preset-react",
+        "version": "7.9"
+      },
+      {
+        "name": "@module-federation/dashboard-plugin",
+        "version": "1.0"
+      },
+      {
+        "name": "babel-loader",
+        "version": "8.1"
+      },
+      {
+        "name": "serve",
+        "version": "11.3"
+      },
+      {
+        "name": "webpack",
+        "version": "5.0.0-beta"
+      },
+      {
+        "name": "webpack-cli",
+        "version": "3.3"
+      },
+      {
+        "name": "webpack-dev-server",
+        "version": "3.11"
+      },
+      {
+        "name": "@module-federation/automatic-vendor-federation",
+        "version": "1.0"
+      }
+    ],
+    "optionalDependencies": [],
+    "id": "utils",
+    "name": "utils",
+    "remote": "http://assets.mycompany.com/utils/remoteEntry.js",
+    "overrides": [],
+    "consumes": [],
+    "modules": [
+      {
+        "id": "utils:analytics",
+        "name": "analytics",
+        "applicationID": "utils",
+        "requires": [],
+        "file": "./src/analytics"
+      }
+    ]
+  },
+  {
+    "dependencies": [
+      {
+        "name": "@emotion/core",
+        "version": "10.0"
+      },
+      {
+        "name": "lodash",
+        "version": "4.17"
+      },
+      {
+        "name": "react",
+        "version": "16.13"
+      },
+      {
+        "name": "react-dom",
+        "version": "16.13"
+      }
+    ],
+    "devDependencies": [
+      {
+        "name": "@babel/core",
+        "version": "7.9"
+      },
+      {
+        "name": "@babel/preset-react",
+        "version": "7.9"
+      },
+      {
+        "name": "@module-federation/dashboard-plugin",
+        "version": "1.0"
+      },
+      {
+        "name": "babel-loader",
+        "version": "8.1"
+      },
+      {
+        "name": "html-webpack-plugin",
+        "version": "4.0.0-beta"
+      },
+      {
+        "name": "serve",
+        "version": "11.3"
+      },
+      {
+        "name": "webpack",
+        "version": "5.0.0-beta"
+      },
+      {
+        "name": "webpack-cli",
+        "version": "3.3"
+      },
+      {
+        "name": "webpack-dev-server",
+        "version": "3.11"
+      },
+      {
+        "name": "@module-federation/automatic-vendor-federation",
+        "version": "1.0"
+      }
+    ],
+    "optionalDependencies": [],
     "id": "dsl",
     "name": "dsl",
     "remote": "http://assets.mycompany.com/dsl/remoteEntry.js",
@@ -123,6 +326,142 @@
         "applicationID": "dsl",
         "requires": ["react", "@emotion/core"],
         "file": "./src/TextField"
+      }
+    ]
+  },
+  {
+    "dependencies": [
+      {
+        "name": "react",
+        "version": "16.13"
+      },
+      {
+        "name": "react-dom",
+        "version": "16.13"
+      }
+    ],
+    "devDependencies": [
+      {
+        "name": "@babel/core",
+        "version": "7.9"
+      },
+      {
+        "name": "@babel/preset-react",
+        "version": "7.9"
+      },
+      {
+        "name": "babel-loader",
+        "version": "8.1"
+      },
+      {
+        "name": "html-webpack-plugin",
+        "version": "4.0.0-beta"
+      },
+      {
+        "name": "serve",
+        "version": "11.3"
+      },
+      {
+        "name": "webpack",
+        "version": "5.0.0-beta"
+      },
+      {
+        "name": "webpack-cli",
+        "version": "3.3"
+      },
+      {
+        "name": "webpack-dev-server",
+        "version": "3.11"
+      },
+      {
+        "name": "@module-federation/automatic-vendor-federation",
+        "version": "1.0"
+      },
+      {
+        "name": "@module-federation/dashboard-plugin",
+        "version": "1.0"
+      }
+    ],
+    "optionalDependencies": [],
+    "id": "search",
+    "name": "search",
+    "remote": "http://mycompany.com/search/remoteEntry.js",
+    "overrides": [
+      {
+        "id": "react",
+        "name": "react",
+        "version": "16.13",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/search",
+        "applicationID": "search"
+      },
+      {
+        "id": "react-dom",
+        "name": "react-dom",
+        "version": "16.13",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/search",
+        "applicationID": "search"
+      }
+    ],
+    "consumes": [
+      {
+        "consumingApplicationID": "search",
+        "applicationID": "nav",
+        "name": "Header",
+        "usedIn": [
+          {
+            "file": "./src/App.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search/./src/App.js"
+          }
+        ]
+      },
+      {
+        "consumingApplicationID": "search",
+        "applicationID": "nav",
+        "name": "Footer",
+        "usedIn": [
+          {
+            "file": "./src/App.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search/./src/App.js"
+          }
+        ]
+      },
+      {
+        "consumingApplicationID": "search",
+        "applicationID": "utils",
+        "name": "analytics",
+        "usedIn": [
+          {
+            "file": "./src/App.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search/./src/App.js"
+          }
+        ]
+      },
+      {
+        "consumingApplicationID": "search",
+        "applicationID": "home",
+        "name": "ProductCarousel",
+        "usedIn": [
+          {
+            "file": "./src/App.js",
+            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search/./src/App.js"
+          }
+        ]
+      }
+    ],
+    "modules": [
+      {
+        "id": "search:SearchList",
+        "name": "SearchList",
+        "applicationID": "search",
+        "requires": ["react"],
+        "file": "./src/SearchList"
+      },
+      {
+        "id": "search:MiniSearch",
+        "name": "MiniSearch",
+        "applicationID": "search",
+        "requires": ["react"],
+        "file": "./src/MiniSearch"
       }
     ]
   },
@@ -344,345 +683,6 @@
         "applicationID": "home",
         "requires": ["react"],
         "file": "./src/HeroImage"
-      }
-    ]
-  },
-  {
-    "dependencies": [
-      {
-        "name": "react",
-        "version": "16.13"
-      },
-      {
-        "name": "react-dom",
-        "version": "16.13"
-      }
-    ],
-    "devDependencies": [
-      {
-        "name": "@babel/core",
-        "version": "7.9"
-      },
-      {
-        "name": "@babel/preset-react",
-        "version": "7.9"
-      },
-      {
-        "name": "babel-loader",
-        "version": "8.1"
-      },
-      {
-        "name": "html-webpack-plugin",
-        "version": "4.0.0-beta"
-      },
-      {
-        "name": "serve",
-        "version": "11.3"
-      },
-      {
-        "name": "webpack",
-        "version": "5.0.0-beta"
-      },
-      {
-        "name": "webpack-cli",
-        "version": "3.3"
-      },
-      {
-        "name": "webpack-dev-server",
-        "version": "3.11"
-      },
-      {
-        "name": "@module-federation/automatic-vendor-federation",
-        "version": "1.0"
-      },
-      {
-        "name": "@module-federation/dashboard-plugin",
-        "version": "1.0"
-      }
-    ],
-    "optionalDependencies": [],
-    "id": "search",
-    "name": "search",
-    "remote": "http://mycompany.com/search/remoteEntry.js",
-    "overrides": [
-      {
-        "id": "react",
-        "name": "react",
-        "version": "16.13",
-        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/search",
-        "applicationID": "search"
-      },
-      {
-        "id": "react-dom",
-        "name": "react-dom",
-        "version": "16.13",
-        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/search",
-        "applicationID": "search"
-      }
-    ],
-    "consumes": [
-      {
-        "consumingApplicationID": "search",
-        "applicationID": "nav",
-        "name": "Header",
-        "usedIn": [
-          {
-            "file": "./src/App.js",
-            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search/./src/App.js"
-          }
-        ]
-      },
-      {
-        "consumingApplicationID": "search",
-        "applicationID": "nav",
-        "name": "Footer",
-        "usedIn": [
-          {
-            "file": "./src/App.js",
-            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search/./src/App.js"
-          }
-        ]
-      },
-      {
-        "consumingApplicationID": "search",
-        "applicationID": "utils",
-        "name": "analytics",
-        "usedIn": [
-          {
-            "file": "./src/App.js",
-            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search/./src/App.js"
-          }
-        ]
-      },
-      {
-        "consumingApplicationID": "search",
-        "applicationID": "home",
-        "name": "ProductCarousel",
-        "usedIn": [
-          {
-            "file": "./src/App.js",
-            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search/./src/App.js"
-          }
-        ]
-      }
-    ],
-    "modules": [
-      {
-        "id": "search:SearchList",
-        "name": "SearchList",
-        "applicationID": "search",
-        "requires": ["react"],
-        "file": "./src/SearchList"
-      },
-      {
-        "id": "search:MiniSearch",
-        "name": "MiniSearch",
-        "applicationID": "search",
-        "requires": ["react"],
-        "file": "./src/MiniSearch"
-      }
-    ]
-  },
-  {
-    "dependencies": [
-      {
-        "name": "@emotion/core",
-        "version": "10.0"
-      },
-      {
-        "name": "lodash",
-        "version": "4.17"
-      },
-      {
-        "name": "react",
-        "version": "16.13"
-      },
-      {
-        "name": "react-dom",
-        "version": "16.13"
-      }
-    ],
-    "devDependencies": [
-      {
-        "name": "@babel/core",
-        "version": "7.9"
-      },
-      {
-        "name": "@babel/preset-react",
-        "version": "7.9"
-      },
-      {
-        "name": "@module-federation/dashboard-plugin",
-        "version": "1.0"
-      },
-      {
-        "name": "babel-loader",
-        "version": "8.1"
-      },
-      {
-        "name": "html-webpack-plugin",
-        "version": "4.0.0-beta"
-      },
-      {
-        "name": "serve",
-        "version": "11.3"
-      },
-      {
-        "name": "webpack",
-        "version": "5.0.0-beta"
-      },
-      {
-        "name": "webpack-cli",
-        "version": "3.3"
-      },
-      {
-        "name": "webpack-dev-server",
-        "version": "3.11"
-      },
-      {
-        "name": "@module-federation/automatic-vendor-federation",
-        "version": "1.0"
-      }
-    ],
-    "optionalDependencies": [],
-    "id": "nav",
-    "name": "nav",
-    "remote": "http://assets.mycompany.com/nav/remoteEntry.js",
-    "overrides": [
-      {
-        "id": "react",
-        "name": "react",
-        "version": "16.13",
-        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/nav",
-        "applicationID": "nav"
-      },
-      {
-        "id": "react-dom",
-        "name": "react-dom",
-        "version": "16.13",
-        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/nav",
-        "applicationID": "nav"
-      },
-      {
-        "id": "@emotion/core",
-        "name": "@emotion/core",
-        "version": "10.0",
-        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/nav",
-        "applicationID": "nav"
-      },
-      {
-        "id": "lodash",
-        "name": "lodash",
-        "version": "4.17",
-        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/nav",
-        "applicationID": "nav"
-      }
-    ],
-    "consumes": [
-      {
-        "consumingApplicationID": "nav",
-        "applicationID": "dsl",
-        "name": "Button",
-        "usedIn": [
-          {
-            "file": "./src/Header.js",
-            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/./src/Header.js"
-          }
-        ]
-      },
-      {
-        "consumingApplicationID": "nav",
-        "applicationID": "search",
-        "name": "MiniSearch",
-        "usedIn": [
-          {
-            "file": "./src/Header.js",
-            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/./src/Header.js"
-          }
-        ]
-      },
-      {
-        "consumingApplicationID": "nav",
-        "applicationID": "utils",
-        "name": "analytics",
-        "usedIn": [
-          {
-            "file": "./src/App.js",
-            "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/./src/App.js"
-          }
-        ]
-      }
-    ],
-    "modules": [
-      {
-        "id": "nav:Header",
-        "name": "Header",
-        "applicationID": "nav",
-        "requires": ["react", "@emotion/core"],
-        "file": "./src/Header"
-      },
-      {
-        "id": "nav:Footer",
-        "name": "Footer",
-        "applicationID": "nav",
-        "requires": ["react", "@emotion/core"],
-        "file": "./src/Footer"
-      }
-    ]
-  },
-  {
-    "dependencies": [],
-    "devDependencies": [
-      {
-        "name": "@babel/core",
-        "version": "7.9"
-      },
-      {
-        "name": "@babel/preset-react",
-        "version": "7.9"
-      },
-      {
-        "name": "@module-federation/dashboard-plugin",
-        "version": "1.0"
-      },
-      {
-        "name": "babel-loader",
-        "version": "8.1"
-      },
-      {
-        "name": "serve",
-        "version": "11.3"
-      },
-      {
-        "name": "webpack",
-        "version": "5.0.0-beta"
-      },
-      {
-        "name": "webpack-cli",
-        "version": "3.3"
-      },
-      {
-        "name": "webpack-dev-server",
-        "version": "3.11"
-      },
-      {
-        "name": "@module-federation/automatic-vendor-federation",
-        "version": "1.0"
-      }
-    ],
-    "optionalDependencies": [],
-    "id": "utils",
-    "name": "utils",
-    "remote": "http://assets.mycompany.com/utils/remoteEntry.js",
-    "overrides": [],
-    "consumes": [],
-    "modules": [
-      {
-        "id": "utils:analytics",
-        "name": "analytics",
-        "applicationID": "utils",
-        "requires": [],
-        "file": "./src/analytics"
       }
     ]
   }
