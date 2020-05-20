@@ -22,6 +22,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import PlusIcon from "@material-ui/icons/Add";
 import WebIcon from "@material-ui/icons/Web";
+import ShareIcon from "@material-ui/icons/Share";
 import WidgetsIcon from "@material-ui/icons/Widgets";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -55,6 +56,14 @@ const SideBar = ({ data }) => {
             <DashboardIcon />
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
+        </ListItem>
+      </Link>
+      <Link href={`/dependencies`}>
+        <ListItem button>
+          <ListItemIcon>
+            <ShareIcon />
+          </ListItemIcon>
+          <ListItemText primary="Dependencies" />
         </ListItem>
       </Link>
       {data && (
