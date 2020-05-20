@@ -127,26 +127,39 @@ class FederationDashboardPlugin {
             [chunk.id]: stringifiableChunk,
           });
         }, {});
-        let packageJson, vendorFederation;
+        let packageJson,
+          vendorFederation = {};
         try {
           packageJson = require(compilation.options.context + "/package.json");
         } catch (e) {}
         if (packageJson) {
-          vendorFederation = AutomaticVendorFederation({
+          vendorFederation.dependencies = AutomaticVendorFederation({
             exclude: [],
             ignoreVersion: false,
             packageJson,
             subPackages: Array.from(directReasons),
-            shareFrom: [
-              "dependencies",
-              "devDependencies",
-              "optionalDependencies",
-            ],
+            shareFrom: ["dependencies"],
+            ignorePatchVersion: true,
+          });
+          vendorFederation.devDependencies = AutomaticVendorFederation({
+            exclude: [],
+            ignoreVersion: false,
+            packageJson,
+            subPackages: Array.from(directReasons),
+            shareFrom: ["devDependencies"],
+            ignorePatchVersion: true,
+          });
+          vendorFederation.optionalDependencies = AutomaticVendorFederation({
+            exclude: [],
+            ignoreVersion: false,
+            packageJson,
+            subPackages: Array.from(directReasons),
+            shareFrom: ["optionalDependencies"],
             ignorePatchVersion: true,
           });
         }
         const dashData = (this._dashData = JSON.stringify({
-          topLevelPackage: vendorFederation || null,
+          topLevelPackage: vendorFederation || {},
           publicPath: compilation.outputOptions.publicPath,
           federationRemoteEntry: RemoteEntryChunk,
           buildHash: stats.hash,

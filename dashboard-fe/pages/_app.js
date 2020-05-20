@@ -32,9 +32,7 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-const isProduction = process.env.NODE_ENV === "production";
-
-if (!isProduction) {
+if (process.env.NODE_ENV !== "production") {
   Router.events.on("routeChangeComplete", () => {
     const path = "/_next/static/chunks/styles.chunk.module.css";
     const chunksSelector = `link[href*="${path}"]:not([rel=preload])`;

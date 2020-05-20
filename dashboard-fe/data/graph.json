@@ -1,5 +1,66 @@
 [
   {
+    "dependencies": [
+      {
+        "name": "@emotion/core",
+        "version": "10.0"
+      },
+      {
+        "name": "lodash",
+        "version": "4.17"
+      },
+      {
+        "name": "react",
+        "version": "16.13"
+      },
+      {
+        "name": "react-dom",
+        "version": "16.13"
+      }
+    ],
+    "devDependencies": [
+      {
+        "name": "@babel/core",
+        "version": "7.9"
+      },
+      {
+        "name": "@babel/preset-react",
+        "version": "7.9"
+      },
+      {
+        "name": "@module-federation/dashboard-plugin",
+        "version": "1.0"
+      },
+      {
+        "name": "babel-loader",
+        "version": "8.1"
+      },
+      {
+        "name": "html-webpack-plugin",
+        "version": "4.0.0-beta"
+      },
+      {
+        "name": "serve",
+        "version": "11.3"
+      },
+      {
+        "name": "webpack",
+        "version": "5.0.0-beta"
+      },
+      {
+        "name": "webpack-cli",
+        "version": "3.3"
+      },
+      {
+        "name": "webpack-dev-server",
+        "version": "3.11"
+      },
+      {
+        "name": "@module-federation/automatic-vendor-federation",
+        "version": "1.0"
+      }
+    ],
+    "optionalDependencies": [],
     "id": "dsl",
     "name": "dsl",
     "remote": "http://assets.mycompany.com/dsl/remoteEntry.js",
@@ -7,22 +68,22 @@
       {
         "id": "react",
         "name": "react",
-        "version": "react",
-        "location": "/Volumes/lulu_dev/federation-dashboard/node_modules/react-dom/cjs",
+        "version": "16.13",
+        "location": "/Users/jherr/projects/federation-dashboard/node_modules/react-dom/cjs",
         "applicationID": "dsl"
       },
       {
         "id": "react-dom",
         "name": "react-dom",
-        "version": "react-dom",
-        "location": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/dsl/src",
+        "version": "16.13",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/dsl/src",
         "applicationID": "dsl"
       },
       {
         "id": "@emotion/core",
         "name": "@emotion/core",
-        "version": "@emotion/core",
-        "location": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/dsl/src",
+        "version": "10.0",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/dsl/src",
         "applicationID": "dsl"
       }
     ],
@@ -66,6 +127,63 @@
     ]
   },
   {
+    "dependencies": [
+      {
+        "name": "lodash",
+        "version": "4.17"
+      },
+      {
+        "name": "react",
+        "version": "16.13"
+      },
+      {
+        "name": "react-dom",
+        "version": "16.13"
+      }
+    ],
+    "devDependencies": [
+      {
+        "name": "@babel/core",
+        "version": "7.9"
+      },
+      {
+        "name": "@babel/preset-react",
+        "version": "7.9"
+      },
+      {
+        "name": "@module-federation/dashboard-plugin",
+        "version": "1.0"
+      },
+      {
+        "name": "babel-loader",
+        "version": "8.1"
+      },
+      {
+        "name": "html-webpack-plugin",
+        "version": "4.0.0-beta"
+      },
+      {
+        "name": "serve",
+        "version": "11.3"
+      },
+      {
+        "name": "webpack",
+        "version": "5.0.0-beta"
+      },
+      {
+        "name": "webpack-cli",
+        "version": "3.3"
+      },
+      {
+        "name": "webpack-dev-server",
+        "version": "3.11"
+      },
+      {
+        "name": "@module-federation/automatic-vendor-federation",
+        "version": "1.0"
+      }
+    ],
+    "optionalDependencies": [],
     "id": "home",
     "name": "home",
     "remote": "http://mycompany.com/home/remoteEntry.js",
@@ -73,22 +191,22 @@
       {
         "id": "react",
         "name": "react",
-        "version": "react",
-        "location": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/home",
+        "version": "16.13",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/home",
         "applicationID": "home"
       },
       {
         "id": "react-dom",
         "name": "react-dom",
-        "version": "react-dom",
-        "location": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/home",
+        "version": "16.13",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/home",
         "applicationID": "home"
       },
       {
         "id": "lodash",
         "name": "lodash",
-        "version": "lodash-4.17",
-        "location": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/home",
+        "version": "4.17",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/home",
         "applicationID": "home"
       }
     ],
@@ -230,6 +348,59 @@
     ]
   },
   {
+    "dependencies": [
+      {
+        "name": "react",
+        "version": "16.13"
+      },
+      {
+        "name": "react-dom",
+        "version": "16.13"
+      }
+    ],
+    "devDependencies": [
+      {
+        "name": "@babel/core",
+        "version": "7.9"
+      },
+      {
+        "name": "@babel/preset-react",
+        "version": "7.9"
+      },
+      {
+        "name": "babel-loader",
+        "version": "8.1"
+      },
+      {
+        "name": "html-webpack-plugin",
+        "version": "4.0.0-beta"
+      },
+      {
+        "name": "serve",
+        "version": "11.3"
+      },
+      {
+        "name": "webpack",
+        "version": "5.0.0-beta"
+      },
+      {
+        "name": "webpack-cli",
+        "version": "3.3"
+      },
+      {
+        "name": "webpack-dev-server",
+        "version": "3.11"
+      },
+      {
+        "name": "@module-federation/automatic-vendor-federation",
+        "version": "1.0"
+      },
+      {
+        "name": "@module-federation/dashboard-plugin",
+        "version": "1.0"
+      }
+    ],
+    "optionalDependencies": [],
     "id": "search",
     "name": "search",
     "remote": "http://mycompany.com/search/remoteEntry.js",
@@ -237,15 +408,15 @@
       {
         "id": "react",
         "name": "react",
-        "version": "react",
-        "location": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/search",
+        "version": "16.13",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/search",
         "applicationID": "search"
       },
       {
         "id": "react-dom",
         "name": "react-dom",
-        "version": "react-dom",
-        "location": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/search",
+        "version": "16.13",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/search",
         "applicationID": "search"
       }
     ],
@@ -313,6 +484,67 @@
     ]
   },
   {
+    "dependencies": [
+      {
+        "name": "@emotion/core",
+        "version": "10.0"
+      },
+      {
+        "name": "lodash",
+        "version": "4.17"
+      },
+      {
+        "name": "react",
+        "version": "16.13"
+      },
+      {
+        "name": "react-dom",
+        "version": "16.13"
+      }
+    ],
+    "devDependencies": [
+      {
+        "name": "@babel/core",
+        "version": "7.9"
+      },
+      {
+        "name": "@babel/preset-react",
+        "version": "7.9"
+      },
+      {
+        "name": "@module-federation/dashboard-plugin",
+        "version": "1.0"
+      },
+      {
+        "name": "babel-loader",
+        "version": "8.1"
+      },
+      {
+        "name": "html-webpack-plugin",
+        "version": "4.0.0-beta"
+      },
+      {
+        "name": "serve",
+        "version": "11.3"
+      },
+      {
+        "name": "webpack",
+        "version": "5.0.0-beta"
+      },
+      {
+        "name": "webpack-cli",
+        "version": "3.3"
+      },
+      {
+        "name": "webpack-dev-server",
+        "version": "3.11"
+      },
+      {
+        "name": "@module-federation/automatic-vendor-federation",
+        "version": "1.0"
+      }
+    ],
+    "optionalDependencies": [],
     "id": "nav",
     "name": "nav",
     "remote": "http://assets.mycompany.com/nav/remoteEntry.js",
@@ -320,29 +552,29 @@
       {
         "id": "react",
         "name": "react",
-        "version": "react",
-        "location": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/nav",
+        "version": "16.13",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/nav",
         "applicationID": "nav"
       },
       {
         "id": "react-dom",
         "name": "react-dom",
-        "version": "react-dom",
-        "location": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/nav",
+        "version": "16.13",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/nav",
         "applicationID": "nav"
       },
       {
         "id": "@emotion/core",
         "name": "@emotion/core",
-        "version": "@emotion/core-10.0",
-        "location": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/nav",
+        "version": "10.0",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/nav",
         "applicationID": "nav"
       },
       {
         "id": "lodash",
         "name": "lodash",
-        "version": "lodash-4.17",
-        "location": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/nav",
+        "version": "4.17",
+        "location": "/Users/jherr/projects/federation-dashboard/dashboard-example/nav",
         "applicationID": "nav"
       }
     ],
@@ -399,6 +631,46 @@
     ]
   },
   {
+    "dependencies": [],
+    "devDependencies": [
+      {
+        "name": "@babel/core",
+        "version": "7.9"
+      },
+      {
+        "name": "@babel/preset-react",
+        "version": "7.9"
+      },
+      {
+        "name": "@module-federation/dashboard-plugin",
+        "version": "1.0"
+      },
+      {
+        "name": "babel-loader",
+        "version": "8.1"
+      },
+      {
+        "name": "serve",
+        "version": "11.3"
+      },
+      {
+        "name": "webpack",
+        "version": "5.0.0-beta"
+      },
+      {
+        "name": "webpack-cli",
+        "version": "3.3"
+      },
+      {
+        "name": "webpack-dev-server",
+        "version": "3.11"
+      },
+      {
+        "name": "@module-federation/automatic-vendor-federation",
+        "version": "1.0"
+      }
+    ],
+    "optionalDependencies": [],
     "id": "utils",
     "name": "utils",
     "remote": "http://assets.mycompany.com/utils/remoteEntry.js",

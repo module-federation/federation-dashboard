@@ -1,7 +1,10 @@
 const fs = require("fs");
 const path = require("path");
 
-const importData = ({ federationRemoteEntry, modules }, config) => {
+const importData = (
+  { federationRemoteEntry, modules, topLevelPackage },
+  config
+) => {
   const app = federationRemoteEntry.origins[0].loc;
   const overrides = {};
   const consumes = [];
@@ -41,6 +44,17 @@ const importData = ({ federationRemoteEntry, modules }, config) => {
     }
   });
 
+  const convertDeps = (deps = {}) =>
+    Object.entries(deps).map(([version, name]) => ({
+      name,
+      version: version.replace(`${name}-`, ""),
+    }));
+  const convertedDeps = {
+    dependencies: convertDeps(topLevelPackage.dependencies),
+    devDependencies: convertDeps(topLevelPackage.devDependencies),
+    optionalDependencies: convertDeps(topLevelPackage.optionalDependencies),
+  };
+
   modules.forEach(({ identifier, issuerName, reasons }) => {
     const data = identifier.split("|");
     if (data[0] === "overridable") {
@@ -59,10 +73,23 @@ const importData = ({ federationRemoteEntry, modules }, config) => {
           }
         });
       }
+
+      let version = "";
+      [
+        convertedDeps.dependencies,
+        convertedDeps.devDependencies,
+        convertedDeps.optionalDependencies,
+      ].forEach((deps) => {
+        const dep = deps.find(({ name }) => name === data[3]);
+        if (dep) {
+          version = dep.version;
+        }
+      });
+
       overrides[data[3]] = {
         id: data[3],
         name: data[3],
-        version: data[1],
+        version,
         location: data[2],
         applicationID: app,
       };
@@ -70,6 +97,7 @@ const importData = ({ federationRemoteEntry, modules }, config) => {
   });
 
   const out = {
+    ...convertedDeps,
     id: app,
     name: app,
     remote: config[app].remote,
