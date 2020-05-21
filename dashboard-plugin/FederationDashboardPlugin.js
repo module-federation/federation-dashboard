@@ -1,8 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const vm = require("vm");
 const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
-const parseOptions = require("webpack/lib/container/parseOptions");
 
 /** @typedef {import('webpack/lib/Compilation')} Compilation */
 /** @typedef {import('webpack/lib/Compiler')} Compiler */
@@ -11,7 +9,7 @@ const parseOptions = require("webpack/lib/container/parseOptions");
  * @typedef FederationDashboardPluginOptions
  * @property {string} filename
  * @property {function} reportFunction
- */
+ */ l;
 
 const PLUGIN_NAME = "FederationDashboardPlugin";
 
@@ -68,7 +66,6 @@ class FederationDashboardPlugin {
           if (module.reasons) {
             module.reasons.forEach((reason) => {
               if (reason.userRequest) {
-                // const sandbox = vm.createContext(context);
                 try {
                   const subsetPackage = require(reason.userRequest +
                     "/package.json");
@@ -159,6 +156,7 @@ class FederationDashboardPlugin {
           });
         }
         const dashData = (this._dashData = JSON.stringify({
+          metadata: this._options.metadata || {},
           topLevelPackage: vendorFederation || {},
           publicPath: compilation.outputOptions.publicPath,
           federationRemoteEntry: RemoteEntryChunk,

@@ -56,6 +56,13 @@ module.exports = {
     }),
     new DashboardPlugin({
       filename: "dashboard.json",
+      metadata: {
+        source: {
+          url:
+            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/dsl",
+        },
+        remote: "http://assets.mycompany.com/dsl/remoteEntry.js",
+      },
       reportFunction: (data) => {
         console.log("afterDone", data);
       },
