@@ -6,6 +6,7 @@ import {
   TableHead,
   TableRow,
   Typography,
+  Popover,
   makeStyles,
 } from "@material-ui/core";
 import gql from "graphql-tag";
@@ -27,6 +28,15 @@ const useStyles = makeStyles((theme) => ({
   },
   override: {
     fontWeight: "bold",
+  },
+  warning: {
+    color: "red",
+  },
+  popover: {
+    pointerEvents: "none",
+  },
+  paper: {
+    padding: theme.spacing(1),
   },
 }));
 
@@ -59,6 +69,59 @@ const GET_APPS = gql`
 const Dependencies = () => {
   const { data } = useQuery(GET_APPS);
   const classes = useStyles();
+
+  const Dependency = ({ devDependency, override, version }) => {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handlePopoverOpen = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    const handlePopoverClose = () => {
+      setAnchorEl(null);
+    };
+
+    return (
+      <>
+        <Typography
+          aria-owns={open ? "mouse-over-popover" : undefined}
+          variant="body2"
+          className={clsx({
+            [classes.devDependency]: devDependency,
+            [classes.override]: override,
+            [classes.warning]: !devDependency && !override,
+          })}
+          onMouseEnter={handlePopoverOpen}
+          onMouseLeave={handlePopoverClose}
+        >
+          {version}
+        </Typography>
+        {!devDependency && !override && anchorEl && (
+          <Popover
+            id="mouse-over-popover"
+            className={classes.popover}
+            classes={{
+              paper: classes.paper,
+            }}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handlePopoverClose}
+            disableRestoreFocus
+          >
+            <Typography>This should be shared.</Typography>
+          </Popover>
+        )}
+      </>
+    );
+  };
 
   const dependencyMap = {};
   if (data) {
@@ -123,16 +186,7 @@ const Dependencies = () => {
                     {data.applications.map(({ id }) => (
                       <TableCell>
                         {dependencyMap[k][id] && (
-                          <Typography
-                            variant="body2"
-                            className={clsx({
-                              [classes.devDependency]:
-                                dependencyMap[k][id].devDependency,
-                              [classes.override]: dependencyMap[k][id].override,
-                            })}
-                          >
-                            {dependencyMap[k][id].version}
-                          </Typography>
+                          <Dependency {...dependencyMap[k][id]} />
                         )}
                       </TableCell>
                     ))}
