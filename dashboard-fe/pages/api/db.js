@@ -1,10 +1,19 @@
-const fs = require("fs");
+import Datastore from "nedb";
 
-let apps = JSON.parse(fs.readFileSync("./data/graph.json").toString());
+const db = new Datastore({ filename: "./data/apps.db" });
+db.loadDatabase();
 
 export const update = (info) => {
-  apps = [...apps.filter(({ id }) => id != info.id), info];
-  fs.writeFileSync("./data/graph.json", JSON.stringify(apps, null, 2));
+  db.find({ id: info.id }, (_, docs) => {
+    if (docs.length > 0) {
+      console.log(`Updating ${info.id}`);
+      db.update({ id: info.id }, { $set: info });
+    } else {
+      console.log(`Adding ${info.id}`);
+      db.insert(info);
+    }
+  });
 };
 
-export default () => apps;
+export default () =>
+  new Promise((resolve) => db.find({}, (_, docs) => resolve(docs)));

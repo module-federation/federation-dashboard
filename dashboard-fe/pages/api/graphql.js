@@ -57,33 +57,36 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    applications(_, { name: nameFilter }) {
+    applications: async (_, { name: nameFilter }) => {
+      const applications = await getApplications();
       const applicationFilter = nameFilter
         ? ({ name }) => name.includes(nameFilter)
         : () => true;
-      return getApplications().filter(applicationFilter);
+      return applications.filter(applicationFilter);
     },
-    modules(_, { application, name: nameFilter }) {
+    modules: async (_, { application, name: nameFilter }) => {
+      const applications = await getApplications();
       const applicationFilter = application
         ? ({ name }) => name.includes(application)
         : () => true;
       const filter = nameFilter
         ? ({ name }) => name.includes(nameFilter)
         : () => true;
-      return getApplications()
+      return applications
         .filter(applicationFilter)
         .map(({ modules }) => modules)
         .flat()
         .filter(filter);
     },
-    consumes(_, { application, name: nameFilter }) {
+    consumes: async (_, { application, name: nameFilter }) => {
+      const applications = await getApplications();
       const applicationFilter = application
         ? ({ name }) => name.includes(application)
         : () => true;
       const filter = nameFilter
         ? ({ name }) => name.includes(nameFilter)
         : () => true;
-      return getApplications()
+      return applications
         .filter(applicationFilter)
         .map(({ consumes }) => consumes)
         .flat()
@@ -91,17 +94,20 @@ const resolvers = {
     },
   },
   Module: {
-    application({ applicationID }) {
-      return getApplications().find(({ id }) => id === applicationID);
+    application: async ({ applicationID }) => {
+      const applications = await getApplications();
+      return applications.find(({ id }) => id === applicationID);
     },
-    requires({ requires, applicationID }) {
-      const app = getApplications().find(({ id }) => id === applicationID);
+    requires: async ({ requires, applicationID }) => {
+      const applications = await getApplications();
+      const app = applications.find(({ id }) => id === applicationID);
       return requires.map((reqId) =>
         app.overrides.find(({ id }) => id === reqId)
       );
     },
-    consumedBy({ applicationID, name }) {
-      return getApplications()
+    consumedBy: async ({ applicationID, name }) => {
+      const applications = await getApplications();
+      return applications
         .map(({ consumes }) => consumes)
         .flat()
         .filter(
@@ -111,16 +117,19 @@ const resolvers = {
     },
   },
   Override: {
-    application({ applicationID }) {
-      return getApplications().find(({ id }) => id === applicationID);
+    application: async ({ applicationID }) => {
+      const applications = await getApplications();
+      return applications.find(({ id }) => id === applicationID);
     },
   },
   Consume: {
-    consumingApplication({ consumingApplicationID }) {
-      return getApplications().find(({ id }) => id === consumingApplicationID);
+    consumingApplication: async ({ consumingApplicationID }) => {
+      const applications = await getApplications();
+      return applications.find(({ id }) => id === consumingApplicationID);
     },
-    application({ applicationID }) {
-      return getApplications().find(({ id }) => id === applicationID);
+    application: async ({ applicationID }) => {
+      const applications = await getApplications();
+      return applications.find(({ id }) => id === applicationID);
     },
   },
 };
