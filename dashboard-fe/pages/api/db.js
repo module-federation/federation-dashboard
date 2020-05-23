@@ -1,6 +1,11 @@
 import Datastore from "nedb";
+import path from "path";
 
-const db = new Datastore({ filename: "./data/apps.db" });
+const dir = process.env.DATA_DIR || process.cwd();
+
+const db = new Datastore({
+  filename: path.join(dir, "./.fm-dashboard/apps.db"),
+});
 db.loadDatabase();
 
 export const update = (info) => {
