@@ -2,12 +2,13 @@ import fs from "fs";
 import path from "path";
 
 import { update } from "./db";
-import config from "../../data/config.json";
 
-const importData = (
-  { federationRemoteEntry, modules, topLevelPackage },
-  config
-) => {
+const importData = ({
+  federationRemoteEntry,
+  modules,
+  topLevelPackage,
+  metadata,
+}) => {
   const app = federationRemoteEntry.origins[0].loc;
   const overrides = {};
   const consumes = [];
@@ -99,17 +100,19 @@ const importData = (
     }
   });
 
+  const sourceUrl = metadata && metadata.source ? metadata.source.url : "";
+
   const out = {
     ...convertedDeps,
     id: app,
     name: app,
-    remote: config[app].remote,
+    remote: metadata.remote || "",
     overrides: Object.values(overrides),
     consumes: consumes.map((con) => ({
       ...con,
       usedIn: Array.from(con.usedIn.values()).map((file) => ({
         file,
-        url: `${config[app].source.url}/${file}`,
+        url: `${sourceUrl}/${file}`,
       })),
     })),
     modules: Object.values(modulesObj).map((mod) => ({
@@ -122,6 +125,6 @@ const importData = (
 };
 
 export default (req, res) => {
-  update(importData(req.body, config));
+  update(importData(req.body));
   res.send(true);
 };
