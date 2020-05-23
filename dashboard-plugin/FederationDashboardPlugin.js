@@ -9,7 +9,7 @@ const AutomaticVendorFederation = require("@module-federation/automatic-vendor-f
  * @typedef FederationDashboardPluginOptions
  * @property {string} filename
  * @property {function} reportFunction
- */ l;
+ */
 
 const PLUGIN_NAME = "FederationDashboardPlugin";
 
