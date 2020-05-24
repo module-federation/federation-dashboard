@@ -3,7 +3,7 @@ import { ApolloServer, gql } from "apollo-server-micro";
 import getApplications, {
   versionManagementEnabled,
   getVersionInfo,
-  setVersion,
+  publishVersion,
 } from "./db";
 
 const typeDefs = gql`
@@ -15,7 +15,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    setVersion(application: String!, version: String!): Versions!
+    publishVersion(application: String!, version: String!): Versions!
   }
 
   type DashboardInfo {
@@ -57,7 +57,7 @@ const typeDefs = gql`
 
   type Versions {
     versions: [String!]!
-    current: String!
+    latest: String!
   }
 
   type Application {
@@ -118,8 +118,8 @@ const resolvers = {
     },
   },
   Mutation: {
-    setVersion: async (_, { application, version }) => {
-      return setVersion(application, version);
+    publishVersion: async (_, { application, version }) => {
+      return publishVersion(application, version);
     },
   },
   Module: {

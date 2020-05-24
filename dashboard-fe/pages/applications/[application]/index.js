@@ -87,7 +87,7 @@ const GET_APPS = gql`
       }
       versions {
         versions
-        current
+        latest
       }
     }
   }
@@ -95,8 +95,8 @@ const GET_APPS = gql`
 
 const SET_VERSION = gql`
   mutation($application: String!, $version: String!) {
-    setVersion(application: $application, version: $version) {
-      current
+    publishVersion(application: $application, version: $version) {
+      latest
     }
   }
 `;
@@ -274,7 +274,7 @@ const Application = () => {
   const classes = useStyles();
   const router = useRouter();
   const [getData, { data }] = useLazyQuery(GET_APPS);
-  const [setVersion] = useMutation(SET_VERSION);
+  const [publishVersion] = useMutation(SET_VERSION);
 
   React.useEffect(() => {
     if (router.query.application) {
@@ -285,7 +285,7 @@ const Application = () => {
   }, [router]);
 
   const handleVersionChange = (application, version) => {
-    setVersion({
+    publishVersion({
       variables: {
         application,
         version,
@@ -317,7 +317,7 @@ const Application = () => {
                     {data.dashboard.versionManagementEnabled && (
                       <Select
                         variant="outlined"
-                        value={application.versions.current}
+                        value={application.versions.latest}
                         onChange={(evt) =>
                           handleVersionChange(application.id, evt.target.value)
                         }

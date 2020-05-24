@@ -28,12 +28,12 @@ export const getVersionInfo = (app) => {
   } else {
     return Promise.resolve({
       versions: [],
-      current: "",
+      latest: "",
     });
   }
 };
 
-export const setVersion = (app, version) => {
+export const publishVersion = (app, version) => {
   if (versionManager) {
     console.log(`Telling version manager to set '${app}' to '${version}'`);
     return fetch(`${versionManager}/${app}`, {
@@ -46,7 +46,7 @@ export const setVersion = (app, version) => {
   } else {
     return Promise.resolve({
       versions: [],
-      current: "",
+      latest: "",
     });
   }
 };

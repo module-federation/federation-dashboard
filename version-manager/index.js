@@ -53,7 +53,7 @@ app.post("/:app", (req, res) => {
     if (versions[app].versions.includes(req.body.version)) {
       console.log(`Application ${app} now at version ${req.body.version}`);
 
-      versions[app].current = req.body.version;
+      versions[app].latest = req.body.version;
       setVersions(versions);
       res.send(versions[app]);
     } else {

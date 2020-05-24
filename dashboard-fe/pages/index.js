@@ -62,7 +62,7 @@ const GET_APPS = gql`
       }
       versions {
         versions
-        current
+        latest
       }
     }
   }
@@ -122,7 +122,7 @@ const Applications = ({ applications, dashboard }) => {
                   <a className={classes.headerCell}>{name}</a>
                 </Link>
                 {dashboard.versionManagementEnabled && (
-                  <Typography variant="body2">({versions.current})</Typography>
+                  <Typography variant="body2">({versions.latest})</Typography>
                 )}
               </Typography>
             </TableCell>
