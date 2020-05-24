@@ -9,10 +9,12 @@ import {
   TableRow,
   TableBody,
   TableCell,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 import Link from "next/link";
 import gql from "graphql-tag";
-import { useLazyQuery } from "@apollo/react-hooks";
+import { useLazyQuery, useMutation } from "@apollo/react-hooks";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 
@@ -41,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
 
 const GET_APPS = gql`
   query($name: String!) {
+    dashboard {
+      versionManagementEnabled
+    }
     applications(name: $name) {
       id
       name
@@ -80,6 +85,18 @@ const GET_APPS = gql`
         name
         version
       }
+      versions {
+        versions
+        latest
+      }
+    }
+  }
+`;
+
+const SET_VERSION = gql`
+  mutation($application: String!, $version: String!) {
+    publishVersion(application: $application, version: $version) {
+      latest
     }
   }
 `;
@@ -257,6 +274,7 @@ const Application = () => {
   const classes = useStyles();
   const router = useRouter();
   const [getData, { data }] = useLazyQuery(GET_APPS);
+  const [publishVersion] = useMutation(SET_VERSION);
 
   React.useEffect(() => {
     if (router.query.application) {
@@ -265,6 +283,18 @@ const Application = () => {
       });
     }
   }, [router]);
+
+  const handleVersionChange = (application, version) => {
+    publishVersion({
+      variables: {
+        application,
+        version,
+      },
+      refetchQueries: [
+        { query: GET_APPS, variables: { name: router.query.application } },
+      ],
+    });
+  };
 
   return (
     <Layout>
@@ -275,9 +305,33 @@ const Application = () => {
         {data &&
           data.applications.map((application) => (
             <div key={application.id}>
-              <Typography variant="h4" className={classes.title}>
-                {application.name}
-              </Typography>
+              <Grid container>
+                <Grid item xs={9}>
+                  <Typography variant="h4" className={classes.title}>
+                    {application.name}
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="h6" className={classes.title}>
+                    Production Version:{"  "}
+                    {data.dashboard.versionManagementEnabled && (
+                      <Select
+                        variant="outlined"
+                        value={application.versions.latest}
+                        onChange={(evt) =>
+                          handleVersionChange(application.id, evt.target.value)
+                        }
+                      >
+                        {application.versions.versions.map((v) => (
+                          <MenuItem key={v} value={v}>
+                            {v}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    )}
+                  </Typography>
+                </Grid>
+              </Grid>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <Paper className={classes.panel} elevation={3}>
