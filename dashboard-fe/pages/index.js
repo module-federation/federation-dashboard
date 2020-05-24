@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
 
 const GET_APPS = gql`
   {
+    dashboard {
+      versionManagementEnabled
+    }
     applications {
       id
       name
@@ -57,11 +60,15 @@ const GET_APPS = gql`
           file
         }
       }
+      versions {
+        versions
+        current
+      }
     }
   }
 `;
 
-const Applications = ({ applications }) => {
+const Applications = ({ applications, dashboard }) => {
   const classes = useStyles();
   const modules = applications
     .map(({ id, name, modules }) =>
@@ -108,12 +115,15 @@ const Applications = ({ applications }) => {
       <TableHead>
         <TableRow className={classes.headerRow}>
           <TableCell />
-          {applications.map(({ id, name }) => (
+          {applications.map(({ id, name, versions }) => (
             <TableCell align="center" key={`application:${id}`}>
               <Typography variant="h5">
                 <Link href={`/applications/${name}`}>
                   <a className={classes.headerCell}>{name}</a>
                 </Link>
+                {dashboard.versionManagementEnabled && (
+                  <Typography variant="body2">({versions.current})</Typography>
+                )}
               </Typography>
             </TableCell>
           ))}
@@ -415,12 +425,18 @@ const Home = () => {
                 <ModuleChordChart applications={data.applications} />
               </div>
               <div style={{ display: currentTab === 2 ? "block" : "none" }}>
-                <Applications applications={data.applications} />
+                <Applications
+                  applications={data.applications}
+                  dashboard={data.dashboard || {}}
+                />
               </div>
             </>
           )}
           {data.applications.length === 1 && (
-            <Applications applications={data.applications} />
+            <Applications
+              applications={data.applications}
+              dashboard={data.dashboard || {}}
+            />
           )}
         </>
       )}

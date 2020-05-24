@@ -1,12 +1,25 @@
 import { ApolloServer, gql } from "apollo-server-micro";
 
-import getApplications from "./db";
+import getApplications, {
+  versionManagementEnabled,
+  getVersionInfo,
+  setVersion,
+} from "./db";
 
 const typeDefs = gql`
   type Query {
+    dashboard: DashboardInfo!
     applications(name: String): [Application!]!
     modules(application: String, name: String): [Module!]!
     consumes(application: String, name: String): [Consume!]!
+  }
+
+  type Mutation {
+    setVersion(application: String!, version: String!): Versions!
+  }
+
+  type DashboardInfo {
+    versionManagementEnabled: Boolean!
   }
 
   type Module {
@@ -42,6 +55,11 @@ const typeDefs = gql`
     version: String!
   }
 
+  type Versions {
+    versions: [String!]!
+    current: String!
+  }
+
   type Application {
     dependencies: [Dependency!]!
     devDependencies: [Dependency!]!
@@ -52,11 +70,17 @@ const typeDefs = gql`
     modules: [Module!]!
     overrides: [Override!]!
     consumes: [Consume!]!
+    versions: Versions!
   }
 `;
 
 const resolvers = {
   Query: {
+    dashboard: () => {
+      return {
+        versionManagementEnabled: versionManagementEnabled(),
+      };
+    },
     applications: async (_, { name: nameFilter }) => {
       const applications = await getApplications();
       const applicationFilter = nameFilter
@@ -91,6 +115,11 @@ const resolvers = {
         .map(({ consumes }) => consumes)
         .flat()
         .filter(filter);
+    },
+  },
+  Mutation: {
+    setVersion: async (_, { application, version }) => {
+      return setVersion(application, version);
     },
   },
   Module: {
@@ -131,6 +160,9 @@ const resolvers = {
       const applications = await getApplications();
       return applications.find(({ id }) => id === applicationID);
     },
+  },
+  Application: {
+    versions: ({ id }) => getVersionInfo(id),
   },
 };
 

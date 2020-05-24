@@ -1,7 +1,9 @@
 import Datastore from "nedb";
 import path from "path";
+import fetch from "node-fetch";
 
 const dir = process.env.DATA_DIR || process.cwd();
+const versionManager = process.env.VERSION_MANAGER || null;
 
 const db = new Datastore({
   filename: path.join(dir, "./.fm-dashboard/apps.db"),
@@ -18,6 +20,39 @@ export const update = (info) => {
       db.insert(info);
     }
   });
+};
+
+export const getVersionInfo = (app) => {
+  if (versionManager) {
+    return fetch(`${versionManager}/${app}`).then((resp) => resp.json());
+  } else {
+    return Promise.resolve({
+      versions: [],
+      current: "",
+    });
+  }
+};
+
+export const setVersion = (app, version) => {
+  if (versionManager) {
+    console.log(`Telling version manager to set '${app}' to '${version}'`);
+    return fetch(`${versionManager}/${app}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ version }),
+    }).then((resp) => resp.json());
+  } else {
+    return Promise.resolve({
+      versions: [],
+      current: "",
+    });
+  }
+};
+
+export const versionManagementEnabled = () => {
+  return versionManager !== null;
 };
 
 export default () =>
