@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require("fs-extra");
 const path = require("path");
 const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
 
@@ -156,6 +156,7 @@ class FederationDashboardPlugin {
           });
         }
         const dashData = (this._dashData = JSON.stringify({
+          outputPath: compilation.options.output.path,
           metadata: this._options.metadata || {},
           topLevelPackage: vendorFederation || {},
           publicPath: compilation.outputOptions.publicPath,
@@ -183,7 +184,24 @@ class FederationDashboardPlugin {
       }
     );
 
-    compiler.hooks.afterDone.tap(PLUGIN_NAME, (stats) => {
+    compiler.hooks.afterDone.tap(PLUGIN_NAME, (statsClass) => {
+      const stats = statsClass.toJson();
+      fs.copy(
+        stats.outputPath,
+        path.join(
+          stats.outputPath,
+          "../release",
+          `${stats.hash}-${Date.now()}`
+        ),
+        function (err) {
+          if (err) {
+            console.log("An error occured while copying the folder.");
+            return console.error(err);
+          }
+          console.log("Copy completed!");
+        }
+      );
+      // outputPath
       if (this._options.reportFunction) {
         // this._options.reportFunction(this._dashData);
       }
