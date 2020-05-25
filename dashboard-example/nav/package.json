@@ -15,7 +15,7 @@
     "@module-federation/automatic-vendor-federation": "^1.0.1"
   },
   "scripts": {
-    "start": "node --inspect ../../node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "start": "webpack-dev-server --open --mode development --liveReload",
     "build": "node ../../node_modules/webpack/bin/webpack.js --mode production",
     "serve": "serve dist -p 3001",
     "clean": "rm -rf dist"

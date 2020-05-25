@@ -1,5 +1,5 @@
-import React from "react";
-import css from "@emotion/core";
+/** @jsx jsx */
+import { jsx, css } from "@emotion/core";
 
 const style = css({
   background: "#800",
@@ -7,6 +7,6 @@ const style = css({
   padding: 12,
 });
 
-const Footer = () => <Footer style={style}>App 1 Footer</Footer>;
+const Footer = () => <footer css={style}>App 1 footer</footer>;
 
 export default Footer;

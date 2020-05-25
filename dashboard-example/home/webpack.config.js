@@ -63,7 +63,7 @@ module.exports = {
           url:
             "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home",
         },
-        remote: "http://assets.mycompany.com/home/remoteEntry.js",
+        remote: "http://localhost:3001/remoteEntry.js",
       },
       reportFunction: (data) => {
         console.log("afterDone", data);

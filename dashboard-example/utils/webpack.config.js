@@ -1,3 +1,4 @@
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
@@ -11,10 +12,10 @@ module.exports = {
   mode: "development",
   devServer: {
     contentBase: path.join(__dirname, "dist"),
-    port: 3001,
+    port: 3005,
   },
   output: {
-    publicPath: "http://localhost:3001/",
+    publicPath: "http://localhost:3005/",
   },
   module: {
     rules: [
@@ -29,6 +30,9 @@ module.exports = {
     ],
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
     new ModuleFederationPlugin({
       name: "utils",
       library: { type: "var", name: "utils" },
@@ -52,7 +56,7 @@ module.exports = {
           url:
             "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/utils",
         },
-        remote: "http://assets.mycompany.com/utils/remoteEntry.js",
+        remote: "http://localhost:3005/remoteEntry.js",
       },
       reportFunction: (data) => {
         console.log("afterDone", data);
