@@ -14,7 +14,10 @@ const style = css({
 
 const Header = () => (
   <header css={style}>
-    App 1 <React.Suspense fallback={<div />}></React.Suspense><Button>Foo</Button></React.Suspense>
+    App 1{" "}
+    <React.Suspense fallback={<div />}>
+      <Button>Foo</Button>
+    </React.Suspense>
     <React.Suspense fallback={<div />}>
       <MiniSearch />
     </React.Suspense>

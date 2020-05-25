@@ -1,12 +1,12 @@
 import HeroImage from "./HeroImage";
 import React from "react";
 
-import sendMessage from "utils/analytics";
+// import sendMessage from "utils/analytics";
 
 const SearchList = React.lazy(() => import("search/SearchList"));
 
 const SubPage = () => {
-  sendMessage("SubPage loaded");
+  // sendMessage("SubPage loaded");
   return (
     <div>
       <h1>Bi-Directional</h1>
