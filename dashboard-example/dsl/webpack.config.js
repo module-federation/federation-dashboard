@@ -12,10 +12,10 @@ module.exports = {
   mode: "development",
   devServer: {
     contentBase: path.join(__dirname, "dist"),
-    port: 3001,
+    port: 3002,
   },
   output: {
-    publicPath: "http://localhost:3001/",
+    publicPath: "http://localhost:3002/",
   },
   module: {
     rules: [
@@ -61,7 +61,7 @@ module.exports = {
           url:
             "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/dsl",
         },
-        remote: "http://assets.mycompany.com/dsl/remoteEntry.js",
+        remote: "http://localhost:3002/remoteEntry.js",
       },
       reportFunction: (data) => {
         console.log("afterDone", data);

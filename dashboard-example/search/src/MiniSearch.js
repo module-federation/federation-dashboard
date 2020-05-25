@@ -6,6 +6,6 @@ const style = {
   padding: 12,
 };
 
-const MiniSearch = () => <button style={style}>App 2 MiniSearch</button>;
+const MiniSearch = () => <button style={style}>Search/MiniSearch</button>;
 
 export default MiniSearch;

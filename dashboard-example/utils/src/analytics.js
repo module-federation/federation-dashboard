@@ -1,5 +1,4 @@
-const sendAnalyticsMessage = (message) => {
+console.log("Loading sendAnalytics");
+export const sendAnalyticsMessage = (message) => {
   console.log(message);
 };
-
-export default sendAnalyticsMessage;

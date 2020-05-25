@@ -7,7 +7,7 @@ import React from "react";
 
 const App = () => (
   <div>
-    <Button />
+    <Button>Something buttony</Button>
     <Carousel />
     <Dialog />
     <Slider />
