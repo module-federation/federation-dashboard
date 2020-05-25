@@ -164,6 +164,7 @@ class FederationDashboardPlugin {
           buildHash: stats.hash,
           modules,
           chunkDependencies,
+          timeStamp: Date.now(),
         }));
 
         Promise.all([
@@ -186,22 +187,20 @@ class FederationDashboardPlugin {
 
     compiler.hooks.afterDone.tap(PLUGIN_NAME, (statsClass) => {
       const stats = statsClass.toJson();
-      fs.copy(
+      const generationPath = path.join(
         stats.outputPath,
-        path.join(
-          stats.outputPath,
-          "../release",
-          `${stats.hash}-${Date.now()}`
-        ),
-        function (err) {
+        "../release",
+        `${stats.hash}`
+      );
+      if (fs.pathExists(generationPath)) {
+        fs.copy(stats.outputPath, generationPath, function (err) {
           if (err) {
             console.log("An error occured while copying the folder.");
             return console.error(err);
           }
           console.log("Copy completed!");
-        }
-      );
-      // outputPath
+        });
+      }
       if (this._options.reportFunction) {
         // this._options.reportFunction(this._dashData);
       }
