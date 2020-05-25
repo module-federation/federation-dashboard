@@ -1,5 +1,5 @@
 import React from "react";
-// import sendMessage from "utils/analytics";
+import { sendMessage } from "./analytics";
 
 const style = {
   background: "#800",
@@ -8,7 +8,7 @@ const style = {
 };
 
 const HeroImage = () => {
-  // sendMessage("loaded");
+  sendMessage("loaded");
   return (
     <img
       style={style}

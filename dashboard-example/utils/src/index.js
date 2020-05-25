@@ -1,3 +1,3 @@
-import sendAnalytics from "./analytics";
+import { sendAnalyticsMessage } from "./analytics";
 
 sendAnalytics("sendAnalytics hello");

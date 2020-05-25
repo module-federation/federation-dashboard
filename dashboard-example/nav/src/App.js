@@ -1,11 +1,11 @@
 import React from "react";
-// import sendMessage from "utils/analytics";
+import { sendMessage } from "./analytics";
 
 import Header from "./Header";
 import Footer from "./Footer";
 
 const App = () => {
-  // sendMessage("loaded");
+  sendMessage("loaded");
   return (
     <div>
       <Header />

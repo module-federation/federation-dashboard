@@ -1,13 +1,13 @@
 import HeroImage from "./HeroImage";
 import React from "react";
 
-// import sendMessage from "utils/analytics";
+import { sendMessage } from "./analytics";
 
 const SearchList = React.lazy(() => import("search/SearchList"));
 const Button = React.lazy(() => import("dsl/Button"));
 
 const Page3 = () => {
-  // sendMessage("Page 3 loaded");
+  sendMessage("Page 3 loaded");
   return (
     <div>
       <h1>Bi-Directional</h1>

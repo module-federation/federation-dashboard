@@ -6,14 +6,15 @@ import Page2 from "./Page2";
 import Page3 from "./Page3";
 import Page4 from "./Page4";
 
+import { sendMessage } from "./analytics";
+
 const Header = React.lazy(() => import("nav/Header"));
 const Footer = React.lazy(() => import("nav/Footer"));
-// import sendMessage from "utils/analytics";
 
 const SearchList = React.lazy(() => import("search/SearchList"));
 
 const App = () => {
-  // sendMessage("Application loaded");
+  sendMessage("Application loaded");
   return (
     <div>
       <React.Suspense fallback="Loading SearchList">
