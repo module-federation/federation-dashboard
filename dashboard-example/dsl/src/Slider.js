@@ -1,12 +1,17 @@
-import React from "react";
-import css from "@emotion/core";
+/** @jsx jsx */
+import { jsx, css } from "@emotion/core";
 
-const style = css({
-  background: "#800",
-  color: "#fff",
-  padding: 12,
-});
+const style = css`
+  background: green;
+  color: #fff;
+  padding: 12px;
+`;
 
-const Slider = () => <Slider style={style}>App 1 Slider</Slider>;
+const Slider = ({ children }) => (
+  <div css={style}>
+    <div>Slider!</div>
+    {children}
+  </div>
+);
 
 export default Slider;

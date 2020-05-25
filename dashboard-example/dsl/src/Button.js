@@ -1,12 +1,16 @@
-import React from "react";
-import css from "@emotion/core";
+/** @jsx jsx */
+import { jsx, css } from "@emotion/core";
 
-const style = css({
-  background: "#800",
-  color: "#fff",
-  padding: 12,
-});
-
-const Button = () => <button style={style}>App 1 Button</button>;
+const Button = ({ children }) => (
+  <button
+    css={css`
+      background: blue;
+      color: #fff;
+      padding: 12px;
+    `}
+  >
+    {children}
+  </button>
+);
 
 export default Button;

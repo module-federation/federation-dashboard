@@ -6,6 +6,6 @@ const style = {
   padding: 12,
 };
 
-const SearchList = () => <button style={style}>App 2 SearchList</button>;
+const SearchList = () => <button style={style}>Search/SearchList</button>;
 
 export default SearchList;

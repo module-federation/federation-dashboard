@@ -1,1 +1,3 @@
-console.log("hello");
+import { sendAnalyticsMessage } from "./analytics";
+
+sendAnalytics("sendAnalytics hello");
