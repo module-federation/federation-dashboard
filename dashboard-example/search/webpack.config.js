@@ -6,16 +6,17 @@ const path = require("path");
 const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
 const packageJson = require("./package.json");
 const exclude = ["babel", "plugin", "preset", "webpack", "loader", "serve"];
-const ignoreVersion = ["react", "react-dom"];
+const ignoreVersion = ["react", "react-dom", "@emotion/core"];
+
 module.exports = {
   entry: "./src/index",
   mode: "development",
   devServer: {
     contentBase: path.join(__dirname, "dist"),
-    port: 3002,
+    port: 3004,
   },
   output: {
-    publicPath: "http://localhost:3002/",
+    publicPath: "http://localhost:3004/",
   },
   module: {
     rules: [
@@ -61,7 +62,7 @@ module.exports = {
           url:
             "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search",
         },
-        remote: "http://assets.mycompany.com/search/remoteEntry.js",
+        remote: "http://localhost:3004/remoteEntry.js",
       },
       reportFunction: (data) => {
         console.log("afterDone", data);

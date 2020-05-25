@@ -1,12 +1,16 @@
-import React from "react";
-import css from "@emotion/core";
+/** @jsx jsx */
+import { jsx, css } from "@emotion/core";
 
-const style = css({
-  background: "#800",
-  color: "#fff",
-  padding: 12,
-});
+const style = css`
+  background: #eee;
+  color: #fff;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+`;
 
-const TextField = () => <TextField style={style}>App 1 TextField</TextField>;
+const TextField = ({ value, onChange }) => (
+  <input css={style} value={value} onChange={onChange} />
+);
 
 export default TextField;

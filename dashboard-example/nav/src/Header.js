@@ -1,8 +1,10 @@
+/** @jsx jsx */
+import { jsx, css } from "@emotion/core";
 import React from "react";
-import css from "@emotion/core";
 
-import Button from "dsl/Button";
-import MiniSearch from "search/MiniSearch";
+const Button = React.lazy(() => import("dsl/Button"));
+
+const MiniSearch = React.lazy(() => import("search/MiniSearch"));
 
 const style = css({
   background: "#800",
@@ -11,10 +13,12 @@ const style = css({
 });
 
 const Header = () => (
-  <Header style={style}>
-    App 1 <Button />
-    <MiniSearch />
-  </Header>
+  <header css={style}>
+    App 1 <React.Suspense fallback={<div />}></React.Suspense><Button>Foo</Button></React.Suspense>
+    <React.Suspense fallback={<div />}>
+      <MiniSearch />
+    </React.Suspense>
+  </header>
 );
 
 export default Header;

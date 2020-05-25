@@ -1,12 +1,17 @@
-import React from "react";
-import css from "@emotion/core";
+/** @jsx jsx */
+import { jsx, css } from "@emotion/core";
 
-const style = css({
-  background: "#800",
-  color: "#fff",
-  padding: 12,
-});
+const style = css`
+  background: #aaa;
+  color: #333;
+  padding: 12px;
+`;
 
-const Dialog = () => <Dialog style={style}>App 1 Dialog</Dialog>;
+const Dialog = ({ children }) => (
+  <div css={style}>
+    <div>Design System Language Dialog</div>
+    <div>{children}</div>
+  </div>
+);
 
 export default Dialog;
