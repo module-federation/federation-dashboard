@@ -5,14 +5,17 @@
   "devDependencies": {
     "@babel/core": "7.9.6",
     "@babel/preset-react": "7.9.4",
+    "@module-federation/automatic-vendor-federation": "^1.0.1",
     "@module-federation/dashboard-plugin": "file:../../dashboard-plugin",
     "babel-loader": "8.1.0",
+    "css-loader": "^3.5.3",
     "html-webpack-plugin": "git://github.com/ScriptedAlchemy/html-webpack-plugin#master",
+    "less-loader": "^6.1.0",
     "serve": "11.3.0",
+    "style-loader": "^1.2.1",
     "webpack": "5.0.0-beta.16",
     "webpack-cli": "3.3.11",
-    "webpack-dev-server": "3.11.0",
-    "@module-federation/automatic-vendor-federation": "^1.0.1"
+    "webpack-dev-server": "3.11.0"
   },
   "scripts": {
     "start": "webpack-dev-server --open --mode development --liveReload",
@@ -21,6 +24,8 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.1.0",
+    "antd": "^4.2.5",
     "lodash": "^4.17.15",
     "react": "^16.13.0",
     "react-dom": "^16.13.0"

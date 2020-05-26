@@ -1,12 +1,10 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/core";
+import React from "react";
+import { Layout } from "antd";
 
-const style = css({
-  background: "#800",
-  color: "#fff",
-  padding: 12,
-});
-
-const Footer = () => <footer css={style}>App 1 footer</footer>;
+const Footer = ({ children }) => (
+  <Layout.Footer>
+    <h2>{children}</h2>
+  </Layout.Footer>
+);
 
 export default Footer;

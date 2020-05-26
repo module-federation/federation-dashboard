@@ -1,17 +1,8 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/core";
+import React from "react";
+import { Carousel } from "antd";
 
-const style = css`
-  background: #777;
-  color: #fff;
-  padding: 12px;
-`;
-
-const Carousel = ({ children }) => (
-  <div css={style}>
-    <div>Carousel!</div>
-    <div>{children}</div>
-  </div>
+const MyCarousel = ({ children, ...props }) => (
+  <Carousel {...props}>{children}</Carousel>
 );
 
-export default Carousel;
+export default MyCarousel;
