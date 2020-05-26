@@ -1,27 +1,39 @@
 /** @jsx jsx */
-import { jsx, css } from "@emotion/core";
+import { css, jsx } from "@emotion/core";
 import React from "react";
-
-const Button = React.lazy(() => import("dsl/Button"));
+import { Layout, Row, Col } from "antd";
 
 const MiniSearch = React.lazy(() => import("search/MiniSearch"));
+const Button = React.lazy(() => import("dsl/Button"));
 
-const style = css({
-  background: "#800",
-  color: "#fff",
-  padding: 12,
-});
-
-const Header = () => (
-  <header css={style}>
-    App 1{" "}
-    <React.Suspense fallback={<div />}>
-      <Button>Foo</Button>
-    </React.Suspense>
-    <React.Suspense fallback={<div />}>
-      <MiniSearch />
-    </React.Suspense>
-  </header>
+const Header = ({ children }) => (
+  <Layout.Header>
+    <Row>
+      <Col span={16}>
+        <h2
+          css={css`
+            color: white;
+          `}
+        >
+          {children}
+        </h2>
+      </Col>
+      <Col span={8} style={{ marginTop: 15 }}>
+        <React.Suspense fallback={<span />}>
+          <MiniSearch
+            inputProps={{
+              style: {
+                width: 200,
+              },
+            }}
+          />
+        </React.Suspense>
+        <React.Suspense fallback={<span />}>
+          <Button>Search</Button>
+        </React.Suspense>
+      </Col>
+    </Row>
+  </Layout.Header>
 );
 
 export default Header;

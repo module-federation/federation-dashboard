@@ -1,10 +1,16 @@
 import React from "react";
+import { Layout, Tabs, Divider } from "antd";
+
+const { TabPane } = Tabs;
+
+import "./index.less";
 
 import HeroImage from "./HeroImage";
-import SubPage from "./SubPage";
-import Page2 from "./Page2";
-import Page3 from "./Page3";
-import Page4 from "./Page4";
+import PageSally from "./PageSally";
+import PageLG from "./PageLG";
+import PageMimi from "./PageMimi";
+import PageSammy from "./PageSammy";
+import ProductCarousel from "./ProductCarousel";
 
 import { sendMessage } from "./analytics";
 
@@ -16,24 +22,48 @@ const SearchList = React.lazy(() => import("search/SearchList"));
 const App = () => {
   sendMessage("Application loaded");
   return (
-    <div>
+    <Layout style={{ maxWidth: 1200, margin: "auto" }}>
       <React.Suspense fallback="Loading SearchList">
-        <Header />
+        <Header>Home Page</Header>
       </React.Suspense>
-      <h1>Bi-Directional</h1>
-      <h2>App 1</h2>
-      <HeroImage />
-      <SubPage />
-      <Page2 />
-      <Page3 />
-      <Page4 />
+
+      <Layout.Content style={{ background: "white", padding: "2em" }}>
+        <Divider>Dog of the day</Divider>
+
+        <HeroImage
+          src="https://placedog.net/800/280?random"
+          style={{ margin: "auto" }}
+        />
+
+        <Tabs defaultActiveKey="1">
+          <TabPane tab="Sally" key="1">
+            <PageSally />
+          </TabPane>
+          <TabPane tab="Little Guy" key="2">
+            <PageLG />
+          </TabPane>
+          <TabPane tab="Mimi" key="3">
+            <PageMimi />
+          </TabPane>
+          <TabPane tab="Sammy" key="4">
+            <PageSammy />
+          </TabPane>
+        </Tabs>
+
+        <Divider>Search</Divider>
+
+        <React.Suspense fallback="Loading SearchList">
+          <SearchList />
+        </React.Suspense>
+
+        <Divider>More Dogs</Divider>
+        <ProductCarousel />
+      </Layout.Content>
+
       <React.Suspense fallback="Loading SearchList">
-        <SearchList />
+        <Footer>Home Page</Footer>
       </React.Suspense>
-      <React.Suspense fallback="Loading SearchList">
-        <Footer />
-      </React.Suspense>
-    </div>
+    </Layout>
   );
 };
 

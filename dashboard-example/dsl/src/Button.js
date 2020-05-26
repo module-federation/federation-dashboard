@@ -1,16 +1,7 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/core";
+import React from "react";
 
-const Button = ({ children }) => (
-  <button
-    css={css`
-      background: blue;
-      color: #fff;
-      padding: 12px;
-    `}
-  >
-    {children}
-  </button>
-);
+import { Button } from "antd";
 
-export default Button;
+const MyButton = ({ children }) => <Button primary>{children}</Button>;
+
+export default MyButton;
