@@ -1,11 +1,11 @@
 import React from "react";
 
-const style = {
-  background: "#00c",
-  color: "#fff",
-  padding: 12,
-};
+const TextField = React.lazy(() => import("dsl/TextField"));
 
-const MiniSearch = () => <button style={style}>Search/MiniSearch</button>;
+const MiniSearch = ({ inputProps = {} }) => (
+  <React.Suspense fallback={<span />}>
+    <TextField placeholder="Search" {...inputProps} />
+  </React.Suspense>
+);
 
 export default MiniSearch;

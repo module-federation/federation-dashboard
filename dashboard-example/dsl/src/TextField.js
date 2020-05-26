@@ -1,16 +1,7 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/core";
+import React from "react";
 
-const style = css`
-  background: #eee;
-  color: #fff;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
+import { Input } from "antd";
 
-const TextField = ({ value, onChange }) => (
-  <input css={style} value={value} onChange={onChange} />
-);
+const TextField = (props) => <Input {...props} />;
 
 export default TextField;

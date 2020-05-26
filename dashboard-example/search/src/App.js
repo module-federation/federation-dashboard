@@ -1,4 +1,7 @@
 import React from "react";
+import { Layout, Divider } from "antd";
+
+import "antd/dist/antd.less";
 
 import { sendMessage } from "./analytics";
 
@@ -11,20 +14,21 @@ import SearchList from "./SearchList";
 const App = () => {
   sendMessage("page loaded");
   return (
-    <div>
+    <Layout style={{ maxWidth: 1200, margin: "auto" }}>
       <React.Suspense fallback={<div />}>
-        <Header />
+        <Header>Search Site</Header>
       </React.Suspense>
-      <h1>Bi-Directional</h1>
-      <h2>App 2</h2>
-      <SearchList />
-      <React.Suspense fallback="Loading ProductCarousel">
-        <ProductCarousel />
-      </React.Suspense>
+      <Layout.Content style={{ padding: "2em", background: "white" }}>
+        <SearchList />
+        <Divider>More Dogs</Divider>
+        <React.Suspense fallback={<div />}>
+          <ProductCarousel />
+        </React.Suspense>
+      </Layout.Content>
       <React.Suspense fallback={<div />}>
-        <Footer />
+        <Footer>Search Site</Footer>
       </React.Suspense>
-    </div>
+    </Layout>
   );
 };
 
