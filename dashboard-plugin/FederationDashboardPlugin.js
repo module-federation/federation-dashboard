@@ -183,7 +183,8 @@ class FederationDashboardPlugin {
         });
       }
     );
-
+    // try using this
+    // compilation.hooks.additionalAssets.tapAsync(callback =)
     compiler.hooks.afterDone.tap(PLUGIN_NAME, (statsClass) => {
       const stats = statsClass.toJson();
       const version = require(statsClass.compilation.options.context +
@@ -191,16 +192,23 @@ class FederationDashboardPlugin {
 
       const generationPath = path.join(
         stats.outputPath,
-        "/release",
+        "../release",
         `${version}`
       );
       if (fs.pathExists(generationPath)) {
         fs.copy(stats.outputPath, generationPath, function (err) {
           if (err) {
-            console.log("An error occured while copying the folder.");
+            console.log("An error occurred while copying the folder.");
             return console.error(err);
           }
           console.log("Copy completed!");
+        });
+
+        fs.ensureSymlink(
+          generationPath,
+          path.join(stats.outputPath, "release")
+        ).then(() => {
+          console.log("success!");
         });
       }
       if (this._options.reportFunction) {
