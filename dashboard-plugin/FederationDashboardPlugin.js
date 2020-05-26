@@ -164,7 +164,6 @@ class FederationDashboardPlugin {
           buildHash: stats.hash,
           modules,
           chunkDependencies,
-          timeStamp: Date.now(),
         }));
 
         Promise.all([
@@ -187,10 +186,13 @@ class FederationDashboardPlugin {
 
     compiler.hooks.afterDone.tap(PLUGIN_NAME, (statsClass) => {
       const stats = statsClass.toJson();
+      const version = require(statsClass.compilation.options.context +
+        "/package.json").version;
+
       const generationPath = path.join(
         stats.outputPath,
-        "../release",
-        `${stats.hash}`
+        "/release",
+        `${version}`
       );
       if (fs.pathExists(generationPath)) {
         fs.copy(stats.outputPath, generationPath, function (err) {
