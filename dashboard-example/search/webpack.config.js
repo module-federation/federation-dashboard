@@ -6,7 +6,13 @@ const path = require("path");
 const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
 const packageJson = require("./package.json");
 const exclude = ["babel", "plugin", "preset", "webpack", "loader", "serve"];
-const ignoreVersion = ["react", "react-dom", "@emotion/core"];
+const ignoreVersion = [
+  "react",
+  "react-dom",
+  "@emotion/core",
+  "antd",
+  "@ant-design/icons",
+];
 
 module.exports = {
   entry: "./src/index",
@@ -20,6 +26,25 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.less$/,
+        use: [
+          {
+            loader: "style-loader",
+          },
+          {
+            loader: "css-loader",
+          },
+          {
+            loader: "less-loader",
+            options: {
+              lessOptions: {
+                javascriptEnabled: true,
+              },
+            },
+          },
+        ],
+      },
       {
         test: /\.jsx?$/,
         loader: "babel-loader",
@@ -37,6 +62,7 @@ module.exports = {
       filename: "remoteEntry.js",
       remotes: {
         nav: "nav",
+        dsl: "dsl",
         home: "home",
         utils: "utils",
       },
