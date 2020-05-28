@@ -1,6 +1,3 @@
-import fs from "fs";
-import path from "path";
-
 import { update } from "./db";
 
 const importData = ({
@@ -122,6 +119,14 @@ const importData = ({
   };
 
   return out;
+};
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "10mb",
+    },
+  },
 };
 
 export default (req, res) => {

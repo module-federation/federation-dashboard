@@ -82,6 +82,7 @@ module.exports = {
     }),
     new DashboardPlugin({
       filename: "dashboard.json",
+      dashboardURL: "http://localhost:3000/api/update",
       metadata: {
         source: {
           url:
