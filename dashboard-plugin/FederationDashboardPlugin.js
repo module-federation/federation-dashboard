@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const fetch = require("node-fetch");
 const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
 
 /** @typedef {import('webpack/lib/Compilation')} Compilation */
@@ -155,6 +156,7 @@ class FederationDashboardPlugin {
             ignorePatchVersion: true,
           });
         }
+
         const dashData = (this._dashData = JSON.stringify({
           metadata: this._options.metadata || {},
           topLevelPackage: vendorFederation || {},
@@ -165,7 +167,7 @@ class FederationDashboardPlugin {
           chunkDependencies,
         }));
 
-        Promise.all([
+        const writePromises = [
           new Promise((resolve) => {
             fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, resolve);
           }),
@@ -177,7 +179,32 @@ class FederationDashboardPlugin {
               resolve
             );
           }),
-        ]).then(() => {
+        ];
+
+        if (this._options.dashboardURL) {
+          writePromises.push(
+            new Promise((resolve) => {
+              fetch(this._options.dashboardURL, {
+                method: "POST",
+                body: dashData,
+                headers: {
+                  Accept: "application/json",
+                  "Content-type": "application/json",
+                },
+              })
+                .then((resp) => resp.json())
+                .then(resolve)
+                .catch(() => {
+                  console.warn(
+                    `Error posting data to dashboard URL: ${this._options.dashboardURL}`
+                  );
+                  resolve();
+                });
+            })
+          );
+        }
+
+        Promise.all(writePromises).then(() => {
           callback();
         });
       }
