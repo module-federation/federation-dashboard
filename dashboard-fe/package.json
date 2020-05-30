@@ -1,13 +1,11 @@
 {
-  "name": "dashboard-fe",
+  "name": "@module-federation/dashboard",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
-    "dev-with-vm": "VERSION_MANAGER=http://localhost:3010 next dev -p 3000",
     "build": "next build",
     "start": "next start",
-    "start-with-vm": "VERSION_MANAGER=http://localhost:3010 next start",
     "postinstall": "next build"
   },
   "bin": {

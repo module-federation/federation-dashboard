@@ -32,9 +32,6 @@ const useStyles = makeStyles((theme) => ({
 
 const GET_APPS = gql`
   {
-    dashboard {
-      versionManagementEnabled
-    }
     applications {
       id
       name
@@ -59,10 +56,6 @@ const GET_APPS = gql`
         usedIn {
           file
         }
-      }
-      versions {
-        versions
-        latest
       }
     }
   }
@@ -121,9 +114,6 @@ const Applications = ({ applications, dashboard }) => {
                 <Link href={`/applications/${name}`}>
                   <a className={classes.headerCell}>{name}</a>
                 </Link>
-                {dashboard.versionManagementEnabled && (
-                  <Typography variant="body2">({versions.latest})</Typography>
-                )}
               </Typography>
             </TableCell>
           ))}
