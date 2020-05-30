@@ -68,7 +68,9 @@ And add the plugin to the `plugins` array and alter the parameters to suit.
 Neither `filename` nor `dashboardURL` are required. It's up to you how and when to invoke this plugin and how to store that data and send it to the dashboard. The `/api/update` endpoint just takes a JSON payload 'as-is'. To post the `dashboard.json` data manually use a `curl` request like this:
 
 ```shell script
-> curl "http://localhost:3000/api/update" -X POST -d @dashboard-example/utils/dist/dashboard.json -H "Content-type: application/json"
+> curl "http://localhost:3000/api/update" -X POST \
+  -d @dashboard-example/utils/dist/dashboard.json \
+  -H "Content-type: application/json"
 ```
 
 Metadata isn't required, but it does make the experience better. For example, the `source` URL is used to provide clickable file links in some views. And the `remote` is used when providing information on how to consume the modules provided by
