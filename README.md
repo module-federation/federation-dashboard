@@ -65,6 +65,12 @@ And add the plugin to the `plugins` array and alter the parameters to suit.
     }),
 ```
 
+Neither `filename` nor `dashboardURL` are required. It's up to you how and when to invoke this plugin and how to store that data and send it to the dashboard. The `/api/update` endpoint just takes a JSON payload 'as-is'. To post the `dashboard.json` data manually use a `curl` request like this:
+
+```shell script
+> curl "http://localhost:3000/api/update" -X POST -d @dashboard-example/utils/dist/dashboard.json -H "Content-type: application/json"
+```
+
 Metadata isn't required, but it does make the experience better. For example, the `source` URL is used to provide clickable file links in some views. And the `remote` is used when providing information on how to consume the modules provided by
 
 You should be able to see your application listed. You are _not_ required to have all your federated applicatons listed in the dashboard. But if application A depends on application B, and A is in the dashboard, but B is not, then you will not see references to B because the dashboard doesn't have that data. So you should do your best to get all the applications data into the dashboard.
