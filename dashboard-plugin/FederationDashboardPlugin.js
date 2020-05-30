@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const fetch = require("node-fetch");
 const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
+const convertToGraph = require("./convertToGraph");
 
 /** @typedef {import('webpack/lib/Compilation')} Compilation */
 /** @typedef {import('webpack/lib/Compiler')} Compiler */
@@ -157,7 +158,7 @@ class FederationDashboardPlugin {
           });
         }
 
-        const dashData = (this._dashData = JSON.stringify({
+        const rawData = {
           metadata: this._options.metadata || {},
           topLevelPackage: vendorFederation || {},
           publicPath: compilation.outputOptions.publicPath,
@@ -165,7 +166,10 @@ class FederationDashboardPlugin {
           buildHash: stats.hash,
           modules,
           chunkDependencies,
-        }));
+        };
+        const graphData = convertToGraph(rawData);
+
+        const dashData = (this._dashData = JSON.stringify(graphData));
 
         const writePromises = [
           new Promise((resolve) => {
