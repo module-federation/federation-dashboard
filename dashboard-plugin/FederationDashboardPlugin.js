@@ -46,14 +46,6 @@ class FederationDashboardPlugin {
         const stats = compilation.getStats().toJson();
         const liveStats = compilation.getStats();
 
-        const hashPath = path.join(
-          compilation.options.output.path,
-          this._options.filename
-        );
-        const statsPath = path.join(
-          compilation.options.output.path,
-          "stats.json"
-        );
         const modules = stats.modules.filter((module) => {
           const array = [
             module.name.includes("container entry"),
@@ -171,10 +163,25 @@ class FederationDashboardPlugin {
 
         const dashData = (this._dashData = JSON.stringify(graphData));
 
-        const writePromises = [
-          new Promise((resolve) => {
-            fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, resolve);
-          }),
+        const writePromises = [];
+
+        if (this._options.filename) {
+          const hashPath = path.join(
+            compilation.options.output.path,
+            this._options.filename
+          );
+          writePromises.push(
+            new Promise((resolve) => {
+              fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, resolve);
+            })
+          );
+        }
+
+        const statsPath = path.join(
+          compilation.options.output.path,
+          "stats.json"
+        );
+        writePromises.push(
           new Promise((resolve) => {
             fs.writeFile(
               statsPath,
@@ -182,8 +189,8 @@ class FederationDashboardPlugin {
               { encoding: "utf-8" },
               resolve
             );
-          }),
-        ];
+          })
+        );
 
         if (this._options.dashboardURL) {
           writePromises.push(
