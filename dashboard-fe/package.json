@@ -9,7 +9,7 @@
     "postinstall": "next build"
   },
   "bin": {
-    "dashboard-fe": "./bin/dashboard-fe.js"
+    "mfdash": "./bin/mfdash.js"
   },
   "contributors": [
     {
