@@ -167,6 +167,8 @@ class FederationDashboardPlugin {
           modules,
           chunkDependencies,
         };
+
+        console.log(rawData);
         const graphData = convertToGraph(rawData);
 
         const dashData = (this._dashData = JSON.stringify(graphData));
@@ -174,6 +176,14 @@ class FederationDashboardPlugin {
         const writePromises = [
           new Promise((resolve) => {
             fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, resolve);
+          }),
+          new Promise((resolve) => {
+            fs.writeFile(
+              `${hashPath}-raw.json`,
+              JSON.stringify(rawData, null, 2),
+              { encoding: "utf-8" },
+              resolve
+            );
           }),
           new Promise((resolve) => {
             fs.writeFile(

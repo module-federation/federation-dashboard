@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should convert Plugin data to graph should convert data to graph 1`] = `
+Object {
+  "consumes": Array [],
+  "dependencies": Array [],
+  "devDependencies": Array [
+    Object {
+      "name": "@babel/core",
+      "version": "7.9",
+    },
+    Object {
+      "name": "@babel/preset-react",
+      "version": "7.9",
+    },
+    Object {
+      "name": "@module-federation/dashboard-plugin",
+      "version": "1.0",
+    },
+    Object {
+      "name": "babel-loader",
+      "version": "8.1",
+    },
+    Object {
+      "name": "serve",
+      "version": "11.3",
+    },
+    Object {
+      "name": "webpack",
+      "version": "5.0.0-beta",
+    },
+    Object {
+      "name": "webpack-cli",
+      "version": "3.3",
+    },
+    Object {
+      "name": "webpack-dev-server",
+      "version": "3.11",
+    },
+    Object {
+      "name": "@module-federation/automatic-vendor-federation",
+      "version": "1.0",
+    },
+  ],
+  "id": "utils",
+  "modules": Array [
+    Object {
+      "applicationID": "utils",
+      "file": "./src/analytics",
+      "id": "utils:analytics",
+      "name": "analytics",
+      "requires": Array [],
+    },
+  ],
+  "name": "utils",
+  "optionalDependencies": Array [],
+  "overrides": Array [],
+  "remote": "http://localhost:3005/remoteEntry.js",
+}
+`;
