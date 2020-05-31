@@ -179,14 +179,6 @@ class FederationDashboardPlugin {
           }),
           new Promise((resolve) => {
             fs.writeFile(
-              `${hashPath}-raw.json`,
-              JSON.stringify(rawData, null, 2),
-              { encoding: "utf-8" },
-              resolve
-            );
-          }),
-          new Promise((resolve) => {
-            fs.writeFile(
               statsPath,
               JSON.stringify(stats),
               { encoding: "utf-8" },
