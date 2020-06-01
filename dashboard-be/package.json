@@ -1,0 +1,27 @@
+{
+  "name": "@module-federation/dashboard-graphql",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./server.js",
+  "scripts": {},
+  "contributors": [
+    {
+      "name": "Jack Herrington",
+      "email": "jherr@pobox.com",
+      "url": "http://jackherrington.com"
+    },
+    {
+      "name": "Jacob Ebey",
+      "email": "jacob.ebey@live.com",
+      "url": "https://jacob-ebey.js.org"
+    }
+  ],
+  "dependencies": {
+    "@apollo/federation": "^0.16.0",
+    "@apollo/gateway": "^0.16.2",
+    "apollo-server": "^2.14.1",
+    "apollo-server-micro": "^2.14.1",
+    "graphql": "^15.0.0",
+    "nedb": "^1.8.0"
+  }
+}
