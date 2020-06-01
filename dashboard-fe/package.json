@@ -47,6 +47,8 @@
     "react-d3-graph": "^2.4.1",
     "react-dom": "16.13.1",
     "react-force-graph-2d": "^1.16.0",
+    "react-hook-form": "^5.7.2",
+    "use-auth0-hooks": "^0.7.0"
     "react-hook-form": "^5.7.2"
   },
   "devDependencies": {

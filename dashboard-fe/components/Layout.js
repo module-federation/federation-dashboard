@@ -16,6 +16,7 @@ import {
   IconButton,
   Drawer,
   Container,
+  Button,
   fade,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -30,6 +31,7 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useAuth, withAuth } from "use-auth0-hooks";
 
 const GET_SIDEBAR_DATA = gql`
   {
@@ -205,7 +207,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard({ children }) {
+function Dashboard({ children }) {
   const { data } = useQuery(GET_SIDEBAR_DATA);
   const classes = useStyles();
   const router = useRouter();
@@ -241,6 +243,16 @@ export default function Dashboard({ children }) {
       router.push(opt.url);
     }
   };
+
+  const { isAuthenticated, login, isLoading: authLoading, logout } = useAuth();
+
+  const { pathname, query } = router;
+  const handleLogin = React.useCallback(
+    () => login({ appState: { returnTo: { pathname, query } } }),
+    [pathname, query, login]
+  );
+
+  const handleLogout = React.useCallback(() => logout(), [logout]);
 
   return (
     <div className={classes.root}>
@@ -281,6 +293,19 @@ export default function Dashboard({ children }) {
               <TextField {...params} className={classes.search} />
             )}
           />
+          {!isAuthenticated ? (
+            <Button
+              color="inherit"
+              onClick={handleLogin}
+              disabled={authLoading}
+            >
+              Login
+            </Button>
+          ) : (
+            <Button color="inherit" onClick={handleLogout}>
+              Logout
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -307,3 +332,5 @@ export default function Dashboard({ children }) {
     </div>
   );
 }
+
+export default withAuth(Dashboard);

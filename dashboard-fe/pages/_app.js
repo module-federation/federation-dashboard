@@ -3,6 +3,7 @@ import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
 import Head from "next/head";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { Auth0Provider } from "use-auth0-hooks";
 
 const client = new ApolloClient({
   uri: "http://localhost:3000/api/graphql",
@@ -27,9 +28,15 @@ function MyApp({ Component, pageProps }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <CssBaseline />
-      <ApolloProvider client={client}>
-        <Component {...pageProps} />
-      </ApolloProvider>
+      <Auth0Provider
+        domain="jacob-ebey.auth0.com"
+        clientId="vjF7pqeEveWVjToEwICt3WJUWU8iiaNK"
+        redirectUri="http://localhost:3000"
+      >
+        <ApolloProvider client={client}>
+          <Component {...pageProps} />
+        </ApolloProvider>
+      </Auth0Provider>
     </React.Fragment>
   );
 }
