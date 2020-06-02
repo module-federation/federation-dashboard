@@ -1,31 +1,99 @@
 const fs = require("fs");
 const convertToGraph = require("../convertToGraph");
-const mockDataDir = fs.readdirSync(`${__dirname}/mock-data`);
 
 describe("should convert Plugin data to graph", () => {
-  const dataListQueue = [];
-  let currentData;
-
-  beforeAll(() => {
-    for (let file of mockDataDir) {
-      currentData = require(`${__dirname}/mock-data/${file}`);
-      dataListQueue.push(currentData);
-    }
-  });
-
-  test("should convert data to graph", () => {
-    const rawData = dataListQueue.shift();
+  test("should convert raw data to graph", () => {
+    const rawData = require(`${__dirname}/mock-data/base-config.json`);
     const graph = convertToGraph(rawData);
 
-    expect(graph.consumes instanceof Array).toBe(true);
-    expect(graph.dependencies instanceof Array).toBe(true);
-    expect(graph.devDependencies instanceof Array).toBe(true);
-    expect(typeof graph.id === "string").toBe(true);
-    expect(graph.modules instanceof Array).toBe(true);
-    expect(typeof graph.name === "string").toBe(true);
-    expect(graph.overrides instanceof Array).toBe(true);
-    expect(graph.optionalDependencies instanceof Array).toBe(true);
-    expect(typeof graph.remote === "string").toBe(true);
-    expect(graph).toMatchSnapshot();
+    expect(graph.consumes.length).toBe(6);
+    expect(graph.dependencies.length).toBe(5);
+    expect(graph.devDependencies.length).toBe(13);
+    expect(graph.id).toBe("home");
+    expect(graph.name).toBe("home");
+    expect(graph.remote).toBe("http://localhost:3001/remoteEntry.js");
+    expect(graph.modules.length).toBe(2);
+    expect(graph.optionalDependencies.length).toBe(0);
+    expect(graph.overrides.length).toBe(5);
+  });
+
+  test("should throw Error topLevelPackage.dependencies are not defined", () => {
+    const rawData = require(`${__dirname}/mock-data/failed-dependencies.json`);
+
+    expect(() => convertToGraph(rawData)).toThrow(
+      "topLevelPackage.dependencies must be defined"
+    );
+  });
+
+  test("should throw Error topLevelPackage.devDependencies are not defined", () => {
+    const rawData = require(`${__dirname}/mock-data/failed-dev-dependencies.json`);
+
+    expect(() => convertToGraph(rawData)).toThrow(
+      "topLevelPackage.devDependencies must be defined"
+    );
+  });
+
+  test("should throw Error topLevelPackage.optionalDependencies are not defined", () => {
+    const rawData = require(`${__dirname}/mock-data/failed-optional-dependencies.json`);
+
+    expect(() => convertToGraph(rawData)).toThrow(
+      "topLevelPackage.optionalDependencies must be defined"
+    );
+  });
+
+  test("should throw Error when loc is not provided", () => {
+    const rawData = require(`${__dirname}/mock-data/failed-loc-case-config.json`);
+
+    expect(() => convertToGraph(rawData)).toThrow(
+      "federationRemoteEntry.origins[0].loc must be defined and have a value"
+    );
+  });
+
+  test("should throw Error when modules parameter not present", () => {
+    const rawData = require(`${__dirname}/mock-data/failed-modules-config.json`);
+
+    expect(() => convertToGraph(rawData)).toThrow(
+      "Modules must be defined and have length"
+    );
+  });
+
+  test("should throw Error when modules identifier not defined", () => {
+    const rawData = require(`${__dirname}/mock-data/failed-modules-identifier.json`);
+
+    expect(() => convertToGraph(rawData)).toThrow(
+      "module.identifier must be defined"
+    );
+  });
+
+  test("should throw Error when modules reasons not defined", () => {
+    const rawData = require(`${__dirname}/mock-data/failed-modules-reasons.json`);
+
+    expect(() => convertToGraph(rawData)).toThrow(
+      "module.reasons must be defined"
+    );
+  });
+
+  test("should throw Error when modules issuerName not defined", () => {
+    const rawData = require(`${__dirname}/mock-data/failed-module-issuer-name.json`);
+
+    expect(() => convertToGraph(rawData)).toThrow(
+      "module.issuerName must be defined"
+    );
+  });
+
+  test("should throw Error when metadata source url not defined", () => {
+    const rawData = require(`${__dirname}/mock-data/failed-metadata-source-url.json`);
+
+    expect(() => convertToGraph(rawData)).toThrow(
+      "metadata.source.url must be defined"
+    );
+  });
+
+  test("should throw Error when metadata remote not defined", () => {
+    const rawData = require(`${__dirname}/mock-data/failed-metadata-remote.json`);
+
+    expect(() => convertToGraph(rawData)).toThrow(
+      "metadata.remote must be defined"
+    );
   });
 });
