@@ -61,6 +61,7 @@ class FederationDashboardPlugin {
             module.reasons.forEach((reason) => {
               if (reason.userRequest) {
                 try {
+                  // grab user required package.json
                   const subsetPackage = require(reason.userRequest +
                     "/package.json");
 
@@ -70,6 +71,7 @@ class FederationDashboardPlugin {
             });
           }
         });
+        // get RemoteEntryChunk
         const RemoteEntryChunk = stats.chunks.find((chunk) => {
           const specificChunk = chunk.names.find((name) => {
             return name === FederationPluginOptions.name;
@@ -159,6 +161,7 @@ class FederationDashboardPlugin {
           modules,
           chunkDependencies,
         };
+
         const graphData = convertToGraph(rawData);
 
         const dashData = (this._dashData = JSON.stringify(graphData));
