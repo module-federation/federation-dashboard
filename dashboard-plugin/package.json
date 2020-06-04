@@ -9,14 +9,16 @@
     "deploy": "echo noop",
     "dev": "echo noop",
     "setup": "echo noop",
-    "test": "echo noop"
+    "test": "jest --watch"
   },
   "dependencies": {
     "@module-federation/automatic-vendor-federation": "^1.0.1",
     "flatted": "^2.0.2",
     "node-fetch": "^2.6.0",
-    "schema-utils": "^2.6.6",
     "webpack": "^5.0.0-beta.16",
     "webpack-sources": "^1.4.3"
+  },
+  "devDependencies": {
+    "jest": "26.0.1"
   }
 }
