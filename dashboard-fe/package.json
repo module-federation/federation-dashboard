@@ -7,10 +7,9 @@
     "build": "next build",
     "build:image": "docker build . -t mf-dashboard",
     "start": "next start",
-    "start:image": "docker run -p 3000:3000/tcp mf-dashboard:latest"
-  },
-  "bin": {
-    "mfdash": "./bin/mfdash.js"
+    "docker:build": "docker build . -t mf-dashboard",
+    "docker:run": "docker run -p 3000:3000 -t mf-dashboard",
+    "docker:demo": "docker run -p 3000:3000 --mount type=bind,source=\"$(pwd)\"/.fm-dashboard,target=/data -t mf-dashboard"
   },
   "contributors": [
     {
