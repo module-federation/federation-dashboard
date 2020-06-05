@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
-    "start": "next start"
+    "build:image": "docker build . -t mf-dashboard",
+    "start": "next start",
+    "start:image": "docker run -p 3000:3000/tcp mf-dashboard:latest"
   },
   "bin": {
     "mfdash": "./bin/mfdash.js"
