@@ -5,10 +5,10 @@
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
-    "start": "next start"
-  },
-  "bin": {
-    "mfdash": "./bin/mfdash.js"
+    "start": "next start",
+    "docker:build": "docker build . -t mf-dashboard",
+    "docker:run": "docker run -p 3000:3000 -t mf-dashboard",
+    "docker:demo": "docker run -p 3000:3000 --mount type=bind,source=\"$(pwd)\"/.fm-dashboard,target=/data -t mf-dashboard"
   },
   "contributors": [
     {
