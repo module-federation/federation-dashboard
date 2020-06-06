@@ -1,11 +1,10 @@
 import Datastore from "nedb";
 import path from "path";
-import fetch from "node-fetch";
 
-const dir = process.env.DATA_DIR || process.cwd();
+const dir = process.env.DATA_DIR || path.join(process.cwd(), "./.fm-dashboard");
 
 const db = new Datastore({
-  filename: path.join(dir, "./.fm-dashboard/apps.db"),
+  filename: path.join(dir, "/apps.db"),
 });
 db.loadDatabase();
 
