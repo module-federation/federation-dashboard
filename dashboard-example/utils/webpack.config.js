@@ -2,10 +2,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
-const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
-const packageJson = require("./package.json");
-const exclude = ["babel", "plugin", "preset", "webpack", "loader", "serve"];
-const ignoreVersion = ["react", "react-dom", "@emotion/core"];
 
 module.exports = {
   entry: "./src/index",
@@ -39,15 +35,9 @@ module.exports = {
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
-        analytics: "./src/analytics",
+        "./analytics": "./src/analytics",
       },
-      shared: AutomaticVendorFederation({
-        exclude,
-        ignoreVersion,
-        packageJson,
-        shareFrom: ["dependencies"],
-        ignorePatchVersion: true,
-      }),
+      shared: require("./package.json").dependencies,
     }),
     new DashboardPlugin({
       filename: "dashboard.json",

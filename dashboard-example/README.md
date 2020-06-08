@@ -1,6 +1,5 @@
 # Bi-Directional Hosts Example
 
-
 # Running Demo
 
 Run `yarn start`. This will build and serve both `app1` and `app2` on ports 3001 and 3002 respectively.

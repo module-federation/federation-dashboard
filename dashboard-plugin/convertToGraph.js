@@ -19,28 +19,29 @@ const convertToGraph = ({
       if (data.length === 4) {
         const consume = {
           consumingApplicationID: app,
-          applicationID: data[1].replace("webpack/container/reference/", ""),
-          name: data[2],
+          applicationID: data[2].replace("webpack/container/reference/", ""),
+          name: data[3],
           usedIn: new Set(),
         };
         consumes.push(consume);
-        consumesByName[`${consume.applicationID}/${data[2]}`] = consume;
+        consumesByName[`${consume.applicationID}/${data[3]}`] = consume;
       }
       if (reasons) {
         reasons.forEach(({ userRequest, resolvedModule, type }) => {
+          console.log(consumesByName[userRequest]);
           if (consumesByName[userRequest]) {
             consumesByName[userRequest].usedIn.add(resolvedModule);
           }
         });
       }
     } else if (data[0] === "container" && data[1] === "entry") {
-      JSON.parse(data[2]).forEach(([name, file]) => {
+      JSON.parse(data[3]).forEach(([name, file]) => {
         modulesObj[file] = {
           id: `${app}:${name}`,
-          name,
+          name: name.replace("./"),
           applicationID: app,
           requires: new Set(),
-          file,
+          file: file.import[0],
         };
       });
     }
@@ -59,7 +60,7 @@ const convertToGraph = ({
 
   modules.forEach(({ identifier, issuerName, reasons }) => {
     const data = identifier.split("|");
-    if (data[0] === "overridable") {
+    if (data[0] === "consume-shared-module") {
       if (issuerName) {
         // This is a hack
         const issuerNameMinusExtension = issuerName.replace(".js", "");
