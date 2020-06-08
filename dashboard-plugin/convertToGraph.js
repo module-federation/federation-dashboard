@@ -17,31 +17,31 @@ const convertToGraph = ({
     const data = identifier.split(" ");
     if (data[0] === "remote") {
       if (data.length === 4) {
+        const name = data[3].replace("./", "");
         const consume = {
           consumingApplicationID: app,
           applicationID: data[2].replace("webpack/container/reference/", ""),
-          name: data[3].replace("./", ""),
+          name,
           usedIn: new Set(),
         };
         consumes.push(consume);
-        consumesByName[
-          `${consume.applicationID}/${data[3].replace("./", "")}`
-        ] = consume;
+        consumesByName[`${consume.applicationID}/${name}`] = consume;
       }
       if (reasons) {
         reasons.forEach(({ userRequest, resolvedModule, type }) => {
-          console.log(userRequest, consumesByName);
-          console.log("consume by name", consumesByName[userRequest]);
           if (consumesByName[userRequest]) {
-            consumesByName[userRequest].usedIn.add(resolvedModule);
+            consumesByName[userRequest].usedIn.add(
+              resolvedModule.replace("./", "")
+            );
           }
         });
       }
     } else if (data[0] === "container" && data[1] === "entry") {
-      JSON.parse(data[3]).forEach(([name, file]) => {
+      JSON.parse(data[3]).forEach(([prefixedName, file]) => {
+        const name = prefixedName.replace("./", "");
         modulesObj[file] = {
           id: `${app}:${name}`,
-          name: name.replace("./", ""),
+          name,
           applicationID: app,
           requires: new Set(),
           file: file.import[0],
@@ -63,6 +63,7 @@ const convertToGraph = ({
 
   modules.forEach(({ identifier, issuerName, reasons }) => {
     const data = identifier.split("|");
+
     if (data[0] === "consume-shared-module") {
       if (issuerName) {
         // This is a hack
@@ -73,6 +74,7 @@ const convertToGraph = ({
       }
       if (reasons) {
         reasons.forEach(({ module }) => {
+          console.log(module);
           const moduleMinusExtension = module.replace(".js", "");
           if (modulesObj[moduleMinusExtension]) {
             modulesObj[moduleMinusExtension].requires.add(data[3]);
