@@ -20,15 +20,18 @@ const convertToGraph = ({
         const consume = {
           consumingApplicationID: app,
           applicationID: data[2].replace("webpack/container/reference/", ""),
-          name: data[3],
+          name: data[3].replace("./", ""),
           usedIn: new Set(),
         };
         consumes.push(consume);
-        consumesByName[`${consume.applicationID}/${data[3]}`] = consume;
+        consumesByName[
+          `${consume.applicationID}/${data[3].replace("./", "")}`
+        ] = consume;
       }
       if (reasons) {
         reasons.forEach(({ userRequest, resolvedModule, type }) => {
-          console.log(consumesByName[userRequest]);
+          console.log(userRequest, consumesByName);
+          console.log("consume by name", consumesByName[userRequest]);
           if (consumesByName[userRequest]) {
             consumesByName[userRequest].usedIn.add(resolvedModule);
           }
@@ -38,7 +41,7 @@ const convertToGraph = ({
       JSON.parse(data[3]).forEach(([name, file]) => {
         modulesObj[file] = {
           id: `${app}:${name}`,
-          name: name.replace("./"),
+          name: name.replace("./", ""),
           applicationID: app,
           requires: new Set(),
           file: file.import[0],
