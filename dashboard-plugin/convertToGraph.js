@@ -39,7 +39,7 @@ const convertToGraph = ({
     } else if (data[0] === "container" && data[1] === "entry") {
       JSON.parse(data[3]).forEach(([prefixedName, file]) => {
         const name = prefixedName.replace("./", "");
-        modulesObj[file] = {
+        modulesObj[file.import[0]] = {
           id: `${app}:${name}`,
           name,
           applicationID: app,
@@ -74,14 +74,12 @@ const convertToGraph = ({
       }
       if (reasons) {
         reasons.forEach(({ module }) => {
-          console.log(module);
           const moduleMinusExtension = module.replace(".js", "");
           if (modulesObj[moduleMinusExtension]) {
             modulesObj[moduleMinusExtension].requires.add(data[3]);
           }
         });
       }
-
       let version = "";
       [
         convertedDeps.dependencies,
