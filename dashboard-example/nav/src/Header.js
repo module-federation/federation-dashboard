@@ -2,7 +2,7 @@
 import { css, jsx } from "@emotion/core";
 import React from "react";
 import { Layout, Row, Col } from "antd";
-
+console.log(import("search/MiniSearch"));
 const MiniSearch = React.lazy(() => import("search/MiniSearch"));
 const Button = React.lazy(() => import("dsl/Button"));
 

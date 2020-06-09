@@ -36,195 +36,165 @@ class FederationDashboardPlugin {
     if (FederationPlugin) {
       FederationPluginOptions = FederationPlugin._options;
     }
-    compiler.hooks.afterEmit.tapAsync(
-      PLUGIN_NAME,
-      /**
-       * @param {Compilation} compilation
-       * @param {function(err: Error | undefined):void} callback
-       */
-      async (compilation, callback) => {
-        const stats = compilation.getStats().toJson();
-        const liveStats = compilation.getStats();
 
-        const modules = stats.modules.filter((module) => {
-          const array = [
-            module.name.includes("container entry"),
-            module.name.includes("remote "),
-            module.name.includes("overridable "),
-            module.name.includes("remote overrides "),
-          ];
-          return array.some((item) => item);
-        });
-        const directReasons = new Set();
-        Array.from(modules).forEach((module) => {
-          if (module.reasons) {
-            module.reasons.forEach((reason) => {
-              if (reason.userRequest) {
-                try {
-                  // grab user required package.json
-                  const subsetPackage = require(reason.userRequest +
-                    "/package.json");
+    compiler.hooks.afterDone.tap(PLUGIN_NAME, (liveStats) => {
+      const stats = liveStats.toJson();
 
-                  directReasons.add(subsetPackage);
-                } catch (e) {}
-              }
-            });
-          }
-        });
-        // get RemoteEntryChunk
-        const RemoteEntryChunk = stats.chunks.find((chunk) => {
-          const specificChunk = chunk.names.find((name) => {
-            return name === FederationPluginOptions.name;
-          });
-          return specificChunk;
-        });
+      const modules = stats.modules.filter((module) => {
+        const array = [
+          module.name.includes("container entry"),
+          module.name.includes("remote "),
+          module.name.includes("shared module "),
+          module.name.includes("provide module "),
+        ];
+        return array.some((item) => item);
+      });
+      const directReasons = new Set();
+      Array.from(modules).forEach((module) => {
+        if (module.reasons) {
+          module.reasons.forEach((reason) => {
+            if (reason.userRequest) {
+              try {
+                // grab user required package.json
+                const subsetPackage = require(reason.userRequest +
+                  "/package.json");
 
-        const AllReferencedChunksByRemote = liveStats.compilation.namedChunks
-          .get(FederationPluginOptions.name)
-          .getAllReferencedChunks();
-
-        const validChunkArray = [];
-        AllReferencedChunksByRemote.forEach((chunk) => {
-          if (chunk.id !== FederationPluginOptions.name) {
-            validChunkArray.push(chunk);
-          }
-        });
-
-        function mapToObjectRec(m) {
-          let lo = {};
-          for (let [k, v] of Object.entries(m)) {
-            if (v instanceof Map) {
-              lo[k] = mapToObjectRec(v);
-            } else if (v instanceof Set) {
-              lo[k] = mapToObjectRec(Array.from(v));
-            } else {
-              lo[k] = v;
+                directReasons.add(subsetPackage);
+              } catch (e) {}
             }
+          });
+        }
+      });
+      // get RemoteEntryChunk
+      const RemoteEntryChunk = stats.chunks.find((chunk) => {
+        const specificChunk = chunk.names.find((name) => {
+          return name === FederationPluginOptions.name;
+        });
+        return specificChunk;
+      });
+
+      const AllReferencedChunksByRemote = liveStats.compilation.namedChunks
+        .get(FederationPluginOptions.name)
+        .getAllReferencedChunks();
+
+      const validChunkArray = [];
+      AllReferencedChunksByRemote.forEach((chunk) => {
+        if (chunk.id !== FederationPluginOptions.name) {
+          validChunkArray.push(chunk);
+        }
+      });
+
+      function mapToObjectRec(m) {
+        let lo = {};
+        for (let [k, v] of Object.entries(m)) {
+          if (v instanceof Map) {
+            lo[k] = mapToObjectRec(v);
+          } else if (v instanceof Set) {
+            lo[k] = mapToObjectRec(Array.from(v));
+          } else {
+            lo[k] = v;
           }
-          return lo;
         }
+        return lo;
+      }
 
-        const chunkDependencies = validChunkArray.reduce((acc, chunk) => {
-          const subset = chunk.getAllReferencedChunks();
-          const stringifiableChunk = Array.from(subset).map((sub) => {
-            const cleanSet = Object.getOwnPropertyNames(sub).reduce(
-              (acc, key) => {
-                if (key === "_groups") return acc;
-                return Object.assign(acc, { [key]: sub[key] });
-              },
-              {}
-            );
-            return mapToObjectRec(cleanSet);
-          });
-          return Object.assign(acc, {
-            [chunk.id]: stringifiableChunk,
-          });
-        }, {});
-        let packageJson,
-          vendorFederation = {};
-        try {
-          packageJson = require(compilation.options.context + "/package.json");
-        } catch (e) {}
-        if (packageJson) {
-          vendorFederation.dependencies = AutomaticVendorFederation({
-            exclude: [],
-            ignoreVersion: false,
-            packageJson,
-            subPackages: Array.from(directReasons),
-            shareFrom: ["dependencies"],
-            ignorePatchVersion: true,
-          });
-          vendorFederation.devDependencies = AutomaticVendorFederation({
-            exclude: [],
-            ignoreVersion: false,
-            packageJson,
-            subPackages: Array.from(directReasons),
-            shareFrom: ["devDependencies"],
-            ignorePatchVersion: true,
-          });
-          vendorFederation.optionalDependencies = AutomaticVendorFederation({
-            exclude: [],
-            ignoreVersion: false,
-            packageJson,
-            subPackages: Array.from(directReasons),
-            shareFrom: ["optionalDependencies"],
-            ignorePatchVersion: true,
-          });
-        }
-
-        const rawData = {
-          metadata: this._options.metadata || {},
-          topLevelPackage: vendorFederation || {},
-          publicPath: compilation.outputOptions.publicPath,
-          federationRemoteEntry: RemoteEntryChunk,
-          buildHash: stats.hash,
-          modules,
-          chunkDependencies,
-        };
-
-        const graphData = convertToGraph(rawData);
-
-        const dashData = (this._dashData = JSON.stringify(graphData));
-
-        const writePromises = [];
-
-        if (this._options.filename) {
-          const hashPath = path.join(
-            compilation.options.output.path,
-            this._options.filename
+      const chunkDependencies = validChunkArray.reduce((acc, chunk) => {
+        const subset = chunk.getAllReferencedChunks();
+        const stringifiableChunk = Array.from(subset).map((sub) => {
+          const cleanSet = Object.getOwnPropertyNames(sub).reduce(
+            (acc, key) => {
+              if (key === "_groups") return acc;
+              return Object.assign(acc, { [key]: sub[key] });
+            },
+            {}
           );
-          writePromises.push(
-            new Promise((resolve) => {
-              fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, resolve);
-            })
-          );
-        }
-
-        const statsPath = path.join(
-          compilation.options.output.path,
-          "stats.json"
-        );
-        writePromises.push(
-          new Promise((resolve) => {
-            fs.writeFile(
-              statsPath,
-              JSON.stringify(stats),
-              { encoding: "utf-8" },
-              resolve
-            );
-          })
-        );
-
-        if (this._options.dashboardURL) {
-          writePromises.push(
-            new Promise((resolve) => {
-              fetch(this._options.dashboardURL, {
-                method: "POST",
-                body: dashData,
-                headers: {
-                  Accept: "application/json",
-                  "Content-type": "application/json",
-                },
-              })
-                .then((resp) => resp.json())
-                .then(resolve)
-                .catch(() => {
-                  console.warn(
-                    `Error posting data to dashboard URL: ${this._options.dashboardURL}`
-                  );
-                  resolve();
-                });
-            })
-          );
-        }
-
-        Promise.all(writePromises).then(() => {
-          callback();
+          return mapToObjectRec(cleanSet);
+        });
+        return Object.assign(acc, {
+          [chunk.id]: stringifiableChunk,
+        });
+      }, {});
+      let packageJson,
+        vendorFederation = {};
+      try {
+        packageJson = require(liveStats.compilation.options.context +
+          "/package.json");
+      } catch (e) {}
+      if (packageJson) {
+        vendorFederation.dependencies = AutomaticVendorFederation({
+          exclude: [],
+          ignoreVersion: false,
+          packageJson,
+          subPackages: Array.from(directReasons),
+          shareFrom: ["dependencies"],
+          ignorePatchVersion: true,
+        });
+        vendorFederation.devDependencies = AutomaticVendorFederation({
+          exclude: [],
+          ignoreVersion: false,
+          packageJson,
+          subPackages: Array.from(directReasons),
+          shareFrom: ["devDependencies"],
+          ignorePatchVersion: true,
+        });
+        vendorFederation.optionalDependencies = AutomaticVendorFederation({
+          exclude: [],
+          ignoreVersion: false,
+          packageJson,
+          subPackages: Array.from(directReasons),
+          shareFrom: ["optionalDependencies"],
+          ignorePatchVersion: true,
         });
       }
-    );
 
-    compiler.hooks.afterDone.tap(PLUGIN_NAME, (stats) => {
+      const rawData = {
+        metadata: this._options.metadata || {},
+        topLevelPackage: vendorFederation || {},
+        publicPath: stats.publicPath,
+        federationRemoteEntry: RemoteEntryChunk,
+        buildHash: stats.hash,
+        modules,
+        chunkDependencies,
+      };
+
+      const graphData = convertToGraph(rawData);
+
+      const dashData = (this._dashData = JSON.stringify(graphData));
+
+      if (this._options.filename) {
+        const hashPath = path.join(stats.outputPath, this._options.filename);
+        fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, () => {});
+      }
+
+      const statsPath = path.join(stats.outputPath, "stats.json");
+      fs.writeFile(
+        statsPath,
+        JSON.stringify(stats),
+        { encoding: "utf-8" },
+        () => {}
+      );
+
+      if (this._options.dashboardURL) {
+        new Promise((resolve) => {
+          fetch(this._options.dashboardURL, {
+            method: "POST",
+            body: dashData,
+            headers: {
+              Accept: "application/json",
+              "Content-type": "application/json",
+            },
+          })
+            .then((resp) => resp.json())
+            .then(resolve)
+            .catch(() => {
+              console.warn(
+                `Error posting data to dashboard URL: ${this._options.dashboardURL}`
+              );
+              resolve();
+            });
+        });
+      }
+
       if (this._options.reportFunction) {
         // this._options.reportFunction(this._dashData);
       }

@@ -51,7 +51,8 @@ typings/
 
 # Optional npm cache directory
 .npm
-
+.npmrc
+.yarnrc
 # Optional eslint cache
 .eslintcache
 
@@ -78,13 +79,10 @@ env.json
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 
-# Next.js build output
-.next
-
 # Nuxt.js build / generate output
 .nuxt
-dist
 .next
+dist
 buildClient
 buildServer
 

@@ -12,12 +12,12 @@
     "node-fetch": "^2.6.0"
   },
   "peerDependencies": {
-    "webpack": "^5.0.0-beta.16",
+    "webpack": "^5.0.0-beta.17",
     "webpack-sources": "^1.4.3"
   },
   "devDependencies": {
     "jest": "26.0.1",
-    "webpack": "^5.0.0-beta.16",
+    "webpack": "^5.0.0-beta.17",
     "webpack-sources": "^1.4.3"
   }
 }
