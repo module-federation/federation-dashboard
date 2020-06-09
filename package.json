@@ -23,7 +23,7 @@
   },
   "scripts": {
     "submodules": "git pull --recurse-submodules",
-    "release": "changeset publish",
+    "release": "yarn workspaces run build && changeset publish && yarn workspace @module-federation/dashboard run docker:push",
     "prettier": "prettier --write \"**/*.{js,json,md,ts,tsx}\"",
     "wipe": "find . -name \"node_modules\" -exec rm -rf '{}' +\nfind . -name \"yarn.lock\" -exec rm -rf '{}' +",
     "prettier:check": "prettier --list-different \"**/*.{js,json,md,ts,tsx}\""
