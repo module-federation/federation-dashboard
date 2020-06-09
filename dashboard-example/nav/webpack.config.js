@@ -2,16 +2,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
-const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
-const packageJson = require("./package.json");
-const exclude = ["babel", "plugin", "preset", "webpack", "loader", "serve"];
-const ignoreVersion = [
-  "react",
-  "react-dom",
-  "@emotion/core",
-  "antd",
-  "@ant-design/icons",
-];
 
 module.exports = {
   entry: "./src/index",
@@ -65,17 +55,11 @@ module.exports = {
         utils: "utils",
       },
       exposes: {
-        Header: "./src/Header",
-        Footer: "./src/Footer",
+        "./Header": "./src/Header",
+        "./Footer": "./src/Footer",
       },
       // sharing code based on the installed version, to allow for multiple vendors with different versions
-      shared: AutomaticVendorFederation({
-        exclude,
-        ignoreVersion,
-        packageJson,
-        shareFrom: ["dependencies"],
-        ignorePatchVersion: true,
-      }),
+      shared: require("./package.json").dependencies,
     }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",

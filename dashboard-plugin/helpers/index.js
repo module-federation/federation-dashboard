@@ -66,4 +66,4 @@ function validateParams({
   }
 }
 
-module.exports = { validateParams }
+module.exports = { validateParams };
