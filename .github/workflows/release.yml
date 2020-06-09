@@ -40,6 +40,10 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
 
+      - name: Perform builds
+        run: |-
+          yarn workspace @module-federation/dashboard run docker:build
+
       - name: Create Release or Publish
         uses: changesets/action@master
         with:
