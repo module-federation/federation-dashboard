@@ -69,14 +69,14 @@ const convertToGraph = ({
         // This is a hack
         const issuerNameMinusExtension = issuerName.replace(".js", "");
         if (modulesObj[issuerNameMinusExtension]) {
-          modulesObj[issuerNameMinusExtension].requires.add(data[3]);
+          modulesObj[issuerNameMinusExtension].requires.add(data[2]);
         }
       }
       if (reasons) {
         reasons.forEach(({ module }) => {
           const moduleMinusExtension = module.replace(".js", "");
           if (modulesObj[moduleMinusExtension]) {
-            modulesObj[moduleMinusExtension].requires.add(data[3]);
+            modulesObj[moduleMinusExtension].requires.add(data[2]);
           }
         });
       }
@@ -86,15 +86,15 @@ const convertToGraph = ({
         convertedDeps.devDependencies,
         convertedDeps.optionalDependencies,
       ].forEach((deps) => {
-        const dep = deps.find(({ name }) => name === data[3]);
+        const dep = deps.find(({ name }) => name === data[2]);
         if (dep) {
           version = dep.version;
         }
       });
 
-      overrides[data[3]] = {
-        id: data[3],
-        name: data[3],
+      overrides[data[2]] = {
+        id: data[2],
+        name: data[2],
         version,
         location: data[2],
         applicationID: app,
