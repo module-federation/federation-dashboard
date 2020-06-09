@@ -17,30 +17,34 @@ const convertToGraph = ({
     const data = identifier.split(" ");
     if (data[0] === "remote") {
       if (data.length === 4) {
+        const name = data[3].replace("./", "");
         const consume = {
           consumingApplicationID: app,
-          applicationID: data[1].replace("webpack/container/reference/", ""),
-          name: data[2],
+          applicationID: data[2].replace("webpack/container/reference/", ""),
+          name,
           usedIn: new Set(),
         };
         consumes.push(consume);
-        consumesByName[`${consume.applicationID}/${data[2]}`] = consume;
+        consumesByName[`${consume.applicationID}/${name}`] = consume;
       }
       if (reasons) {
         reasons.forEach(({ userRequest, resolvedModule, type }) => {
           if (consumesByName[userRequest]) {
-            consumesByName[userRequest].usedIn.add(resolvedModule);
+            consumesByName[userRequest].usedIn.add(
+              resolvedModule.replace("./", "")
+            );
           }
         });
       }
     } else if (data[0] === "container" && data[1] === "entry") {
-      JSON.parse(data[2]).forEach(([name, file]) => {
-        modulesObj[file] = {
+      JSON.parse(data[3]).forEach(([prefixedName, file]) => {
+        const name = prefixedName.replace("./", "");
+        modulesObj[file.import[0]] = {
           id: `${app}:${name}`,
           name,
           applicationID: app,
           requires: new Set(),
-          file,
+          file: file.import[0],
         };
       });
     }
@@ -59,38 +63,38 @@ const convertToGraph = ({
 
   modules.forEach(({ identifier, issuerName, reasons }) => {
     const data = identifier.split("|");
-    if (data[0] === "overridable") {
+
+    if (data[0] === "consume-shared-module") {
       if (issuerName) {
         // This is a hack
         const issuerNameMinusExtension = issuerName.replace(".js", "");
         if (modulesObj[issuerNameMinusExtension]) {
-          modulesObj[issuerNameMinusExtension].requires.add(data[3]);
+          modulesObj[issuerNameMinusExtension].requires.add(data[2]);
         }
       }
       if (reasons) {
         reasons.forEach(({ module }) => {
           const moduleMinusExtension = module.replace(".js", "");
           if (modulesObj[moduleMinusExtension]) {
-            modulesObj[moduleMinusExtension].requires.add(data[3]);
+            modulesObj[moduleMinusExtension].requires.add(data[2]);
           }
         });
       }
-
       let version = "";
       [
         convertedDeps.dependencies,
         convertedDeps.devDependencies,
         convertedDeps.optionalDependencies,
       ].forEach((deps) => {
-        const dep = deps.find(({ name }) => name === data[3]);
+        const dep = deps.find(({ name }) => name === data[2]);
         if (dep) {
           version = dep.version;
         }
       });
 
-      overrides[data[3]] = {
-        id: data[3],
-        name: data[3],
+      overrides[data[2]] = {
+        id: data[2],
+        name: data[2],
         version,
         location: data[2],
         applicationID: app,

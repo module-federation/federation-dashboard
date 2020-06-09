@@ -66,9 +66,7 @@
       "warnings": 0,
       "id": "webpack/container/entry/home",
       "issuerId": null,
-      "chunks": [
-        "home"
-      ],
+      "chunks": ["home"],
       "assets": [],
       "reasons": [
         {
