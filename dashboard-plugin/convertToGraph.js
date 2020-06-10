@@ -1,5 +1,6 @@
 const { validateParams } = require("./helpers");
 const convertToGraph = ({
+  name,
   federationRemoteEntry,
   modules,
   topLevelPackage,
@@ -7,7 +8,7 @@ const convertToGraph = ({
 }) => {
   validateParams({ federationRemoteEntry, modules, topLevelPackage, metadata });
 
-  const app = federationRemoteEntry.origins[0].loc;
+  const app = name;
   const overrides = {};
   const consumes = [];
   const consumesByName = {};

@@ -73,9 +73,12 @@ class FederationDashboardPlugin {
         return specificChunk;
       });
 
-      const AllReferencedChunksByRemote = liveStats.compilation.namedChunks
-        .get(FederationPluginOptions.name)
-        .getAllReferencedChunks();
+      const namedChunkRefs = liveStats.compilation.namedChunks.get(
+        FederationPluginOptions.name
+      );
+      const AllReferencedChunksByRemote = namedChunkRefs
+        ? namedChunkRefs.getAllReferencedChunks()
+        : [];
 
       const validChunkArray = [];
       AllReferencedChunksByRemote.forEach((chunk) => {
@@ -148,6 +151,7 @@ class FederationDashboardPlugin {
       }
 
       const rawData = {
+        name: FederationPluginOptions.name,
         metadata: this._options.metadata || {},
         topLevelPackage: vendorFederation || {},
         publicPath: stats.publicPath,
