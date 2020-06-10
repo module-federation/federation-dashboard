@@ -33,7 +33,7 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-node-${{ steps.setups.outputs.node_version }}
 
       - run: yarn --frozen-lockfile
-      
+
       - name: Docker Login
         run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         env:
@@ -42,6 +42,7 @@ jobs:
 
       - name: Perform builds
         run: |-
+          rm -fr dashboard-fe/node_modules
           yarn workspace @module-federation/dashboard run docker:build
 
       - name: Create Release or Publish
