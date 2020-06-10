@@ -1,5 +1,17 @@
 # @module-federation/dashboard-plugin
 
+## 1.0.0
+
+### Minor Changes
+
+- eb2e7c1: Updating Readmes
+- eb2e7c1: Adderssing general upgrades and bugs
+- eb2e7c1: Fixing CI issues
+
+### Patch Changes
+
+- eb2e7c1: Fixing bugs in getAllReferenceChunks
+
 ## 0.2.0
 
 ### Minor Changes
