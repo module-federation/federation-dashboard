@@ -75,9 +75,6 @@ module.exports = {
         },
         remote: "http://localhost:3004/remoteEntry.js",
       },
-      reportFunction: (data) => {
-        console.log("afterDone", data);
-      },
     }),
   ],
 };

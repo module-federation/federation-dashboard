@@ -104,12 +104,13 @@ const convertToGraph = ({
   });
 
   const sourceUrl = metadata && metadata.source ? metadata.source.url : "";
+  const remote = metadata && metadata.remote ? metadata.remote : "";
 
   const out = {
     ...convertedDeps,
     id: app,
     name: app,
-    remote: metadata.remote || "",
+    remote,
     overrides: Object.values(overrides),
     consumes: consumes.map((con) => ({
       ...con,

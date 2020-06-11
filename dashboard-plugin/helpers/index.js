@@ -17,8 +17,6 @@ function validateParams({
   const hasOptionalDependencies = objHasKeys(topLevelPackage, [
     "optionalDependencies",
   ]);
-  const hasMetaDataSource = objHasKeys(metadata, ["source", "url"]);
-  const hasMetaDataRemote = objHasKeys(metadata, ["remote"]);
 
   if (
     typeof hasLoc === "undefined" ||
@@ -55,14 +53,6 @@ function validateParams({
     if (typeof module.issuerName === "undefined") {
       throw new Error("module.issuerName must be defined");
     }
-  }
-
-  if (typeof hasMetaDataSource === "undefined") {
-    throw new Error("metadata.source.url must be defined");
-  }
-
-  if (typeof hasMetaDataRemote === "undefined") {
-    throw new Error("metadata.remote must be defined");
   }
 }
 
