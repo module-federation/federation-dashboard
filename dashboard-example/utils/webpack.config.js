@@ -40,7 +40,6 @@ module.exports = {
       shared: require("./package.json").dependencies,
     }),
     new DashboardPlugin({
-      filename: "dashboard.json",
       dashboardURL: "http://localhost:3000/api/update",
       metadata: {
         source: {
@@ -48,9 +47,6 @@ module.exports = {
             "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/utils",
         },
         remote: "http://localhost:3005/remoteEntry.js",
-      },
-      reportFunction: (data) => {
-        console.log("afterDone", data);
       },
     }),
   ],
