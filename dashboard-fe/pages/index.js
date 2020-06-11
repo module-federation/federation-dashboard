@@ -440,7 +440,7 @@ const Home = () => {
             Modules then you can import their metadata into this dashboard using
             the{" "}
             <a
-              href="https://npmjs.com/package/@module-federation/dashboard-plugin"
+              href="https://www.npmjs.com/package/@module-federation/dashboard-plugin"
               target="_blank"
             >
               @module-federation/dashboard-plugin
