@@ -4,6 +4,7 @@ import getApplications, {
   versionManagementEnabled,
   getVersionInfo,
   publishVersion,
+  setRemoteVersion,
 } from "./db";
 
 const typeDefs = gql`
@@ -16,6 +17,11 @@ const typeDefs = gql`
 
   type Mutation {
     publishVersion(application: String!, version: String!): Versions!
+    setRemoteVersion(
+      application: String!
+      remote: String!
+      version: String
+    ): Versions!
   }
 
   type DashboardInfo {
@@ -58,6 +64,7 @@ const typeDefs = gql`
   type Versions {
     versions: [String!]!
     latest: String!
+    override: [Dependency!]
   }
 
   type Application {
@@ -120,6 +127,9 @@ const resolvers = {
   Mutation: {
     publishVersion: async (_, { application, version }) => {
       return publishVersion(application, version);
+    },
+    setRemoteVersion: async (_, { application, remote, version }) => {
+      return setRemoteVersion(application, remote, version);
     },
   },
   Module: {

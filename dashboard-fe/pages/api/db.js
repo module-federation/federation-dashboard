@@ -33,6 +33,33 @@ export const getVersionInfo = (app) => {
   }
 };
 
+export const setRemoteVersion = (app, remote, version) => {
+  if (versionManager) {
+    if (version) {
+      console.log(
+        `Telling version manager to set the remote '${remote}' on '${app}' to '${version}'`
+      );
+    } else {
+      console.log(
+        `Telling version manager to set the remote '${remote}' on '${app}' to the default`
+      );
+    }
+    const body = version ? { version } : {};
+    return fetch(`${versionManager}/${app}/${remote}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }).then((resp) => resp.json());
+  } else {
+    return Promise.resolve({
+      versions: [],
+      latest: "",
+    });
+  }
+};
+
 export const publishVersion = (app, version) => {
   if (versionManager) {
     console.log(`Telling version manager to set '${app}' to '${version}'`);

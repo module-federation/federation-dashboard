@@ -14,13 +14,13 @@ import {
 } from "@material-ui/core";
 import Link from "next/link";
 import gql from "graphql-tag";
-import { useLazyQuery, useMutation } from "@apollo/react-hooks";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/react-hooks";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 
 import Layout from "../../../components/Layout";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   title: {
     fontWeight: "bold",
   },
@@ -39,7 +39,18 @@ const useStyles = makeStyles((theme) => ({
   overridden: {
     fontWeight: "bold",
   },
-}));
+});
+
+const GET_REMOTE_VERSIONS = gql`
+  query($name: String!) {
+    applications(name: $name) {
+      versions {
+        versions
+        latest
+      }
+    }
+  }
+`;
 
 const GET_APPS = gql`
   query($name: String!) {
@@ -88,6 +99,10 @@ const GET_APPS = gql`
       versions {
         versions
         latest
+        override {
+          name
+          version
+        }
       }
     }
   }
@@ -96,6 +111,18 @@ const GET_APPS = gql`
 const SET_VERSION = gql`
   mutation($application: String!, $version: String!) {
     publishVersion(application: $application, version: $version) {
+      latest
+    }
+  }
+`;
+
+const SET_REMOTE_VERSION = gql`
+  mutation($application: String!, $remote: String!, $version: String) {
+    setRemoteVersion(
+      application: $application
+      remote: $remote
+      version: $version
+    ) {
       latest
     }
   }
@@ -176,6 +203,96 @@ const DependenciesTable = ({ title, dependencies, overrides }) => {
               </TableRow>
             );
           })}
+        </TableBody>
+      </Table>
+    </div>
+  );
+};
+
+const RemoteVersionSelector = ({ application, remote, version }) => {
+  const router = useRouter();
+  const { data } = useQuery(GET_REMOTE_VERSIONS, {
+    variables: { name: remote },
+  });
+  const [setRemoteVersion] = useMutation(SET_REMOTE_VERSION);
+
+  const handleVersionChange = (newVersion) => {
+    setRemoteVersion({
+      variables: {
+        application,
+        remote,
+        version: newVersion === versions.latest ? null : newVersion,
+      },
+      refetchQueries: [
+        { query: GET_APPS, variables: { name: router.query.application } },
+      ],
+    });
+  };
+
+  if (!data || data.applications.length === 0) {
+    return null;
+  }
+  const { versions } = data.applications[0];
+  return (
+    <Select
+      variant="outlined"
+      value={version || versions.latest}
+      onChange={(evt) => handleVersionChange(evt.target.value)}
+    >
+      {versions.versions.map((v) => (
+        <MenuItem key={v} value={v}>
+          {v} {v === versions.latest ? "(default)" : ""}
+        </MenuItem>
+      ))}
+    </Select>
+  );
+};
+
+const RemoteVersionManager = ({ application }) => {
+  const classes = useStyles();
+  const apps = Array.from(
+    application.consumes.reduce(
+      (s, { application: { name } }) => s.add(name),
+      new Set()
+    )
+  );
+  const overrides = {};
+  application.versions.override.forEach(({ name, version }) => {
+    overrides[name] = version;
+  });
+  return (
+    <div>
+      <Typography variant="h6" className={classes.panelTitle}>
+        Remote Versions
+      </Typography>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              <Typography>Name</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>Version</Typography>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {apps.map((name) => (
+            <TableRow key={["rvm", name].join()}>
+              <TableCell>
+                <Typography>{name}</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>
+                  <RemoteVersionSelector
+                    application={application.id}
+                    remote={name}
+                    version={overrides[name]}
+                  />
+                </Typography>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>
@@ -270,19 +387,9 @@ const ModulesTable = ({ application, modules, overrides }) => {
   );
 };
 
-const Application = () => {
+const ApplicationSection = ({ application, versionManagementEnabled }) => {
   const classes = useStyles();
-  const router = useRouter();
-  const [getData, { data }] = useLazyQuery(GET_APPS);
   const [publishVersion] = useMutation(SET_VERSION);
-
-  React.useEffect(() => {
-    if (router.query.application) {
-      getData({
-        variables: { name: router.query.application },
-      });
-    }
-  }, [router]);
 
   const handleVersionChange = (application, version) => {
     publishVersion({
@@ -297,6 +404,114 @@ const Application = () => {
   };
 
   return (
+    <div key={application.id}>
+      <Grid container>
+        <Grid item xs={9}>
+          <Typography variant="h4" className={classes.title}>
+            {application.name}
+          </Typography>
+        </Grid>
+        {versionManagementEnabled && (
+          <Grid item xs={3}>
+            <Typography variant="h6" className={classes.title}>
+              <>
+                Default Version:{"  "}
+                <Select
+                  variant="outlined"
+                  value={application.versions.latest}
+                  onChange={(evt) =>
+                    handleVersionChange(application.id, evt.target.value)
+                  }
+                >
+                  {application.versions.versions.map((v) => (
+                    <MenuItem key={v} value={v}>
+                      {v}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </>
+            </Typography>
+          </Grid>
+        )}
+      </Grid>
+
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Paper className={classes.panel} elevation={3}>
+            <ModulesTable
+              application={application}
+              modules={application.modules}
+              overrides={application.overrides}
+            />
+          </Paper>
+        </Grid>
+
+        {versionManagementEnabled && (
+          <Grid item xs={6}>
+            <Paper className={classes.panel} elevation={3}>
+              <RemoteVersionManager application={application} />
+            </Paper>
+          </Grid>
+        )}
+
+        <Grid item xs={6}>
+          <Paper className={classes.panel} elevation={3}>
+            <OverridesTable overrides={application.overrides} />
+          </Paper>
+        </Grid>
+
+        {application.consumes.length > 0 && (
+          <Grid item xs={6}>
+            <Paper className={classes.panel} elevation={3}>
+              <ConsumesTable consumes={application.consumes} />
+            </Paper>
+          </Grid>
+        )}
+
+        <Grid item xs={6}>
+          <Paper className={classes.panel} elevation={3}>
+            {application.dependencies.length > 0 && (
+              <DependenciesTable
+                title="Direct Dependencies"
+                dependencies={application.dependencies}
+                overrides={application.overrides}
+              />
+            )}
+            {application.devDependencies.length > 0 && (
+              <DependenciesTable
+                title="Development Dependencies"
+                dependencies={application.devDependencies}
+                overrides={application.overrides}
+              />
+            )}
+            {application.optionalDependencies.length > 0 && (
+              <DependenciesTable
+                title="Optional Dependencies"
+                dependencies={application.optionalDependencies}
+                overrides={application.overrides}
+              />
+            )}
+          </Paper>
+        </Grid>
+      </Grid>
+    </div>
+  );
+};
+
+const Application = () => {
+  const classes = useStyles();
+  const router = useRouter();
+  const [getData, { data }] = useLazyQuery(GET_APPS);
+
+  React.useEffect(() => {
+    if (router.query.application) {
+      getData({
+        variables: { name: router.query.application },
+      });
+    }
+  }, [router]);
+
+  return (
     <Layout>
       <Head>
         <title>Federated Modules Dashboard</title>
@@ -304,91 +519,10 @@ const Application = () => {
       <div className={classes.container}>
         {data &&
           data.applications.map((application) => (
-            <div key={application.id}>
-              <Grid container>
-                <Grid item xs={9}>
-                  <Typography variant="h4" className={classes.title}>
-                    {application.name}
-                  </Typography>
-                </Grid>
-                {data.dashboard.versionManagementEnabled && (
-                  <Grid item xs={3}>
-                    <Typography variant="h6" className={classes.title}>
-                      <>
-                        Production Version:{"  "}
-                        <Select
-                          variant="outlined"
-                          value={application.versions.latest}
-                          onChange={(evt) =>
-                            handleVersionChange(
-                              application.id,
-                              evt.target.value
-                            )
-                          }
-                        >
-                          {application.versions.versions.map((v) => (
-                            <MenuItem key={v} value={v}>
-                              {v}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </>
-                    </Typography>
-                  </Grid>
-                )}
-              </Grid>
-              <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <Paper className={classes.panel} elevation={3}>
-                    <ModulesTable
-                      application={application}
-                      modules={application.modules}
-                      overrides={application.overrides}
-                    />
-                  </Paper>
-                </Grid>
-
-                <Grid item xs={6}>
-                  <Paper className={classes.panel} elevation={3}>
-                    <OverridesTable overrides={application.overrides} />
-                  </Paper>
-                </Grid>
-
-                {application.consumes.length > 0 && (
-                  <Grid item xs={6}>
-                    <Paper className={classes.panel} elevation={3}>
-                      <ConsumesTable consumes={application.consumes} />
-                    </Paper>
-                  </Grid>
-                )}
-
-                <Grid item xs={6}>
-                  <Paper className={classes.panel} elevation={3}>
-                    {application.dependencies.length > 0 && (
-                      <DependenciesTable
-                        title="Direct Dependencies"
-                        dependencies={application.dependencies}
-                        overrides={application.overrides}
-                      />
-                    )}
-                    {application.devDependencies.length > 0 && (
-                      <DependenciesTable
-                        title="Development Dependencies"
-                        dependencies={application.devDependencies}
-                        overrides={application.overrides}
-                      />
-                    )}
-                    {application.optionalDependencies.length > 0 && (
-                      <DependenciesTable
-                        title="Optional Dependencies"
-                        dependencies={application.optionalDependencies}
-                        overrides={application.overrides}
-                      />
-                    )}
-                  </Paper>
-                </Grid>
-              </Grid>
-            </div>
+            <ApplicationSection
+              application={application}
+              versionManagementEnabled={data.dashboard.versionManagementEnabled}
+            />
           ))}
       </div>
     </Layout>
