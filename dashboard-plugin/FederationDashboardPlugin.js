@@ -161,46 +161,50 @@ class FederationDashboardPlugin {
         chunkDependencies,
       };
 
-      const graphData = convertToGraph(rawData);
-
-      const dashData = (this._dashData = JSON.stringify(graphData));
-
-      if (this._options.filename) {
-        const hashPath = path.join(stats.outputPath, this._options.filename);
-        fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, () => {});
+      let graphData = null;
+      try {
+        graphData = convertToGraph(rawData);
+      } catch (err) {
+        console.warn("Error during dashboard data processing");
+        console.warn(err);
       }
 
-      const statsPath = path.join(stats.outputPath, "stats.json");
-      fs.writeFile(
-        statsPath,
-        JSON.stringify(stats),
-        { encoding: "utf-8" },
-        () => {}
-      );
+      if (graphData) {
+        const dashData = (this._dashData = JSON.stringify(graphData));
 
-      if (this._options.dashboardURL) {
-        new Promise((resolve) => {
-          fetch(this._options.dashboardURL, {
-            method: "POST",
-            body: dashData,
-            headers: {
-              Accept: "application/json",
-              "Content-type": "application/json",
-            },
-          })
-            .then((resp) => resp.json())
-            .then(resolve)
-            .catch(() => {
-              console.warn(
-                `Error posting data to dashboard URL: ${this._options.dashboardURL}`
-              );
-              resolve();
-            });
-        });
-      }
+        if (this._options.filename) {
+          const hashPath = path.join(stats.outputPath, this._options.filename);
+          fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, () => {});
+        }
 
-      if (this._options.reportFunction) {
-        // this._options.reportFunction(this._dashData);
+        const statsPath = path.join(stats.outputPath, "stats.json");
+        fs.writeFile(
+          statsPath,
+          JSON.stringify(stats),
+          { encoding: "utf-8" },
+          () => {}
+        );
+
+        if (this._options.dashboardURL) {
+          new Promise((resolve) => {
+            fetch(this._options.dashboardURL, {
+              method: "POST",
+              body: dashData,
+              headers: {
+                Accept: "application/json",
+                "Content-type": "application/json",
+              },
+            })
+              .then((resp) => resp.json())
+              .then(resolve)
+              .catch(() => {
+                console.warn(
+                  `Error posting data to dashboard URL: ${this._options.dashboardURL}`
+                );
+                resolve();
+              });
+          });
+        }
       }
     });
   }
