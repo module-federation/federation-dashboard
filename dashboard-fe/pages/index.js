@@ -16,6 +16,9 @@ import Layout from "../components/Layout";
 
 const GET_APPS = gql`
   {
+    dashboard {
+      versionManagementEnabled
+    }
     applications {
       id
       name
@@ -40,6 +43,10 @@ const GET_APPS = gql`
         usedIn {
           file
         }
+      }
+      versions {
+        versions
+        latest
       }
     }
   }
