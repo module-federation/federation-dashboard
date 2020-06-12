@@ -1,5 +1,11 @@
 # @module-federation/dashboard-plugin
 
+## 1.0.1
+
+### Patch Changes
+
+- 50aa8b1: Removing the metadata requirement
+
 ## 1.0.0
 
 ### Minor Changes
