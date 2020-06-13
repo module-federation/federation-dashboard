@@ -1,5 +1,11 @@
 # @module-federation/dashboard-plugin
 
+## 1.1.0
+
+### Minor Changes
+
+- a32d527: Documentation Formatting and fixing a bug in the pluign that happens when no remoteEntry is emitted at all
+
 ## 1.0.1
 
 ### Patch Changes
