@@ -1,6 +1,4 @@
 import React from "react";
-import Head from "next/head";
-import Header from "./header";
 import { UserProvider } from "../lib/user";
 import clsx from "clsx";
 import {
@@ -8,33 +6,20 @@ import {
   CssBaseline,
   AppBar,
   Toolbar,
-  Paper,
-  List,
-  ListItem,
   Divider,
-  ListItemText,
-  ListItemIcon,
-  ListSubheader,
   Typography,
   TextField,
   IconButton,
   Drawer,
   Container,
   fade,
-  Link as NormalLink
 } from "@material-ui/core";
+import SideBar from "./Sidebar";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import PlusIcon from "@material-ui/icons/Add";
-import WebIcon from "@material-ui/icons/Web";
-import ShareIcon from "@material-ui/icons/Share";
-import LockIcon from "@material-ui/icons/Lock";
-import WidgetsIcon from "@material-ui/icons/Widgets";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 const GET_SIDEBAR_DATA = gql`
@@ -53,91 +38,6 @@ const GET_SIDEBAR_DATA = gql`
     }
   }
 `;
-const SideBar = ({ data, restricted }) => {
-  if (restricted) {
-    return (
-      <List>
-        <Link href="/api/login">
-          <ListItem button>
-            <ListItemIcon>
-              <LockIcon />
-            </ListItemIcon>
-            <ListItemText primary="Login" />
-          </ListItem>
-        </Link>
-      </List>
-    );
-  }
-  return (
-    <List>
-      <Link href="/">
-        <ListItem button>
-          <ListItemIcon>
-            <DashboardIcon />
-          </ListItemIcon>
-          <ListItemText primary="Dashboard" />
-        </ListItem>
-      </Link>
-      <Link href={`/dependencies`}>
-        <ListItem button>
-          <ListItemIcon>
-            <ShareIcon />
-          </ListItemIcon>
-          <ListItemText primary="Dependencies" />
-        </ListItem>
-      </Link>
-      {data && (
-        <>
-          <ListSubheader inset>Applications</ListSubheader>
-          {data.applications.map(({ id, name }) => (
-            <Link href={`/applications/${id}`} key={`application:${id}`}>
-              <ListItem button>
-                <ListItemIcon>
-                  <WebIcon />
-                </ListItemIcon>
-                <ListItemText primary={name} />
-              </ListItem>
-            </Link>
-          ))}
-          <Link href={`/applications/new`}>
-            <ListItem button>
-              <ListItemIcon>
-                <PlusIcon />
-              </ListItemIcon>
-              <ListItemText primary="New" />
-            </ListItem>
-          </Link>
-        </>
-      )}
-      {data && (
-        <>
-          <ListSubheader inset>Modules</ListSubheader>
-          {data.modules.map(({ id, name, application }) => (
-            <Link
-              href={`/applications/${application.id}/${name}`}
-              key={`module:${id}`}
-            >
-              <ListItem button>
-                <ListItemIcon>
-                  <WidgetsIcon />
-                </ListItemIcon>
-                <ListItemText primary={name} />
-              </ListItem>
-            </Link>
-          ))}
-        </>
-      )}
-      <Link href="/api/logout">
-        <ListItem button>
-          <ListItemIcon>
-            <LockIcon />
-          </ListItemIcon>
-          <ListItemText primary="Logout" />
-        </ListItem>
-      </Link>
-    </List>
-  );
-};
 
 const drawerWidth = 240;
 
@@ -232,30 +132,6 @@ const useStyles = makeStyles(theme => ({
     padding: 5
   }
 }));
-
-const AuthWrapper = ({ user, loading, children }) => {
-  if (user) {
-    return children;
-  }
-  return (
-    <>
-      {loading && <p>Loading login info...</p>}
-
-      {!loading && !user && (
-        <>
-          <p>Redirecting to login...</p>
-        </>
-      )}
-
-      {user && (
-        <>
-          <h4>Rendered user info on the client</h4>
-          <pre>{JSON.stringify(user, null, 2)}</pre>
-        </>
-      )}
-    </>
-  );
-};
 
 const Layout = ({ user, loading = false, children }) => {
   const { data } = useQuery(GET_SIDEBAR_DATA);
