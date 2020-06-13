@@ -11,22 +11,25 @@ function validateParams({
     );
   }
 
-  const hasLoc = objHasKeys(federationRemoteEntry, ["origins", "0", "loc"]);
+  const hasLoc = federationRemoteEntry
+    ? objHasKeys(federationRemoteEntry, ["origins", "0", "loc"])
+    : federationRemoteEntry;
+
   const hasDependencies = objHasKeys(topLevelPackage, ["dependencies"]);
   const hasDevDependencies = objHasKeys(topLevelPackage, ["devDependencies"]);
   const hasOptionalDependencies = objHasKeys(topLevelPackage, [
     "optionalDependencies",
   ]);
-
-  if (
-    typeof hasLoc === "undefined" ||
-    federationRemoteEntry.origins[0].loc === ""
-  ) {
-    throw new Error(
-      "federationRemoteEntry.origins[0].loc must be defined and have a value"
-    );
+  if (federationRemoteEntry) {
+    if (
+      typeof hasLoc === "undefined" ||
+      federationRemoteEntry.origins[0].loc === ""
+    ) {
+      throw new Error(
+        "federationRemoteEntry.origins[0].loc must be defined and have a value"
+      );
+    }
   }
-
   if ((modules && !modules.length) || typeof modules === "undefined") {
     throw new Error("Modules must be defined and have length");
   }
