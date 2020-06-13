@@ -169,7 +169,7 @@ const Layout = ({ user, loading = false, children }) => {
       router.push(opt.url);
     }
   };
-
+console.log('here')
   return (
     <UserProvider value={{ user, loading }}>
       <div className={classes.root}>

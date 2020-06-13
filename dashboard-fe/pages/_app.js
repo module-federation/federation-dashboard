@@ -16,7 +16,6 @@ function MyApp({ Component, pageProps }) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
   }, []);
-
   return (
     <React.Fragment>
     <Head>

@@ -35,7 +35,6 @@ export default function withAuth(InnerComponent) {
       if (!this.props.user) {
         return <RedirectToLogin />;
       }
-
       return <div>{<InnerComponent {...this.props} user={this.props.user} />}</div>;
     }
   };

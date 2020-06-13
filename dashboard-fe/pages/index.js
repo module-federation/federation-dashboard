@@ -130,4 +130,4 @@ const Home = () => {
   );
 };
 
-export default withAuth(Head)
+export default withAuth(Home);
