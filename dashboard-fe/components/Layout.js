@@ -31,7 +31,7 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useAuth, withAuth } from "use-auth0-hooks";
+import { useLazyAuth } from "../hooks";
 
 const GET_SIDEBAR_DATA = gql`
   {
@@ -138,7 +138,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarShift: {
     marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    width: `calc(10% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -176,7 +176,7 @@ const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: "100vh",
+    height: "10vh",
     overflow: "auto",
   },
   container: {
@@ -201,7 +201,7 @@ const useStyles = makeStyles((theme) => ({
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
-    width: 200,
+    width: 20,
     color: "white",
     padding: 5,
   },
@@ -244,16 +244,15 @@ function Dashboard({ children }) {
     }
   };
 
-  const { isAuthenticated, login, isLoading: authLoading, logout } = useAuth();
+  const { isAuthenticated, loginWithRedirect: login, isLoading: authLoading, logout } = useLazyAuth();
 
   const { pathname, query } = router;
   const handleLogin = React.useCallback(
-    () => login({ appState: { returnTo: { pathname, query } } }),
+    () => login(),
     [pathname, query, login]
   );
 
   const handleLogout = React.useCallback(() => logout(), [logout]);
-
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -333,4 +332,4 @@ function Dashboard({ children }) {
   );
 }
 
-export default withAuth(Dashboard);
+export default Dashboard;
