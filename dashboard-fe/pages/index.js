@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import { Typography, Tabs, Tab, makeStyles } from "@material-ui/core";
 import gql from "graphql-tag";
@@ -11,8 +12,9 @@ const ModuleUMLDiagram =
   typeof window === "undefined"
     ? () => <div />
     : require("../components/ModuleUMLDiagram.tsx").default;
-
 import Layout from "../components/Layout";
+import { useFetchUser } from "../lib/user";
+import withAuth from '../components/with-auth';
 
 const GET_APPS = gql`
   {
@@ -47,17 +49,18 @@ const GET_APPS = gql`
 
 const useHomeStyles = makeStyles({
   helpParagraph: {
-    marginTop: "1em",
-  },
+    marginTop: "1em"
+  }
 });
 
 const Home = () => {
+  const { user, loading } = useFetchUser();
   const { data } = useQuery(GET_APPS);
   const [currentTab, currentTabSet] = React.useState(0);
   const classes = useHomeStyles();
 
   return (
-    <Layout>
+    <Layout user={user} loading={loading}>
       <Head>
         <title>Federated Modules Dashboard</title>
       </Head>
@@ -127,4 +130,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withAuth(Head)

@@ -17,6 +17,8 @@ import { useRouter } from "next/router";
 import clsx from "clsx";
 
 import Layout from "../../../components/Layout";
+import { useFetchUser } from '../../../lib/user';
+import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -265,9 +267,10 @@ const Application = () => {
       });
     }
   }, [router]);
+  const { user, loading } = useFetchUser();
 
   return (
-    <Layout>
+    <Layout user={user} loading={loading}>
       <Head>
         <title>Federated Modules Dashboard</title>
       </Head>
