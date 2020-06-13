@@ -16,8 +16,7 @@ const DashboardPlugin = require("@module-federation/dashboard-plugin");
 
 ```js
 plugins: [
-  ...
-  new DashboardPlugin({
+  ...new DashboardPlugin({
     dashboardURL: "http://localhost:3000/api/update",
   }),
 ];
@@ -35,12 +34,11 @@ There are also other options:
 
 ## Metadata
 
-Metadata is *optional* and is specified as an object.
+Metadata is _optional_ and is specified as an object.
 
 ```js
 plugins: [
-  ...
-  new DashboardPlugin({
+  ...new DashboardPlugin({
     dashboardURL: "http://localhost:3000/api/update",
     metadata: {
       source: {
