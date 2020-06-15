@@ -111,7 +111,6 @@ const ModulePage = () => {
       });
     }
   }, [router]);
-
   return (
     <Layout>
       <Head>

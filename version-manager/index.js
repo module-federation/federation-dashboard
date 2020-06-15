@@ -2,10 +2,23 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const fs = require("fs");
+const cors = require("cors");
 
 app.use(bodyParser.json());
 
-// This server reaqds versions.json anytime it does anything so that you can edit
+var whitelist = ["http://localhost:3001"];
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+  console.log(whitelist.indexOf(req.header("Origin")));
+  if (whitelist.indexOf(req.header("Origin")) !== -1) {
+    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false }; // disable CORS for this request
+  }
+  callback(null, corsOptions); // callback expects two parameters: error and options
+};
+
+// This server reads versions.json anytime it does anything so that you can edit
 // that file on the fly and see new results.
 
 const setVersions = (versions) =>
@@ -19,7 +32,7 @@ Returns all the version information (not required for API completeness)
 curl "http://localhost:3010/"
 */
 
-app.get("/", (_, res) => {
+app.get("/", cors(corsOptionsDelegate), (_, res) => {
   res.send(getVersions());
 });
 
@@ -37,6 +50,26 @@ app.get("/:app", (req, res) => {
   } else {
     res.status(404);
     res.send({ error: "Unkown application" });
+  }
+});
+
+app.post("/write/:app", (req, res) => {
+  const versions = getVersions();
+  const app = req.params.app;
+  if (versions[app]) {
+    if (!versions[app].versions.includes(req.body.version)) {
+      console.log(`Application ${app} now at version ${req.body.version}`);
+      versions[app].versions.push(req.body.version);
+      versions[app].latest = req.body.version;
+      setVersions(versions);
+      res.send(versions[app]);
+    } else {
+      res.status(404);
+      res.send({ error: "Version already Exists" });
+    }
+  } else {
+    res.status(404);
+    res.send({ error: "Unknown application" });
   }
 });
 

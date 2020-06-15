@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
-
+const MutateRuntime = require("./mutate-public-path");
 module.exports = {
   entry: "./src/index",
   mode: "development",
@@ -11,7 +11,7 @@ module.exports = {
     port: 3002,
   },
   output: {
-    publicPath: "http://localhost:3002/",
+    publicPath: `http://localhost:3002/__REMOTE_VERSION__`,
   },
   module: {
     rules: [
@@ -72,5 +72,6 @@ module.exports = {
         remote: "http://localhost:3002/remoteEntry.js",
       },
     }),
+    new MutateRuntime(),
   ],
 };
