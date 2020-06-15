@@ -26,12 +26,14 @@ class FederationDashboardPlugin {
           chunk.name === FederationPluginOptions.name
         ) {
           const generatedCode = module.getGeneratedCode();
-          console.log(generatedCode);
+          const splitGeneration = generatedCode.split("=");
           module._cachedGeneratedCode = generatedCode.replace(
-            '__REMOTE_VERSION__"',
-            `" + window.versions[window.versions.currentHost].${FederationPluginOptions.name} +"/"`
+            splitGeneration[1],
+            splitGeneration[1].split(";")[0] +
+              `+ (window.remote_${FederationPluginOptions.name} ? window.remote_${FederationPluginOptions.name}+"/" : '');`
           );
           console.log(module._cachedGeneratedCode);
+          return module;
         }
       });
     });

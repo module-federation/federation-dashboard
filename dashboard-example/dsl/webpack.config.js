@@ -11,7 +11,7 @@ module.exports = {
     port: 3002,
   },
   output: {
-    publicPath: `http://localhost:3002/__REMOTE_VERSION__`,
+    publicPath: `http://localhost:3002/`,
   },
   module: {
     rules: [
