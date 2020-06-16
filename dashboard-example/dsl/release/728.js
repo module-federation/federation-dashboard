@@ -1,1 +1,14 @@
-(window.webpackJsonp_dashboard_dsl=window.webpackJsonp_dashboard_dsl||[]).push([[728],{31728:(e,n,s)=>{"use strict";s.r(n),s.d(n,{default:()=>r});var a=s(10456),d=s.n(a),l=s(28722);const r=({children:e,...n})=>d().createElement("div",null,"  ",d().createElement("h1",null,"Using DSL Version 0.2.0"),"  ",d().createElement(l.Carousel,n,e))}}]);
+(window.webpackJsonp_dashboard_dsl =
+  window.webpackJsonp_dashboard_dsl || []).push([
+  [728],
+  {
+    31728: (d, s, a) => {
+      "use strict";
+      a.r(s), a.d(s, { default: () => r });
+      var e = a(10456),
+        n = a.n(e),
+        o = a(28722);
+      const r = ({ children: d, ...s }) => n().createElement(o.Carousel, s, d);
+    },
+  },
+]);

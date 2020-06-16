@@ -93,7 +93,7 @@ dsl = (() => {
             ).version + "/"
           );
         } catch (e) {
-          return console.error(e), "";
+          return console.warn(e), "";
         }
       })()),
     (() => {
