@@ -22,12 +22,7 @@
       "0.0.0"
     ],
     "latest": "0.2.0",
-    "override": [
-      {
-        "name": "dsl",
-        "version": "0.2.0"
-      }
-    ]
+    "override": []
   },
   "nav": {
     "versions": [
