@@ -32,7 +32,7 @@ class FederationDashboardPlugin {
               FederationPluginOptions.name +
               "'}).version + '/'",
             "} catch(e) {",
-            "console.error(e);",
+            "console.warn(e);",
             'return ""',
             "}",
             "})();",
