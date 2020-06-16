@@ -25,12 +25,24 @@ class FederationDashboardPlugin {
           module.constructor.name === "PublicPathRuntimeModule" &&
           chunk.name === FederationPluginOptions.name
         ) {
+          const iffy = [
+            "+ (function(){",
+            "try {",
+            "return window.versions[window.versions.currentHost].override.find(function(override){return override.name === '" +
+              FederationPluginOptions.name +
+              "'}).version + '/'",
+            "} catch(e) {",
+            "console.error(e)",
+            'return ""',
+            "}",
+            "})()",
+          ].join("");
+
           const generatedCode = module.getGeneratedCode();
           const splitGeneration = generatedCode.split("=");
           module._cachedGeneratedCode = generatedCode.replace(
             splitGeneration[1],
-            splitGeneration[1].split(";")[0] +
-              `+ (window.remote_${FederationPluginOptions.name} ? window.remote_${FederationPluginOptions.name}+"/" : '');`
+            splitGeneration[1].split(";")[0] + iffy
           );
           console.log(module._cachedGeneratedCode);
           return module;
