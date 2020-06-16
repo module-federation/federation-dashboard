@@ -32,10 +32,10 @@ class FederationDashboardPlugin {
               FederationPluginOptions.name +
               "'}).version + '/'",
             "} catch(e) {",
-            "console.error(e)",
+            "console.error(e);",
             'return ""',
             "}",
-            "})()",
+            "})();",
           ].join("");
 
           const generatedCode = module.getGeneratedCode();
