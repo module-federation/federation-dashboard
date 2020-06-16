@@ -28,7 +28,8 @@ fetch("http://localhost:3010/")
   .then((res) => res.json())
   .then((versions) => {
     window.versions = versions;
-    console.log(versions);
+    Object.assign(versions, { currentHost: "home" });
+    console.log(versions)
     if (!versions.home.override.length) {
       injectScript(document, "script", "federation-dynamic-remote").then(() => {
         import("./bootstrap");

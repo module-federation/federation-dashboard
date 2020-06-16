@@ -4,13 +4,13 @@ dsl = (() => {
   var e,
     r,
     t,
-    o,
     n,
+    o,
     i,
     a,
     s = {
       79098: (e, r, t) => {
-        var o = {
+        var n = {
             "./Button": () =>
               Promise.all([t.e(456), t.e(722), t.e(84)]).then(() => () =>
                 t(79084)
@@ -24,9 +24,9 @@ dsl = (() => {
                 t(24085)
               ),
           },
-          n = (e) =>
-            t.o(o, e)
-              ? o[e]()
+          o = (e) =>
+            t.o(n, e)
+              ? n[e]()
               : Promise.resolve().then(() => {
                   throw new Error(
                     'Module "' + e + '" does not exist in container.'
@@ -40,7 +40,7 @@ dsl = (() => {
               );
             return (t.S.default = e), t.I("default");
           };
-        t.d(r, { get: () => n, init: () => i });
+        t.d(r, { get: () => o, init: () => i });
       },
     },
     l = {};
@@ -83,7 +83,19 @@ dsl = (() => {
     (d.nmd = (e) => ((e.paths = []), e.children || (e.children = []), e)),
     (d.p =
       "http://localhost:3002/" +
-      (window.remote_dsl ? window.remote_dsl + "/" : "")),
+      (function () {
+        try {
+          return (
+            window.versions[window.versions.currentHost].override.find(
+              function (e) {
+                return "dsl" === e.name;
+              }
+            ).version + "/"
+          );
+        } catch (e) {
+          return "";
+        }
+      })()),
     (() => {
       d.S = {};
       var e = {};
@@ -91,12 +103,12 @@ dsl = (() => {
         if (e[r]) return e[r];
         (e[r] = 1), d.o(d.S, r) || (d.S[r] = {});
         var t = d.S[r],
-          o = (e) =>
+          n = (e) =>
             "undefined" != typeof console && console.warn && console.warn(e),
-          n = (e, r, n, i) => {
+          o = (e, r, o, i) => {
             (r = r || []), (i = e);
             var a = () =>
-                o(
+                n(
                   "Version conflict for shared modules: " +
                     e +
                     " " +
@@ -122,11 +134,11 @@ dsl = (() => {
                     }
                   if (l >= 0 && r.length <= s.length) return;
                   if (t[i].loaded)
-                    return o(
+                    return n(
                       "Ignoring providing of already used shared module: " + e
                     );
                 }
-                t[i] = { get: n, version: r };
+                t[i] = { get: o, version: r };
               };
             s(),
               r.forEach((e) => {
@@ -136,11 +148,11 @@ dsl = (() => {
           i = [];
         switch (r) {
           case "default":
-            n("lodash", [4, 17, 15], () => d.e(635).then(() => () => d(76635))),
-              n("@emotion/core", [10, 0, 28], () =>
+            o("lodash", [4, 17, 15], () => d.e(635).then(() => () => d(76635))),
+              o("@emotion/core", [10, 0, 28], () =>
                 Promise.all([d.e(961), d.e(456)]).then(() => () => d(4961))
               ),
-              n("antd", [4, 3, 3], () =>
+              o("antd", [4, 3, 3], () =>
                 Promise.all([
                   d.e(584),
                   d.e(414),
@@ -149,13 +161,13 @@ dsl = (() => {
                   d.e(506),
                 ]).then(() => () => d(51971))
               ),
-              n("react", [16, 13, 1], () => d.e(784).then(() => () => d(2784))),
-              n("@ant-design/icons", [4, 2, 1], () =>
+              o("react", [16, 13, 1], () => d.e(784).then(() => () => d(2784))),
+              o("@ant-design/icons", [4, 2, 1], () =>
                 Promise.all([d.e(584), d.e(659), d.e(456)]).then(() => () =>
                   d(31659)
                 )
               ),
-              n("react-dom", [16, 13, 1], () =>
+              o("react-dom", [16, 13, 1], () =>
                 Promise.all([d.e(316), d.e(456)]).then(() => () => d(28316))
               );
         }
@@ -172,12 +184,12 @@ dsl = (() => {
         }
       }
     }),
-    (r = (r, t, o, n) => {
+    (r = (r, t, n, o) => {
       var i,
         a = t,
-        s = (o = o || []).map((e) => (a += "`" + e));
+        s = (n = n || []).map((e) => (a += "`" + e));
       for (s.unshift(t); (a = s.shift()); )
-        if (d.o(r, a) && !e((i = r[a].version || []), o)) return r[a];
+        if (d.o(r, a) && !e((i = r[a].version || []), n)) return r[a];
       var l =
         "Unsatisfied version of shared module " +
         t +
@@ -186,36 +198,36 @@ dsl = (() => {
         " (required " +
         t +
         "@" +
-        o.join(".") +
+        n.join(".") +
         ")";
-      if (n) throw new Error(l);
+      if (o) throw new Error(l);
       "undefined" != typeof console && console.warn && console.warn(l);
     }),
     (t = (e) => ((e.loaded = 1), e.get())),
-    (o = (e, o, n, i) => {
+    (n = (e, n, o, i) => {
       d.I(e);
       var a = d.S[e],
-        s = a && r(a, o, n);
+        s = a && r(a, n, o);
       return s ? t(s) : i();
     }),
-    (n = {}),
+    (o = {}),
     (i = {
       10456: () =>
-        o("default", "react", ["16", 13, 0], () =>
+        n("default", "react", ["16", 13, 0], () =>
           d.e(784).then(() => () => d(2784))
         ),
       28722: () =>
-        o("default", "antd", ["4", 2, 5], () =>
+        n("default", "antd", ["4", 2, 5], () =>
           Promise.all([d.e(584), d.e(414), d.e(136), d.e(847)]).then(() => () =>
             d(51971)
           )
         ),
       29136: () =>
-        o("default", "react-dom", ["16", 13, 0], () =>
+        n("default", "react-dom", ["16", 13, 0], () =>
           d.e(316).then(() => () => d(28316))
         ),
       18689: () =>
-        o("default", "@ant-design/icons", ["4", 1, 0], () =>
+        n("default", "@ant-design/icons", ["4", 1, 0], () =>
           d.e(659).then(() => () => d(31659))
         ),
     }),
@@ -229,39 +241,39 @@ dsl = (() => {
     (d.f.consumes = (e, r) => {
       d.o(a, e) &&
         a[e].forEach((e) => {
-          if (d.o(n, e)) return r.push(n[e]);
+          if (d.o(o, e)) return r.push(o[e]);
           var t = (r) => {
-              (n[e] = 0),
+              (o[e] = 0),
                 (s[e] = (t) => {
                   delete l[e], (t.exports = r());
                 });
             },
-            o = (r) => {
-              delete n[e],
+            n = (r) => {
+              delete o[e],
                 (s[e] = (t) => {
                   throw (delete l[e], r);
                 });
             };
           try {
             var a = i[e]();
-            a.then ? r.push((n[e] = a.then(t).catch(o))) : t(a);
+            a.then ? r.push((o[e] = a.then(t).catch(n))) : t(a);
           } catch (e) {
-            o(e);
+            n(e);
           }
         });
     }),
     (() => {
       var e = { 365: 0 };
       d.f.j = (r, t) => {
-        var o = d.o(e, r) ? e[r] : void 0;
-        if (0 !== o)
-          if (o) t.push(o[2]);
+        var n = d.o(e, r) ? e[r] : void 0;
+        if (0 !== n)
+          if (n) t.push(n[2]);
           else if (/^(136|456|722)$/.test(r)) e[r] = 0;
           else {
-            var n = new Promise((t, n) => {
-              o = e[r] = [t, n];
+            var o = new Promise((t, o) => {
+              n = e[r] = [t, o];
             });
-            t.push((o[2] = n));
+            t.push((n[2] = o));
             var i,
               a = d.p + d.u(r),
               s = document.createElement("script");
@@ -271,23 +283,23 @@ dsl = (() => {
               (s.src = a);
             var l = new Error();
             i = (t) => {
-              (i = () => {}), (s.onerror = s.onload = null), clearTimeout(f);
-              var n = (() => {
-                if (d.o(e, r) && (0 !== (o = e[r]) && (e[r] = void 0), o))
-                  return o[1];
+              (i = () => {}), (s.onerror = s.onload = null), clearTimeout(u);
+              var o = (() => {
+                if (d.o(e, r) && (0 !== (n = e[r]) && (e[r] = void 0), n))
+                  return n[1];
               })();
-              if (n) {
+              if (o) {
                 var a = t && ("load" === t.type ? "missing" : t.type),
-                  u = t && t.target && t.target.src;
+                  f = t && t.target && t.target.src;
                 (l.message =
-                  "Loading chunk " + r + " failed.\n(" + a + ": " + u + ")"),
+                  "Loading chunk " + r + " failed.\n(" + a + ": " + f + ")"),
                   (l.name = "ChunkLoadError"),
                   (l.type = a),
-                  (l.request = u),
-                  n(l);
+                  (l.request = f),
+                  o(l);
               }
             };
-            var f = setTimeout(() => {
+            var u = setTimeout(() => {
               i({ type: "timeout", target: s });
             }, 12e4);
             (s.onerror = s.onload = i), document.head.appendChild(s);
@@ -298,15 +310,15 @@ dsl = (() => {
         t = r.push.bind(r);
       r.push = function (r) {
         for (
-          var t, n, i = r[0], a = r[1], s = r[3], l = 0, f = [];
+          var t, o, i = r[0], a = r[1], s = r[3], l = 0, u = [];
           l < i.length;
           l++
         )
-          (n = i[l]), d.o(e, n) && e[n] && f.push(e[n][0]), (e[n] = 0);
+          (o = i[l]), d.o(e, o) && e[o] && u.push(e[o][0]), (e[o] = 0);
         for (t in a) d.o(a, t) && (d.m[t] = a[t]);
-        for (s && s(d), o && o(r); f.length; ) f.shift()();
+        for (s && s(d), n && n(r); u.length; ) u.shift()();
       };
-      var o = t;
+      var n = t;
     })(),
     d(79098)
   );
