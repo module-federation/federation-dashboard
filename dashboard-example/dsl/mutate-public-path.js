@@ -1,6 +1,6 @@
-const PLUGIN_NAME = "FederationDashboardPlugin";
+const PLUGIN_NAME = "MutateRuntimePlugin";
 
-class FederationDashboardPlugin {
+class MutateRuntimePlugin {
   /**
    *
    * @param {FederationDashboardPluginOptions} options
@@ -55,4 +55,4 @@ class FederationDashboardPlugin {
   }
 }
 
-module.exports = FederationDashboardPlugin;
+module.exports = MutateRuntimePlugin;
