@@ -2,7 +2,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
-const MutateRuntime = require("./mutate-public-path");
 module.exports = {
   entry: "./src/index",
   mode: "development",
@@ -11,6 +10,8 @@ module.exports = {
     port: 3002,
   },
   output: {
+    filename: "[name].[contenthash].js",
+    chunkFilename: "[name].[contenthash].js",
     publicPath: `http://localhost:3002/`,
   },
   module: {
@@ -72,6 +73,5 @@ module.exports = {
         remote: "http://localhost:3002/remoteEntry.js",
       },
     }),
-    new MutateRuntime(),
   ],
 };

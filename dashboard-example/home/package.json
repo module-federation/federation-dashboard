@@ -18,9 +18,9 @@
   },
   "scripts": {
     "start": "webpack-dev-server --open --mode development --liveReload",
-    "cut-version": "PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\\\",]//g' | tr -d '[[:space:]]'); mkdir -p release && cd dist; cp -a . ../release/$PACKAGE_VERSION && cp -a . ../release && cd ../; node ./report-version.js",
+    "cut-version": "PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\\\",]//g' | tr -d '[[:space:]]');mkdir dist/$PACKAGE_VERSION; cp -a dist/remoteEntry.js dist/$PACKAGE_VERSION/remoteEntry.js && node ./report-version.js",
     "build": "node ../../node_modules/webpack/bin/webpack.js --mode production && yarn cut-version",
-    "serve": "serve release -p 3001",
+    "serve": "serve dist -p 3001",
     "clean": "rm -rf dist"
   },
   "dependencies": {

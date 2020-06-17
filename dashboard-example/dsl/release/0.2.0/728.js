@@ -1,1 +1,0 @@
-(window.webpackJsonp_dashboard_dsl=window.webpackJsonp_dashboard_dsl||[]).push([[728],{31728:(e,n,s)=>{"use strict";s.r(n),s.d(n,{default:()=>r});var a=s(10456),d=s.n(a),l=s(28722);const r=({children:e,...n})=>d().createElement("div",null,"  ",d().createElement("h1",null,"Using DSL Version 0.2.0"),"  ",d().createElement(l.Carousel,n,e))}}]);

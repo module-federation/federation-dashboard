@@ -11,6 +11,8 @@ module.exports = {
     port: 3001,
   },
   output: {
+    filename: "[name].[contenthash].js",
+    chunkFilename: "[name].[contenthash].js",
     publicPath: `http://localhost:3001/`,
   },
   module: {
