@@ -7,6 +7,10 @@ import Link from "next/link";
 import ApplicationsTable from "../components/ApplicationsTable";
 import ModuleChordChart from "../components/ModuleChordChart";
 import ModuleNodeGraph from "../components/ModuleNodeGraph";
+const ModuleUMLDiagram =
+  typeof window === "undefined"
+    ? () => <div />
+    : require("../components/ModuleUMLDiagram.tsx").default;
 
 import Layout from "../components/Layout";
 
@@ -68,17 +72,21 @@ const Home = () => {
                 }}
                 aria-label="simple tabs example"
               >
+                <Tab label="UML" />
                 <Tab label="Node Graph" />
                 <Tab label="Dependency Graph" />
                 <Tab label="Dependency Table" />
               </Tabs>
               <div style={{ display: currentTab === 0 ? "block" : "none" }}>
-                <ModuleNodeGraph applications={data.applications} />
+                <ModuleUMLDiagram applications={data.applications} />
               </div>
               <div style={{ display: currentTab === 1 ? "block" : "none" }}>
-                <ModuleChordChart applications={data.applications} />
+                <ModuleNodeGraph applications={data.applications} />
               </div>
               <div style={{ display: currentTab === 2 ? "block" : "none" }}>
+                <ModuleChordChart applications={data.applications} />
+              </div>
+              <div style={{ display: currentTab === 3 ? "block" : "none" }}>
                 <ApplicationsTable applications={data.applications} />
               </div>
             </>
