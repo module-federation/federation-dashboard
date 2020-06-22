@@ -11,6 +11,9 @@ import createEngine, {
   PointModel,
   LinkWidget,
   DefaultLinkFactory,
+  DefaultNodeWidget,
+  DefaultPortLabel,
+  DefaultNodeFactory,
 } from "@projectstorm/react-diagrams";
 import * as React from "react";
 import { CanvasWidget } from "@projectstorm/react-canvas-core";
@@ -273,7 +276,7 @@ export default ({ applications }) => {
       },
     });
 
-    const port = new AdvancedPortModel(true, name, "Application");
+    const port = new AdvancedPortModel(true, name, "");
     ports[name] = port;
     node.addPort(port);
 
@@ -287,14 +290,16 @@ export default ({ applications }) => {
   });
 
   applications.forEach(({ name: fromApp, consumes }) => {
-    consumes.forEach(({ application: { name: appName }, name: moduleName }) => {
-      links.push(
-        ports[fromApp].link(
-          ports[`${appName}:${moduleName}`]
-          // engine.getLinkFactories().getFactory(PathFindingLinkFactory.NAME)
-        )
-      );
-    });
+    consumes
+      .filter(({ application }) => application)
+      .forEach(({ application: { name: appName }, name: moduleName }) => {
+        links.push(
+          ports[fromApp].link(
+            ports[`${appName}:${moduleName}`]
+            // engine.getLinkFactories().getFactory(PathFindingLinkFactory.NAME)
+          )
+        );
+      });
   });
 
   nodes.forEach((node, index) => {
