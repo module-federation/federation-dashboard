@@ -12,7 +12,7 @@
     "docker:push": "PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\\\",]//g' | tr -d '[[:space:]]');echo $PACKAGE_VERSION && docker tag scriptedalchemy/mf-dashboard:latest scriptedalchemy/mf-dashboard:$PACKAGE_VERSION && docker push scriptedalchemy/mf-dashboard:latest && docker push scriptedalchemy/mf-dashboard:$PACKAGE_VERSION",
     "dev-with-vm": "VERSION_MANAGER=http://localhost:3010 next dev -p 3000",
     "start-with-vm": "VERSION_MANAGER=http://localhost:3010 next start"
-    },
+  },
   "contributors": [
     {
       "name": "Jack Herrington",
@@ -22,6 +22,7 @@
   ],
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
+    "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@material-ui/core": "^4.9.13",
     "@material-ui/icons": "^4.9.1",
