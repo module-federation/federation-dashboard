@@ -1,11 +1,12 @@
 import { ApolloServer, gql } from "apollo-server-micro";
 
-import getApplications, {
-  versionManagementEnabled,
-  getVersionInfo,
-  publishVersion,
-  setRemoteVersion,
-} from "./db";
+import getApplications, { versionManagementEnabled, update } from "./db";
+
+const DEFAULT_VERSIONS = {
+  versions: [],
+  latest: "",
+  override: [],
+};
 
 const typeDefs = gql`
   type Query {
@@ -16,6 +17,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    addVersion(application: String!, version: String!): Versions!
     publishVersion(application: String!, version: String!): Versions!
     setRemoteVersion(
       application: String!
@@ -125,11 +127,46 @@ const resolvers = {
     },
   },
   Mutation: {
+    addVersion: async (_, { application, version }) => {
+      const applications = await getApplications();
+      const app = applications.find(({ id }) => id === application);
+      app.versions = app.versions || DEFAULT_VERSIONS;
+      app.versions.versions = [
+        ...app.versions.versions.filter((v) => v !== version),
+        version,
+      ];
+      app.versions.latest = app.versions.latest || version;
+      update(app);
+      return app.versions;
+    },
     publishVersion: async (_, { application, version }) => {
-      return publishVersion(application, version);
+      const applications = await getApplications();
+      const app = applications.find(({ id }) => id === application);
+      app.versions = app.versions || DEFAULT_VERSIONS;
+      app.versions.latest = version;
+      update(app);
+      return app.versions;
     },
     setRemoteVersion: async (_, { application, remote, version }) => {
-      return setRemoteVersion(application, remote, version);
+      const applications = await getApplications();
+      const app = applications.find(({ id }) => id === application);
+      app.versions = app.versions || DEFAULT_VERSIONS;
+      const overridesWithoutRemote = app.versions.override.filter(
+        ({ name }) => name !== remote
+      );
+      if (version) {
+        app.versions.override = [
+          ...overridesWithoutRemote,
+          {
+            name: remote,
+            version,
+          },
+        ];
+      } else {
+        app.versions.override = overridesWithoutRemote;
+      }
+      update(app);
+      return app.versions;
     },
   },
   Module: {
@@ -172,7 +209,11 @@ const resolvers = {
     },
   },
   Application: {
-    versions: ({ id }) => getVersionInfo(id),
+    versions: async ({ id }) => {
+      const applications = await getApplications();
+      const app = applications.find(({ id: appId }) => appId === id);
+      return app.versions || DEFAULT_VERSIONS;
+    },
   },
 };
 

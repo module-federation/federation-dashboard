@@ -1,14 +1,16 @@
-console.log();
 const http = require("http");
 
-const data = JSON.stringify({
-  version: require("./package.json").version,
-});
+const pkg = require("./package.json");
+const data = `mutation {
+  addVersion(application: "${pkg.name}", version: "${pkg.version}") {
+    versions
+  }
+}`;
 
 const options = {
   hostname: "localhost",
   port: 3010,
-  path: "/write/home",
+  path: "/api/graph",
   method: "POST",
   headers: {
     "Content-Type": "application/json",

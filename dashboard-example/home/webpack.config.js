@@ -70,6 +70,7 @@ module.exports = {
     new DashboardPlugin({
       filename: "dashboard.json",
       dashboardURL: "http://localhost:3000/api/update",
+      versionChangeWebhook: "http://cnn.com/",
       metadata: {
         source: {
           url:

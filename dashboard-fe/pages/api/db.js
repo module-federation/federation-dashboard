@@ -14,68 +14,15 @@ export const update = (info) => {
   db.find({ id: info.id }, (_, docs) => {
     if (docs.length > 0) {
       console.log(`Updating ${info.id}`);
+      if (!info.versions) {
+        info.versions = docs[0].versions;
+      }
       db.update({ id: info.id }, { $set: info });
     } else {
       console.log(`Adding ${info.id}`);
       db.insert(info);
     }
   });
-};
-
-export const getVersionInfo = (app) => {
-  if (versionManager) {
-    return fetch(`${versionManager}/${app}`).then((resp) => resp.json());
-  } else {
-    return Promise.resolve({
-      versions: [],
-      latest: "",
-    });
-  }
-};
-
-export const setRemoteVersion = (app, remote, version) => {
-  if (versionManager) {
-    if (version) {
-      console.log(
-        `Telling version manager to set the remote '${remote}' on '${app}' to '${version}'`
-      );
-    } else {
-      console.log(
-        `Telling version manager to set the remote '${remote}' on '${app}' to the default`
-      );
-    }
-    const body = version ? { version } : {};
-    return fetch(`${versionManager}/${app}/${remote}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    }).then((resp) => resp.json());
-  } else {
-    return Promise.resolve({
-      versions: [],
-      latest: "",
-    });
-  }
-};
-
-export const publishVersion = (app, version) => {
-  if (versionManager) {
-    console.log(`Telling version manager to set '${app}' to '${version}'`);
-    return fetch(`${versionManager}/${app}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ version }),
-    }).then((resp) => resp.json());
-  } else {
-    return Promise.resolve({
-      versions: [],
-      latest: "",
-    });
-  }
 };
 
 export const versionManagementEnabled = () => {
