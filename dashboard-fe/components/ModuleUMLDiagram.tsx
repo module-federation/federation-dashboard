@@ -1,3 +1,4 @@
+import React from "react";
 import createEngine, {
   DiagramModel,
   DefaultNodeModel,
@@ -8,9 +9,7 @@ import createEngine, {
 } from "@projectstorm/react-diagrams";
 import { CanvasWidget } from "@projectstorm/react-canvas-core";
 import styled from "@emotion/styled";
-import { useRecoilState } from "recoil";
-
-import { selectedApplicationAtom, detailDrawerOpenAtom } from "../src/store";
+import store from "../src/store";
 
 export interface CanvasContainerProps {}
 
@@ -87,113 +86,101 @@ const LINK_COLOR_SELECTED = "gray";
 const LINK_COLOR_UNSELECTED = "rgba(0,192,255,0)";
 const LINK_SIZE_DEFAULT = 3;
 
-const InteractivityHandler = ({ nodesByName, links }) => {
-  const [detailDrawerOpen, setDetailDrawerOpen] = useRecoilState(
-    detailDrawerOpenAtom
-  );
-  const [selectedApplication, setSelectedApplication] = useRecoilState(
-    selectedApplicationAtom
-  );
+class ModuleUMLDiagram extends React.PureComponent {
+  constructor(props) {
+    super(props);
 
-  Object.entries(nodesByName).forEach(([name, node]) => {
-    node.registerListener({
-      eventDidFire: (evt) => {
-        if (evt.function === "selectionChanged") {
-          const selected = node.getOptions().selected;
-          if (selected) {
-            setDetailDrawerOpen(true);
-            setSelectedApplication(name);
+    this.model = new DiagramModel();
 
-            Object.values(nodesByName).forEach((n) => {
-              if (node === n) {
-                n.getOptions().color =
-                  node === n ? NODE_COLOR_SELECTED : NODE_COLOR_UNSELECTED;
-              }
-            });
+    const nodes: NodeModel[] = [];
+    const links = [];
+    const ports = {};
 
-            links.forEach((l) => {
-              const sourceName = l.sourcePort.getOptions().id;
-              const targetName = l.targetPort.getOptions().id;
-              l.getOptions().color =
-                sourceName === name || targetName.startsWith(name)
-                  ? LINK_COLOR_SELECTED
-                  : LINK_COLOR_UNSELECTED;
-              l.getOptions().width =
-                sourceName === name || targetName.startsWith(name) ? 3 : 0;
-              l.getOptions().showArrow = true;
-            });
-          } else {
-            setDetailDrawerOpen(false);
-            setSelectedApplication(false);
+    props.applications.forEach(({ name, modules }) => {
+      const node = new DefaultNodeModel(name, NODE_COLOR_DEFAULT);
 
-            Object.values(nodesByName).forEach((n) => {
-              n.getOptions().color = NODE_COLOR_DEFAULT;
-            });
-            links.forEach((l) => {
-              l.getOptions().showArrow = false;
-              l.getOptions().color = LINK_COLOR_DEFAULT;
-              l.getOptions().width = LINK_SIZE_DEFAULT;
-            });
+      node.registerListener({
+        eventDidFire: (evt) => {
+          if (evt.function === "selectionChanged") {
+            const selected = node.getOptions().selected;
+            if (selected) {
+              store.selectedApplication = name;
+              store.detailDrawerOpen = true;
+
+              nodes.forEach((n) => {
+                if (node === n) {
+                  n.getOptions().color =
+                    node === n ? NODE_COLOR_SELECTED : NODE_COLOR_UNSELECTED;
+                }
+              });
+
+              links.forEach((l) => {
+                const sourceName = l.sourcePort.getOptions().id;
+                const targetName = l.targetPort.getOptions().id;
+                l.getOptions().color =
+                  sourceName === name || targetName.startsWith(name)
+                    ? LINK_COLOR_SELECTED
+                    : LINK_COLOR_UNSELECTED;
+                l.getOptions().width =
+                  sourceName === name || targetName.startsWith(name) ? 3 : 0;
+              });
+            } else {
+              store.selectedApplication = null;
+              store.detailDrawerOpen = false;
+
+              nodes.forEach((n) => {
+                n.getOptions().color = NODE_COLOR_DEFAULT;
+              });
+              links.forEach((l) => {
+                l.getOptions().color = LINK_COLOR_DEFAULT;
+                l.getOptions().width = LINK_SIZE_DEFAULT;
+              });
+            }
           }
-        }
-      },
-    });
-  });
-
-  return null;
-};
-
-export default ({ applications }) => {
-  const engine = createEngine();
-  const model = new DiagramModel();
-  const nodes: NodeModel[] = [];
-  const links = [];
-  const ports = {};
-  const nodesByName = {};
-
-  applications.forEach(({ name, modules }) => {
-    const node = new DefaultNodeModel(name, NODE_COLOR_DEFAULT);
-    nodesByName[name] = node;
-    ports[name] = node.addOutPort(name);
-    ports[name].getOptions().id = name;
-
-    modules.forEach(({ name: moduleName }) => {
-      const id = `${name}:${moduleName}`;
-      ports[id] = node.addInPort(moduleName);
-      ports[id].getOptions().id = id;
-    });
-    nodes.push(node);
-  });
-
-  applications.forEach(({ name: fromApp, consumes }) => {
-    consumes
-      .filter(({ application }) => application)
-      .forEach(({ application: { name: appName }, name: moduleName }) => {
-        links.push(
-          ports[fromApp].link(
-            ports[`${appName}:${moduleName}`]
-            // engine.getLinkFactories().getFactory(PathFindingLinkFactory.NAME)
-          )
-        );
+        },
       });
-  });
 
-  nodes.forEach((node, index) => {
-    node.setPosition(index * 200, index * 200);
-    model.addNode(node);
-  });
+      ports[name] = node.addOutPort(name);
+      ports[name].getOptions().id = name;
 
-  links.forEach((link) => {
-    model.addLink(link);
-  });
+      modules.forEach(({ name: moduleName }) => {
+        const id = `${name}:${moduleName}`;
+        ports[id] = node.addInPort(moduleName);
+        ports[id].getOptions().id = id;
+      });
+      nodes.push(node);
+    });
 
-  model.setLocked(true);
-  engine.setModel(model);
+    props.applications.forEach(({ name: fromApp, consumes }) => {
+      consumes
+        .filter(({ application }) => application)
+        .forEach(({ application: { name: appName }, name: moduleName }) => {
+          links.push(
+            ports[fromApp].link(
+              ports[`${appName}:${moduleName}`]
+              // engine.getLinkFactories().getFactory(PathFindingLinkFactory.NAME)
+            )
+          );
+        });
+    });
 
-  return (
-    <div>
-      <InteractivityHandler nodesByName={nodesByName} links={links} />
-      <LayoutWidget model={model} engine={engine} />
-    </div>
-  );
-};
+    nodes.forEach((node, index) => {
+      node.setPosition(index * 200, index * 200);
+      this.model.addNode(node);
+    });
+
+    links.forEach((link) => {
+      this.model.addLink(link);
+    });
+
+    this.model.setLocked(true);
+    this.engine = createEngine();
+    this.engine.setModel(this.model);
+  }
+
+  render() {
+    return <LayoutWidget model={this.model} engine={this.engine} />;
+  }
+}
+
+export default ModuleUMLDiagram;

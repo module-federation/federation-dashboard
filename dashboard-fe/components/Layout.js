@@ -4,7 +4,6 @@ import {
   CssBaseline,
   AppBar,
   Toolbar,
-  Paper,
   List,
   ListItem,
   Divider,
@@ -26,15 +25,12 @@ import ShareIcon from "@material-ui/icons/Share";
 import WidgetsIcon from "@material-ui/icons/Widgets";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useRecoilState, useRecoilValue } from "recoil";
 
-import ApplicationSidebar from "../components/ApplicationSidebar";
-import { selectedApplicationAtom, detailDrawerOpenAtom } from "../src/store";
+import ApplicationDrawer from "../components/ApplicationDrawer";
 
 const GET_SIDEBAR_DATA = gql`
   {
@@ -117,7 +113,6 @@ const SideBar = ({ data }) => {
 };
 
 const leftDrawerWidth = 240;
-const rightDrawerWidth = 480;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -125,12 +120,6 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
-  },
-  rightToolbarIcon: {
-    alignItems: "center",
-    justifyContent: "flex-start",
-    padding: "0 8px",
-    ...theme.mixins.toolbar,
   },
   toolbarIcon: {
     display: "flex",
@@ -221,10 +210,6 @@ export default function Dashboard({ children }) {
   const { data } = useQuery(GET_SIDEBAR_DATA);
   const classes = useStyles();
   const router = useRouter();
-  const [detailDrawerOpen, setDetailDrawerOpen] = useRecoilState(
-    detailDrawerOpenAtom
-  );
-  const selectedApplication = useRecoilValue(selectedApplicationAtom);
 
   const [leftOpen, setLeftOpen] = React.useState(true);
   const handleDrawerLeftOpen = () => {
@@ -234,20 +219,16 @@ export default function Dashboard({ children }) {
     setLeftOpen(false);
   };
 
-  const handleDrawerRightClose = () => {
-    setDetailDrawerOpen(false);
-  };
-
   const options = [];
   if (data) {
-    data.applications.forEach(({ id, name }) => {
+    data.applications.forEach(({ name }) => {
       options.push({
         type: "Application",
         url: `/applications/${name}`,
         name,
       });
     });
-    data.modules.forEach(({ id, application, name }) => {
+    data.modules.forEach(({ application, name }) => {
       options.push({
         type: "Modules",
         url: `/applications/${application.name}/${name}`,
@@ -326,34 +307,7 @@ export default function Dashboard({ children }) {
           {children}
         </Container>
       </main>
-      <Drawer
-        anchor="right"
-        open={detailDrawerOpen}
-        onClose={handleDrawerRightClose}
-      >
-        <div
-          style={{
-            display: "flex",
-          }}
-        >
-          <div className={classes.toolbarIcon}>
-            <IconButton onClick={handleDrawerRightClose}>
-              <ChevronRightIcon />
-            </IconButton>
-          </div>
-          {selectedApplication && <h1>{selectedApplication}</h1>}
-        </div>
-        <Divider />
-        <div
-          style={{
-            width: rightDrawerWidth,
-          }}
-        >
-          {selectedApplication && (
-            <ApplicationSidebar name={selectedApplication} />
-          )}
-        </div>
-      </Drawer>
+      <ApplicationDrawer />
     </div>
   );
 }
