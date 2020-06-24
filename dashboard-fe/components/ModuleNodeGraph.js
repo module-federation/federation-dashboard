@@ -1,9 +1,7 @@
 import { Graph } from "react-d3-graph";
-import { useRouter } from "next/router";
+import store from "../src/store";
 
 const ModuleNodeGraph = ({ applications }) => {
-  const router = useRouter();
-
   const nodes = [];
   const links = [];
   applications.forEach(({ id: appId, name: appName, modules }) => {
@@ -76,7 +74,8 @@ const ModuleNodeGraph = ({ applications }) => {
     panAndZoom: true,
   };
   const onClickNode = (nodeId) => {
-    router.push(`/applications/${nodeId.replace(":", "/")}`);
+    store.selectedApplication = nodeId.replace(":", "/");
+    store.detailDrawerOpen = true;
   };
   return (
     <div

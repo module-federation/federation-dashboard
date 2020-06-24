@@ -1,11 +1,9 @@
-import { atom } from "recoil";
+import { observable } from "mobx";
 
-export const selectedApplicationAtom = atom({
-  key: "selectedApplication",
-  default: null,
-});
+class Store {
+  @observable selectedApplication = null;
+  @observable detailDrawerOpen = false;
+}
 
-export const detailDrawerOpenAtom = atom({
-  key: "detailDrawerOpen",
-  default: false,
-});
+const store = new Store();
+export default store;

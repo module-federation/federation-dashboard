@@ -3,7 +3,6 @@ import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
 import Head from "next/head";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { RecoilRoot } from "recoil";
 
 const client = new ApolloClient({
   uri: "http://localhost:3000/api/graphql",
@@ -19,21 +18,19 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   return (
-    <RecoilRoot>
-      <React.Fragment>
-        <Head>
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width"
-          />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <CssBaseline />
-        <ApolloProvider client={client}>
-          <Component {...pageProps} />
-        </ApolloProvider>
-      </React.Fragment>
-    </RecoilRoot>
+    <React.Fragment>
+      <Head>
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <CssBaseline />
+      <ApolloProvider client={client}>
+        <Component {...pageProps} />
+      </ApolloProvider>
+    </React.Fragment>
   );
 }
 
