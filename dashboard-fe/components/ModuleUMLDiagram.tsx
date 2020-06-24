@@ -1,155 +1,16 @@
 import createEngine, {
   DiagramModel,
   DefaultNodeModel,
-  DefaultPortModel,
   NodeModel,
   DagreEngine,
   DiagramEngine,
   PathFindingLinkFactory,
-  DefaultLinkModel,
-  DefaultLinkWidget,
-  PointModel,
-  LinkWidget,
-  DefaultLinkFactory,
-  DefaultNodeWidget,
-  DefaultPortLabel,
-  DefaultNodeFactory,
 } from "@projectstorm/react-diagrams";
-import * as React from "react";
 import { CanvasWidget } from "@projectstorm/react-canvas-core";
 import styled from "@emotion/styled";
+import { useRecoilState } from "recoil";
 
-export class AdvancedLinkModel extends DefaultLinkModel {
-  constructor() {
-    super({
-      type: "advanced",
-      width: 4,
-    });
-    this.showArrow = false;
-  }
-}
-
-export class AdvancedPortModel extends DefaultPortModel {
-  createLinkModel(): AdvancedLinkModel | null {
-    return new AdvancedLinkModel();
-  }
-}
-
-const CustomLinkArrowWidget = (props) => {
-  const { point, previousPoint } = props;
-
-  const angle =
-    90 +
-    (Math.atan2(
-      point.getPosition().y - previousPoint.getPosition().y,
-      point.getPosition().x - previousPoint.getPosition().x
-    ) *
-      180) /
-      Math.PI;
-
-  //translate(50, -10),
-  return (
-    <g
-      className="arrow"
-      transform={
-        "translate(" +
-        point.getPosition().x +
-        ", " +
-        point.getPosition().y +
-        ")"
-      }
-    >
-      <g style={{ transform: "rotate(" + angle + "deg)" }}>
-        <g transform={"translate(0, -3)"}>
-          <polygon
-            points="0,10 8,30 -8,30"
-            fill={props.color}
-            onMouseLeave={() => {
-              this.setState({ selected: false });
-            }}
-            onMouseEnter={() => {
-              this.setState({ selected: true });
-            }}
-            data-id={point.getID()}
-            data-linkid={point.getLink().getID()}
-          ></polygon>
-        </g>
-      </g>
-    </g>
-  );
-};
-
-export class AdvancedLinkWidget extends DefaultLinkWidget {
-  generateArrow(point: PointModel, previousPoint: PointModel): JSX.Element {
-    return this.props.link.getOptions().showArrow ? (
-      <CustomLinkArrowWidget
-        key={point.getID()}
-        point={point as any}
-        previousPoint={previousPoint as any}
-        colorSelected={this.props.link.getOptions().selectedColor}
-        color={this.props.link.getOptions().color}
-      />
-    ) : null;
-  }
-
-  render() {
-    //ensure id is present for all points on the path
-    var points = this.props.link.getPoints();
-    var paths = [];
-    this.refPaths = [];
-
-    //draw the multiple anchors and complex line instead
-    for (let j = 0; j < points.length - 1; j++) {
-      paths.push(
-        this.generateLink(
-          LinkWidget.generateLinePath(points[j], points[j + 1]),
-          {
-            "data-linkid": this.props.link.getID(),
-            "data-point": j,
-            onMouseDown: (event: MouseEvent) => {
-              this.addPointToLink(event, j + 1);
-            },
-          },
-          j
-        )
-      );
-    }
-
-    for (let i = 1; i < points.length - 1; i++) {
-      paths.push(this.generatePoint(points[i]));
-    }
-
-    if (this.props.link.getTargetPort() !== null) {
-      paths.push(
-        this.generateArrow(points[points.length - 1], points[points.length - 2])
-      );
-    } else {
-      paths.push(this.generatePoint(points[points.length - 1]));
-    }
-
-    return (
-      <g data-default-link-test={this.props.link.getOptions().testName}>
-        {paths}
-      </g>
-    );
-  }
-}
-
-export class AdvancedLinkFactory extends DefaultLinkFactory {
-  constructor() {
-    super("advanced");
-  }
-
-  generateModel(): AdvancedLinkModel {
-    return new AdvancedLinkModel();
-  }
-
-  generateReactWidget(event): JSX.Element {
-    return (
-      <AdvancedLinkWidget link={event.model} diagramEngine={this.engine} />
-    );
-  }
-}
+import { selectedApplicationAtom, detailDrawerOpenAtom } from "../src/store";
 
 export interface CanvasContainerProps {}
 
@@ -199,7 +60,6 @@ class LayoutWidget extends React.Component<
   componentDidMount(): void {
     setTimeout(() => {
       this.autoDistribute();
-      this.props.engine.zoomToFit();
     }, 0);
   }
 
@@ -227,33 +87,33 @@ const LINK_COLOR_SELECTED = "gray";
 const LINK_COLOR_UNSELECTED = "rgba(0,192,255,0)";
 const LINK_SIZE_DEFAULT = 3;
 
-export default ({ applications }) => {
-  let engine = createEngine();
-  engine.getLinkFactories().registerFactory(new AdvancedLinkFactory());
+const InteractivityHandler = ({ nodesByName, links }) => {
+  const [detailDrawerOpen, setDetailDrawerOpen] = useRecoilState(
+    detailDrawerOpenAtom
+  );
+  const [selectedApplication, setSelectedApplication] = useRecoilState(
+    selectedApplicationAtom
+  );
 
-  let model = new DiagramModel();
-
-  let nodes: NodeModel[] = [];
-  let links = [];
-
-  const ports = {};
-
-  applications.forEach(({ name, modules }) => {
-    const node = new DefaultNodeModel(name, NODE_COLOR_DEFAULT);
+  Object.entries(nodesByName).forEach(([name, node]) => {
     node.registerListener({
       eventDidFire: (evt) => {
         if (evt.function === "selectionChanged") {
-          let selected = node.getOptions().selected;
+          const selected = node.getOptions().selected;
           if (selected) {
-            nodes.forEach((n) => {
+            setDetailDrawerOpen(true);
+            setSelectedApplication(name);
+
+            Object.values(nodesByName).forEach((n) => {
               if (node === n) {
                 n.getOptions().color =
                   node === n ? NODE_COLOR_SELECTED : NODE_COLOR_UNSELECTED;
               }
             });
+
             links.forEach((l) => {
-              const sourceName = l.sourcePort.getOptions().name;
-              const targetName = l.targetPort.getOptions().name;
+              const sourceName = l.sourcePort.getOptions().id;
+              const targetName = l.targetPort.getOptions().id;
               l.getOptions().color =
                 sourceName === name || targetName.startsWith(name)
                   ? LINK_COLOR_SELECTED
@@ -263,7 +123,10 @@ export default ({ applications }) => {
               l.getOptions().showArrow = true;
             });
           } else {
-            nodes.forEach((n) => {
+            setDetailDrawerOpen(false);
+            setSelectedApplication(false);
+
+            Object.values(nodesByName).forEach((n) => {
               n.getOptions().color = NODE_COLOR_DEFAULT;
             });
             links.forEach((l) => {
@@ -275,16 +138,29 @@ export default ({ applications }) => {
         }
       },
     });
+  });
 
-    const port = new AdvancedPortModel(true, name, "");
-    ports[name] = port;
-    node.addPort(port);
+  return null;
+};
+
+export default ({ applications }) => {
+  const engine = createEngine();
+  const model = new DiagramModel();
+  const nodes: NodeModel[] = [];
+  const links = [];
+  const ports = {};
+  const nodesByName = {};
+
+  applications.forEach(({ name, modules }) => {
+    const node = new DefaultNodeModel(name, NODE_COLOR_DEFAULT);
+    nodesByName[name] = node;
+    ports[name] = node.addOutPort(name);
+    ports[name].getOptions().id = name;
 
     modules.forEach(({ name: moduleName }) => {
       const id = `${name}:${moduleName}`;
-      const port = new AdvancedPortModel(true, id, moduleName);
-      ports[id] = port;
-      node.addPort(port);
+      ports[id] = node.addInPort(moduleName);
+      ports[id].getOptions().id = id;
     });
     nodes.push(node);
   });
@@ -311,7 +187,13 @@ export default ({ applications }) => {
     model.addLink(link);
   });
 
+  model.setLocked(true);
   engine.setModel(model);
 
-  return <LayoutWidget model={model} engine={engine} />;
+  return (
+    <div>
+      <InteractivityHandler nodesByName={nodesByName} links={links} />
+      <LayoutWidget model={model} engine={engine} />
+    </div>
+  );
 };

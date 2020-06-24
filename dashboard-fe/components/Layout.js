@@ -26,10 +26,15 @@ import ShareIcon from "@material-ui/icons/Share";
 import WidgetsIcon from "@material-ui/icons/Widgets";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useRecoilState, useRecoilValue } from "recoil";
+
+import ApplicationSidebar from "../components/ApplicationSidebar";
+import { selectedApplicationAtom, detailDrawerOpenAtom } from "../src/store";
 
 const GET_SIDEBAR_DATA = gql`
   {
@@ -111,7 +116,8 @@ const SideBar = ({ data }) => {
   );
 };
 
-const drawerWidth = 240;
+const leftDrawerWidth = 240;
+const rightDrawerWidth = 480;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -119,6 +125,12 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
+  },
+  rightToolbarIcon: {
+    alignItems: "center",
+    justifyContent: "flex-start",
+    padding: "0 8px",
+    ...theme.mixins.toolbar,
   },
   toolbarIcon: {
     display: "flex",
@@ -135,8 +147,8 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: leftDrawerWidth,
+    width: `calc(100% - ${leftDrawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -151,16 +163,16 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  drawerPaper: {
+  leftDrawerPaper: {
     position: "relative",
     whiteSpace: "nowrap",
-    width: drawerWidth,
+    width: leftDrawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  drawerPaperClose: {
+  leftDrawerPaperClose: {
     overflowX: "hidden",
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
@@ -209,15 +221,22 @@ export default function Dashboard({ children }) {
   const { data } = useQuery(GET_SIDEBAR_DATA);
   const classes = useStyles();
   const router = useRouter();
+  const [detailDrawerOpen, setDetailDrawerOpen] = useRecoilState(
+    detailDrawerOpenAtom
+  );
+  const selectedApplication = useRecoilValue(selectedApplicationAtom);
 
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const [leftOpen, setLeftOpen] = React.useState(true);
+  const handleDrawerLeftOpen = () => {
+    setLeftOpen(true);
   };
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleDrawerLeftClose = () => {
+    setLeftOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  const handleDrawerRightClose = () => {
+    setDetailDrawerOpen(false);
+  };
 
   const options = [];
   if (data) {
@@ -247,17 +266,17 @@ export default function Dashboard({ children }) {
       <CssBaseline />
       <AppBar
         position="absolute"
-        className={clsx(classes.appBar, open && classes.appBarShift)}
+        className={clsx(classes.appBar, leftOpen && classes.appBarShift)}
       >
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
             color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            aria-label="Open left drawer"
+            onClick={handleDrawerLeftOpen}
             className={clsx(
               classes.menuButton,
-              open && classes.menuButtonHidden
+              leftOpen && classes.menuButtonHidden
             )}
           >
             <MenuIcon />
@@ -286,12 +305,15 @@ export default function Dashboard({ children }) {
       <Drawer
         variant="permanent"
         classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          paper: clsx(
+            classes.leftDrawerPaper,
+            !leftOpen && classes.leftDrawerPaperClose
+          ),
         }}
-        open={open}
+        open={leftOpen}
       >
         <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerLeftClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
@@ -304,6 +326,34 @@ export default function Dashboard({ children }) {
           {children}
         </Container>
       </main>
+      <Drawer
+        anchor="right"
+        open={detailDrawerOpen}
+        onClose={handleDrawerRightClose}
+      >
+        <div
+          style={{
+            display: "flex",
+          }}
+        >
+          <div className={classes.toolbarIcon}>
+            <IconButton onClick={handleDrawerRightClose}>
+              <ChevronRightIcon />
+            </IconButton>
+          </div>
+          {selectedApplication && <h1>{selectedApplication}</h1>}
+        </div>
+        <Divider />
+        <div
+          style={{
+            width: rightDrawerWidth,
+          }}
+        >
+          {selectedApplication && (
+            <ApplicationSidebar name={selectedApplication} />
+          )}
+        </div>
+      </Drawer>
     </div>
   );
 }
