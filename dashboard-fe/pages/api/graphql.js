@@ -5,6 +5,7 @@ import getApplications from "./db";
 const typeDefs = gql`
   type Query {
     applications(name: String): [Application!]!
+    consumingApplications(name: String): [Application!]!
     modules(application: String, name: String): [Module!]!
     consumes(application: String, name: String): [Consume!]!
   }
@@ -63,6 +64,14 @@ const resolvers = {
         ? ({ name }) => name.includes(nameFilter)
         : () => true;
       return applications.filter(applicationFilter);
+    },
+    consumingApplications: async (_, { name }) => {
+      const applications = await getApplications();
+      return applications.filter(
+        ({ consumes }) =>
+          consumes.filter(({ applicationID }) => applicationID === name)
+            .length > 0
+      );
     },
     modules: async (_, { application, name: nameFilter }) => {
       const applications = await getApplications();

@@ -34,22 +34,19 @@ const useStyles = makeStyles((theme) => ({
 
 const GET_APPS = gql`
   query($name: String!) {
+    consumingApplications(name: $name) {
+      name
+      consumes {
+        application {
+          id
+          name
+        }
+        name
+      }
+    }
     applications(name: $name) {
       id
       name
-      modules {
-        id
-        file
-        name
-        requires {
-          name
-        }
-      }
-      overrides {
-        id
-        version
-        name
-      }
       consumes {
         application {
           id
@@ -60,18 +57,6 @@ const GET_APPS = gql`
           file
           url
         }
-      }
-      dependencies {
-        name
-        version
-      }
-      devDependencies {
-        name
-        version
-      }
-      optionalDependencies {
-        name
-        version
       }
     }
   }
@@ -114,36 +99,53 @@ const ConsumesTable = ({ consumes }) => {
   );
 };
 
-const ModulesTable = ({ application, modules }) => {
+const ConsumersTable = ({ consumers, name }) => {
   const classes = useStyles();
+  const modules = {};
+  consumers.forEach((application) => {
+    const consumingApp = application.name;
+    (application.consumes || []).forEach((consume) => {
+      if (consume.application && consume.application.name === name) {
+        const moduleName = consume.name;
+        modules[moduleName] = modules[moduleName] || new Set();
+        modules[moduleName].add(consumingApp);
+      }
+    });
+  });
   return (
     <>
       <Typography variant="h6" className={classes.panelTitle}>
-        Modules
+        Consumers
       </Typography>
       <Table>
         <TableHead>
           <TableRow>
             <TableCell>
-              <Typography>Name</Typography>
+              <Typography>Module</Typography>
             </TableCell>
             <TableCell>
-              <Typography>File</Typography>
+              <Typography>Consumers</Typography>
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {modules.map(({ name, file, requires }) => (
-            <TableRow key={[application.id, name].join()}>
+          {Object.entries(modules).map(([moduleName, apps]) => (
+            <TableRow key={moduleName}>
               <TableCell>
                 <Typography>
-                  <Link href={`/applications/${application.name}/${name}`}>
-                    {name}
+                  <Link href={`/applications/${name}/${moduleName}`}>
+                    {moduleName}
                   </Link>
                 </Typography>
               </TableCell>
               <TableCell>
-                <Typography>{file}</Typography>
+                <Typography>
+                  {Array.from(apps).map((consumer) => (
+                    <>
+                      <Link href={`/applications/${consumer}`}>{consumer}</Link>{" "}
+                    </>
+                  ))}
+                </Typography>
               </TableCell>
             </TableRow>
           ))}
@@ -170,7 +172,7 @@ const ApplicationSidebar = ({ name }) => {
         padding: "1em",
       }}
     >
-      <ModulesTable application={application} modules={application.modules} />
+      <ConsumersTable consumers={data.consumingApplications} name={name} />
       {application.consumes.length > 0 && (
         <ConsumesTable consumes={application.consumes} />
       )}
