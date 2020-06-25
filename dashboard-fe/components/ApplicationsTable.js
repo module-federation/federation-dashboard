@@ -7,16 +7,12 @@ import {
   Typography,
   makeStyles,
 } from "@material-ui/core";
-import UpArrow from "@material-ui/icons/PublishTwoTone";
-import DownArrow from "@material-ui/icons/CloudDownloadOutlined";
+import ArrowIcon from "@material-ui/icons/Forward";
 import Link from "next/link";
 
 const useStyles = makeStyles((theme) => ({
   headerRow: {
-    background: theme.palette.primary.light,
-  },
-  headerCell: {
-    color: theme.palette.primary.contrastText,
+    background: theme.palette.grey[200],
   },
 }));
 
@@ -63,7 +59,7 @@ const ApplicationsTable = ({ applications }) => {
   };
 
   return (
-    <Table aria-label="simple table">
+    <Table aria-label="simple table" style={{ marginTop: "1em" }}>
       <TableHead>
         <TableRow className={classes.headerRow}>
           <TableCell />
@@ -103,17 +99,33 @@ const ApplicationsTable = ({ applications }) => {
                   align="center"
                   key={`${name}:app:${appId}:mod:${absoluteId}`}
                 >
-                  {modulesById[absoluteId].applicationId === appId && (
-                    <UpArrow />
-                  )}
-                  {modulesById[absoluteId].applications[appId] && (
-                    <>
-                      <Typography>
-                        <DownArrow />{" "}
-                        {modulesById[absoluteId].applications[appId].count}
-                      </Typography>
-                    </>
-                  )}
+                  <div
+                    style={{
+                      flex: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {modulesById[absoluteId].applicationId === appId && (
+                      <ArrowIcon
+                        fontSize="medium"
+                        style={{ color: "green", transform: "rotate(-90deg)" }}
+                      />
+                    )}
+                    {modulesById[absoluteId].applications[appId] && (
+                      <>
+                        <ArrowIcon
+                          fontSize="medium"
+                          style={{ color: "blue", transform: "rotate(90deg)" }}
+                        />
+                        <Typography>
+                          {" "}
+                          {modulesById[absoluteId].applications[appId].count}
+                        </Typography>
+                      </>
+                    )}
+                  </div>
                 </TableCell>
               ))}
               <TableCell align="left" width="5%">
@@ -140,7 +152,11 @@ const ApplicationsTable = ({ applications }) => {
             </TableCell>
             {applications.map(({ id, name }) => (
               <TableCell align="center" key={`override:${name}:${id}`}>
-                {apps.includes(id) ? <UpArrow /> : ""}
+                {apps.includes(id) ? (
+                  <ArrowIcon style={{ transform: "rotate(-90deg)" }} />
+                ) : (
+                  ""
+                )}
               </TableCell>
             ))}
             <TableCell />
