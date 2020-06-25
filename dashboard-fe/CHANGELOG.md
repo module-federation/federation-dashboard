@@ -1,5 +1,15 @@
 # @module-federation/dashboard
 
+## 1.2.0
+
+### Minor Changes
+
+- 3c72765: Adding UML diagrams, fixing build issues
+
+### Patch Changes
+
+- 7e99d84: Fixing lockfile causing docker run failures
+
 ## 1.1.0
 
 ### Minor Changes
