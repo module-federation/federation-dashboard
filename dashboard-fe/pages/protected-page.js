@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import Layout from '../components/Layout';
-import { useFetchUser } from '../lib/user';
-import withAuth from '../components/with-auth';
+import Layout from "../components/Layout";
+import { useFetchUser } from "../lib/user";
+import withAuth from "../components/with-auth";
 
 export function ProtectedPage() {
   const { user, loading } = useFetchUser();

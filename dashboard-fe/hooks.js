@@ -20,4 +20,4 @@ const useLazyAuth = () => {
     return authResult;
   }, [render, authResult]);
 };
-export { useLazyAuth }
+export { useLazyAuth };

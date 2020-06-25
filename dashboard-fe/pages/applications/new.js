@@ -14,8 +14,8 @@ import Layout from "../../components/Layout";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { Code, CodeWrapper, GeneratedCode } from "../../components/Code";
-import React from 'react';
-import { useFetchUser } from '../../lib/user';
+import React from "react";
+import { useFetchUser } from "../../lib/user";
 
 const GET_APPS = gql`
   {
@@ -113,7 +113,7 @@ const ignoreVersion = [${watch("ignoreVersion")
 
   return (
     <Layout user={user} loading={loading}>
-    <Head>
+      <Head>
         <title>New Federated Module Application</title>
       </Head>
       {data && (

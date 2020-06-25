@@ -14,7 +14,7 @@ const ModuleUMLDiagram =
     : require("../components/ModuleUMLDiagram.tsx").default;
 import Layout from "../components/Layout";
 import { useFetchUser } from "../lib/user";
-import withAuth from '../components/with-auth';
+import withAuth from "../components/with-auth";
 
 const GET_APPS = gql`
   {
@@ -49,8 +49,8 @@ const GET_APPS = gql`
 
 const useHomeStyles = makeStyles({
   helpParagraph: {
-    marginTop: "1em"
-  }
+    marginTop: "1em",
+  },
 });
 
 const Home = () => {

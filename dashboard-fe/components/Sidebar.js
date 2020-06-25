@@ -1,4 +1,11 @@
-import {List, ListItem, ListItemIcon, ListItemText, ListSubheader,Divider} from "@material-ui/core";
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader,
+  Divider,
+} from "@material-ui/core";
 import Link from "next/link";
 import LockIcon from "@material-ui/icons/Lock";
 import DashboardIcon from "@material-ui/icons/Dashboard";
@@ -82,7 +89,7 @@ const SideBar = ({ data, restricted }) => {
           ))}
         </>
       )}
-      <Divider/>
+      <Divider />
       <ListSubheader inset>User</ListSubheader>
       <Link href="/api/logout">
         <ListItem button>
@@ -95,4 +102,4 @@ const SideBar = ({ data, restricted }) => {
     </List>
   );
 };
-export default SideBar
+export default SideBar;

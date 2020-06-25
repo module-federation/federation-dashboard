@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import auth0 from '../lib/auth0';
-import { fetchUser } from '../lib/user';
-import Layout from '../components/Layout';
-import withAuth from '../components/with-auth';
+import auth0 from "../lib/auth0";
+import { fetchUser } from "../lib/user";
+import Layout from "../components/Layout";
+import withAuth from "../components/with-auth";
 
 const Profile = ({ user }) => (
   <Layout user={user}>

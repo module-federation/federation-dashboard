@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import auth0 from '../lib/auth0';
-import { fetchUser } from '../lib/user';
-import createLoginUrl from '../lib/url-helper';
-import RedirectToLogin from './login-redirect';
+import auth0 from "../lib/auth0";
+import { fetchUser } from "../lib/user";
+import createLoginUrl from "../lib/url-helper";
+import RedirectToLogin from "./login-redirect";
 
 export default function withAuth(InnerComponent) {
   return class Authenticated extends Component {
@@ -11,14 +11,14 @@ export default function withAuth(InnerComponent) {
       if (!ctx.req) {
         const user = await fetchUser();
         return {
-          user
+          user,
         };
       }
 
       const session = await auth0.getSession(ctx.req);
       if (!session || !session.user) {
         ctx.res.writeHead(302, {
-          Location: createLoginUrl(ctx.req.url)
+          Location: createLoginUrl(ctx.req.url),
         });
         ctx.res.end();
         return;
@@ -35,7 +35,9 @@ export default function withAuth(InnerComponent) {
       if (!this.props.user) {
         return <RedirectToLogin />;
       }
-      return <div>{<InnerComponent {...this.props} user={this.props.user} />}</div>;
+      return (
+        <div>{<InnerComponent {...this.props} user={this.props.user} />}</div>
+      );
     }
   };
 }

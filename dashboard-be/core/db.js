@@ -1,14 +1,14 @@
 const path = require("path");
 const Datastore = require("nedb");
 
-const dir = process.env.DATA_DIR || process.cwd();
+const dir = process.env.DATA_DIR || path.join(process.cwd(), "./.fm-dashboard");
 
 const db = new Datastore({
-  filename: path.join(dir, "./.fm-dashboard/apps.db"),
+  filename: path.join(dir, "/apps.db"),
 });
 db.loadDatabase();
 
-exports.update = (info) => {
+module.exports.update = (info) => {
   db.find({ id: info.id }, (_, docs) => {
     if (docs.length > 0) {
       console.log(`Updating ${info.id}`);

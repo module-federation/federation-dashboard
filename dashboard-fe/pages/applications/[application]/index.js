@@ -17,8 +17,8 @@ import { useRouter } from "next/router";
 import clsx from "clsx";
 
 import Layout from "../../../components/Layout";
-import { useFetchUser } from '../../../lib/user';
-import React from 'react';
+import { useFetchUser } from "../../../lib/user";
+import React from "react";
 
 const useStyles = makeStyles((theme) => ({
   title: {
