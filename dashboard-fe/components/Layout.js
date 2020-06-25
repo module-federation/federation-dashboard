@@ -1,3 +1,5 @@
+import React from "react";
+import { UserProvider } from "../lib/user";
 import clsx from "clsx";
 import {
   makeStyles,
@@ -7,9 +9,6 @@ import {
   List,
   ListItem,
   Divider,
-  ListItemText,
-  ListItemIcon,
-  ListSubheader,
   Typography,
   TextField,
   IconButton,
@@ -17,17 +16,12 @@ import {
   Container,
   fade
 } from "@material-ui/core";
+import SideBar from "./Sidebar";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import PlusIcon from "@material-ui/icons/Add";
-import WebIcon from "@material-ui/icons/Web";
-import ShareIcon from "@material-ui/icons/Share";
-import WidgetsIcon from "@material-ui/icons/Widgets";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 import ApplicationDrawer from "../components/ApplicationDrawer";
@@ -48,69 +42,6 @@ const GET_SIDEBAR_DATA = gql`
     }
   }
 `;
-const SideBar = ({ data }) => {
-  return (
-    <List>
-      <Link href="/">
-        <ListItem button>
-          <ListItemIcon>
-            <DashboardIcon />
-          </ListItemIcon>
-          <ListItemText primary="Dashboard" />
-        </ListItem>
-      </Link>
-      <Link href={`/dependencies`}>
-        <ListItem button>
-          <ListItemIcon>
-            <ShareIcon />
-          </ListItemIcon>
-          <ListItemText primary="Dependencies" />
-        </ListItem>
-      </Link>
-      {data && (
-        <>
-          <ListSubheader inset>Applications</ListSubheader>
-          {data.applications.map(({ id, name }) => (
-            <Link href={`/applications/${id}`} key={`application:${id}`}>
-              <ListItem button>
-                <ListItemIcon>
-                  <WebIcon />
-                </ListItemIcon>
-                <ListItemText primary={name} />
-              </ListItem>
-            </Link>
-          ))}
-          <Link href={`/applications/new`}>
-            <ListItem button>
-              <ListItemIcon>
-                <PlusIcon />
-              </ListItemIcon>
-              <ListItemText primary="New" />
-            </ListItem>
-          </Link>
-        </>
-      )}
-      {data && (
-        <>
-          <ListSubheader inset>Modules</ListSubheader>
-          {data.modules.map(({ id, name, application }) => (
-            <Link
-              href={`/applications/${application.id}/${name}`}
-              key={`module:${id}`}
-            >
-              <ListItem button>
-                <ListItemIcon>
-                  <WidgetsIcon />
-                </ListItemIcon>
-                <ListItemText primary={name} />
-              </ListItem>
-            </Link>
-          ))}
-        </>
-      )}
-    </List>
-  );
-};
 
 const leftDrawerWidth = 240;
 
@@ -206,7 +137,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Dashboard({ children }) {
+const Layout = ({ user, loading = false, children }) => {
   const { data } = useQuery(GET_SIDEBAR_DATA);
   const classes = useStyles();
   const router = useRouter();
@@ -243,71 +174,73 @@ export default function Dashboard({ children }) {
   };
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="absolute"
-        className={clsx(classes.appBar, leftOpen && classes.appBarShift)}
-      >
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="Open left drawer"
-            onClick={handleDrawerLeftOpen}
-            className={clsx(
-              classes.menuButton,
-              leftOpen && classes.menuButtonHidden
-            )}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            className={classes.title}
-          >
-            <strong>Federated Modules</strong> Dashboard
-          </Typography>
-          <Autocomplete
-            onChange={onChange}
-            options={options}
-            groupBy={option => option.type}
-            getOptionLabel={option => option.name}
-            className={classes.searchBox}
-            renderInput={params => (
-              <TextField {...params} className={classes.search} />
-            )}
-          />
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(
-            classes.leftDrawerPaper,
+    <UserProvider value={{ user, loading }}>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar
+          position="absolute"
+          className={clsx(classes.appBar, leftOpen && classes.appBarShift)}
+        >
+          <Toolbar className={classes.toolbar}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="Open left drawer"
+              onClick={handleDrawerLeftOpen}
+              className={clsx(
+                classes.menuButton,
+                leftOpen && classes.menuButtonHidden
+              )}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              className={classes.title}
+            >
+              <strong>Federated Modules</strong> Dashboard
+            </Typography>
+            <Autocomplete
+              onChange={onChange}
+              options={options}
+              groupBy={option => option.type}
+              getOptionLabel={option => option.name}
+              className={classes.searchBox}
+              renderInput={params => (
+                <TextField {...params} className={classes.search} />
+              )}
+            />
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          classes={{
+            paper: clsx(classes.leftDrawerPaper,
             !leftOpen && classes.leftDrawerPaperClose
           )
-        }}
+          }}
         open={leftOpen}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerLeftClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <SideBar data={data} />
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          {children}
-        </Container>
-      </main>
-      <ApplicationDrawer />
-    </div>
+        >
+          <div className={classes.toolbarIcon}>
+            <IconButton onClick={handleDrawerLeftClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <SideBar restricted={!user} data={data} />
+        </Drawer>
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <Container maxWidth="lg" className={classes.container}>
+            {children}
+          </Container>
+        </main><ApplicationDrawer />
+      </div>
+    </UserProvider>
   );
-}
+};
+
+export default Layout;
