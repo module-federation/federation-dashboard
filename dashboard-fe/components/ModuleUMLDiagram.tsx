@@ -6,7 +6,6 @@ import createEngine, {
   DagreEngine,
   DiagramEngine,
   PathFindingLinkFactory,
-  AbstractReactFactory,
   DefaultPortLabel,
   DefaultNodeFactory,
 } from "@projectstorm/react-diagrams";
@@ -204,6 +203,9 @@ const LINK_COLOR_UNSELECTED = "rgba(0,192,255,0)";
 const LINK_SIZE_DEFAULT = 3;
 
 class ModuleUMLDiagram extends React.PureComponent {
+  engine: DiagramEngine;
+  model: DiagramModel;
+
   constructor(props) {
     super(props);
 
@@ -229,6 +231,7 @@ class ModuleUMLDiagram extends React.PureComponent {
 
               nodes.forEach((n) => {
                 if (node === n) {
+                  // @ts-ignore
                   n.getOptions().color =
                     node === n ? NODE_COLOR_SELECTED : NODE_COLOR_UNSELECTED;
                 }
@@ -249,6 +252,7 @@ class ModuleUMLDiagram extends React.PureComponent {
               store.detailDrawerOpen = false;
 
               nodes.forEach((n) => {
+                // @ts-ignore
                 n.getOptions().color = NODE_COLOR_DEFAULT;
               });
               links.forEach((l) => {
