@@ -3,7 +3,7 @@ ENV NODE_ENV=test
 ENV PATH $PATH:/usr/src/app/node_modules/.bin
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm install
+RUN yarn install
 COPY . .
 
 # Build
@@ -11,8 +11,8 @@ FROM test-target as build-target
 ENV NODE_ENV=production
 ENV PATH $PATH:/usr/src/app/node_modules/.bin
 WORKDIR /usr/src/app
-RUN npm run build
-RUN npm prune --production
+RUN yarn build
+RUN yarn install --production --ignore-scripts
 
 # Archive
 FROM node:12.8-alpine as archive-target
