@@ -61,3 +61,5 @@ const SideBar = ({ data }) => {
     </List>
   );
 };
+
+export default SideBar;
