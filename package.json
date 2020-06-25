@@ -31,5 +31,11 @@
   "volta": {
     "node": "14.4.0",
     "yarn": "1.22.4"
-  }
+  },
+  "contributors": [
+    "Jack Herrington <jherr@pobox.com>",
+    "Zack Jackson <zackary.l.jackson@gmail.com>",
+    "Marais Rossouw <me@maraisr.com>",
+    "Jacob Ebey <jacob.ebey@live.com>"
+  ]
 }
