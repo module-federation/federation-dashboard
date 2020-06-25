@@ -1,3 +1,19 @@
+import React from "react";
+import Link from "next/link";
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader,
+} from "@material-ui/core";
+
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import PlusIcon from "@material-ui/icons/Add";
+import WebIcon from "@material-ui/icons/Web";
+import ShareIcon from "@material-ui/icons/Share";
+import WidgetsIcon from "@material-ui/icons/Widgets";
+
 const SideBar = ({ data }) => {
   return (
     <List>
