@@ -7,7 +7,7 @@ import {
   TableRow,
   Typography,
   Popover,
-  makeStyles
+  makeStyles,
 } from "@material-ui/core";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
@@ -15,29 +15,31 @@ import Link from "next/link";
 import clsx from "clsx";
 
 import Layout from "../components/Layout";
+import { useFetchUser } from "../lib/user";
+import withAuth from "../components/with-auth";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   headerRow: {
-    background: theme.palette.primary.light
+    background: theme.palette.primary.light,
   },
   headerCell: {
-    color: theme.palette.primary.contrastText
+    color: theme.palette.primary.contrastText,
   },
   devDependency: {
-    fontStyle: "italic"
+    fontStyle: "italic",
   },
   override: {
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   warning: {
-    color: "red"
+    color: "red",
   },
   popover: {
-    pointerEvents: "none"
+    pointerEvents: "none",
   },
   paper: {
-    padding: theme.spacing(1)
-  }
+    padding: theme.spacing(1),
+  },
 }));
 
 const GET_APPS = gql`
@@ -73,7 +75,7 @@ const Dependencies = () => {
   const Dependency = ({ devDependency, override, version }) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const handlePopoverOpen = event => {
+    const handlePopoverOpen = (event) => {
       setAnchorEl(event.currentTarget);
     };
 
@@ -89,7 +91,7 @@ const Dependencies = () => {
           className={clsx({
             [classes.devDependency]: devDependency,
             [classes.override]: override,
-            [classes.warning]: !devDependency && !override
+            [classes.warning]: !devDependency && !override,
           })}
           onMouseEnter={handlePopoverOpen}
           onMouseLeave={handlePopoverClose}
@@ -101,15 +103,15 @@ const Dependencies = () => {
             id="mouse-over-popover"
             className={classes.popover}
             classes={{
-              paper: classes.paper
+              paper: classes.paper,
             }}
             anchorOrigin={{
               vertical: "bottom",
-              horizontal: "left"
+              horizontal: "left",
             }}
             transformOrigin={{
               vertical: "top",
-              horizontal: "left"
+              horizontal: "left",
             }}
             open={open}
             anchorEl={anchorEl}
@@ -131,7 +133,7 @@ const Dependencies = () => {
         dependencies,
         devDependencies,
         optionalDependencies,
-        overrides
+        overrides,
       }) => {
         const addDependency = ({ name, version }, type) => {
           dependencyMap[name] = dependencyMap[name] || {};
@@ -141,20 +143,21 @@ const Dependencies = () => {
             devDependency: type === "devDependency",
             override:
               overrides.find(({ name: ovName }) => ovName === name) !==
-              undefined
+              undefined,
           };
         };
-        dependencies.forEach(dep => addDependency(dep, "dependency"));
-        devDependencies.forEach(dep => addDependency(dep, "devDependency"));
-        optionalDependencies.forEach(dep =>
+        dependencies.forEach((dep) => addDependency(dep, "dependency"));
+        devDependencies.forEach((dep) => addDependency(dep, "devDependency"));
+        optionalDependencies.forEach((dep) =>
           addDependency(dep, "optionalDependency")
         );
       }
     );
   }
+  const { user, loading } = useFetchUser();
 
   return (
-    <Layout>
+    <Layout user={user} loading={loading}>
       <Head>
         <title>Dependency Matrix</title>
       </Head>
@@ -178,7 +181,7 @@ const Dependencies = () => {
             <TableBody>
               {Object.keys(dependencyMap)
                 .sort()
-                .map(k => (
+                .map((k) => (
                   <TableRow key={k}>
                     <TableCell>
                       <Typography>{k}</Typography>
@@ -200,4 +203,4 @@ const Dependencies = () => {
   );
 };
 
-export default Dependencies;
+export default withAuth(Dependencies);

@@ -8,10 +8,10 @@ module.exports = {
   mode: "development",
   devServer: {
     contentBase: path.join(__dirname, "dist"),
-    port: 3002
+    port: 3002,
   },
   output: {
-    publicPath: "http://localhost:3002/"
+    publicPath: "http://localhost:3002/",
   },
   module: {
     rules: [
@@ -19,30 +19,30 @@ module.exports = {
         test: /\.less$/,
         use: [
           {
-            loader: "style-loader"
+            loader: "style-loader",
           },
           {
-            loader: "css-loader"
+            loader: "css-loader",
           },
           {
             loader: "less-loader",
             options: {
               lessOptions: {
-                javascriptEnabled: true
-              }
-            }
-          }
-        ]
+                javascriptEnabled: true,
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.jsx?$/,
         loader: "babel-loader",
         exclude: /node_modules/,
         options: {
-          presets: ["@babel/preset-react"]
-        }
-      }
-    ]
+          presets: ["@babel/preset-react"],
+        },
+      },
+    ],
   },
   plugins: [
     new ModuleFederationPlugin({
@@ -53,13 +53,13 @@ module.exports = {
       exposes: {
         "./Button": "./src/Button",
         "./Carousel": "./src/Carousel",
-        "./TextField": "./src/TextField"
+        "./TextField": "./src/TextField",
       },
       // sharing code based on the installed version, to allow for multiple vendors with different versions
-      shared: require("./package.json").dependencies
+      shared: require("./package.json").dependencies,
     }),
     new HtmlWebpackPlugin({
-      template: "./public/index.html"
+      template: "./public/index.html",
     }),
     new DashboardPlugin({
       filename: "dashboard.json",
@@ -67,10 +67,10 @@ module.exports = {
       metadata: {
         source: {
           url:
-            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/dsl"
+            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/dsl",
         },
-        remote: "http://localhost:3002/remoteEntry.js"
-      }
-    })
-  ]
+        remote: "http://localhost:3002/remoteEntry.js",
+      },
+    }),
+  ],
 };
