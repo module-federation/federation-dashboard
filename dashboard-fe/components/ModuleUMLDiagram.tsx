@@ -7,7 +7,7 @@ import createEngine, {
   DiagramEngine,
   PathFindingLinkFactory,
   DefaultPortLabel,
-  DefaultNodeFactory,
+  DefaultNodeFactory
 } from "@projectstorm/react-diagrams";
 import { CanvasWidget } from "@projectstorm/react-canvas-core";
 import styled from "@emotion/styled";
@@ -16,14 +16,14 @@ import store from "../src/store";
 
 namespace S {
   export const Node = styled.div<{ background: string; selected: boolean }>`
-    background-color: ${(p) => p.background};
+    background-color: ${p => p.background};
     border-radius: 5px;
     font-family: sans-serif;
     color: white;
     border: solid 2px black;
     overflow: visible;
     font-size: 14px;
-    border: solid 2px ${(p) => (p.selected ? "rgb(0,192,255)" : "black")};
+    border: solid 2px ${p => (p.selected ? "rgb(0,192,255)" : "black")};
   `;
 
   export const Title = styled.div`
@@ -74,7 +74,7 @@ export interface DefaultNodeProps {
 }
 
 export class NicerNodeWidget extends React.Component<DefaultNodeProps> {
-  generateInPort = (port) => {
+  generateInPort = port => {
     return (
       <S.InPortItem>
         <DefaultPortLabel
@@ -86,7 +86,7 @@ export class NicerNodeWidget extends React.Component<DefaultNodeProps> {
     );
   };
 
-  generateOutPort = (port) => {
+  generateOutPort = port => {
     return (
       <S.OutPortItem>
         <DefaultPortLabel
@@ -160,9 +160,9 @@ class LayoutWidget extends React.Component<
         rankdir: "RL",
         ranker: "network-simplex",
         marginx: 25,
-        marginy: 25,
+        marginy: 25
       },
-      includeLinks: true,
+      includeLinks: true
     });
   }
 
@@ -222,14 +222,14 @@ class ModuleUMLDiagram extends React.PureComponent {
       const node = new DefaultNodeModel(name, NODE_COLOR_DEFAULT);
 
       node.registerListener({
-        eventDidFire: (evt) => {
+        eventDidFire: evt => {
           if (evt.function === "selectionChanged") {
             const selected = node.getOptions().selected;
             if (selected) {
               store.selectedApplication = name;
               store.detailDrawerOpen = true;
 
-              nodes.forEach((n) => {
+              nodes.forEach(n => {
                 if (node === n) {
                   // @ts-ignore
                   n.getOptions().color =
@@ -237,7 +237,7 @@ class ModuleUMLDiagram extends React.PureComponent {
                 }
               });
 
-              links.forEach((l) => {
+              links.forEach(l => {
                 const sourceName = l.sourcePort.getOptions().id;
                 const targetName = l.targetPort.getOptions().id;
                 l.getOptions().color =
@@ -251,17 +251,17 @@ class ModuleUMLDiagram extends React.PureComponent {
               store.selectedApplication = null;
               store.detailDrawerOpen = false;
 
-              nodes.forEach((n) => {
+              nodes.forEach(n => {
                 // @ts-ignore
                 n.getOptions().color = NODE_COLOR_DEFAULT;
               });
-              links.forEach((l) => {
+              links.forEach(l => {
                 l.getOptions().color = LINK_COLOR_DEFAULT;
                 l.getOptions().width = LINK_SIZE_DEFAULT;
               });
             }
           }
-        },
+        }
       });
 
       ports[name] = node.addOutPort("");
@@ -293,7 +293,7 @@ class ModuleUMLDiagram extends React.PureComponent {
       this.model.addNode(node);
     });
 
-    links.forEach((link) => {
+    links.forEach(link => {
       this.model.addLink(link);
     });
 
