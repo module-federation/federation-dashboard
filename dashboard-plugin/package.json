@@ -16,7 +16,7 @@
     "webpack-sources": "^1.4.3"
   },
   "devDependencies": {
-    "jest": "26.0.1",
+    "jest": "26.1.0",
     "webpack": "5.0.0-beta.18",
     "webpack-sources": "1.4.3"
   }
