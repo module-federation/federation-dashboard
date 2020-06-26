@@ -2,7 +2,7 @@ name: Release
 
 on:
   push:
-    branches: [authentication]
+    branches: [master]
 
 jobs:
   release:
@@ -47,13 +47,12 @@ jobs:
         run: |-
           rm -fr dashboard-fe/node_modules
           yarn workspace @module-federation/dashboard run docker:build:ci
+          yarn workspace @module-federation/dashboard run docker:push
 
-#         yarn workspace @module-federation/dashboard run docker:push
-
-#      - name: Create Release or Publish
-#        uses: changesets/action@master
-#        with:
-#          publish: yarn release
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Create Release or Publish
+        uses: changesets/action@master
+        with:
+          publish: yarn release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
