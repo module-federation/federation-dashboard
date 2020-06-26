@@ -31,6 +31,9 @@ RUN yarn install --production
 
 # Archive
 FROM node:12.8-alpine as archive-target
+ARG AUTH0_CLIENT_SECRET
+ARG SESSION_COOKIE_SECRET
+
 ENV NODE_ENV=production
 ENV PATH $PATH:/usr/src/app/node_modules/.bin
 WORKDIR /usr/src/app
