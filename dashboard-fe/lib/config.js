@@ -16,7 +16,7 @@ if (typeof window === "undefined") {
     ).toString("ascii"),
     SESSION_COOKIE_LIFETIME: 60 * 60 * 8,
   };
-  console.log(module.exports, { B64: process.env.SESSION_COOKIE_SECRET });
+  console.log(module.exports);
 } else {
   /**
    * Settings exposed to the client.
