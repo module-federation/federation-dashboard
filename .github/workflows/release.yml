@@ -46,7 +46,7 @@ jobs:
           SESSION_COOKIE_SECRET: ${{ secrets.SESSION_COOKIE_SECRET }}
         run: |-
           rm -fr dashboard-fe/node_modules
-          yarn workspace @module-federation/dashboard run docker:build:ci
+          yarn workspace @module-federation/dashboard run docker:build
 
 #         yarn workspace @module-federation/dashboard run docker:push
 
