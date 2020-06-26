@@ -34,7 +34,7 @@ export const useUser = () => React.useContext(User);
 export const useFetchUser = () => {
   const [data, setUser] = React.useState({
     user: userState || null,
-    loading: userState === undefined
+    loading: userState === undefined,
   });
 
   React.useEffect(() => {
@@ -44,7 +44,7 @@ export const useFetchUser = () => {
 
     let isMounted = true;
 
-    fetchUser().then(user => {
+    fetchUser().then((user) => {
       // Only set the user if the component is still mounted
       if (isMounted) {
         setUser({ user, loading: false });

@@ -11,14 +11,14 @@ export default function withAuth(InnerComponent) {
       if (!ctx.req) {
         const user = await fetchUser();
         return {
-          user
+          user,
         };
       }
 
       const session = await auth0.getSession(ctx.req);
       if (!session || !session.user) {
         ctx.res.writeHead(302, {
-          Location: createLoginUrl(ctx.req.url)
+          Location: createLoginUrl(ctx.req.url),
         });
         ctx.res.end();
         return;

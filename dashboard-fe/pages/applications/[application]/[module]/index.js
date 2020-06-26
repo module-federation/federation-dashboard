@@ -6,7 +6,7 @@ import {
   Paper,
   Table,
   TableRow,
-  TableCell
+  TableCell,
 } from "@material-ui/core";
 import Link from "next/link";
 import gql from "graphql-tag";
@@ -17,23 +17,23 @@ import { Code, CodeWrapper, GeneratedCode } from "../../../../components/Code";
 import React from "react";
 import { useFetchUser } from "../../../../lib/user";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
-    padding: 10
+    padding: 10,
   },
   panel: {
-    padding: 10
+    padding: 10,
   },
   usageTitle: {
-    marginTop: 20
+    marginTop: 20,
   },
   usageSection: {
     marginTop: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   moduleHeader: {
-    marginBottom: 20
-  }
+    marginBottom: 20,
+  },
 }));
 
 const GET_MODULES = gql`
@@ -108,8 +108,8 @@ const ModulePage = () => {
       getData({
         variables: {
           name: router.query.module,
-          app: router.query.application
-        }
+          app: router.query.application,
+        },
       });
     }
   }, [router]);
@@ -125,7 +125,7 @@ const ModulePage = () => {
       </Head>
       <div className={classes.container}>
         {data &&
-          data.modules.map(mod => (
+          data.modules.map((mod) => (
             <div>
               <Typography variant="h4" className={classes.moduleHeader}>
                 <Link href={`/applications/${router.query.application}`}>

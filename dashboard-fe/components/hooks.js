@@ -14,7 +14,7 @@ const useLazyAuth = () => {
         logout: () => {},
         user: null,
         userId: null,
-        authResult: null
+        authResult: null,
       };
     }
     return authResult;

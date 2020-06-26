@@ -4,7 +4,7 @@ import {
   ListItemIcon,
   ListItemText,
   ListSubheader,
-  Divider
+  Divider,
 } from "@material-ui/core";
 import Link from "next/link";
 import LockIcon from "@material-ui/icons/Lock";
