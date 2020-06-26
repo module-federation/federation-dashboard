@@ -43,7 +43,7 @@ jobs:
       - name: Perform builds
         env:
           AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
-          SESSION_COOKIE_SECRET: ${{ secrets.SESSION_COOKIE_SECRET }}
+          SESSION_COOKIE_SECRET_B64: ${{ secrets.SESSION_COOKIE_SECRET_B64 }}
         run: |-
           rm -fr dashboard-fe/node_modules
           yarn workspace @module-federation/dashboard run docker:build
