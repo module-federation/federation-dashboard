@@ -5,4 +5,4 @@ fs.writeFileSync(
     "\n"
   )
 );
-console.log(fs.readFileSync("./.env").toString());
+console.log(fs.readFileSync("./.env").toString("base64"));
