@@ -6,7 +6,7 @@
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start",
-    "docker:build": "rm -rf node_modules && docker build --build-arg MOCK_ATTEMPT1=testing123 AUTH0_CLIENT_KEY=$AUTH0_CLIENT_SECRET MOCK_ATTEMPT=$SESSION_COOKIE_SECRET_B64 . -t scriptedalchemy/mf-dashboard:latest",
+    "docker:build": "rm -rf node_modules && docker build --build-arg MOCK_ATTEMPT1=testing123 --build-arg AUTH0_CLIENT_KEY=$AUTH0_CLIENT_SECRET --build-arg MOCK_ATTEMPT=$SESSION_COOKIE_SECRET_B64 . -t scriptedalchemy/mf-dashboard:latest",
     "docker:run": "docker run -p 3000:3000 -t scriptedalchemy/mf-dashboard",
     "docker:demo": "docker run -p 3000:3000 --mount type=bind,source=\"$(pwd)\"/.fm-dashboard,target=/data -t mf-dashboard",
     "docker:push": "PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\\\",]//g' | tr -d '[[:space:]]');echo $PACKAGE_VERSION && docker tag scriptedalchemy/mf-dashboard:latest scriptedalchemy/mf-dashboard:$PACKAGE_VERSION && docker push scriptedalchemy/mf-dashboard:latest && docker push scriptedalchemy/mf-dashboard:$PACKAGE_VERSION"
