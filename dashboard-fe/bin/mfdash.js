@@ -8,6 +8,6 @@ exec("npm run start", {
   cwd: path.resolve(`${__dirname}/..`),
   env: {
     ...process.env,
-    DATA_PATH,
-  },
+    DATA_PATH
+  }
 });

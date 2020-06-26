@@ -5,33 +5,33 @@ import {
   TableHead,
   TableRow,
   Typography,
-  makeStyles,
+  makeStyles
 } from "@material-ui/core";
 import ArrowIcon from "@material-ui/icons/Forward";
 import Link from "next/link";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   headerRow: {
-    background: theme.palette.grey[200],
-  },
+    background: theme.palette.grey[200]
+  }
 }));
 
 const ApplicationsTable = ({ applications }) => {
   const classes = useStyles();
   const modules = applications
     .map(({ id, name, modules }) =>
-      modules.map((mod) => ({
+      modules.map(mod => ({
         ...mod,
         absoluteId: `${id}:${mod.name}`,
         applicationId: id,
-        applicationName: name,
+        applicationName: name
       }))
     )
     .flat();
   const modulesById = Object.fromEntries(
     modules.map(({ id, name, applicationId }) => [
       `${applicationId}:${name}`,
-      { name, applicationId, applications: {} },
+      { name, applicationId, applications: {} }
     ])
   );
 
@@ -104,7 +104,7 @@ const ApplicationsTable = ({ applications }) => {
                       flex: 1,
                       display: "flex",
                       flexDirection: "row",
-                      justifyContent: "center",
+                      justifyContent: "center"
                     }}
                   >
                     {modulesById[absoluteId].applicationId === appId && (
