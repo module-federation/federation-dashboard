@@ -7,7 +7,7 @@ import {
   FormControlLabel,
   Typography,
   Grid,
-  Paper,
+  Paper
 } from "@material-ui/core";
 import { useForm, Controller } from "react-hook-form";
 import Layout from "../../components/Layout";
@@ -29,17 +29,17 @@ const useStyles = makeStyles({
   container: {},
   configSection: {
     padding: 10,
-    marginTop: 20,
+    marginTop: 20
   },
   title: {
-    marginBottom: 10,
+    marginBottom: 10
   },
   explanation: {
-    marginBottom: 10,
+    marginBottom: 10
   },
   textField: {
-    marginTop: 20,
-  },
+    marginTop: 20
+  }
 });
 
 export default () => {
@@ -50,8 +50,8 @@ export default () => {
       shared: "react,react-dom",
       ignoreVersion: "react,react-dom",
       exclude: "lodash",
-      automaticFederation: true,
-    },
+      automaticFederation: true
+    }
   });
   const [applications, applicationsSet] = React.useState([]);
   const { data } = useQuery(GET_APPS);
@@ -59,7 +59,7 @@ export default () => {
 
   const scriptTags = applications
     .map(
-      (n) =>
+      n =>
         `<script src="${
           data.applications.find(({ name }) => name === n).remote
         }"></script>`
@@ -68,13 +68,13 @@ export default () => {
   const remotesCode =
     applications.length > 0
       ? "\n" +
-        applications.map((name) => `      "${name}": "${name}"`).join(",\n") +
+        applications.map(name => `      "${name}": "${name}"`).join(",\n") +
         "\n    "
       : "";
 
   const exposesCode = watch("files")
     .split(",")
-    .map((file) => {
+    .map(file => {
       const fname = file.trim();
       const mod = fname.replace(/.*\//, "");
       return `      \"${mod}\": "${fname}"`;
@@ -87,10 +87,10 @@ const AutomaticVendorFederation = require("@module-federation/automatic-vendor-f
 const packageJson = require("./package.json");
 const exclude = [${watch("exclude")
         .split(",")
-        .map((n) => `"${n.trim()}"`)}];
+        .map(n => `"${n.trim()}"`)}];
 const ignoreVersion = [${watch("ignoreVersion")
         .split(",")
-        .map((n) => `"${n.trim()}"`)}];
+        .map(n => `"${n.trim()}"`)}];
 `
     : "";
   const sharedCode = watch("automaticFederation")
@@ -105,7 +105,7 @@ const ignoreVersion = [${watch("ignoreVersion")
     `
     : watch("shared")
         .split(",")
-        .map((mod) => `"${mod.trim()}"`)
+        .map(mod => `"${mod.trim()}"`)
         .join(", ");
 
   return (
@@ -227,9 +227,7 @@ ${exposesCode}
                         if (val) {
                           applicationsSet([...applications, name]);
                         } else {
-                          applicationsSet(
-                            applications.filter((n) => n !== name)
-                          );
+                          applicationsSet(applications.filter(n => n !== name));
                         }
                       }}
                     />

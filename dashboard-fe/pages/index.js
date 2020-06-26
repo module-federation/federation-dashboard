@@ -47,8 +47,8 @@ const GET_APPS = gql`
 
 const useHomeStyles = makeStyles({
   helpParagraph: {
-    marginTop: "1em",
-  },
+    marginTop: "1em"
+  }
 });
 
 const Home = () => {

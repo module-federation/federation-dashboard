@@ -5,31 +5,31 @@ import {
   TableHead,
   TableRow,
   TableBody,
-  TableCell,
+  TableCell
 } from "@material-ui/core";
 import Link from "next/link";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   title: {
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
   container: {
-    padding: 10,
+    padding: 10
   },
   panel: {
-    padding: 10,
+    padding: 10
   },
   panelTitle: {
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
   dependenciesTable: {
-    marginBottom: "3em",
+    marginBottom: "3em"
   },
   overridden: {
-    fontWeight: "bold",
-  },
+    fontWeight: "bold"
+  }
 }));
 
 const GET_APPS = gql`
@@ -102,9 +102,9 @@ const ConsumesTable = ({ consumes }) => {
 const ConsumersTable = ({ consumers, name }) => {
   const classes = useStyles();
   const modules = {};
-  consumers.forEach((application) => {
+  consumers.forEach(application => {
     const consumingApp = application.name;
-    (application.consumes || []).forEach((consume) => {
+    (application.consumes || []).forEach(consume => {
       if (consume.application && consume.application.name === name) {
         const moduleName = consume.name;
         modules[moduleName] = modules[moduleName] || new Set();
@@ -140,7 +140,7 @@ const ConsumersTable = ({ consumers, name }) => {
               </TableCell>
               <TableCell>
                 <Typography>
-                  {Array.from(apps).map((consumer) => (
+                  {Array.from(apps).map(consumer => (
                     <>
                       <Link href={`/applications/${consumer}`}>{consumer}</Link>{" "}
                     </>
@@ -157,7 +157,7 @@ const ConsumersTable = ({ consumers, name }) => {
 
 const ApplicationSidebar = ({ name }) => {
   const { data } = useQuery(GET_APPS, {
-    variables: { name },
+    variables: { name }
   });
 
   if (!data) {
@@ -169,7 +169,7 @@ const ApplicationSidebar = ({ name }) => {
   return (
     <div
       style={{
-        padding: "1em",
+        padding: "1em"
       }}
     >
       <ConsumersTable consumers={data.consumingApplications} name={name} />
