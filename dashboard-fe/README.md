@@ -1,6 +1,10 @@
 # Federated Modules Dashboard
 
-## Docker useage
+## Feature Flags
+
+- `WITH_AUTH` - Enables Auth0 Authentication (default: `false`)
+
+## Docker usage
 
 To run the dashboard and test it out use this command:
 
