@@ -10,6 +10,10 @@ if (typeof window === "undefined") {
     process.env.AUTH0_CLIENT_SECRET = parsed.AUTH0_CLIENT_SECRET;
   }
 
+  if(!parsed.AUTH0_CLIENT_SECRET && !process.env.AUTH0_CLIENT_SECRET) {
+    throw new Error('You are missing environment variables. Make sure you have an .env file or are passing args')
+  }
+
   module.exports = {
     AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
     AUTH0_CLIENT_SECRET: process.env.AUTH0_CLIENT_SECRET,
