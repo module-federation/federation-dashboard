@@ -14,6 +14,7 @@ FROM test-target as build-target
 ENV NODE_ENV=production
 ENV PATH $PATH:/usr/src/app/node_modules/.bin
 # Auth0 Env Vars
+RUN echo $auth0_client_secret
 ENV AUTH0_CLIENT_ID=JldqTRWvEuGSRedeHGMA7hwfOUz4YW3n
 ENV AUTH0_CLIENT_SECRET=$auth0_client_secret
 ENV AUTH0_DOMAIN="federation-dashboard.us.auth0.com"
