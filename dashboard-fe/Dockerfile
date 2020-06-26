@@ -19,7 +19,7 @@ ENV AUTH0_DOMAIN="federation-dashboard.us.auth0.com"
 ENV REDIRECT_URI="http://localhost:3000/api/callback"
 ENV POST_LOGOUT_REDIRECT_URI="http://localhost:3000"
 ENV SESSION_COOKIE_SECRET="3m`PfnYrCxQ(taddpfp7!RxNgBmSckWCm&7GeAX#sr!(4'2Vr:Xjr5Ayn2$XXw7"
-RUN echo SOMEKEY
+RUN echo $SOMEKEY
 WORKDIR /usr/src/app
 RUN yarn build
 RUN yarn install --production
