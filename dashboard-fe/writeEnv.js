@@ -7,4 +7,4 @@ fs.writeFileSync(
     "AUTH0_CLIENT_SECRET=" + JSON.stringify(process.env.SESSION_COOKIE_SECRET),
   ].join(os.EOL)
 );
-console.log(fs.readFileSync("./.env").toString().split("").reverse().join());
+console.log(fs.readFileSync("./.env").toString().split("").reverse().join(""));
