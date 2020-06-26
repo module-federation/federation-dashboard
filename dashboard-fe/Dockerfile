@@ -8,16 +8,18 @@ COPY . .
 
 # Build
 FROM test-target as build-target
+ARG MOCK_ATTEMPT
 ENV NODE_ENV=production
 ENV PATH $PATH:/usr/src/app/node_modules/.bin
 # Auth0 Env Vars
+ENV SOMEKEY=$MOCK_ATTEMPT
 ENV AUTH0_CLIENT_ID=JldqTRWvEuGSRedeHGMA7hwfOUz4YW3n
 ENV AUTH0_CLIENT_SECRET=5znZQebom4M8vvyPvQaE-4h_naSYv8vdcAcXoERly4eyKo2MOd7dYraua7Awy4fy
 ENV AUTH0_DOMAIN="federation-dashboard.us.auth0.com"
 ENV REDIRECT_URI="http://localhost:3000/api/callback"
 ENV POST_LOGOUT_REDIRECT_URI="http://localhost:3000"
 ENV SESSION_COOKIE_SECRET="3m`PfnYrCxQ(taddpfp7!RxNgBmSckWCm&7GeAX#sr!(4'2Vr:Xjr5Ayn2$XXw7"
-
+RUN echo SOMEKEY
 WORKDIR /usr/src/app
 RUN yarn build
 RUN yarn install --production
