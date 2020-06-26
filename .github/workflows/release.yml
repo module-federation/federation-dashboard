@@ -2,7 +2,7 @@ name: Release
 
 on:
   push:
-    branches: [master]
+    branches: [authentication]
 
 jobs:
   release:
@@ -46,13 +46,15 @@ jobs:
           SESSION_COOKIE_SECRET: ${{ secrets.SESSION_COOKIE_SECRET }}
         run: |-
           rm -fr dashboard-fe/node_modules
-          yarn workspace @module-federation/dashboard run docker:build --build-arg auth0_client_secret=${AUTH0_CLIENT_SECRET} --build-arg auth0_session_secret=${SESSION_COOKIE_SECRET}
-          yarn workspace @module-federation/dashboard run docker:push
+          yarn workspace @module-federation/dashboard run writeEnv
+          yarn workspace @module-federation/dashboard run docker:build
 
-      - name: Create Release or Publish
-        uses: changesets/action@master
-        with:
-          publish: yarn release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+#         yarn workspace @module-federation/dashboard run docker:push
+
+#      - name: Create Release or Publish
+#        uses: changesets/action@master
+#        with:
+#          publish: yarn release
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
