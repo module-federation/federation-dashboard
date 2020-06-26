@@ -58,9 +58,7 @@
     "react-dom": "16.13.1",
     "react-force-graph-2d": "^1.16.0",
     "react-hook-form": "^5.7.2",
-    "@auth0/nextjs-auth0": "^0.13.0",
     "dotenv": "^8.2.0",
-    "isomorphic-unfetch": "^3.0.0",
     "recoil": "^0.0.10"
   },
   "devDependencies": {

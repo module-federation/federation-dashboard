@@ -10,20 +10,20 @@ const ModuleNodeGraph = ({ applications }) => {
       id: appId,
       label: name,
       size: 800,
-      symbolType: "wye"
+      symbolType: "wye",
     });
     modules.forEach(({ id: moduleId, name: moduleName }) => {
       nodes.push({
         color: "darkblue",
         id: moduleId,
         label: moduleName,
-        symbolType: "diamond"
+        symbolType: "diamond",
       });
       links.push({
         source: appId,
         target: moduleId,
         color: "green",
-        type: "CURVE_SMOOTH"
+        type: "CURVE_SMOOTH",
       });
     });
   });
@@ -35,14 +35,14 @@ const ModuleNodeGraph = ({ applications }) => {
           links.push({
             source: appId,
             target: `${modApp}:${modName}`,
-            type: "CURVE_SMOOTH"
+            type: "CURVE_SMOOTH",
           });
         }
       );
   });
   const data = {
     nodes,
-    links
+    links,
   };
 
   const myConfig = {
@@ -55,32 +55,32 @@ const ModuleNodeGraph = ({ applications }) => {
       fontSize: 16,
       highlightStrokeColor: "blue",
       highlightFontSize: 20,
-      highlightFontWeight: "bold"
+      highlightFontWeight: "bold",
     },
     d3: {
       alphaTarget: 0.5,
       gravity: -300,
       linkLength: 150,
       linkStrength: 0.5,
-      disableLinkForce: false
+      disableLinkForce: false,
     },
     link: {
       highlightColor: "darkblue",
       semanticStrokeWidth: true,
       markerHeight: 8,
-      markerWidth: 8
+      markerWidth: 8,
     },
     directed: true,
-    panAndZoom: true
+    panAndZoom: true,
   };
-  const onClickNode = nodeId => {
+  const onClickNode = (nodeId) => {
     store.selectedApplication = nodeId.replace(":", "/");
     store.detailDrawerOpen = true;
   };
   return (
     <div
       style={{
-        marginTop: 50
+        marginTop: 50,
       }}
     >
       <Graph

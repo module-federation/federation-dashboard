@@ -218,11 +218,12 @@ const Layout = ({ user, loading = false, children }) => {
         <Drawer
           variant="permanent"
           classes={{
-            paper: clsx(classes.leftDrawerPaper,
-            !leftOpen && classes.leftDrawerPaperClose
-          )
+            paper: clsx(
+              classes.leftDrawerPaper,
+              !leftOpen && classes.leftDrawerPaperClose
+            ),
           }}
-        open={leftOpen}
+          open={leftOpen}
         >
           <div className={classes.toolbarIcon}>
             <IconButton onClick={handleDrawerLeftClose}>
@@ -237,7 +238,8 @@ const Layout = ({ user, loading = false, children }) => {
           <Container maxWidth="lg" className={classes.container}>
             {children}
           </Container>
-        </main><ApplicationDrawer />
+        </main>
+        <ApplicationDrawer />
       </div>
     </UserProvider>
   );
