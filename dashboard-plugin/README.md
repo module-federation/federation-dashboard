@@ -17,8 +17,8 @@ const DashboardPlugin = require("@module-federation/dashboard-plugin");
 ```js
 plugins: [
   ...new DashboardPlugin({
-    dashboardURL: "http://localhost:3000/api/update"
-  })
+    dashboardURL: "http://localhost:3000/api/update",
+  }),
 ];
 ```
 
@@ -42,11 +42,11 @@ plugins: [
     dashboardURL: "http://localhost:3000/api/update",
     metadata: {
       source: {
-        url: "http://github.com/myorg/myproject/tree/master"
+        url: "http://github.com/myorg/myproject/tree/master",
       },
-      remote: "http://localhost:8081/remoteEntry.js"
-    }
-  })
+      remote: "http://localhost:8081/remoteEntry.js",
+    },
+  }),
 ];
 ```
 

@@ -8,7 +8,7 @@ import {
   TableHead,
   TableRow,
   TableBody,
-  TableCell
+  TableCell,
 } from "@material-ui/core";
 import Link from "next/link";
 import gql from "graphql-tag";
@@ -17,26 +17,28 @@ import { useRouter } from "next/router";
 import clsx from "clsx";
 
 import Layout from "../../../components/Layout";
+import { useFetchUser } from "../../../lib/user";
+import React from "react";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   title: {
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   container: {
-    padding: 10
+    padding: 10,
   },
   panel: {
-    padding: 10
+    padding: 10,
   },
   panelTitle: {
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   dependenciesTable: {
-    marginBottom: "3em"
+    marginBottom: "3em",
   },
   overridden: {
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 }));
 
 const GET_APPS = gql`
@@ -202,7 +204,7 @@ const OverridesTable = ({ overrides }) => {
 
 const ModulesTable = ({ application, modules, overrides }) => {
   const classes = useStyles();
-  const findVersion = name => {
+  const findVersion = (name) => {
     let ov = overrides.find(({ name: ovName }) => ovName === name);
     return ov ? ` (${ov.version})` : "";
   };
@@ -261,19 +263,20 @@ const Application = () => {
   React.useEffect(() => {
     if (router.query.application) {
       getData({
-        variables: { name: router.query.application }
+        variables: { name: router.query.application },
       });
     }
   }, [router]);
+  const { user, loading } = useFetchUser();
 
   return (
-    <Layout>
+    <Layout user={user} loading={loading}>
       <Head>
         <title>Federated Modules Dashboard</title>
       </Head>
       <div className={classes.container}>
         {data &&
-          data.applications.map(application => (
+          data.applications.map((application) => (
             <div key={application.id}>
               <Grid container>
                 <Grid item xs={9}>

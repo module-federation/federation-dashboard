@@ -100,7 +100,7 @@ const resolvers = {
         .map(({ consumes }) => consumes)
         .flat()
         .filter(filter);
-    }
+    },
   },
   Module: {
     application: async ({ applicationID }) => {
@@ -110,7 +110,7 @@ const resolvers = {
     requires: async ({ requires, applicationID }) => {
       const applications = await getApplications();
       const app = applications.find(({ id }) => id === applicationID);
-      return requires.map(reqId =>
+      return requires.map((reqId) =>
         app.overrides.find(({ id }) => id === reqId)
       );
     },
@@ -123,13 +123,13 @@ const resolvers = {
           ({ applicationID: conApp, name: conName }) =>
             conApp === applicationID && conName === name
         );
-    }
+    },
   },
   Override: {
     application: async ({ applicationID }) => {
       const applications = await getApplications();
       return applications.find(({ id }) => id === applicationID);
-    }
+    },
   },
   Consume: {
     consumingApplication: async ({ consumingApplicationID }) => {
@@ -139,21 +139,21 @@ const resolvers = {
     application: async ({ applicationID }) => {
       const applications = await getApplications();
       return applications.find(({ id }) => id === applicationID);
-    }
-  }
+    },
+  },
 };
 
 const apolloServer = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
 });
 
 const handler = apolloServer.createHandler({ path: "/api/graphql" });
 
 export const config = {
   api: {
-    bodyParser: false
-  }
+    bodyParser: false,
+  },
 };
 
 export default handler;
