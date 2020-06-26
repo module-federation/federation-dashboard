@@ -1,3 +1,6 @@
+ARG auth0_client_secret
+ARG auth0_session_secret
+
 FROM node:12.8-alpine as test-target
 ENV NODE_ENV=test
 ENV PATH $PATH:/usr/src/app/node_modules/.bin
@@ -12,9 +15,11 @@ ENV NODE_ENV=production
 ENV PATH $PATH:/usr/src/app/node_modules/.bin
 # Auth0 Env Vars
 ENV AUTH0_CLIENT_ID=JldqTRWvEuGSRedeHGMA7hwfOUz4YW3n
+ENV AUTH0_CLIENT_SECRET=$auth0_client_secret
 ENV AUTH0_DOMAIN="federation-dashboard.us.auth0.com"
 ENV REDIRECT_URI="http://localhost:3000/api/callback"
 ENV POST_LOGOUT_REDIRECT_URI="http://localhost:3000"
+ENV SESSION_COOKIE_SECRET=$auth0_session_secret
 
 WORKDIR /usr/src/app
 RUN yarn build
@@ -33,9 +38,11 @@ COPY --from=build-target /usr/src/app/.next .next
 ENV DATA_DIR /data
 # Auth0 Env Vars
 ENV AUTH0_CLIENT_ID=JldqTRWvEuGSRedeHGMA7hwfOUz4YW3n
+ENV AUTH0_CLIENT_SECRET=$auth0_client_secret
 ENV AUTH0_DOMAIN="federation-dashboard.us.auth0.com"
 ENV REDIRECT_URI="http://localhost:3000/api/callback"
 ENV POST_LOGOUT_REDIRECT_URI="http://localhost:3000"
+ENV SESSION_COOKIE_SECRET=$auth0_session_secret
 RUN mkdir -p /data
 
 EXPOSE 3000

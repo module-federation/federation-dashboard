@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "writeEnv": "node writeEnv.js",
+    "docker:build:ci": "rm -rf node_modules && docker build $(buildargs.sh .env) . -t scriptedalchemy/mf-dashboard:latest",
     "docker:build": "rm -rf node_modules && docker build . -t scriptedalchemy/mf-dashboard:latest",
     "docker:run": "docker run -p 3000:3000 -t scriptedalchemy/mf-dashboard",
     "docker:demo": "docker run -p 3000:3000 --mount type=bind,source=\"$(pwd)\"/.fm-dashboard,target=/data -t mf-dashboard",
