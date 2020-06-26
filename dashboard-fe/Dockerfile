@@ -13,9 +13,12 @@ ARG SESSION_COOKIE_SECRET
 
 ENV NODE_ENV=production
 ENV PATH $PATH:/usr/src/app/node_modules/.bin
+RUN rm ./.env
+RUN echo "export AUTH0_CLIENT_SECRET=${AUTH0_CLIENT_SECRET};" >> ./.env
+RUN echo "export AUTH0_CLIENT_SECRET=${SESSION_COOKIE_SECRET};" >> ./.env
 # Auth0 Env Vars
 RUN echo "zack was here"
-RUN echo "$SESSION_COOKIE_SECRET"
+RUN echo "${SESSION_COOKIE_SECRET}"
 RUN echo "end"
 
 ENV AUTH0_CLIENT_ID=JldqTRWvEuGSRedeHGMA7hwfOUz4YW3n
