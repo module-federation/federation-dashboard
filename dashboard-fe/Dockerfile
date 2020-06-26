@@ -8,22 +8,18 @@ COPY . .
 
 # Build
 FROM test-target as build-target
-ARG MOCK_ATTEMPT1
-ARG MOCK_ATTEMPT
-ARG AUTH0_CLIENT_KEY
+ARG auth0_cookie_secret
+ARG auth0_client_key
 
 ENV NODE_ENV=production
 ENV PATH $PATH:/usr/src/app/node_modules/.bin
 # Auth0 Env Vars
-ENV AUTH0_COOKIE_SECRET=$MOCK_ATTEMPT
-ENV SOMEKEY1=$MOCK_ATTEMPT1
 ENV AUTH0_CLIENT_ID=JldqTRWvEuGSRedeHGMA7hwfOUz4YW3n
-ENV AUTH0_CLIENT_SECRET=$AUTH0_CLIENT_KEY
+ENV AUTH0_CLIENT_SECRET=$auth0_client_key
 ENV AUTH0_DOMAIN="federation-dashboard.us.auth0.com"
 ENV REDIRECT_URI="http://localhost:3000/api/callback"
 ENV POST_LOGOUT_REDIRECT_URI="http://localhost:3000"
-ENV SESSION_COOKIE_SECRET=$AUTH0_COOKIE_SECRET
-RUN echo $SOMEKEY1
+ENV SESSION_COOKIE_SECRET=$auth0_cookie_secret
 WORKDIR /usr/src/app
 RUN yarn build
 RUN yarn install --production
@@ -41,11 +37,11 @@ COPY --from=build-target /usr/src/app/.next .next
 ENV DATA_DIR /data
 # Auth0 Env Vars
 ENV AUTH0_CLIENT_ID=JldqTRWvEuGSRedeHGMA7hwfOUz4YW3n
-ENV AUTH0_CLIENT_SECRET=$AUTH0_CLIENT_KEY
+ENV AUTH0_CLIENT_SECRET=$auth0_client_key
 ENV AUTH0_DOMAIN="federation-dashboard.us.auth0.com"
 ENV REDIRECT_URI="http://localhost:3000/api/callback"
 ENV POST_LOGOUT_REDIRECT_URI="http://localhost:3000"
-ENV SESSION_COOKIE_SECRET=$AUTH0_COOKIE_SECRET
+ENV SESSION_COOKIE_SECRET=$auth0_cookie_secret
 RUN mkdir -p /data
 
 EXPOSE 3000
