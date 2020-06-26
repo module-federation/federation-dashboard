@@ -47,6 +47,7 @@ jobs:
         run: |-
           rm -fr dashboard-fe/node_modules
           yarn workspace @module-federation/dashboard run writeEnv
+          cat dashboard-fe/.env
           yarn workspace @module-federation/dashboard run docker:build
 
 #         yarn workspace @module-federation/dashboard run docker:push

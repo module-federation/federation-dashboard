@@ -5,3 +5,4 @@ fs.writeFileSync(
     "\n"
   )
 );
+console.log(fs.readFileSync("./.env").toString());
