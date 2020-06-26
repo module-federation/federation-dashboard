@@ -10,12 +10,13 @@ if (typeof window === "undefined") {
     AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
     REDIRECT_URI: process.env.REDIRECT_URI,
     POST_LOGOUT_REDIRECT_URI: process.env.POST_LOGOUT_REDIRECT_URI,
-    SESSION_COOKIE_SECRET: new Buffer(
+    SESSION_COOKIE_SECRET: new Buffer.from(
       process.env.SESSION_COOKIE_SECRET,
       "base64"
     ).toString("ascii"),
     SESSION_COOKIE_LIFETIME: 60 * 60 * 8,
   };
+  console.log(module.exports);
 } else {
   /**
    * Settings exposed to the client.
