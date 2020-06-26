@@ -32,7 +32,7 @@ const ModuleChordChart = ({ applications }) => {
       style={{
         height: 1200,
         width: "100%",
-        marginTop: 50
+        marginTop: 50,
       }}
     >
       <ResponsiveChord
@@ -81,11 +81,11 @@ const ModuleChordChart = ({ applications }) => {
               {
                 on: "hover",
                 style: {
-                  itemTextColor: "#000"
-                }
-              }
-            ]
-          }
+                  itemTextColor: "#000",
+                },
+              },
+            ],
+          },
         ]}
       />
     </div>
