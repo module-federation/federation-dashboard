@@ -1,6 +1,3 @@
-ARG AUTH0_CLIENT_SECRET
-ARG SESSION_COOKIE_SECRET
-
 FROM node:12.8-alpine as test-target
 ENV NODE_ENV=test
 ENV PATH $PATH:/usr/src/app/node_modules/.bin
@@ -11,6 +8,9 @@ COPY . .
 
 # Build
 FROM test-target as build-target
+ARG AUTH0_CLIENT_SECRET
+ARG SESSION_COOKIE_SECRET
+
 ENV NODE_ENV=production
 ENV PATH $PATH:/usr/src/app/node_modules/.bin
 # Auth0 Env Vars
