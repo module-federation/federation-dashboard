@@ -2,6 +2,13 @@ if (typeof window === "undefined") {
   /**
    * Settings exposed to the server.
    */
+  const { parsed = {} } = require("dotenv").config();
+  if (parsed.SESSION_COOKIE_SECRET) {
+    process.env.SESSION_COOKIE_SECRET = parsed.SESSION_COOKIE_SECRET;
+  }
+  if (parsed.AUTH0_CLIENT_SECRET) {
+    process.env.AUTH0_CLIENT_SECRET = parsed.AUTH0_CLIENT_SECRET;
+  }
 
   module.exports = {
     AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
@@ -14,9 +21,8 @@ if (typeof window === "undefined") {
       process.env.SESSION_COOKIE_SECRET,
       "base64"
     ).toString("ascii"),
-    SESSION_COOKIE_LIFETIME: 60 * 60 * 8,
+    SESSION_COOKIE_LIFETIME: 60 * 60 * 8
   };
-  console.log(module.exports);
 } else {
   /**
    * Settings exposed to the client.
@@ -26,6 +32,6 @@ if (typeof window === "undefined") {
     AUTH0_SCOPE: process.env.AUTH0_SCOPE,
     AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
     REDIRECT_URI: process.env.REDIRECT_URI,
-    POST_LOGOUT_REDIRECT_URI: process.env.POST_LOGOUT_REDIRECT_URI,
+    POST_LOGOUT_REDIRECT_URI: process.env.POST_LOGOUT_REDIRECT_URI
   };
 }

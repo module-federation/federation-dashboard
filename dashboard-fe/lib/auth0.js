@@ -13,6 +13,6 @@ export default initAuth0({
     cookieLifetime: config.SESSION_COOKIE_LIFETIME,
     storeIdToken: false,
     storeRefreshToken: false,
-    storeAccessToken: false,
-  },
+    storeAccessToken: false
+  }
 });
