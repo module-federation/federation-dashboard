@@ -11,6 +11,7 @@ FROM test-target as build-target
 ARG MOCK_ATTEMPT1
 ARG MOCK_ATTEMPT
 ARG AUTH0_CLIENT_KEY
+
 ENV NODE_ENV=production
 ENV PATH $PATH:/usr/src/app/node_modules/.bin
 # Auth0 Env Vars
