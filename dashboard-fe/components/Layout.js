@@ -4,7 +4,6 @@ import {
   CssBaseline,
   AppBar,
   Toolbar,
-  Paper,
   List,
   ListItem,
   Divider,
@@ -30,6 +29,8 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import Link from "next/link";
 import { useRouter } from "next/router";
+
+import ApplicationDrawer from "../components/ApplicationDrawer";
 
 const GET_SIDEBAR_DATA = gql`
   {
@@ -111,7 +112,7 @@ const SideBar = ({ data }) => {
   );
 };
 
-const drawerWidth = 240;
+const leftDrawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -135,8 +136,8 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: leftDrawerWidth,
+    width: `calc(100% - ${leftDrawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -151,16 +152,16 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  drawerPaper: {
+  leftDrawerPaper: {
     position: "relative",
     whiteSpace: "nowrap",
-    width: drawerWidth,
+    width: leftDrawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  drawerPaperClose: {
+  leftDrawerPaperClose: {
     overflowX: "hidden",
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
@@ -210,25 +211,24 @@ export default function Dashboard({ children }) {
   const classes = useStyles();
   const router = useRouter();
 
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const [leftOpen, setLeftOpen] = React.useState(true);
+  const handleDrawerLeftOpen = () => {
+    setLeftOpen(true);
   };
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleDrawerLeftClose = () => {
+    setLeftOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   const options = [];
   if (data) {
-    data.applications.forEach(({ id, name }) => {
+    data.applications.forEach(({ name }) => {
       options.push({
         type: "Application",
         url: `/applications/${name}`,
         name,
       });
     });
-    data.modules.forEach(({ id, application, name }) => {
+    data.modules.forEach(({ application, name }) => {
       options.push({
         type: "Modules",
         url: `/applications/${application.name}/${name}`,
@@ -247,17 +247,17 @@ export default function Dashboard({ children }) {
       <CssBaseline />
       <AppBar
         position="absolute"
-        className={clsx(classes.appBar, open && classes.appBarShift)}
+        className={clsx(classes.appBar, leftOpen && classes.appBarShift)}
       >
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
             color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            aria-label="Open left drawer"
+            onClick={handleDrawerLeftOpen}
             className={clsx(
               classes.menuButton,
-              open && classes.menuButtonHidden
+              leftOpen && classes.menuButtonHidden
             )}
           >
             <MenuIcon />
@@ -286,12 +286,15 @@ export default function Dashboard({ children }) {
       <Drawer
         variant="permanent"
         classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          paper: clsx(
+            classes.leftDrawerPaper,
+            !leftOpen && classes.leftDrawerPaperClose
+          ),
         }}
-        open={open}
+        open={leftOpen}
       >
         <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerLeftClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
@@ -304,6 +307,7 @@ export default function Dashboard({ children }) {
           {children}
         </Container>
       </main>
+      <ApplicationDrawer />
     </div>
   );
 }
