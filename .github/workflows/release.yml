@@ -47,7 +47,7 @@ jobs:
         run: |-
           rm -fr dashboard-fe/node_modules
           chmod +x dashboard-fe/buildargs.sh
-          AUTH0_CLIENT_SECRET=$AUTH0_CLIENT_SECRET SESSION_COOKIE_SECRET=$SESSION_COOKIE_SECRET yarn workspace @module-federation/dashboard run writeEnv
+          yarn workspace @module-federation/dashboard run writeEnv
           yarn workspace @module-federation/dashboard run docker:build:ci
 
 #         yarn workspace @module-federation/dashboard run docker:push
