@@ -41,9 +41,12 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
 
       - name: Perform builds
+        env:
+          AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+          SESSION_COOKIE_SECRET: ${{ secrets.SESSION_COOKIE_SECRET }}
         run: |-
           rm -fr dashboard-fe/node_modules
-          yarn workspace @module-federation/dashboard run docker:build
+          yarn workspace @module-federation/dashboard run docker:build --build-arg auth0_client_secret=${AUTH0_CLIENT_SECRET} --build-arg auth0_session_secret=${SESSION_COOKIE_SECRET}
           yarn workspace @module-federation/dashboard run docker:push
 
       - name: Create Release or Publish

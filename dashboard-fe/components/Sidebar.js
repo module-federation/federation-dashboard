@@ -1,20 +1,35 @@
-import React from "react";
-import Link from "next/link";
 import {
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   ListSubheader,
+  Divider,
 } from "@material-ui/core";
-
+import Link from "next/link";
+import LockIcon from "@material-ui/icons/Lock";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import PlusIcon from "@material-ui/icons/Add";
-import WebIcon from "@material-ui/icons/Web";
 import ShareIcon from "@material-ui/icons/Share";
+import WebIcon from "@material-ui/icons/Web";
+import PlusIcon from "@material-ui/icons/Add";
 import WidgetsIcon from "@material-ui/icons/Widgets";
+import React from "react";
 
-const SideBar = ({ data }) => {
+const SideBar = ({ data, restricted }) => {
+  if (restricted) {
+    return (
+      <List>
+        <Link href="/api/login">
+          <ListItem button>
+            <ListItemIcon>
+              <LockIcon />
+            </ListItemIcon>
+            <ListItemText primary="Login" />
+          </ListItem>
+        </Link>
+      </List>
+    );
+  }
   return (
     <List>
       <Link href="/">
@@ -74,6 +89,16 @@ const SideBar = ({ data }) => {
           ))}
         </>
       )}
+      <Divider />
+      <ListSubheader inset>User</ListSubheader>
+      <Link href="/api/logout">
+        <ListItem button>
+          <ListItemIcon>
+            <LockIcon />
+          </ListItemIcon>
+          <ListItemText primary="Logout" />
+        </ListItem>
+      </Link>
     </List>
   );
 };
