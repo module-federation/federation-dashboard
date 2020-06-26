@@ -4,6 +4,7 @@ ENV PATH $PATH:/usr/src/app/node_modules/.bin
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN yarn install
+RUN test -f .env || touch .env
 COPY . .
 
 # Build
@@ -33,7 +34,7 @@ WORKDIR /usr/src/app
 # Include only the release build and production packages.
 COPY --from=build-target /usr/src/app/node_modules node_modules
 COPY --from=build-target /usr/src/app/.next .next
-COPY --from=build-target /usr/src/app/.env* .
+COPY --from=build-target /usr/src/app/.env .
 
 ENV DATA_DIR /data
 # Auth0 Env Vars
