@@ -42,7 +42,9 @@ fetch("http://localhost:3000/api/graphql", {
 })
   .then((resp) => resp.json())
   .then((data) => {
-    console.log(`Added version to dashboard, new version list:
-${data.data.addVersion.versions.join(", ")}`);
+    console.log(
+      `Added version to dashboard, new version list:`,
+      data.data.addVersion.versions.join(", ")
+    );
   })
   .catch((err) => console.log(err));
