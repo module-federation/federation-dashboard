@@ -1,5 +1,5 @@
 {
-  "name": "@dashboard/home",
+  "name": "home",
   "version": "0.0.0",
   "private": true,
   "devDependencies": {

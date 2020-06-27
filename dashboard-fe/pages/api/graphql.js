@@ -139,6 +139,9 @@ const resolvers = {
     addVersion: async (_, { application, version }) => {
       const applications = await getApplications();
       const app = applications.find(({ id }) => id === application);
+      if (!app) {
+        throw new Error(`Application ${application} not found`);
+      }
       app.versions = app.versions || DEFAULT_VERSIONS;
       app.versions.versions = [
         ...app.versions.versions.filter((v) => v !== version),
@@ -151,6 +154,9 @@ const resolvers = {
     publishVersion: async (_, { application, version }) => {
       const applications = await getApplications();
       const app = applications.find(({ id }) => id === application);
+      if (!app) {
+        throw new Error(`Application ${application} not found`);
+      }
       app.versions = app.versions || DEFAULT_VERSIONS;
       app.versions.latest = version;
       update(app);

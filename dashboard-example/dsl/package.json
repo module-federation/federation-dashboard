@@ -1,5 +1,5 @@
 {
-  "name": "@dashboard/dsl",
+  "name": "dsl",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
