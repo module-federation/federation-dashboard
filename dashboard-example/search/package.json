@@ -5,7 +5,7 @@
   "devDependencies": {
     "@babel/core": "7.10.3",
     "@babel/preset-react": "7.10.1",
-    "@module-federation/dashboard-plugin": "file:../../dashboard-plugin",
+    "@module-federation/dashboard-plugin": "*",
     "babel-loader": "8.1.0",
     "css-loader": "3.6.0",
     "html-webpack-plugin": "git://github.com/ScriptedAlchemy/html-webpack-plugin#master",

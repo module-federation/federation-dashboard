@@ -1,11 +1,11 @@
 {
   "name": "@dashboard/nav",
-  "version": "0.0.0",
+  "version": "4.0.0",
   "private": true,
   "devDependencies": {
     "@babel/core": "7.10.3",
     "@babel/preset-react": "7.10.1",
-    "@module-federation/dashboard-plugin": "file:../../dashboard-plugin",
+    "@module-federation/dashboard-plugin": "*",
     "babel-loader": "8.1.0",
     "css-loader": "3.6.0",
     "html-webpack-plugin": "git://github.com/ScriptedAlchemy/html-webpack-plugin#master",
@@ -18,7 +18,8 @@
   },
   "scripts": {
     "start": "webpack-dev-server --open --mode development --liveReload",
-    "build": "node ../../node_modules/webpack/bin/webpack.js --mode production",
+    "build": "node --inspect ../../node_modules/webpack/bin/webpack.js --mode production && yarn cut-version",
+    "cut-version": "PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\\\",]//g' | tr -d '[[:space:]]'); node --inspect node_modules/.bin/federation-report $PACKAGE_VERSION",
     "serve": "serve dist -p 3003",
     "clean": "rm -rf dist"
   },

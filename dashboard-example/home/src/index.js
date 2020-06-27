@@ -1,4 +1,4 @@
-const injectScript = function(d, s, id, override) {
+const injectScript = function (d, s, id, override) {
   const promise = new Promise((resolve) => {
     var js,
       fjs = d.getElementsByTagName(s)[0];
@@ -10,7 +10,7 @@ const injectScript = function(d, s, id, override) {
     if (override && override.version) {
       window[`remote_${override.name}`] = override.version;
     }
-    js.onload = function() {
+    js.onload = function () {
       resolve();
     };
     const src =

@@ -39,6 +39,7 @@ class FederationDashboardPlugin {
 
     compiler.hooks.afterDone.tap(PLUGIN_NAME, (liveStats) => {
       const stats = liveStats.toJson();
+
       // filter modules
       const modules = this.getFilteredModules(stats);
       // get RemoteEntryChunk
