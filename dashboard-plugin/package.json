@@ -19,7 +19,7 @@
     "convertToGraph.js"
   ],
   "dependencies": {
-    "@module-federation/automatic-vendor-federation": "^1.0.1",
+    "@module-federation/automatic-vendor-federation": "^1.2.0",
     "flatted": "^2.0.2",
     "node-fetch": "^2.6.0"
   },

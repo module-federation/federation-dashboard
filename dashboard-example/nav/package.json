@@ -19,7 +19,7 @@
   "scripts": {
     "start": "webpack-dev-server --open --mode development --liveReload",
     "build": "node --inspect ../../node_modules/webpack/bin/webpack.js --mode production && yarn cut-version",
-    "cut-version": "PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\\\",]//g' | tr -d '[[:space:]]'); node --inspect node_modules/.bin/federation-report $PACKAGE_VERSION",
+    "cut-version": "node --inspect node_modules/.bin/federation-report --package-json=./package.json --build-dir=./dist",
     "serve": "serve dist -p 3003",
     "clean": "rm -rf dist"
   },

@@ -47,6 +47,7 @@ class FederationDashboardPlugin {
         stats,
         FederationPluginOptions
       );
+      console.log(RemoteEntryChunk);
       const validChunkArray = this.buildValidChunkArray(
         liveStats,
         FederationPluginOptions

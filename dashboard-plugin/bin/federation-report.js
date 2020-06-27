@@ -46,9 +46,15 @@ const path = require("path");
 //
 //
 
-const pkg = process.argv[2]
-  ? process.argv[2]
-  : require(path.resolve(process.cwd(), "./package.json"));
+const cliArgs = process.argv.slice(2).reduce((acc, arg) => {
+  const [argName, argValue] = arg.split("=");
+  return Object.assign(acc, { [argName]: argValue });
+}, {});
+
+const packageJson = cliArgs["--package-json"] || "./package.json";
+const buildDirectory = cliArgs["--build-dir"] || "./dist";
+console.log(packageJson, buildDirectory);
+const pkg = require(path.resolve(process.cwd(), packageJson));
 
 const data = `mutation {
   addVersion(application: "${pkg.name}", version: "${pkg.version}") {
@@ -67,12 +73,18 @@ const options = {
   },
 };
 
-const remoteDistLocaiton = path.join(process.cwd(), "dist");
-fs.mkdir(path.join(remoteDistLocaiton, version), { recursive: true }, (err) => {
-  if (err) throw err;
-});
+const remoteDistLocaiton = path.join(process.cwd(), buildDirectory);
+fs.mkdir(
+  path.join(remoteDistLocaiton, pkg.version),
+  { recursive: true },
+  (err) => {
+    if (err) throw err;
+  }
+);
 fs.createReadStream(path.join(remoteDistLocaiton, "remoteEntry.js")).pipe(
-  fs.createWriteStream(path.join(remoteDistLocaiton, version, "remoteEntry.js"))
+  fs.createWriteStream(
+    path.join(remoteDistLocaiton, pkg.version, "remoteEntry.js")
+  )
 );
 
 const req = http.request(options, (res) => {
