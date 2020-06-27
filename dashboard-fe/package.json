@@ -49,7 +49,7 @@
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "nedb": "^1.8.0",
-    "next": "9.4.0",
+    "next": "9.4.4",
     "node-fetch": "^2.6.0",
     "pathfinding": "^0.4.18",
     "paths-js": "^0.4.10",
