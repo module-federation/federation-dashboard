@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --open --mode development --liveReload",
-    "build": "node --inspect ../../node_modules/webpack/bin/webpack.js --mode production && yarn cut-version",
+    "build": "node ../../node_modules/webpack/bin/webpack.js --mode production && yarn cut-version",
     "cut-version": "node --inspect node_modules/.bin/federation-report --package-json=./package.json --build-dir=./dist",
     "serve": "serve dist -p 3003",
     "clean": "rm -rf dist"
