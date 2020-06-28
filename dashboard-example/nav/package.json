@@ -35,6 +35,7 @@
     "container": "remoteEntry.js",
     "outputPath": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/dist",
     "dashboardFileName": "dashboard.json",
-    "context": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav"
+    "context": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav",
+    "name": "nav"
   }
 }
