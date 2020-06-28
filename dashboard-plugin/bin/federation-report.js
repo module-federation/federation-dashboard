@@ -64,4 +64,4 @@ fetch("http://localhost:3000/api/graphql", {
       data.data.addVersion.versions.join(", ")
     );
   })
-  .catch((err) => console.log(err));
+  .catch((err) => console.error(err));
