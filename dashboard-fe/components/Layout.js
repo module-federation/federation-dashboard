@@ -172,7 +172,10 @@ const Layout = ({ user, loading = false, children }) => {
       router.push(opt.url);
     }
   };
-
+  if (process.env.WITH_AUTH !== true) {
+    user = true;
+    loading = false;
+  }
   return (
     <UserProvider value={{ user, loading }}>
       <div className={classes.root}>
