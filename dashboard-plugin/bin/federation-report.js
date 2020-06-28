@@ -9,10 +9,15 @@ const cliArgs = process.argv.slice(2).reduce((acc, arg) => {
 
 const packageJson = cliArgs["--package-json"] || "./package.json";
 const buildDirectory = cliArgs["--build-dir"] || "./dist";
-console.log(packageJson, buildDirectory);
+
 const pkg = require(path.resolve(process.cwd(), packageJson));
 
-const remoteDistLocaiton = path.join(process.cwd(), buildDirectory);
+const remoteDistLocaiton =
+  pkg.versionData.outputPath || path.join(process.cwd(), buildDirectory);
+const remoteLocation = path.join(
+  remoteDistLocaiton,
+  pkg.versionData.dashboardFileName
+);
 fs.mkdir(
   path.join(remoteDistLocaiton, pkg.version),
   { recursive: true },
@@ -20,9 +25,9 @@ fs.mkdir(
     if (err) throw err;
   }
 );
-fs.createReadStream(path.join(remoteDistLocaiton, "remoteEntry.js")).pipe(
+fs.createReadStream(remoteLocation).pipe(
   fs.createWriteStream(
-    path.join(remoteDistLocaiton, pkg.version, "remoteEntry.js")
+    path.join(remoteDistLocaiton, pkg.version, remoteLocation)
   )
 );
 

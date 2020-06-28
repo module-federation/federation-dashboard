@@ -5,6 +5,7 @@ const convertToGraph = ({
   modules,
   topLevelPackage,
   metadata,
+  versionData,
 }) => {
   validateParams({ federationRemoteEntry, modules, topLevelPackage, metadata });
 
@@ -111,6 +112,7 @@ const convertToGraph = ({
     id: app,
     name: app,
     remote,
+    versionData,
     overrides: Object.values(overrides),
     consumes: consumes.map((con) => ({
       ...con,

@@ -47,7 +47,6 @@ class FederationDashboardPlugin {
         stats,
         FederationPluginOptions
       );
-      console.log(RemoteEntryChunk);
       const validChunkArray = this.buildValidChunkArray(
         liveStats,
         FederationPluginOptions
@@ -56,6 +55,11 @@ class FederationDashboardPlugin {
       const vendorFederation = this.buildVendorFederationMap(liveStats);
 
       const rawData = {
+        versionData: {
+          container: RemoteEntryChunk.files[0],
+          outputPath: stats.outputPath,
+          dashboardFileName: this._options.filename,
+        },
         name: FederationPluginOptions.name,
         metadata: this._options.metadata || {},
         topLevelPackage: vendorFederation || {},
@@ -134,10 +138,13 @@ class FederationDashboardPlugin {
   buildVendorFederationMap(liveStats) {
     const vendorFederation = {};
     let packageJson;
-
+    this._webpackContext = liveStats.compilation.options.context;
     try {
-      packageJson = require(liveStats.compilation.options.context +
-        "/package.json");
+      packageJson = require(path.join(
+        liveStats.compilation.options.context,
+        "package.json"
+      ));
+      this._packageJson = packageJson;
     } catch (e) {}
 
     if (packageJson) {
@@ -225,6 +232,17 @@ class FederationDashboardPlugin {
   }
 
   writeStatsFiles(stats, dashData) {
+    if (this._packageJson) {
+      const updatedPackage = Object.assign({}, this._packageJson, {
+        versionData: JSON.parse(this._dashData).versionData,
+      });
+      fs.writeFile(
+        path.join(this._webpackContext, "package.json"),
+        JSON.stringify(updatedPackage, null, 2),
+        { encoding: "utf-8" },
+        () => {}
+      );
+    }
     if (this._options.filename) {
       const hashPath = path.join(stats.outputPath, this._options.filename);
       fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, () => {});
