@@ -17,6 +17,9 @@ import withAuth from "../components/with-auth";
 
 const GET_APPS = gql`
   {
+    dashboard {
+      versionManagementEnabled
+    }
     applications {
       id
       name
@@ -41,6 +44,10 @@ const GET_APPS = gql`
         usedIn {
           file
         }
+      }
+      versions {
+        versions
+        latest
       }
     }
   }

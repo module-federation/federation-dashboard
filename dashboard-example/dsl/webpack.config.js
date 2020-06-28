@@ -2,7 +2,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
-
 module.exports = {
   entry: "./src/index",
   mode: "development",
@@ -11,7 +10,9 @@ module.exports = {
     port: 3002,
   },
   output: {
-    publicPath: "http://localhost:3002/",
+    filename: "[name].[contenthash].js",
+    chunkFilename: "[name].[contenthash].js",
+    publicPath: `http://localhost:3002/`,
   },
   module: {
     rules: [
@@ -62,6 +63,7 @@ module.exports = {
       template: "./public/index.html",
     }),
     new DashboardPlugin({
+      version: true,
       filename: "dashboard.json",
       dashboardURL: "http://localhost:3000/api/update",
       metadata: {
