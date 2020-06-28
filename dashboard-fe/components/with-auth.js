@@ -6,9 +6,6 @@ import createLoginUrl from "../lib/url-helper";
 import RedirectToLogin from "./login-redirect";
 
 export default function withAuth(InnerComponent) {
-  if (process.env.WITH_AUTH !== "true") {
-    return InnerComponent;
-  }
   return class Authenticated extends Component {
     static async getInitialProps(ctx) {
       if (!ctx.req) {

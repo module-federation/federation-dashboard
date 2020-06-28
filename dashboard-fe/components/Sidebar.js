@@ -90,19 +90,15 @@ const SideBar = ({ data, restricted }) => {
         </>
       )}
       <Divider />
-      {process.env.WITH_AUTH === "true" && (
-        <>
-          <ListSubheader inset>User</ListSubheader>
-          <Link href="/api/logout">
-            <ListItem button>
-              <ListItemIcon>
-                <LockIcon />
-              </ListItemIcon>
-              <ListItemText primary="Logout" />
-            </ListItem>
-          </Link>
-        </>
-      )}
+      <ListSubheader inset>User</ListSubheader>
+      <Link href="/api/logout">
+        <ListItem button>
+          <ListItemIcon>
+            <LockIcon />
+          </ListItemIcon>
+          <ListItemText primary="Logout" />
+        </ListItem>
+      </Link>
     </List>
   );
 };
