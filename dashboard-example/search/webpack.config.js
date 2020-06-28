@@ -12,6 +12,8 @@ module.exports = {
     port: 3004,
   },
   output: {
+    filename: "[name].[contenthash].js",
+    chunkFilename: "[name].[contenthash].js",
     publicPath: "http://localhost:3004/",
   },
   module: {
@@ -66,6 +68,7 @@ module.exports = {
       template: "./public/index.html",
     }),
     new DashboardPlugin({
+      version: true,
       filename: "dashboard.json",
       dashboardURL: "http://localhost:3000/api/update",
       metadata: {

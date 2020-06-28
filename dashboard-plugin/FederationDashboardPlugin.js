@@ -21,7 +21,7 @@ class FederationDashboardPlugin {
    * @param {FederationDashboardPluginOptions} options
    */
   constructor(options) {
-    this._options = options;
+    this._options = Object.assign({ filename: "dashboard.json" }, options);
     this._dashData = null;
   }
 
@@ -39,6 +39,7 @@ class FederationDashboardPlugin {
 
     compiler.hooks.afterDone.tap(PLUGIN_NAME, (liveStats) => {
       const stats = liveStats.toJson();
+
       // filter modules
       const modules = this.getFilteredModules(stats);
       // get RemoteEntryChunk
@@ -52,7 +53,6 @@ class FederationDashboardPlugin {
       );
       const chunkDependencies = this.getChunkDependencies(validChunkArray);
       const vendorFederation = this.buildVendorFederationMap(liveStats);
-
       const rawData = {
         name: FederationPluginOptions.name,
         metadata: this._options.metadata || {},
@@ -63,6 +63,18 @@ class FederationDashboardPlugin {
         modules,
         chunkDependencies,
       };
+
+      if (this._options.version) {
+        Object.assign(rawData, {
+          versionData: {
+            container: RemoteEntryChunk.files[0],
+            outputPath: stats.outputPath,
+            dashboardFileName: this._options.filename,
+            context: this._webpackContext,
+            name: FederationPluginOptions.name,
+          },
+        });
+      }
 
       let graphData = null;
       try {
@@ -132,10 +144,13 @@ class FederationDashboardPlugin {
   buildVendorFederationMap(liveStats) {
     const vendorFederation = {};
     let packageJson;
-
+    this._webpackContext = liveStats.compilation.options.context;
     try {
-      packageJson = require(liveStats.compilation.options.context +
-        "/package.json");
+      packageJson = require(path.join(
+        liveStats.compilation.options.context,
+        "package.json"
+      ));
+      this._packageJson = packageJson;
     } catch (e) {}
 
     if (packageJson) {
@@ -223,6 +238,17 @@ class FederationDashboardPlugin {
   }
 
   writeStatsFiles(stats, dashData) {
+    if (this._packageJson) {
+      const updatedPackage = Object.assign({}, this._packageJson, {
+        versionData: JSON.parse(this._dashData).versionData,
+      });
+      fs.writeFile(
+        path.join(this._webpackContext, "package.json"),
+        JSON.stringify(updatedPackage, null, 2),
+        { encoding: "utf-8" },
+        () => {}
+      );
+    }
     if (this._options.filename) {
       const hashPath = path.join(stats.outputPath, this._options.filename);
       fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, () => {});

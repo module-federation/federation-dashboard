@@ -6,8 +6,20 @@
   "scripts": {
     "test": "jest --watch"
   },
+  "engines": {
+    "node": ">= 10"
+  },
+  "bin": {
+    "federation-report.js": "bin/federation-report.js"
+  },
+  "files": [
+    "bin",
+    "helpers",
+    "FederationDashboardPlugin.js",
+    "convertToGraph.js"
+  ],
   "dependencies": {
-    "@module-federation/automatic-vendor-federation": "^1.0.1",
+    "@module-federation/automatic-vendor-federation": "^1.2.1",
     "flatted": "^2.0.2",
     "node-fetch": "^2.6.0"
   },
