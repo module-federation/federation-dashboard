@@ -73,6 +73,7 @@ module.exports = {
       dashboardURL: "http://localhost:3000/api/update",
       versionChangeWebhook: "http://cnn.com/",
       metadata: {
+        clientUrl: "http://localhost:3000",
         source: {
           url:
             "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home",
