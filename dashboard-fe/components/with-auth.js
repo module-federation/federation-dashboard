@@ -7,7 +7,10 @@ import RedirectToLogin from "./login-redirect";
 
 export default function withAuth(InnerComponent) {
   if (process.env.WITH_AUTH !== "true") {
-    return InnerComponent;
+    const NoAuth = (props) => {
+      return <div>{<InnerComponent {...props} user={null} />}</div>;
+    };
+    return NoAuth;
   }
   return class Authenticated extends Component {
     static async getInitialProps(ctx) {
