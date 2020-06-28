@@ -42,6 +42,7 @@ module.exports = {
       shared: require("./package.json").dependencies,
     }),
     new DashboardPlugin({
+      version: true,
       dashboardURL: "http://localhost:3000/api/update",
       filename: "dashboard.json",
       metadata: {

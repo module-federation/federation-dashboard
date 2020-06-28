@@ -53,15 +53,7 @@ class FederationDashboardPlugin {
       );
       const chunkDependencies = this.getChunkDependencies(validChunkArray);
       const vendorFederation = this.buildVendorFederationMap(liveStats);
-
       const rawData = {
-        versionData: {
-          container: RemoteEntryChunk.files[0],
-          outputPath: stats.outputPath,
-          dashboardFileName: this._options.filename,
-          context: this._webpackContext,
-          name: FederationPluginOptions.name,
-        },
         name: FederationPluginOptions.name,
         metadata: this._options.metadata || {},
         topLevelPackage: vendorFederation || {},
@@ -71,6 +63,18 @@ class FederationDashboardPlugin {
         modules,
         chunkDependencies,
       };
+
+      if (this._options.version) {
+        Object.assign(rawData, {
+          versionData: {
+            container: RemoteEntryChunk.files[0],
+            outputPath: stats.outputPath,
+            dashboardFileName: this._options.filename,
+            context: this._webpackContext,
+            name: FederationPluginOptions.name,
+          },
+        });
+      }
 
       let graphData = null;
       try {
