@@ -51,10 +51,11 @@ fetch("http://localhost:3000/api/graphql", {
 })
   .then((resp) => resp.json())
   .then((data) => {
-    delete packageJson.versionData;
+    const packagePath = path.join(pkg.versionData.context, "package.json");
+    delete pkg.versionData;
     fs.writeFile(
-      path.join(pkg.versionData.context, "package.json"),
-      JSON.stringify(packageJson, null, 2),
+      packagePath,
+      JSON.stringify(pkg, null, 2),
       { encoding: "utf-8" },
       () => {}
     );

@@ -30,11 +30,5 @@
     "lodash": "^4.17.15",
     "react": "^16.13.0",
     "react-dom": "^16.13.0"
-  },
-  "versionData": {
-    "container": "remoteEntry.js",
-    "outputPath": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/dist",
-    "dashboardFileName": "dashboard.json",
-    "context": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav"
   }
 }
