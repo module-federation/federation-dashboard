@@ -14,6 +14,7 @@ const pkg = require(path.resolve(process.cwd(), packageJson));
 
 const remoteDistLocation =
   pkg.versionData.outputPath || path.join(process.cwd(), buildDirectory);
+console.log(remoteDistLocation);
 const remoteLocation = path.join(
   remoteDistLocation,
   pkg.versionData.dashboardFileName

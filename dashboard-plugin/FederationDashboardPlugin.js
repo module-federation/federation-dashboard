@@ -21,7 +21,7 @@ class FederationDashboardPlugin {
    * @param {FederationDashboardPluginOptions} options
    */
   constructor(options) {
-    this._options = options;
+    this._options = Object.assign({ filename: "dashboard.json" }, options);
     this._dashData = null;
   }
 
