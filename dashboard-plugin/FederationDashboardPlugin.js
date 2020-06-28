@@ -59,6 +59,7 @@ class FederationDashboardPlugin {
           container: RemoteEntryChunk.files[0],
           outputPath: stats.outputPath,
           dashboardFileName: this._options.filename,
+          context: this._webpackContext,
         },
         name: FederationPluginOptions.name,
         metadata: this._options.metadata || {},

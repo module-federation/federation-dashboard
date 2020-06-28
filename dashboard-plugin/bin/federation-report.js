@@ -51,6 +51,13 @@ fetch("http://localhost:3000/api/graphql", {
 })
   .then((resp) => resp.json())
   .then((data) => {
+    delete packageJson.versionData;
+    fs.writeFile(
+      path.join(this._webpackContext, "package.json"),
+      JSON.stringify(packageJson, null, 2),
+      { encoding: "utf-8" },
+      () => {}
+    );
     console.log(
       `Added version to dashboard, new version list:`,
       data.data.addVersion.versions.join(", ")
