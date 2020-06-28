@@ -53,7 +53,7 @@ fetch("http://localhost:3000/api/graphql", {
   .then((data) => {
     delete packageJson.versionData;
     fs.writeFile(
-      path.join(this._webpackContext, "package.json"),
+      path.join(pkg.versionData.context, "package.json"),
       JSON.stringify(packageJson, null, 2),
       { encoding: "utf-8" },
       () => {}

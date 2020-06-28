@@ -53,7 +53,9 @@ class FederationDashboardPlugin {
       );
       const chunkDependencies = this.getChunkDependencies(validChunkArray);
       const vendorFederation = this.buildVendorFederationMap(liveStats);
-
+      console.log(stats);
+      console.log(liveStats);
+      debugger;
       const rawData = {
         versionData: {
           container: RemoteEntryChunk.files[0],
