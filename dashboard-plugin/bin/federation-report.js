@@ -12,14 +12,14 @@ const buildDirectory = cliArgs["--build-dir"] || "./dist";
 
 const pkg = require(path.resolve(process.cwd(), packageJson));
 
-const remoteDistLocaiton =
+const remoteDistLocation =
   pkg.versionData.outputPath || path.join(process.cwd(), buildDirectory);
 const remoteLocation = path.join(
-  remoteDistLocaiton,
+  remoteDistLocation,
   pkg.versionData.dashboardFileName
 );
 fs.mkdir(
-  path.join(remoteDistLocaiton, pkg.version),
+  path.join(remoteDistLocation, pkg.version),
   { recursive: true },
   (err) => {
     if (err) throw err;
@@ -27,7 +27,11 @@ fs.mkdir(
 );
 fs.createReadStream(remoteLocation).pipe(
   fs.createWriteStream(
-    path.join(remoteDistLocaiton, pkg.version, remoteLocation)
+    path.join(
+      remoteDistLocation,
+      pkg.version,
+      pkg.versionData.dashboardFileName
+    )
   )
 );
 
