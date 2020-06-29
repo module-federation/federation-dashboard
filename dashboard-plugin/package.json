@@ -20,7 +20,7 @@
   ],
   "dependencies": {
     "@module-federation/automatic-vendor-federation": "^1.2.1",
-    "flatted": "^2.0.2",
+    "flatted": "^3.0.0",
     "node-fetch": "^2.6.0"
   },
   "peerDependencies": {
