@@ -1,8 +1,11 @@
 import Datastore from "nedb";
 import path from "path";
+import Joi from "@hapi/joi";
 
 import Application from "../application";
-import ApplicationVersion from "../applicationVersion";
+import ApplicationVersion, {
+  schema as applicationVersionSchema,
+} from "../applicationVersion";
 import MetricValue from "../metricValue";
 
 import Driver from "./driver";
@@ -44,11 +47,7 @@ class TableDriver<T> {
   async search(query: any): Promise<Array<T> | null> {
     return new Promise((resolve) => {
       this.store.find(query, (_, docs) => {
-        if (docs.length > 0) {
-          resolve(docs[0]);
-        } else {
-          resolve(null);
-        }
+        resolve(docs || []);
       });
     });
   }
@@ -137,6 +136,8 @@ export default class DriverNedb implements Driver {
     });
   }
   async applicationVersion_update(version: ApplicationVersion): Promise<null> {
+    Joi.assert(version, applicationVersionSchema);
+
     return new Promise(async (resolve) => {
       // Insert or update this version
       await this.applicationVersionsTable.update(

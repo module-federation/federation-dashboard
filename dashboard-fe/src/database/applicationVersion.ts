@@ -1,7 +1,27 @@
-import Application from "./application";
+import Joi from "@hapi/joi";
 
-import Module from "./module";
-import Remote from "./remote";
+import Module, { schema as moduleSchema } from "./module";
+import Remote, { schema as remoteSchema } from "./remote";
+
+export enum ApplicationVersionType {
+  "development",
+  "production",
+}
+
+export const schema = Joi.object({
+  applicationId: Joi.string().required(),
+  type: Joi.any()
+    .valid("development", "production")
+    .required(),
+  version: Joi.string().required(),
+  latest: Joi.boolean().required(),
+  remotes: Joi.array()
+    .items(remoteSchema)
+    .required(),
+  modules: Joi.array()
+    .items(moduleSchema)
+    .required(),
+});
 
 export default class ApplicationVersion {
   applicationId: String;
