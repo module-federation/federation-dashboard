@@ -8,10 +8,10 @@ function Profile() {
   return (
     <Layout>
       <h1>Profile</h1>
-      {store.authUser && (
+      {store.user && (
         <>
           <p>Profile:</p>
-          <pre>{JSON.stringify(store.authUser, null, 2)}</pre>
+          <pre>{JSON.stringify(store.user, null, 2)}</pre>
         </>
       )}
     </Layout>

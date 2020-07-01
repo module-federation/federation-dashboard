@@ -20,6 +20,17 @@ const GET_USER = gql`
     }
   }
 `;
+const UPDATE_USER = gql`
+  mutation($user: UserInput!) {
+    updateUser(user: $user) {
+      id
+      email
+      name
+      groups
+      defaultGroup
+    }
+  }
+`;
 
 class Store {
   client = client;
@@ -28,22 +39,43 @@ class Store {
 
   @observable isAuthorized = false;
   @observable authUser = null;
+  @observable user = null;
 
   @action setAuthUser(authUser) {
     this.authUser = authUser;
-    this.isAuthorized = true;
-    console.log(this.authUser.email);
-    client
-      .query({
-        query: GET_USER,
-        variables: {
-          email: this.authUser.email,
-        },
-      })
-      .then((data) => {
-        console.log("GET_USER");
-        console.log(data.data.userByEmail);
-      });
+    if (this.authUser) {
+      this.isAuthorized = true;
+      client
+        .query({
+          query: GET_USER,
+          variables: {
+            email: this.authUser.email,
+          },
+        })
+        .then((data) => {
+          if (data.data.userByEmail) {
+            this.user = data.data.userByEmail;
+          } else {
+            client
+              .mutate({
+                mutation: UPDATE_USER,
+                variables: {
+                  user: {
+                    email: this.authUser.email,
+                    name: this.authUser.name,
+                    groups: ["default"],
+                    defaultGroup: "default",
+                  },
+                },
+              })
+              .then((updateData) => {
+                this.user = updateData.data.updateUser;
+              });
+          }
+        });
+    } else {
+      this.isAuthorized = false;
+    }
   }
 }
 

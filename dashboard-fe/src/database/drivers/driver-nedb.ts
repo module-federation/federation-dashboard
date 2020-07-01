@@ -225,7 +225,7 @@ export default class DriverNedb implements Driver {
   }
   async user_findByEmail(email: String): Promise<User> {
     const found = await this.usersTable.search({ email });
-    return found.length > 0 ? found[0] : null;
+    return Promise.resolve(found.length > 0 ? found[0] : null);
   }
   async user_findAll(): Promise<Array<User>> {
     return this.usersTable.search({});

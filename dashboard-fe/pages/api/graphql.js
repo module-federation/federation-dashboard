@@ -9,6 +9,7 @@ const DEFAULT_VERSIONS = {
 };
 
 import dbDriver from "../../src/database/drivers";
+import driver from "../../src/database/drivers";
 
 const typeDefs = gql`
   type Query {
@@ -28,6 +29,7 @@ const typeDefs = gql`
       remote: String!
       version: String
     ): Versions!
+    updateUser(user: UserInput!): User!
   }
 
   type DashboardInfo {
@@ -65,6 +67,13 @@ const typeDefs = gql`
   type Dependency {
     name: String!
     version: String!
+  }
+
+  input UserInput {
+    email: String!
+    name: String!
+    groups: [String!]
+    defaultGroup: String!
   }
 
   type User {
@@ -146,7 +155,7 @@ const resolvers = {
         .filter(filter);
     },
     userByEmail: async (_, { email }) => {
-      const user = dbDriver.user_findByEmail(email);
+      return dbDriver.user_findByEmail(email);
     },
   },
   Mutation: {
@@ -196,6 +205,13 @@ const resolvers = {
       }
       update(app);
       return app.versions;
+    },
+    updateUser: async (_, { user }) => {
+      await driver.user_update({
+        id: user.email,
+        ...user,
+      });
+      return driver.user_find(user.email);
     },
   },
   Module: {
