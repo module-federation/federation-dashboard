@@ -11,8 +11,9 @@ const ModuleUMLDiagram =
   typeof window === "undefined"
     ? () => <div />
     : require("../components/ModuleUMLDiagram.tsx").default;
-
 import Layout from "../components/Layout";
+import { useFetchUser } from "../lib/user";
+import withAuth from "../components/with-auth";
 
 const GET_APPS = gql`
   {
@@ -52,12 +53,13 @@ const useHomeStyles = makeStyles({
 });
 
 const Home = () => {
+  const { user, loading } = useFetchUser();
   const { data } = useQuery(GET_APPS);
   const [currentTab, currentTabSet] = React.useState(0);
   const classes = useHomeStyles();
 
   return (
-    <Layout>
+    <Layout user={user} loading={loading}>
       <Head>
         <title>Federated Modules Dashboard</title>
       </Head>
@@ -98,13 +100,14 @@ const Home = () => {
       )}
       {data && data.applications.length === 0 && (
         <>
+          <img src="/empty-data.svg" style={{ maxHeight: 400 }}></img>
           <Typography variant="h5">
             Get Started With Federated Modules
           </Typography>
           <Typography className={classes.helpParagraph}>
             If you already have applications that create or consume Federated
             Modules then you can import their metadata into this dashboard using
-            the{" "}
+            the
             <a
               href="https://www.npmjs.com/package/@module-federation/dashboard-plugin"
               target="_blank"
@@ -127,4 +130,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withAuth(Home);

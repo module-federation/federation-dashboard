@@ -1,7 +1,7 @@
+import React from "react";
 import createEngine, {
   DiagramModel,
   DefaultNodeModel,
-  DefaultPortModel,
   NodeModel,
   DagreEngine,
   DiagramEngine,
@@ -16,135 +16,118 @@ import React from "react";
 import { CanvasWidget } from "@projectstorm/react-canvas-core";
 import styled from "@emotion/styled";
 
-export class AdvancedLinkModel extends DefaultLinkModel {
-  constructor() {
-    super({
-      type: "advanced",
-      width: 4,
-    });
-    this.showArrow = false;
-  }
+import store from "../src/store";
+
+namespace S {
+  export const Node = styled.div<{ background: string; selected: boolean }>`
+    background-color: ${(p) => p.background};
+    border-radius: 5px;
+    font-family: sans-serif;
+    color: white;
+    border: solid 2px black;
+    overflow: visible;
+    font-size: 14px;
+    border: solid 2px ${(p) => (p.selected ? "rgb(0,192,255)" : "black")};
+  `;
+
+  export const Title = styled.div`
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    white-space: nowrap;
+    justify-items: center;
+  `;
+
+  export const TitleName = styled.div`
+    flex-grow: 1;
+    padding: 5px 5px;
+    font-size: 15pt;
+    font-weight: bold;
+    text-align: center;
+  `;
+
+  export const InPortItem = styled.div`
+    margin-top: 3px;
+    margin-bottom: 3px;
+  `;
+
+  export const OutPortItem = styled.div`
+    opacity: 0;
+  `;
+
+  export const Ports = styled.div`
+    display: flex;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+  `;
+
+  export const PortsContainer = styled.div`
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    &:first-of-type {
+      margin-right: 10px;
+    }
+    &:only-child {
+      margin-right: 0px;
+    }
+  `;
 }
 
-export class AdvancedPortModel extends DefaultPortModel {
-  createLinkModel(): AdvancedLinkModel | null {
-    return new AdvancedLinkModel();
-  }
+export interface DefaultNodeProps {
+  node: DefaultNodeModel;
+  engine: DiagramEngine;
 }
 
-const CustomLinkArrowWidget = (props) => {
-  const { point, previousPoint } = props;
+export class NicerNodeWidget extends React.Component<DefaultNodeProps> {
+  generateInPort = (port) => {
+    return (
+      <S.InPortItem>
+        <DefaultPortLabel
+          engine={this.props.engine}
+          port={port}
+          key={port.getID()}
+        />
+      </S.InPortItem>
+    );
+  };
 
-  const angle =
-    90 +
-    (Math.atan2(
-      point.getPosition().y - previousPoint.getPosition().y,
-      point.getPosition().x - previousPoint.getPosition().x
-    ) *
-      180) /
-      Math.PI;
-
-  //translate(50, -10),
-  return (
-    <g
-      className="arrow"
-      transform={
-        "translate(" +
-        point.getPosition().x +
-        ", " +
-        point.getPosition().y +
-        ")"
-      }
-    >
-      <g style={{ transform: "rotate(" + angle + "deg)" }}>
-        <g transform={"translate(0, -3)"}>
-          <polygon
-            points="0,10 8,30 -8,30"
-            fill={props.color}
-            onMouseLeave={() => {
-              this.setState({ selected: false });
-            }}
-            onMouseEnter={() => {
-              this.setState({ selected: true });
-            }}
-            data-id={point.getID()}
-            data-linkid={point.getLink().getID()}
-          ></polygon>
-        </g>
-      </g>
-    </g>
-  );
-};
-
-export class AdvancedLinkWidget extends DefaultLinkWidget {
-  generateArrow(point: PointModel, previousPoint: PointModel): JSX.Element {
-    return this.props.link.getOptions().showArrow ? (
-      <CustomLinkArrowWidget
-        key={point.getID()}
-        point={point as any}
-        previousPoint={previousPoint as any}
-        colorSelected={this.props.link.getOptions().selectedColor}
-        color={this.props.link.getOptions().color}
-      />
-    ) : null;
-  }
+  generateOutPort = (port) => {
+    return (
+      <S.OutPortItem>
+        <DefaultPortLabel
+          engine={this.props.engine}
+          port={port}
+          key={port.getID()}
+        />
+      </S.OutPortItem>
+    );
+  };
 
   render() {
-    //ensure id is present for all points on the path
-    var points = this.props.link.getPoints();
-    var paths = [];
-    this.refPaths = [];
-
-    //draw the multiple anchors and complex line instead
-    for (let j = 0; j < points.length - 1; j++) {
-      paths.push(
-        this.generateLink(
-          LinkWidget.generateLinePath(points[j], points[j + 1]),
-          {
-            "data-linkid": this.props.link.getID(),
-            "data-point": j,
-            onMouseDown: (event: MouseEvent) => {
-              this.addPointToLink(event, j + 1);
-            },
-          },
-          j
-        )
-      );
-    }
-
-    for (let i = 1; i < points.length - 1; i++) {
-      paths.push(this.generatePoint(points[i]));
-    }
-
-    if (this.props.link.getTargetPort() !== null) {
-      paths.push(
-        this.generateArrow(points[points.length - 1], points[points.length - 2])
-      );
-    } else {
-      paths.push(this.generatePoint(points[points.length - 1]));
-    }
-
     return (
-      <g data-default-link-test={this.props.link.getOptions().testName}>
-        {paths}
-      </g>
+      <S.Node
+        data-default-node-name={this.props.node.getOptions().name}
+        selected={this.props.node.isSelected()}
+        background={this.props.node.getOptions().color}
+      >
+        <S.Title>
+          <S.TitleName>{this.props.node.getOptions().name}</S.TitleName>
+        </S.Title>
+        <S.Ports>
+          <S.PortsContainer>
+            {this.props.node.getInPorts().map(this.generateInPort)}
+          </S.PortsContainer>
+          <S.PortsContainer>
+            {this.props.node.getOutPorts().map(this.generateOutPort)}
+          </S.PortsContainer>
+        </S.Ports>
+      </S.Node>
     );
   }
 }
 
-export class AdvancedLinkFactory extends DefaultLinkFactory {
-  constructor() {
-    super("advanced");
-  }
-
-  generateModel(): AdvancedLinkModel {
-    return new AdvancedLinkModel();
-  }
-
+export class NicerNodeFactory extends DefaultNodeFactory {
   generateReactWidget(event): JSX.Element {
-    return (
-      <AdvancedLinkWidget link={event.model} diagramEngine={this.engine} />
-    );
+    return <NicerNodeWidget engine={this.engine} node={event.model} />;
   }
 }
 
@@ -196,7 +179,6 @@ class LayoutWidget extends React.Component<
   componentDidMount(): void {
     setTimeout(() => {
       this.autoDistribute();
-      this.props.engine.zoomToFit();
     }, 0);
   }
 
@@ -224,91 +206,108 @@ const LINK_COLOR_SELECTED = "gray";
 const LINK_COLOR_UNSELECTED = "rgba(0,192,255,0)";
 const LINK_SIZE_DEFAULT = 3;
 
-export default ({ applications }) => {
-  let engine = createEngine();
-  engine.getLinkFactories().registerFactory(new AdvancedLinkFactory());
+class ModuleUMLDiagram extends React.PureComponent {
+  engine: DiagramEngine;
+  model: DiagramModel;
 
-  let model = new DiagramModel();
+  constructor(props) {
+    super(props);
 
-  let nodes: NodeModel[] = [];
-  let links = [];
+    this.engine = createEngine();
+    this.engine.getNodeFactories().registerFactory(new NicerNodeFactory());
 
-  const ports = {};
+    this.model = new DiagramModel();
 
-  applications.forEach(({ name, modules }) => {
-    const node = new DefaultNodeModel(name, NODE_COLOR_DEFAULT);
-    node.registerListener({
-      eventDidFire: (evt) => {
-        if (evt.function === "selectionChanged") {
-          let selected = node.getOptions().selected;
-          if (selected) {
-            nodes.forEach((n) => {
-              if (node === n) {
-                n.getOptions().color =
-                  node === n ? NODE_COLOR_SELECTED : NODE_COLOR_UNSELECTED;
-              }
-            });
-            links.forEach((l) => {
-              const sourceName = l.sourcePort.getOptions().name;
-              const targetName = l.targetPort.getOptions().name;
-              l.getOptions().color =
-                sourceName === name || targetName.startsWith(name)
-                  ? LINK_COLOR_SELECTED
-                  : LINK_COLOR_UNSELECTED;
-              l.getOptions().width =
-                sourceName === name || targetName.startsWith(name) ? 3 : 0;
-              l.getOptions().showArrow = true;
-            });
-          } else {
-            nodes.forEach((n) => {
-              n.getOptions().color = NODE_COLOR_DEFAULT;
-            });
-            links.forEach((l) => {
-              l.getOptions().showArrow = false;
-              l.getOptions().color = LINK_COLOR_DEFAULT;
-              l.getOptions().width = LINK_SIZE_DEFAULT;
-            });
+    const nodes: NodeModel[] = [];
+    const links = [];
+    const ports = {};
+
+    props.applications.forEach(({ name, modules }) => {
+      const node = new DefaultNodeModel(name, NODE_COLOR_DEFAULT);
+
+      node.registerListener({
+        eventDidFire: (evt) => {
+          if (evt.function === "selectionChanged") {
+            const selected = node.getOptions().selected;
+            if (selected) {
+              store.selectedApplication = name;
+              store.detailDrawerOpen = true;
+
+              nodes.forEach((n) => {
+                if (node === n) {
+                  // @ts-ignore
+                  n.getOptions().color =
+                    node === n ? NODE_COLOR_SELECTED : NODE_COLOR_UNSELECTED;
+                }
+              });
+
+              links.forEach((l) => {
+                const sourceName = l.sourcePort.getOptions().id;
+                const targetName = l.targetPort.getOptions().id;
+                l.getOptions().color =
+                  sourceName === name || targetName.startsWith(name)
+                    ? LINK_COLOR_SELECTED
+                    : LINK_COLOR_UNSELECTED;
+                l.getOptions().width =
+                  sourceName === name || targetName.startsWith(name) ? 3 : 0;
+              });
+            } else {
+              store.selectedApplication = null;
+              store.detailDrawerOpen = false;
+
+              nodes.forEach((n) => {
+                // @ts-ignore
+                n.getOptions().color = NODE_COLOR_DEFAULT;
+              });
+              links.forEach((l) => {
+                l.getOptions().color = LINK_COLOR_DEFAULT;
+                l.getOptions().width = LINK_SIZE_DEFAULT;
+              });
+            }
           }
-        }
-      },
-    });
-
-    const port = new AdvancedPortModel(true, name, "");
-    ports[name] = port;
-    node.addPort(port);
-
-    modules.forEach(({ name: moduleName }) => {
-      const id = `${name}:${moduleName}`;
-      const port = new AdvancedPortModel(true, id, moduleName);
-      ports[id] = port;
-      node.addPort(port);
-    });
-    nodes.push(node);
-  });
-
-  applications.forEach(({ name: fromApp, consumes }) => {
-    consumes
-      .filter(({ application }) => application)
-      .forEach(({ application: { name: appName }, name: moduleName }) => {
-        links.push(
-          ports[fromApp].link(
-            ports[`${appName}:${moduleName}`]
-            // engine.getLinkFactories().getFactory(PathFindingLinkFactory.NAME)
-          )
-        );
+        },
       });
-  });
 
-  nodes.forEach((node, index) => {
-    node.setPosition(index * 200, index * 200);
-    model.addNode(node);
-  });
+      ports[name] = node.addOutPort("");
+      ports[name].getOptions().id = name;
 
-  links.forEach((link) => {
-    model.addLink(link);
-  });
+      modules.forEach(({ name: moduleName }) => {
+        const id = `${name}:${moduleName}`;
+        ports[id] = node.addInPort(moduleName);
+        ports[id].getOptions().id = id;
+      });
+      nodes.push(node);
+    });
 
-  engine.setModel(model);
+    props.applications.forEach(({ name: fromApp, consumes }) => {
+      consumes
+        .filter(({ application }) => application)
+        .forEach(({ application: { name: appName }, name: moduleName }) => {
+          links.push(
+            ports[fromApp].link(
+              ports[`${appName}:${moduleName}`]
+              // engine.getLinkFactories().getFactory(PathFindingLinkFactory.NAME)
+            )
+          );
+        });
+    });
 
-  return <LayoutWidget model={model} engine={engine} />;
-};
+    nodes.forEach((node, index) => {
+      node.setPosition(index * 200, index * 200);
+      this.model.addNode(node);
+    });
+
+    links.forEach((link) => {
+      this.model.addLink(link);
+    });
+
+    this.model.setLocked(true);
+    this.engine.setModel(this.model);
+  }
+
+  render() {
+    return <LayoutWidget model={this.model} engine={this.engine} />;
+  }
+}
+
+export default ModuleUMLDiagram;
