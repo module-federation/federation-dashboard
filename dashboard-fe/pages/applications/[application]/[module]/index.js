@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import Layout from "../../../../components/Layout";
 import { Code, CodeWrapper, GeneratedCode } from "../../../../components/Code";
 import React from "react";
-import { useFetchUser } from "../../../../lib/user";
+import { useFetchUser } from "../../../../src/user";
 
 const useStyles = makeStyles((theme) => ({
   container: {

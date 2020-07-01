@@ -1,7 +1,7 @@
 import React from "react";
 
 import Layout from "../components/Layout";
-import { useFetchUser } from "../lib/user";
+import { useFetchUser } from "../src/user";
 import withAuth from "../components/with-auth";
 
 export function ProtectedPage() {

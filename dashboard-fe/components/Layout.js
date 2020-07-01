@@ -1,19 +1,18 @@
 import React from "react";
-import { UserProvider } from "../lib/user";
+import { UserProvider } from "../src/user";
 import clsx from "clsx";
 import {
   makeStyles,
   CssBaseline,
   AppBar,
   Toolbar,
-  List,
-  ListItem,
   Divider,
   Typography,
   TextField,
   IconButton,
   Drawer,
   Container,
+  Avatar,
   fade,
 } from "@material-ui/core";
 import SideBar from "./Sidebar";
@@ -23,6 +22,9 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { useRouter } from "next/router";
+import { observer } from "mobx-react";
+
+import store from '../src/store';
 
 import ApplicationDrawer from "../components/ApplicationDrawer";
 
@@ -44,6 +46,13 @@ const GET_SIDEBAR_DATA = gql`
 `;
 
 const leftDrawerWidth = 240;
+
+const UserMenu = observer(() => {
+  if (store.authUser) {
+    return <Avatar alt={store.authUser.name} src={store.authUser.picture} />
+  }
+  return null;
+});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -213,6 +222,7 @@ const Layout = ({ user, loading = false, children }) => {
                 <TextField {...params} className={classes.search} />
               )}
             />
+            <UserMenu />
           </Toolbar>
         </AppBar>
         <Drawer

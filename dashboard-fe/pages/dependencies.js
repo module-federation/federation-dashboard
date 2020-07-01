@@ -15,7 +15,7 @@ import Link from "next/link";
 import clsx from "clsx";
 
 import Layout from "../components/Layout";
-import { useFetchUser } from "../lib/user";
+import { useFetchUser } from "../src/user";
 import withAuth from "../components/with-auth";
 
 const useStyles = makeStyles((theme) => ({

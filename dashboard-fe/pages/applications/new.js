@@ -15,7 +15,7 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { Code, CodeWrapper, GeneratedCode } from "../../components/Code";
 import React from "react";
-import { useFetchUser } from "../../lib/user";
+import { useFetchUser } from "../../src/user";
 
 const GET_APPS = gql`
   {

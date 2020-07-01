@@ -109,14 +109,12 @@ const ApplicationsTable = ({ applications }) => {
                   >
                     {modulesById[absoluteId].applicationId === appId && (
                       <ArrowIcon
-                        fontSize="medium"
                         style={{ color: "green", transform: "rotate(-90deg)" }}
                       />
                     )}
                     {modulesById[absoluteId].applications[appId] && (
                       <>
                         <ArrowIcon
-                          fontSize="medium"
                           style={{ color: "blue", transform: "rotate(90deg)" }}
                         />
                         <Typography>

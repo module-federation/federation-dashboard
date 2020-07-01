@@ -5,10 +5,6 @@ import createEngine, {
   DagreEngine,
   DiagramEngine,
   PathFindingLinkFactory,
-  DefaultLinkModel,
-  DefaultLinkWidget,
-  PointModel,
-  LinkWidget,
   DefaultNodeFactory,
   DefaultPortLabel,
 } from "@projectstorm/react-diagrams";
@@ -79,24 +75,16 @@ export interface DefaultNodeProps {
 export class NicerNodeWidget extends React.Component<DefaultNodeProps> {
   generateInPort = (port) => {
     return (
-      <S.InPortItem>
-        <DefaultPortLabel
-          engine={this.props.engine}
-          port={port}
-          key={port.getID()}
-        />
+      <S.InPortItem key={port.getID()}>
+        <DefaultPortLabel engine={this.props.engine} port={port} />
       </S.InPortItem>
     );
   };
 
   generateOutPort = (port) => {
     return (
-      <S.OutPortItem>
-        <DefaultPortLabel
-          engine={this.props.engine}
-          port={port}
-          key={port.getID()}
-        />
+      <S.OutPortItem key={port.getID()}>
+        <DefaultPortLabel engine={this.props.engine} port={port} />
       </S.OutPortItem>
     );
   };

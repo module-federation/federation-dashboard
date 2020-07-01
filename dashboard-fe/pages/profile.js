@@ -1,7 +1,7 @@
 import React from "react";
 
 import Layout from "../components/Layout";
-import { useFetchUser } from "../lib/user";
+import { useFetchUser } from "../src/user";
 
 export default function Profile() {
   const { user, loading } = useFetchUser();

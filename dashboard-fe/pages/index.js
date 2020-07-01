@@ -12,7 +12,7 @@ const ModuleUMLDiagram =
     ? () => <div />
     : require("../components/ModuleUMLDiagram.tsx").default;
 import Layout from "../components/Layout";
-import { useFetchUser } from "../lib/user";
+import { useFetchUser } from "../src/user";
 import withAuth from "../components/with-auth";
 
 const GET_APPS = gql`
