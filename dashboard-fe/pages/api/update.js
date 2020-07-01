@@ -1,4 +1,5 @@
 import { update } from "./db";
+import ApplicationManager from "../../src/managers/Application";
 
 export const config = {
   api: {
@@ -20,6 +21,7 @@ const dataIsValid = (data) =>
 
 export default (req, res) => {
   if (dataIsValid(req.body)) {
+    ApplicationManager.update(req.body);
     update(req.body);
     res.send(true);
   } else {

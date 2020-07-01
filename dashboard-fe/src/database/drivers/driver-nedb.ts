@@ -46,6 +46,7 @@ class TableDriver<T> {
     return new Promise((resolve) => {
       this.store.find({ id }, (_, docs) => {
         if (docs.length > 0) {
+          delete docs[0]._id;
           resolve(docs[0]);
         } else {
           resolve(null);
@@ -57,7 +58,7 @@ class TableDriver<T> {
   async search(query: any): Promise<Array<T> | null> {
     return new Promise((resolve) => {
       this.store.find(query, (_, docs) => {
-        resolve(docs || []);
+        resolve(docs.map(({ _id, ...data }) => ({ ...data })) || []);
       });
     });
   }
@@ -138,8 +139,12 @@ export default class DriverNedb implements Driver {
     type: String,
     version: String
   ): Promise<ApplicationVersion | null> {
-    const id = [applicationId, type, version].join(":");
-    return this.applicationVersionsTable.find(id);
+    const versions = await this.applicationVersionsTable.search({
+      applicationId,
+      type,
+      version,
+    });
+    return versions.length > 0 ? versions[0] : null;
   }
   async applicationVersion_findLatest(
     applicationId: String,

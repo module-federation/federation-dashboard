@@ -3,15 +3,15 @@ import Joi from "@hapi/joi";
 export const schema = Joi.object({
   id: Joi.string().required(),
   name: Joi.string().required(),
+  version: Joi.string().required(),
+  location: Joi.string().required(),
   applicationID: Joi.string().required(),
-  requires: Joi.array().items(Joi.string()).required(),
-  file: Joi.string().required(),
 });
 
-export default class Module {
+export default class Override {
   id: String;
   name: String;
+  version: String;
+  location: String;
   applicationID: String;
-  requires: Array<String>;
-  file: String;
 }
