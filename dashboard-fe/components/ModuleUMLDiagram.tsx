@@ -1,4 +1,3 @@
-import React from "react";
 import createEngine, {
   DiagramModel,
   DefaultNodeModel,
@@ -10,9 +9,9 @@ import createEngine, {
   DefaultLinkWidget,
   PointModel,
   LinkWidget,
-  DefaultLinkFactory,
+  DefaultNodeFactory,
+  DefaultPortLabel,
 } from "@projectstorm/react-diagrams";
-import React from "react";
 import { CanvasWidget } from "@projectstorm/react-canvas-core";
 import styled from "@emotion/styled";
 

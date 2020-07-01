@@ -25,47 +25,13 @@
       "url": "https://twitter.com/ScriptedAlchemy"
     }
   ],
-  "babel": {
-    "env": {
-      "development": {
-        "presets": [
-          "next/babel"
-        ],
-        "plugins": []
-      },
-      "production": {
-        "presets": [
-          "next/babel"
-        ],
-        "plugins": []
-      },
-      "test": {
-        "presets": [
-          "@babel/preset-react",
-          [
-            "@babel/preset-env",
-            {
-              "targets": {
-                "node": "current"
-              }
-            }
-          ],
-          "@babel/preset-typescript"
-        ],
-        "plugins": [
-          "@babel/plugin-proposal-class-properties"
-        ]
-      }
-    }
-  },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
     "@auth0/auth0-react": "^0.4.0",
     "@auth0/nextjs-auth0": "^0.13.0",
-    "@babel/plugin-proposal-decorators": "^7.10.3",
-    "@hapi/joi": "^17.1.1",
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
+    "@hapi/joi": "^17.1.1",
     "@material-ui/core": "^4.9.13",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.53",
@@ -79,6 +45,7 @@
     "cross-fetch": "^3.0.4",
     "d3": "^5.16.0",
     "dagre": "^0.8.5",
+    "dotenv": "^8.2.0",
     "isomorphic-unfetch": "^3.0.0",
     "ml-matrix": "^6.5.0",
     "mobx": "^5.15.4",
@@ -93,11 +60,11 @@
     "react-dom": "16.13.1",
     "react-force-graph-2d": "^1.16.0",
     "react-hook-form": "^5.7.2",
-    "dotenv": "^8.2.0",
     "recoil": "^0.0.10"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-decorators": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
     "@types/jest": "^26.0.3",
     "jest": "^26.1.0",

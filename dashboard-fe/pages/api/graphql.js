@@ -2,12 +2,15 @@ import { ApolloServer, gql } from "apollo-server-micro";
 
 import getApplications from "./db";
 
+import dbDriver from "../../src/database/drivers";
+
 const typeDefs = gql`
   type Query {
     applications(name: String): [Application!]!
     consumingApplications(name: String): [Application!]!
     modules(application: String, name: String): [Module!]!
     consumes(application: String, name: String): [Consume!]!
+    userByEmail(email: String): User
   }
 
   type Module {
@@ -41,6 +44,14 @@ const typeDefs = gql`
   type Dependency {
     name: String!
     version: String!
+  }
+
+  type User {
+    id: String!
+    email: String!
+    name: String!
+    groups: [String!]
+    defaultGroup: String!
   }
 
   type Application {
@@ -100,6 +111,9 @@ const resolvers = {
         .map(({ consumes }) => consumes)
         .flat()
         .filter(filter);
+    },
+    userByEmail: async (_, { email }) => {
+      return dbDriver.user_findByEmail(email);
     },
   },
   Module: {
