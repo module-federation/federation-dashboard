@@ -2,11 +2,13 @@ import Datastore from "nedb";
 import path from "path";
 import Joi from "@hapi/joi";
 
-import Application from "../application";
+import Application, { schema as applicationSchema } from "../application";
 import ApplicationVersion, {
   schema as applicationVersionSchema,
 } from "../applicationVersion";
-import MetricValue from "../metricValue";
+import MetricValue, { schema as metricValueSchema } from "../metricValue";
+import Group, { schema as groupSchema } from "../group";
+import User, { schema as userSchema } from "../user";
 
 import Driver from "./driver";
 
@@ -24,6 +26,14 @@ const metrics = new Datastore({
   filename: path.join(dir, "/metrics.db"),
 });
 metrics.loadDatabase();
+const groups = new Datastore({
+  filename: path.join(dir, "/groups.db"),
+});
+groups.loadDatabase();
+const users = new Datastore({
+  filename: path.join(dir, "/users.db"),
+});
+users.loadDatabase();
 
 class TableDriver<T> {
   private store: Datastore;
@@ -87,9 +97,16 @@ export default class DriverNedb implements Driver {
   private metricsTable: TableDriver<MetricValue> = new TableDriver<MetricValue>(
     metrics
   );
+  private groupsTable: TableDriver<Group> = new TableDriver<Group>(groups);
+  private usersTable: TableDriver<User> = new TableDriver<User>(users);
 
   async application_find(id: String): Promise<Application | null> {
     return this.applicationTable.find(id);
+  }
+  async application_findInGroups(
+    groups: Array<String>
+  ): Promise<Array<Application> | null> {
+    return this.applicationTable.search({ group: { $in: groups } });
   }
   async application_getMetrics(id: String): Promise<Array<MetricValue> | null> {
     return this.metricsTable.search({
@@ -101,6 +118,7 @@ export default class DriverNedb implements Driver {
     id: String,
     metric: MetricValue
   ): Promise<Array<MetricValue> | null> {
+    Joi.assert(metric, metricValueSchema);
     return this.metricsTable.insert({
       type: "application",
       id,
@@ -108,6 +126,7 @@ export default class DriverNedb implements Driver {
     });
   }
   async application_update(application: Application): Promise<null> {
+    Joi.assert(application, applicationSchema);
     return this.applicationTable.update({ id: application.id }, application);
   }
   async application_delete(id: String): Promise<null> {
@@ -154,6 +173,7 @@ export default class DriverNedb implements Driver {
         const found = await this.applicationVersionsTable.search({
           applicationId: version.applicationId,
           type: version.type,
+          latest: true,
         });
         await Promise.all(
           found
@@ -184,5 +204,37 @@ export default class DriverNedb implements Driver {
   ): Promise<null> {
     const id = [applicationId, type, version].join(":");
     return this.applicationVersionsTable.delete(id);
+  }
+
+  async group_find(id: String): Promise<Group> {
+    return this.groupsTable.find(id);
+  }
+  async group_findAll(): Promise<Array<Group>> {
+    return this.groupsTable.search({});
+  }
+  async group_update(group: Group): Promise<Array<Group>> {
+    Joi.assert(group, groupSchema);
+    return this.groupsTable.update({ id: group.id }, group);
+  }
+  async group_delete(id: String): Promise<Array<Group>> {
+    return this.groupsTable.delete(id);
+  }
+
+  async user_find(id: String): Promise<User> {
+    return this.usersTable.find(id);
+  }
+  async user_findByEmail(email: String): Promise<User> {
+    const found = await this.usersTable.search({ email });
+    return found.length > 0 ? found[0] : null;
+  }
+  async user_findAll(): Promise<Array<User>> {
+    return this.usersTable.search({});
+  }
+  async user_update(user: User): Promise<Array<User>> {
+    Joi.assert(user, userSchema);
+    return this.usersTable.update({ id: user.id }, user);
+  }
+  async user_delete(id: String): Promise<Array<User>> {
+    return this.usersTable.delete(id);
   }
 }

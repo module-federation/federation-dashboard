@@ -3,17 +3,15 @@ import Metadata, { schema as metadataSchema } from "./metadata";
 import Joi from "@hapi/joi";
 
 export const schema = Joi.object({
+  id: Joi.string().required(),
   name: Joi.string().required(),
-  application: Joi.array()
-    .items(Joi.string().required())
-    .required(),
   metadata: Joi.array()
     .items(metadataSchema)
     .required(),
 });
 
 export default class Group {
+  id: String;
   name: String;
-  application: Array<String>;
   metadata: Array<Metadata>;
 }

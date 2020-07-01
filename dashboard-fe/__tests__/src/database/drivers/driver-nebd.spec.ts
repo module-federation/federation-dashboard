@@ -36,13 +36,60 @@ describe("NEDB Driver Tests", () => {
     });
 
     it("should update", (cb) => {
+      let updateData = null;
       class MockDatastore {
         constructor() {}
         loadDatabase() {}
         find(q, fcb) {
-          fcb(null, []);
+          if (q.version === "2.0.0") {
+            fcb(null, [
+              {
+                applicationId: "app1",
+                version: "2.0.0",
+                type: "development",
+                latest: true,
+                remotes: [],
+                modules: [],
+              },
+            ]);
+          } else if (q.version === "1.1.0") {
+            fcb(null, [
+              {
+                applicationId: "app1",
+                version: "1.1.0",
+                type: "development",
+                latest: true,
+                remotes: [],
+                modules: [],
+              },
+            ]);
+          } else if (!q.version) {
+            fcb(null, [
+              {
+                applicationId: "app1",
+                version: "1.0.0",
+                type: "development",
+                latest: false,
+                remotes: [],
+                modules: [],
+              },
+              {
+                applicationId: "app1",
+                version: "1.1.0",
+                type: "development",
+                latest: true,
+                remotes: [],
+                modules: [],
+              },
+            ]);
+          } else {
+            fcb(null, []);
+          }
         }
-        update() {}
+        update(q, data, opts, ucb) {
+          updateData = data["$set"];
+          ucb();
+        }
         insert(data, icb) {
           icb();
         }
@@ -65,6 +112,8 @@ describe("NEDB Driver Tests", () => {
           modules: [],
         })
         .then(() => {
+          expect(updateData.version).toEqual("1.1.0");
+          expect(updateData.latest).toEqual(false);
           cb();
         });
     });

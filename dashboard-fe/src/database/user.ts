@@ -1,6 +1,7 @@
 import Joi from "@hapi/joi";
 
 export const schema = Joi.object({
+  id: Joi.string().required(),
   email: Joi.string().required(),
   name: Joi.string().required(),
   groups: Joi.array()
@@ -10,6 +11,7 @@ export const schema = Joi.object({
 });
 
 export default class User {
+  id: String = "";
   email: String = "";
   name: String = "";
   groups: Array<string> = [];
