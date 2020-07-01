@@ -1,0 +1,6 @@
+* Migrate `latest` applicationVersion logic to application manager
+* Create secondary GraphQL schema and start porting the UI to it
+* Move the sidebar to a hierarchic scheme with group selector
+* Add group and deployment type option to the plugin
+* Come up with some methodology to switch drivers
+* Implement a mongo driver
