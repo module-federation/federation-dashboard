@@ -11,7 +11,9 @@
     "docker:build": "rm -rf node_modules && docker build . -t scriptedalchemy/mf-dashboard:latest",
     "docker:run": "docker run -p 3000:3000 -t scriptedalchemy/mf-dashboard",
     "docker:demo": "docker run -p 3000:3000 --mount type=bind,source=\"$(pwd)\"/.fm-dashboard,target=/data -t mf-dashboard",
-    "docker:push": "PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\\\",]//g' | tr -d '[[:space:]]');echo $PACKAGE_VERSION && docker tag scriptedalchemy/mf-dashboard:latest scriptedalchemy/mf-dashboard:$PACKAGE_VERSION && docker push scriptedalchemy/mf-dashboard:latest && docker push scriptedalchemy/mf-dashboard:$PACKAGE_VERSION"
+    "docker:push": "PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\\\",]//g' | tr -d '[[:space:]]');echo $PACKAGE_VERSION && docker tag scriptedalchemy/mf-dashboard:latest scriptedalchemy/mf-dashboard:$PACKAGE_VERSION && docker push scriptedalchemy/mf-dashboard:latest && docker push scriptedalchemy/mf-dashboard:$PACKAGE_VERSION",
+    "dev-with-vm": "VERSION_MANAGER=true next dev -p 3000",
+    "start-with-vm": "VERSION_MANAGER=true next start"
   },
   "contributors": [
     {
@@ -27,7 +29,7 @@
   ],
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
-    "@auth0/auth0-react": "^0.4.0",
+    "@auth0/auth0-react": "^1.0.0",
     "@auth0/nextjs-auth0": "^0.13.0",
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
@@ -35,7 +37,7 @@
     "@material-ui/core": "^4.9.13",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.53",
-    "@nivo/chord": "^0.61.1",
+    "@nivo/chord": "^0.62.0",
     "@projectstorm/react-canvas-core": "^6.2.0",
     "@projectstorm/react-diagrams": "^6.2.0",
     "apollo-boost": "^0.4.8",
@@ -51,7 +53,7 @@
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "nedb": "^1.8.0",
-    "next": "9.4.0",
+    "next": "9.4.4",
     "node-fetch": "^2.6.0",
     "pathfinding": "^0.4.18",
     "paths-js": "^0.4.10",

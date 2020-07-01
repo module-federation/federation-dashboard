@@ -215,7 +215,10 @@ const Layout = ({ children }) => {
       router.push(opt.url);
     }
   };
-
+  if (process.env.WITH_AUTH !== true) {
+    user = true;
+    loading = false;
+  }
   return (
     <div className={classes.root}>
       <CssBaseline />

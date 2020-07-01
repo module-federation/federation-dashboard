@@ -11,7 +11,9 @@ module.exports = {
     port: 3001,
   },
   output: {
-    publicPath: "http://localhost:3001/",
+    filename: "[name].[contenthash].js",
+    chunkFilename: "[name].[contenthash].js",
+    publicPath: `http://localhost:3001/`,
   },
   module: {
     rules: [
@@ -66,9 +68,12 @@ module.exports = {
       template: "./public/index.html",
     }),
     new DashboardPlugin({
+      version: true,
       filename: "dashboard.json",
       dashboardURL: "http://localhost:3000/api/update",
+      versionChangeWebhook: "http://cnn.com/",
       metadata: {
+        clientUrl: "http://localhost:3000",
         source: {
           url:
             "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home",

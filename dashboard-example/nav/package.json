@@ -1,11 +1,11 @@
 {
   "name": "@dashboard/nav",
-  "version": "0.0.0",
+  "version": "4.0.0",
   "private": true,
   "devDependencies": {
     "@babel/core": "7.10.3",
     "@babel/preset-react": "7.10.1",
-    "@module-federation/dashboard-plugin": "file:../../dashboard-plugin",
+    "@module-federation/dashboard-plugin": "*",
     "babel-loader": "8.1.0",
     "css-loader": "3.6.0",
     "html-webpack-plugin": "git://github.com/ScriptedAlchemy/html-webpack-plugin#master",
@@ -18,8 +18,9 @@
   },
   "scripts": {
     "start": "webpack-dev-server --open --mode development --liveReload",
-    "build": "node --inspect ../../node_modules/webpack/bin/webpack.js --mode production",
-    "serve": "serve dist -p 3001",
+    "build": "node ../../node_modules/webpack/bin/webpack.js --mode production",
+    "cut-version": "node node_modules/.bin/federation-report",
+    "serve": "serve dist -p 3003",
     "clean": "rm -rf dist"
   },
   "dependencies": {
@@ -29,5 +30,12 @@
     "lodash": "^4.17.15",
     "react": "^16.13.0",
     "react-dom": "^16.13.0"
+  },
+  "versionData": {
+    "container": "remoteEntry.js",
+    "outputPath": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/dist",
+    "dashboardFileName": "dashboard.json",
+    "context": "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav",
+    "name": "nav"
   }
 }

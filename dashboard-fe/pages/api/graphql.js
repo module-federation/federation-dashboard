@@ -1,16 +1,37 @@
 import { ApolloServer, gql } from "apollo-server-micro";
 
-import getApplications from "./db";
+import getApplications, { versionManagementEnabled, update } from "./db";
+
+const DEFAULT_VERSIONS = {
+  versions: [],
+  latest: "",
+  override: [],
+};
 
 import dbDriver from "../../src/database/drivers";
 
 const typeDefs = gql`
   type Query {
+    dashboard: DashboardInfo!
     applications(name: String): [Application!]!
     consumingApplications(name: String): [Application!]!
     modules(application: String, name: String): [Module!]!
     consumes(application: String, name: String): [Consume!]!
     userByEmail(email: String): User
+  }
+
+  type Mutation {
+    addVersion(application: String!, version: String!): Versions!
+    publishVersion(application: String!, version: String!): Versions!
+    setRemoteVersion(
+      application: String!
+      remote: String!
+      version: String
+    ): Versions!
+  }
+
+  type DashboardInfo {
+    versionManagementEnabled: Boolean!
   }
 
   type Module {
@@ -54,6 +75,12 @@ const typeDefs = gql`
     defaultGroup: String!
   }
 
+  type Versions {
+    versions: [String!]!
+    latest: String!
+    override: [Dependency!]
+  }
+
   type Application {
     dependencies: [Dependency!]!
     devDependencies: [Dependency!]!
@@ -64,11 +91,17 @@ const typeDefs = gql`
     modules: [Module!]!
     overrides: [Override!]!
     consumes: [Consume!]!
+    versions: Versions!
   }
 `;
 
 const resolvers = {
   Query: {
+    dashboard: () => {
+      return {
+        versionManagementEnabled: versionManagementEnabled(),
+      };
+    },
     applications: async (_, { name: nameFilter }) => {
       const applications = await getApplications();
       const applicationFilter = nameFilter
@@ -116,6 +149,55 @@ const resolvers = {
       const user = dbDriver.user_findByEmail(email);
     },
   },
+  Mutation: {
+    addVersion: async (_, { application, version }) => {
+      const applications = await getApplications();
+      const app = applications.find(({ id }) => id === application);
+      if (!app) {
+        throw new Error(`Application ${application} not found`);
+      }
+      app.versions = app.versions || DEFAULT_VERSIONS;
+      app.versions.versions = [
+        ...app.versions.versions.filter((v) => v !== version),
+        version,
+      ];
+      app.versions.latest = app.versions.latest || version;
+      update(app);
+      return app.versions;
+    },
+    publishVersion: async (_, { application, version }) => {
+      const applications = await getApplications();
+      const app = applications.find(({ id }) => id === application);
+      if (!app) {
+        throw new Error(`Application ${application} not found`);
+      }
+      app.versions = app.versions || DEFAULT_VERSIONS;
+      app.versions.latest = version;
+      update(app);
+      return app.versions;
+    },
+    setRemoteVersion: async (_, { application, remote, version }) => {
+      const applications = await getApplications();
+      const app = applications.find(({ id }) => id === application);
+      app.versions = app.versions || DEFAULT_VERSIONS;
+      const overridesWithoutRemote = app.versions.override.filter(
+        ({ name }) => name !== remote
+      );
+      if (version) {
+        app.versions.override = [
+          ...overridesWithoutRemote,
+          {
+            name: remote,
+            version,
+          },
+        ];
+      } else {
+        app.versions.override = overridesWithoutRemote;
+      }
+      update(app);
+      return app.versions;
+    },
+  },
   Module: {
     application: async ({ applicationID }) => {
       const applications = await getApplications();
@@ -153,6 +235,13 @@ const resolvers = {
     application: async ({ applicationID }) => {
       const applications = await getApplications();
       return applications.find(({ id }) => id === applicationID);
+    },
+  },
+  Application: {
+    versions: async ({ id }) => {
+      const applications = await getApplications();
+      const app = applications.find(({ id: appId }) => appId === id);
+      return app.versions || DEFAULT_VERSIONS;
     },
   },
 };
