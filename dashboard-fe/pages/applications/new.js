@@ -15,7 +15,6 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { Code, CodeWrapper, GeneratedCode } from "../../components/Code";
 import React from "react";
-import { useFetchUser } from "../../src/user";
 
 const GET_APPS = gql`
   {
@@ -55,7 +54,6 @@ export default () => {
       automaticFederation: true,
     },
   });
-  const { user, loading } = useFetchUser();
   const [applications, applicationsSet] = React.useState([]);
   const { data } = useQuery(GET_APPS);
   const classes = useStyles();
@@ -112,7 +110,7 @@ const ignoreVersion = [${watch("ignoreVersion")
         .join(", ");
 
   return (
-    <Layout user={user} loading={loading}>
+    <Layout>
       <Head>
         <title>New Federated Module Application</title>
       </Head>

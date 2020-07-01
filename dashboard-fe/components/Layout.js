@@ -1,5 +1,4 @@
 import React from "react";
-import { UserProvider } from "../src/user";
 import clsx from "clsx";
 import {
   makeStyles,
@@ -10,9 +9,12 @@ import {
   Typography,
   TextField,
   IconButton,
+  Link,
   Drawer,
   Container,
   Avatar,
+  Menu,
+  MenuItem,
   fade,
 } from "@material-ui/core";
 import SideBar from "./Sidebar";
@@ -24,7 +26,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { useRouter } from "next/router";
 import { observer } from "mobx-react";
 
-import store from '../src/store';
+import store from "../src/store";
 
 import ApplicationDrawer from "../components/ApplicationDrawer";
 
@@ -48,8 +50,40 @@ const GET_SIDEBAR_DATA = gql`
 const leftDrawerWidth = 240;
 
 const UserMenu = observer(() => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   if (store.authUser) {
-    return <Avatar alt={store.authUser.name} src={store.authUser.picture} />
+    return (
+      <>
+        <Avatar
+          alt={store.authUser.name}
+          src={store.authUser.picture}
+          onClick={handleClick}
+        />
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem>
+            <Link href="/profile">Profile</Link>
+          </MenuItem>
+          <MenuItem>
+            <Link href="/api/logout">Logout</Link>
+          </MenuItem>
+        </Menu>
+      </>
+    );
   }
   return null;
 });
@@ -146,7 +180,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Layout = ({ user, loading = false, children }) => {
+const Layout = ({ children }) => {
   const { data } = useQuery(GET_SIDEBAR_DATA);
   const classes = useStyles();
   const router = useRouter();
@@ -183,75 +217,73 @@ const Layout = ({ user, loading = false, children }) => {
   };
 
   return (
-    <UserProvider value={{ user, loading }}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <AppBar
-          position="absolute"
-          className={clsx(classes.appBar, leftOpen && classes.appBarShift)}
-        >
-          <Toolbar className={classes.toolbar}>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="Open left drawer"
-              onClick={handleDrawerLeftOpen}
-              className={clsx(
-                classes.menuButton,
-                leftOpen && classes.menuButtonHidden
-              )}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              className={classes.title}
-            >
-              <strong>Federated Modules</strong> Dashboard
-            </Typography>
-            <Autocomplete
-              onChange={onChange}
-              options={options}
-              groupBy={(option) => option.type}
-              getOptionLabel={(option) => option.name}
-              className={classes.searchBox}
-              renderInput={(params) => (
-                <TextField {...params} className={classes.search} />
-              )}
-            />
-            <UserMenu />
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          variant="permanent"
-          classes={{
-            paper: clsx(
-              classes.leftDrawerPaper,
-              !leftOpen && classes.leftDrawerPaperClose
-            ),
-          }}
-          open={leftOpen}
-        >
-          <div className={classes.toolbarIcon}>
-            <IconButton onClick={handleDrawerLeftClose}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </div>
-          <Divider />
-          <SideBar restricted={!user} data={data} />
-        </Drawer>
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Container maxWidth="lg" className={classes.container}>
-            {children}
-          </Container>
-        </main>
-        <ApplicationDrawer />
-      </div>
-    </UserProvider>
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar
+        position="absolute"
+        className={clsx(classes.appBar, leftOpen && classes.appBarShift)}
+      >
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="Open left drawer"
+            onClick={handleDrawerLeftOpen}
+            className={clsx(
+              classes.menuButton,
+              leftOpen && classes.menuButtonHidden
+            )}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            className={classes.title}
+          >
+            <strong>Federated Modules</strong> Dashboard
+          </Typography>
+          <Autocomplete
+            onChange={onChange}
+            options={options}
+            groupBy={(option) => option.type}
+            getOptionLabel={(option) => option.name}
+            className={classes.searchBox}
+            renderInput={(params) => (
+              <TextField {...params} className={classes.search} />
+            )}
+          />
+          <UserMenu />
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        variant="permanent"
+        classes={{
+          paper: clsx(
+            classes.leftDrawerPaper,
+            !leftOpen && classes.leftDrawerPaperClose
+          ),
+        }}
+        open={leftOpen}
+      >
+        <div className={classes.toolbarIcon}>
+          <IconButton onClick={handleDrawerLeftClose}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+        <Divider />
+        <SideBar data={data} />
+      </Drawer>
+      <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        <Container maxWidth="lg" className={classes.container}>
+          {children}
+        </Container>
+      </main>
+      <ApplicationDrawer />
+    </div>
   );
 };
 

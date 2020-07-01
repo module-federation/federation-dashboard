@@ -113,7 +113,7 @@ const resolvers = {
         .filter(filter);
     },
     userByEmail: async (_, { email }) => {
-      return dbDriver.user_findByEmail(email);
+      const user = dbDriver.user_findByEmail(email);
     },
   },
   Module: {

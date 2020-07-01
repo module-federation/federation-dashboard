@@ -15,7 +15,6 @@ import Link from "next/link";
 import clsx from "clsx";
 
 import Layout from "../components/Layout";
-import { useFetchUser } from "../src/user";
 import withAuth from "../components/with-auth";
 
 const useStyles = makeStyles((theme) => ({
@@ -154,10 +153,9 @@ const Dependencies = () => {
       }
     );
   }
-  const { user, loading } = useFetchUser();
 
   return (
-    <Layout user={user} loading={loading}>
+    <Layout>
       <Head>
         <title>Dependency Matrix</title>
       </Head>

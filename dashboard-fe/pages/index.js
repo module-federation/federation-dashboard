@@ -12,7 +12,6 @@ const ModuleUMLDiagram =
     ? () => <div />
     : require("../components/ModuleUMLDiagram.tsx").default;
 import Layout from "../components/Layout";
-import { useFetchUser } from "../src/user";
 import withAuth from "../components/with-auth";
 
 const GET_APPS = gql`
@@ -53,13 +52,12 @@ const useHomeStyles = makeStyles({
 });
 
 const Home = () => {
-  const { user, loading } = useFetchUser();
   const { data } = useQuery(GET_APPS);
   const [currentTab, currentTabSet] = React.useState(0);
   const classes = useHomeStyles();
 
   return (
-    <Layout user={user} loading={loading}>
+    <Layout>
       <Head>
         <title>Federated Modules Dashboard</title>
       </Head>

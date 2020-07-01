@@ -1,26 +1,17 @@
 import React from "react";
+import { observer } from "mobx-react";
 
 import Layout from "../components/Layout";
-import { useFetchUser } from "../src/user";
 import withAuth from "../components/with-auth";
+import store from "../src/store";
 
 export function ProtectedPage() {
-  const { user, loading } = useFetchUser();
-
   return (
-    <Layout user={user} loading={loading}>
+    <Layout>
       <h1>Protected Page</h1>
-
-      {loading && <p>Loading profile...</p>}
-
-      {!loading && user && (
-        <>
-          <p>Profile:</p>
-          <pre>{JSON.stringify(user, null, 2)}</pre>
-        </>
-      )}
+      {store.isAuthorized && <div>This page is authorized</div>}
     </Layout>
   );
 }
 
-export default withAuth(ProtectedPage);
+export default withAuth(observer(ProtectedPage));

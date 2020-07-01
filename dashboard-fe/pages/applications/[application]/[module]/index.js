@@ -15,7 +15,6 @@ import { useRouter } from "next/router";
 import Layout from "../../../../components/Layout";
 import { Code, CodeWrapper, GeneratedCode } from "../../../../components/Code";
 import React from "react";
-import { useFetchUser } from "../../../../src/user";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -113,10 +112,9 @@ const ModulePage = () => {
       });
     }
   }, [router]);
-  const { user, loading } = useFetchUser();
 
   return (
-    <Layout user={user} loading={loading}>
+    <Layout>
       <Head>
         <title>
           {router.query.application}/

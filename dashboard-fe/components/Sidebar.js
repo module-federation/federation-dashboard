@@ -4,7 +4,6 @@ import {
   ListItemIcon,
   ListItemText,
   ListSubheader,
-  Divider,
 } from "@material-ui/core";
 import Link from "next/link";
 import LockIcon from "@material-ui/icons/Lock";
@@ -89,16 +88,6 @@ const SideBar = ({ data, restricted }) => {
           ))}
         </>
       )}
-      <Divider />
-      <ListSubheader inset>User</ListSubheader>
-      <Link href="/api/logout">
-        <ListItem button>
-          <ListItemIcon>
-            <LockIcon />
-          </ListItemIcon>
-          <ListItemText primary="Logout" />
-        </ListItem>
-      </Link>
     </List>
   );
 };
