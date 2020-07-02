@@ -1,15 +1,10 @@
 import { ApolloServer, gql } from "apollo-server-micro";
 
-import getApplications, { versionManagementEnabled, update } from "./db";
-
-const DEFAULT_VERSIONS = {
-  versions: [],
-  latest: "",
-  override: [],
-};
+import { versionManagementEnabled } from "./db";
 
 import dbDriver from "../../src/database/drivers";
 import ModuleManager from "../../src/managers/Module";
+import VersionManager from "../../src/managers/Version";
 
 const typeDefs = gql`
   type Query {
@@ -19,13 +14,17 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addVersion(application: String!, version: String!): Versions!
-    publishVersion(application: String!, version: String!): Versions!
+    publishVersion(
+      group: String!
+      application: String!
+      version: String!
+    ): Application!
     setRemoteVersion(
+      group: String!
       application: String!
       remote: String!
       version: String
-    ): Versions!
+    ): Application!
     updateUser(user: UserInput!): User!
   }
 
@@ -57,9 +56,7 @@ const typeDefs = gql`
   }
 
   type ApplicationOverride {
-    id: ID!
-    application: Application!
-    version: String
+    version: String!
     name: String!
   }
 
@@ -96,7 +93,7 @@ const typeDefs = gql`
     name: String!
     group: String!
     metadata: [Metadata!]!
-    overrides: [ApplicationOverride!]
+    overrides: [ApplicationOverride!]!
     versions(type: String, latest: Boolean): [ApplicationVersion!]!
   }
 
@@ -156,52 +153,16 @@ const resolvers = {
     },
   },
   Mutation: {
-    addVersion: async (_, { application, version }) => {
-      const applications = await getApplications();
-      const app = applications.find(({ id }) => id === application);
-      if (!app) {
-        throw new Error(`Application ${application} not found`);
-      }
-      app.versions = app.versions || DEFAULT_VERSIONS;
-      app.versions.versions = [
-        ...app.versions.versions.filter((v) => v !== version),
-        version,
-      ];
-      app.versions.latest = app.versions.latest || version;
-      update(app);
-      return app.versions;
+    publishVersion: async (_, { group, application, version }) => {
+      return VersionManager.publishVersion(group, application, version);
     },
-    publishVersion: async (_, { application, version }) => {
-      const applications = await getApplications();
-      const app = applications.find(({ id }) => id === application);
-      if (!app) {
-        throw new Error(`Application ${application} not found`);
-      }
-      app.versions = app.versions || DEFAULT_VERSIONS;
-      app.versions.latest = version;
-      update(app);
-      return app.versions;
-    },
-    setRemoteVersion: async (_, { application, remote, version }) => {
-      const applications = await getApplications();
-      const app = applications.find(({ id }) => id === application);
-      app.versions = app.versions || DEFAULT_VERSIONS;
-      const overridesWithoutRemote = app.versions.override.filter(
-        ({ name }) => name !== remote
+    setRemoteVersion: async (_, { group, application, remote, version }) => {
+      return VersionManager.setRemoteVersion(
+        group,
+        application,
+        remote,
+        version
       );
-      if (version) {
-        app.versions.override = [
-          ...overridesWithoutRemote,
-          {
-            name: remote,
-            version,
-          },
-        ];
-      } else {
-        app.versions.override = overridesWithoutRemote;
-      }
-      update(app);
-      return app.versions;
     },
     updateUser: async (_, { user }) => {
       await dbDriver.setup();

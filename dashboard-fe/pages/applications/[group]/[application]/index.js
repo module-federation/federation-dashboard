@@ -64,7 +64,6 @@ const GET_HEAD_VERSION = gql`
         id
         name
         overrides {
-          id
           version
           name
         }
