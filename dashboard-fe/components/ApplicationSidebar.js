@@ -10,6 +10,10 @@ import {
 import Link from "next/link";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
+import { observer } from "mobx-react";
+import _ from "lodash";
+
+import store from "../src/store";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -33,29 +37,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GET_APPS = gql`
-  query($name: String!) {
-    consumingApplications(name: $name) {
-      name
-      consumes {
-        application {
-          id
-          name
-        }
+  query($name: String!, $group: String!, $type: String!) {
+    groups(name: $group) {
+      applications(id: $name) {
+        id
         name
-      }
-    }
-    applications(name: $name) {
-      id
-      name
-      consumes {
-        application {
-          id
-          name
-        }
-        name
-        usedIn {
-          file
-          url
+        versions(latest: true, type: $type) {
+          consumes {
+            application {
+              id
+              name
+            }
+            name
+            usedIn {
+              file
+              url
+            }
+          }
+          modules {
+            name
+            consumedBy {
+              consumingApplication {
+                name
+                id
+              }
+            }
+          }
         }
       }
     }
@@ -70,48 +77,41 @@ const ConsumesTable = ({ consumes }) => {
         Consumes
       </Typography>
       <Table>
-        {consumes
-          .filter(({ application }) => application)
-          .map(({ name, application, usedIn }) => (
+        <TableBody>
+          {consumes.map(({ name, application, usedIn }) => (
             <TableRow key={[application.id, name].join()}>
               <TableCell>
                 <Typography>
-                  <Link href={`/applications/${application.name}`}>
-                    {application.name}
+                  <Link
+                    href={`/applications/${store.group}/${application.name}`}
+                  >
+                    <a>{application.name}</a>
                   </Link>
                   /
-                  <Link href={`/applications/${application.name}/${name}`}>
+                  <Link
+                    href={`/applications/${store.group}/${application.name}/${name}`}
+                  >
                     <a>{name}</a>
                   </Link>
                 </Typography>
               </TableCell>
               <TableCell>
                 {usedIn.map(({ file, url }) => (
-                  <Typography variant="body2">
+                  <Typography variant="body2" key={[file, url].join(":")}>
                     <a href={url}>{file}</a>
                   </Typography>
                 ))}
               </TableCell>
             </TableRow>
           ))}
+        </TableBody>
       </Table>
     </>
   );
 };
 
-const ConsumersTable = ({ consumers, name }) => {
+const ConsumersTable = ({ modules, name }) => {
   const classes = useStyles();
-  const modules = {};
-  consumers.forEach((application) => {
-    const consumingApp = application.name;
-    (application.consumes || []).forEach((consume) => {
-      if (consume.application && consume.application.name === name) {
-        const moduleName = consume.name;
-        modules[moduleName] = modules[moduleName] || new Set();
-        modules[moduleName].add(consumingApp);
-      }
-    });
-  });
   return (
     <>
       <Typography variant="h6" className={classes.panelTitle}>
@@ -129,26 +129,36 @@ const ConsumersTable = ({ consumers, name }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {Object.entries(modules).map(([moduleName, apps]) => (
-            <TableRow key={moduleName}>
-              <TableCell>
-                <Typography>
-                  <Link href={`/applications/${name}/${moduleName}`}>
-                    {moduleName}
-                  </Link>
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography>
-                  {Array.from(apps).map((consumer) => (
-                    <>
-                      <Link href={`/applications/${consumer}`}>{consumer}</Link>{" "}
-                    </>
-                  ))}
-                </Typography>
-              </TableCell>
-            </TableRow>
-          ))}
+          {modules
+            .filter(({ consumedBy }) => consumedBy.length)
+            .map(({ name: moduleName, consumedBy }) => (
+              <TableRow key={moduleName}>
+                <TableCell>
+                  <Typography>
+                    <Link
+                      href={`/applications/${store.group}/${name}/${moduleName}`}
+                    >
+                      <a>{moduleName}</a>
+                    </Link>
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography>
+                    {consumedBy.map(
+                      ({ consumingApplication: { name: consumer } }) => (
+                        <span key={[name, moduleName, consumer].join(":")}>
+                          <Link
+                            href={`/applications/${store.group}/${consumer}`}
+                          >
+                            <a>{consumer}</a>
+                          </Link>{" "}
+                        </span>
+                      )
+                    )}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </>
@@ -157,14 +167,23 @@ const ConsumersTable = ({ consumers, name }) => {
 
 const ApplicationSidebar = ({ name }) => {
   const { data } = useQuery(GET_APPS, {
-    variables: { name },
+    variables: { name, type: store.versionType, group: store.group },
   });
 
   if (!data) {
     return null;
   }
 
-  const application = data.applications[0];
+  const consumes = _.get(
+    data,
+    "groups[0].applications[0].versions[0].consumes",
+    []
+  );
+  const consumedBy = _.get(
+    data,
+    "groups[0].applications[0].versions[0].modules",
+    []
+  );
 
   return (
     <div
@@ -172,12 +191,10 @@ const ApplicationSidebar = ({ name }) => {
         padding: "1em",
       }}
     >
-      <ConsumersTable consumers={data.consumingApplications} name={name} />
-      {application.consumes.length > 0 && (
-        <ConsumesTable consumes={application.consumes} />
-      )}
+      <ConsumersTable modules={consumedBy} name={name} />
+      {consumes.length > 0 && <ConsumesTable consumes={consumes} />}
     </div>
   );
 };
 
-export default ApplicationSidebar;
+export default observer(ApplicationSidebar);

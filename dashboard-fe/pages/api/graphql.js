@@ -318,6 +318,10 @@ const resolvers = {
       await dbDriver.setup();
       return dbDriver.application_find(parent.consumingApplicationID);
     },
+    application: async (parent, args, ctx) => {
+      await dbDriver.setup();
+      return dbDriver.application_find(parent.applicationID);
+    },
   },
   NewModule: {
     consumedBy: async (parent, args, ctx) => {
