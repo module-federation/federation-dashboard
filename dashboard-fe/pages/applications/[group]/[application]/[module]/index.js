@@ -54,9 +54,7 @@ const GET_MODULES = gql`
             id
             file
             name
-            requires {
-              name
-            }
+            requires
             consumedBy {
               consumingApplication {
                 name
@@ -167,7 +165,7 @@ const ModulePage = () => {
                       Requires
                     </Typography>
                     <Typography>
-                      {mod.requires.map(({ name }) => name).join()}
+                      {mod.requires.map((name) => name).join()}
                     </Typography>
                   </Paper>
                 </Grid>

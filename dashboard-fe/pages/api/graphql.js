@@ -14,12 +14,6 @@ import ModuleManager from "../../src/managers/Module";
 const typeDefs = gql`
   type Query {
     dashboard: DashboardInfo!
-
-    applications(name: String): [Application!]!
-    consumingApplications(name: String): [Application!]!
-    modules(application: String, name: String): [Module!]!
-    consumes(application: String, name: String): [Consume!]!
-
     userByEmail(email: String): User
     groups(name: String): [Group!]!
   }
@@ -39,7 +33,7 @@ const typeDefs = gql`
     versionManagementEnabled: Boolean!
   }
 
-  type NewDependency {
+  type Dependency {
     name: String!
     type: String!
     version: String!
@@ -56,48 +50,53 @@ const typeDefs = gql`
     latest: Boolean!
     remote: String!
     remotes: [Remote!]!
-    dependencies: [NewDependency]!
-    overrides: [NewOverride!]!
-    modules(name: String): [NewModule!]!
-    consumes: [NewConsume!]!
+    dependencies: [Dependency]!
+    overrides: [Override!]!
+    modules(name: String): [Module!]!
+    consumes: [Consume!]!
   }
 
-  type NewApplicationOverride {
+  type ApplicationOverride {
     id: ID!
     application: Application!
     version: String
     name: String!
   }
 
-  type NewOverride {
+  type Override {
     id: ID!
-    application: NewApplication!
+    application: Application!
     version: String
     name: String!
   }
 
-  type NewConsume {
-    consumingApplication: NewApplication!
-    application: NewApplication
+  type Consume {
+    consumingApplication: Application!
+    application: Application
     name: String!
     usedIn: [FileLocation!]!
   }
 
-  type NewModule {
+  type FileLocation {
+    file: String!
+    url: String
+  }
+
+  type Module {
     id: ID!
-    application: NewApplication!
+    application: Application!
     name: String!
     file: String
     requires: [String!]!
-    consumedBy: [NewConsume]!
+    consumedBy: [Consume]!
   }
 
-  type NewApplication {
+  type Application {
     id: String!
     name: String!
     group: String!
     metadata: [Metadata!]!
-    overrides: [NewApplicationOverride!]
+    overrides: [ApplicationOverride!]
     versions(type: String, latest: Boolean): [ApplicationVersion!]!
   }
 
@@ -105,7 +104,7 @@ const typeDefs = gql`
     id: String!
     name: String!
     metadata: [Metadata!]!
-    applications(id: String): [NewApplication!]!
+    applications(id: String): [Application!]!
   }
 
   type Metadata {
@@ -128,56 +127,10 @@ const typeDefs = gql`
     defaultGroup: String!
   }
 
-  type Module {
-    id: ID!
-    application: Application!
-    name: String!
-    file: String
-    requires: [Override!]!
-    consumedBy: [Consume!]!
-  }
-
-  type Override {
-    id: ID!
-    application: Application!
-    version: String
-    name: String!
-  }
-
-  type FileLocation {
-    file: String!
-    url: String
-  }
-
-  type Consume {
-    consumingApplication: Application!
-    application: Application
-    name: String!
-    usedIn: [FileLocation!]!
-  }
-
-  type Dependency {
-    name: String!
-    version: String!
-  }
-
   type Versions {
     versions: [String!]!
     latest: String!
     override: [Dependency!]
-  }
-
-  type Application {
-    dependencies: [Dependency!]!
-    devDependencies: [Dependency!]!
-    optionalDependencies: [Dependency!]!
-    id: ID!
-    name: String!
-    remote: String!
-    modules: [Module!]!
-    overrides: [Override!]!
-    consumes: [Consume!]!
-    versions: Versions!
   }
 `;
 
@@ -187,49 +140,6 @@ const resolvers = {
       return {
         versionManagementEnabled: versionManagementEnabled(),
       };
-    },
-    applications: async (_, { name: nameFilter }) => {
-      const applications = await getApplications();
-      const applicationFilter = nameFilter
-        ? ({ name }) => name.includes(nameFilter)
-        : () => true;
-      return applications.filter(applicationFilter);
-    },
-    consumingApplications: async (_, { name }) => {
-      const applications = await getApplications();
-      return applications.filter(
-        ({ consumes }) =>
-          consumes.filter(({ applicationID }) => applicationID === name)
-            .length > 0
-      );
-    },
-    modules: async (_, { application, name: nameFilter }) => {
-      const applications = await getApplications();
-      const applicationFilter = application
-        ? ({ name }) => name.includes(application)
-        : () => true;
-      const filter = nameFilter
-        ? ({ name }) => name.includes(nameFilter)
-        : () => true;
-      return applications
-        .filter(applicationFilter)
-        .map(({ modules }) => modules)
-        .flat()
-        .filter(filter);
-    },
-    consumes: async (_, { application, name: nameFilter }) => {
-      const applications = await getApplications();
-      const applicationFilter = application
-        ? ({ name }) => name.includes(application)
-        : () => true;
-      const filter = nameFilter
-        ? ({ name }) => name.includes(nameFilter)
-        : () => true;
-      return applications
-        .filter(applicationFilter)
-        .map(({ consumes }) => consumes)
-        .flat()
-        .filter(filter);
     },
     userByEmail: async (_, { email }) => {
       await dbDriver.setup();
@@ -302,7 +212,7 @@ const resolvers = {
       return dbDriver.user_find(user.email);
     },
   },
-  NewApplication: {
+  Application: {
     versions: async ({ id }, { type, latest }, ctx) => {
       ctx.type = type;
       await dbDriver.setup();
@@ -313,7 +223,7 @@ const resolvers = {
       return found;
     },
   },
-  NewConsume: {
+  Consume: {
     consumingApplication: async (parent, args, ctx) => {
       await dbDriver.setup();
       return dbDriver.application_find(parent.consumingApplicationID);
@@ -323,7 +233,7 @@ const resolvers = {
       return dbDriver.application_find(parent.applicationID);
     },
   },
-  NewModule: {
+  Module: {
     consumedBy: async (parent, args, ctx) => {
       await dbDriver.setup();
       return ModuleManager.getConsumedBy(
@@ -351,52 +261,6 @@ const resolvers = {
         const found = await dbDriver.application_find(applicationId);
         return found ? [found] : [];
       }
-    },
-  },
-  Module: {
-    application: async ({ applicationID }) => {
-      const applications = await getApplications();
-      return applications.find(({ id }) => id === applicationID);
-    },
-    requires: async ({ requires, applicationID }) => {
-      const applications = await getApplications();
-      const app = applications.find(({ id }) => id === applicationID);
-      return requires.map((reqId) =>
-        app.overrides.find(({ id }) => id === reqId)
-      );
-    },
-    consumedBy: async ({ applicationID, name }) => {
-      const applications = await getApplications();
-      return applications
-        .map(({ consumes }) => consumes)
-        .flat()
-        .filter(
-          ({ applicationID: conApp, name: conName }) =>
-            conApp === applicationID && conName === name
-        );
-    },
-  },
-  Override: {
-    application: async ({ applicationID }) => {
-      const applications = await getApplications();
-      return applications.find(({ id }) => id === applicationID);
-    },
-  },
-  Consume: {
-    consumingApplication: async ({ consumingApplicationID }) => {
-      const applications = await getApplications();
-      return applications.find(({ id }) => id === consumingApplicationID);
-    },
-    application: async ({ applicationID }) => {
-      const applications = await getApplications();
-      return applications.find(({ id }) => id === applicationID);
-    },
-  },
-  Application: {
-    versions: async ({ id }) => {
-      const applications = await getApplications();
-      const app = applications.find(({ id: appId }) => appId === id);
-      return app.versions || DEFAULT_VERSIONS;
     },
   },
 };

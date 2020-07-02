@@ -73,9 +73,7 @@ const GET_HEAD_VERSION = gql`
             id
             file
             name
-            requires {
-              name
-            }
+            requires
           }
           overrides {
             id
@@ -394,7 +392,7 @@ const ModulesTable = observer(({ application, modules, overrides }) => {
               <TableCell>
                 <Typography>
                   {requires
-                    .map(({ name }) => `${name}${findVersion(name)}`)
+                    .map((name) => `${name}${findVersion(name)}`)
                     .join(", ")}
                 </Typography>
               </TableCell>
