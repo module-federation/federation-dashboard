@@ -9,6 +9,7 @@ const DEFAULT_VERSIONS = {
 };
 
 import dbDriver from "../../src/database/drivers";
+import ModuleManager from "../../src/managers/Module";
 
 const typeDefs = gql`
   type Query {
@@ -56,6 +57,9 @@ const typeDefs = gql`
     remote: String!
     remotes: [Remote!]!
     dependencies: [NewDependency]!
+    overrides: [NewOverride!]!
+    modules(name: String): [NewModule!]!
+    consumes: [NewConsume!]!
   }
 
   type NewOverride {
@@ -78,6 +82,7 @@ const typeDefs = gql`
     name: String!
     file: String
     requires: [Override!]!
+    consumedBy: [NewConsume]!
   }
 
   type NewApplication {
@@ -85,12 +90,6 @@ const typeDefs = gql`
     name: String!
     group: String!
     metadata: [Metadata!]!
-    remote: String!
-    remotes: [Remote!]!
-    overrides: [NewOverride!]!
-    modules: [NewModule!]!
-    consumes: [NewConsume!]!
-    dependencies: [NewDependency!]!
     versions(type: String, latest: Boolean): [ApplicationVersion!]!
   }
 
@@ -228,7 +227,7 @@ const resolvers = {
       await dbDriver.setup();
       return dbDriver.user_findByEmail(email);
     },
-    groups: async (_, { name }) => {
+    groups: async (_, { name }, ctx) => {
       await dbDriver.setup();
       if (name) {
         const found = await dbDriver.group_findByName(name);
@@ -296,7 +295,8 @@ const resolvers = {
     },
   },
   NewApplication: {
-    versions: async ({ id }, { type, latest }) => {
+    versions: async ({ id }, { type, latest }, ctx) => {
+      ctx.type = type;
       await dbDriver.setup();
       let found = await dbDriver.applicationVersion_findAll(id, type);
       if (latest !== undefined) {
@@ -305,8 +305,33 @@ const resolvers = {
       return found;
     },
   },
+  NewConsume: {
+    consumingApplication: async (parent, args, ctx) => {
+      await dbDriver.setup();
+      return dbDriver.application_find(parent.consumingApplicationID);
+    },
+  },
+  NewModule: {
+    consumedBy: async (parent, args, ctx) => {
+      await dbDriver.setup();
+      return ModuleManager.getConsumedBy(
+        ctx.group,
+        ctx.type,
+        parent.applicationID,
+        parent.name
+      );
+    },
+  },
+  ApplicationVersion: {
+    modules: async ({ modules }, { name }) => {
+      return name
+        ? modules.filter(({ name: moduleName }) => name === moduleName)
+        : modules;
+    },
+  },
   Group: {
-    applications: async ({ id }, { id: applicationId }) => {
+    applications: async ({ id }, { id: applicationId }, ctx) => {
+      ctx.group = id;
       await dbDriver.setup();
       if (!applicationId) {
         return dbDriver.application_findInGroups([id]);

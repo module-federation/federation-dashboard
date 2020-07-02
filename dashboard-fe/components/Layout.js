@@ -7,7 +7,6 @@ import {
   Toolbar,
   Divider,
   Typography,
-  TextField,
   IconButton,
   Link,
   Drawer,
@@ -15,37 +14,16 @@ import {
   Avatar,
   Menu,
   MenuItem,
-  fade,
 } from "@material-ui/core";
-import SideBar from "./Sidebar";
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
-import { useRouter } from "next/router";
 import { observer } from "mobx-react";
 
 import store from "../src/store";
 
-import ApplicationDrawer from "../components/ApplicationDrawer";
-
-const GET_SIDEBAR_DATA = gql`
-  {
-    applications {
-      id
-      name
-    }
-    modules {
-      id
-      name
-      application {
-        id
-        name
-      }
-    }
-  }
-`;
+import ApplicationDrawer from "./ApplicationDrawer";
+import SideBar from "./Sidebar";
+import SearchBox from "./SearchBox";
 
 const leftDrawerWidth = 240;
 
@@ -125,6 +103,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    color: "white",
   },
   leftDrawerPaper: {
     position: "relative",
@@ -165,25 +144,10 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: 200,
-    color: "white",
-    padding: 5,
-  },
 }));
 
 const Layout = ({ children }) => {
-  const { data } = useQuery(GET_SIDEBAR_DATA);
   const classes = useStyles();
-  const router = useRouter();
 
   const [leftOpen, setLeftOpen] = React.useState(true);
   const handleDrawerLeftOpen = () => {
@@ -193,28 +157,6 @@ const Layout = ({ children }) => {
     setLeftOpen(false);
   };
 
-  const options = [];
-  if (data) {
-    data.applications.forEach(({ name }) => {
-      options.push({
-        type: "Application",
-        url: `/applications/${name}`,
-        name,
-      });
-    });
-    data.modules.forEach(({ application, name }) => {
-      options.push({
-        type: "Modules",
-        url: `/applications/${application.name}/${name}`,
-        name,
-      });
-    });
-  }
-  const onChange = (evt, opt, reason) => {
-    if (reason === "select-option") {
-      router.push(opt.url);
-    }
-  };
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -235,25 +177,12 @@ const Layout = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            className={classes.title}
-          >
-            <strong>Federated Modules</strong> Dashboard
-          </Typography>
-          <Autocomplete
-            onChange={onChange}
-            options={options}
-            groupBy={(option) => option.type}
-            getOptionLabel={(option) => option.name}
-            className={classes.searchBox}
-            renderInput={(params) => (
-              <TextField {...params} className={classes.search} />
-            )}
-          />
+          <Link href="/" className={classes.title}>
+            <Typography component="h1" variant="h6" color="inherit" noWrap>
+              <strong>Federated Modules</strong> Dashboard
+            </Typography>
+          </Link>
+          <SearchBox />
           <UserMenu />
         </Toolbar>
       </AppBar>
@@ -273,7 +202,7 @@ const Layout = ({ children }) => {
           </IconButton>
         </div>
         <Divider />
-        <SideBar data={data} />
+        <SideBar />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

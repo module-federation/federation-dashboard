@@ -54,6 +54,7 @@ class Store {
 
   @observable group = "default";
   @observable versionType = "development";
+  versionTypes = ["development", "production"];
 
   @observable isAuthorized = false;
   @observable authUser = null;
@@ -110,7 +111,7 @@ if (typeof window !== "undefined") {
       })
       .then(({ data: { dashboard, groups } }) => {
         store.versionManagementEnabled = dashboard.versionManagementEnabled;
-        store.groups = dashboard.groups;
+        store.groups = groups;
       });
   });
 }
