@@ -32,10 +32,28 @@ const UPDATE_USER = gql`
   }
 `;
 
+const GET_INITIAL_DATA = gql`
+  query {
+    dashboard {
+      versionManagementEnabled
+    }
+    groups {
+      id
+      name
+    }
+  }
+`;
+
 class Store {
   client = client;
   @observable selectedApplication = null;
   @observable detailDrawerOpen = false;
+
+  @observable versionManagementEnabled = false;
+  @observable groups = [];
+
+  @observable group = "default";
+  @observable versionType = "development";
 
   @observable isAuthorized = false;
   @observable authUser = null;
@@ -85,6 +103,15 @@ if (typeof window !== "undefined") {
   autorun(async () => {
     const user = await fetchUser();
     store.setAuthUser(user);
+
+    client
+      .query({
+        query: GET_INITIAL_DATA,
+      })
+      .then(({ data: { dashboard, groups } }) => {
+        store.versionManagementEnabled = dashboard.versionManagementEnabled;
+        store.groups = dashboard.groups;
+      });
   });
 }
 

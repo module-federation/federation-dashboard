@@ -5,6 +5,8 @@ import Group from "../group";
 import User from "../user";
 
 export default abstract class Driver {
+  abstract async setup();
+
   abstract async application_find(id: String): Promise<Application | null>;
   abstract async application_findInGroups(
     groups: Array<String>
@@ -24,10 +26,15 @@ export default abstract class Driver {
     type: String,
     version: String
   ): Promise<ApplicationVersion | null>;
+  abstract async applicationVersion_findAll(
+    applicationId: String,
+    type: String,
+    version: String
+  ): Promise<Array<ApplicationVersion>>;
   abstract async applicationVersion_findLatest(
     applicationId: String,
     type: String
-  ): Promise<ApplicationVersion | null>;
+  ): Promise<Array<ApplicationVersion>>;
   abstract async applicationVersion_update(
     version: ApplicationVersion
   ): Promise<null>;
@@ -38,6 +45,7 @@ export default abstract class Driver {
   ): Promise<null>;
 
   abstract async group_find(id: String): Promise<Group>;
+  abstract async group_findByName(name: String): Promise<Group>;
   abstract async group_findAll(): Promise<Array<Group>>;
   abstract async group_update(group: Group): Promise<Array<Group>>;
   abstract async group_delete(id: String): Promise<Array<Group>>;

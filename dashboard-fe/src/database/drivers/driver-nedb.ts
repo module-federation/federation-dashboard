@@ -100,6 +100,26 @@ export default class DriverNedb implements Driver {
   );
   private groupsTable: TableDriver<Group> = new TableDriver<Group>(groups);
   private usersTable: TableDriver<User> = new TableDriver<User>(users);
+  private isSetup = false;
+
+  constructor() {}
+
+  private async setup() {
+    if (this.isSetup) {
+      return false;
+    }
+
+    const defaultGroup = await this.group_findByName("default");
+    if (!defaultGroup) {
+      await this.group_update({
+        id: "default",
+        name: "default",
+        metadata: [],
+      });
+    }
+
+    this.isSetup = true;
+  }
 
   async application_find(id: String): Promise<Application | null> {
     return this.applicationTable.find(id);
@@ -146,62 +166,48 @@ export default class DriverNedb implements Driver {
     });
     return versions.length > 0 ? versions[0] : null;
   }
+
+  async applicationVersion_findAll(
+    applicationId: String,
+    type: String,
+    version: String
+  ): Promise<Array<ApplicationVersion>> {
+    const q = {
+      applicationId,
+    };
+    if (type) {
+      q.type = type;
+    }
+    if (version) {
+      q.version = version;
+    }
+    const versions = await this.applicationVersionsTable.search(q);
+    return versions.length > 0 ? versions : [];
+  }
+
   async applicationVersion_findLatest(
     applicationId: String,
     type: String
-  ): Promise<ApplicationVersion | null> {
-    return new Promise(async (resolve) => {
-      const found = await this.applicationVersionsTable.search({
-        applicationId,
-        type,
-        latest: true,
-      });
-      resolve(found && found.length > 0 ? found[0] : null);
+  ): Promise<Array<ApplicationVersion>> {
+    return this.applicationVersionsTable.search({
+      applicationId,
+      type,
+      latest: true,
     });
   }
+
   async applicationVersion_update(version: ApplicationVersion): Promise<null> {
     Joi.assert(version, applicationVersionSchema);
-
-    return new Promise(async (resolve) => {
-      // Insert or update this version
-      await this.applicationVersionsTable.update(
-        {
-          applicationId: version.applicationId,
-          type: version.type,
-          version: version.version,
-        },
-        version
-      );
-
-      // If it's the latest version then un-mark latest on any other versions
-      if (version.latest) {
-        const found = await this.applicationVersionsTable.search({
-          applicationId: version.applicationId,
-          type: version.type,
-          latest: true,
-        });
-        await Promise.all(
-          found
-            .filter(({ version: v }) => v !== version.version)
-            .map((appVersion) =>
-              this.applicationVersionsTable.update(
-                {
-                  applicationId: appVersion.applicationId,
-                  type: appVersion.type,
-                  version: appVersion.version,
-                },
-                {
-                  ...appVersion,
-                  latest: false,
-                }
-              )
-            )
-        );
-      }
-
-      resolve();
-    });
+    await this.applicationVersionsTable.update(
+      {
+        applicationId: version.applicationId,
+        type: version.type,
+        version: version.version,
+      },
+      version
+    );
   }
+
   async applicationVersion_delete(
     applicationId: String,
     type: String,
@@ -214,13 +220,21 @@ export default class DriverNedb implements Driver {
   async group_find(id: String): Promise<Group> {
     return this.groupsTable.find(id);
   }
+  async group_findByName(name: String): Promise<Group> {
+    return this.groupsTable
+      .search({ name })
+      .then((data) => (data && data.length ? data[0] : null));
+  }
+
   async group_findAll(): Promise<Array<Group>> {
     return this.groupsTable.search({});
   }
+
   async group_update(group: Group): Promise<Array<Group>> {
     Joi.assert(group, groupSchema);
     return this.groupsTable.update({ id: group.id }, group);
   }
+
   async group_delete(id: String): Promise<Array<Group>> {
     return this.groupsTable.delete(id);
   }

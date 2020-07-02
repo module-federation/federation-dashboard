@@ -65,5 +65,24 @@ export default class ApplicationManager {
     }
 
     await driver.applicationVersion_update(version);
+
+    // Demote any previous versions to not latest
+    const found = await driver.applicationVersion_findLatest(
+      version.applicationId,
+      version.type
+    );
+    await Promise.all(
+      found
+        .filter(
+          ({ version: v, type: t }) =>
+            v !== version.version && t == version.type
+        )
+        .map((appVersion) =>
+          driver.applicationVersion_update({
+            ...appVersion,
+            latest: false,
+          })
+        )
+    );
   }
 }

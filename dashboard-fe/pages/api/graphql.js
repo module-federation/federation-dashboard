@@ -9,16 +9,18 @@ const DEFAULT_VERSIONS = {
 };
 
 import dbDriver from "../../src/database/drivers";
-import driver from "../../src/database/drivers";
 
 const typeDefs = gql`
   type Query {
     dashboard: DashboardInfo!
+
     applications(name: String): [Application!]!
     consumingApplications(name: String): [Application!]!
     modules(application: String, name: String): [Module!]!
     consumes(application: String, name: String): [Consume!]!
+
     userByEmail(email: String): User
+    groups(name: String): [Group!]!
   }
 
   type Mutation {
@@ -34,6 +36,89 @@ const typeDefs = gql`
 
   type DashboardInfo {
     versionManagementEnabled: Boolean!
+  }
+
+  type NewDependency {
+    name: String!
+    type: String!
+    version: String!
+  }
+
+  type Remote {
+    internalName: String!
+    name: String!
+  }
+
+  type ApplicationVersion {
+    type: String!
+    version: String!
+    latest: Boolean!
+    remote: String!
+    remotes: [Remote!]!
+    dependencies: [NewDependency]!
+  }
+
+  type NewOverride {
+    id: ID!
+    application: NewApplication!
+    version: String
+    name: String!
+  }
+
+  type NewConsume {
+    consumingApplication: NewApplication!
+    application: NewApplication
+    name: String!
+    usedIn: [FileLocation!]!
+  }
+
+  type NewModule {
+    id: ID!
+    application: NewApplication!
+    name: String!
+    file: String
+    requires: [Override!]!
+  }
+
+  type NewApplication {
+    id: String!
+    name: String!
+    group: String!
+    metadata: [Metadata!]!
+    remote: String!
+    remotes: [Remote!]!
+    overrides: [NewOverride!]!
+    modules: [NewModule!]!
+    consumes: [NewConsume!]!
+    dependencies: [NewDependency!]!
+    versions(type: String, latest: Boolean): [ApplicationVersion!]!
+  }
+
+  type Group {
+    id: String!
+    name: String!
+    metadata: [Metadata!]!
+    applications(id: String): [NewApplication!]!
+  }
+
+  type Metadata {
+    name: String!
+    value: String!
+  }
+
+  input UserInput {
+    email: String!
+    name: String!
+    groups: [String!]
+    defaultGroup: String!
+  }
+
+  type User {
+    id: String!
+    email: String!
+    name: String!
+    groups: [String!]
+    defaultGroup: String!
   }
 
   type Module {
@@ -67,21 +152,6 @@ const typeDefs = gql`
   type Dependency {
     name: String!
     version: String!
-  }
-
-  input UserInput {
-    email: String!
-    name: String!
-    groups: [String!]
-    defaultGroup: String!
-  }
-
-  type User {
-    id: String!
-    email: String!
-    name: String!
-    groups: [String!]
-    defaultGroup: String!
   }
 
   type Versions {
@@ -155,7 +225,17 @@ const resolvers = {
         .filter(filter);
     },
     userByEmail: async (_, { email }) => {
+      await dbDriver.setup();
       return dbDriver.user_findByEmail(email);
+    },
+    groups: async (_, { name }) => {
+      await dbDriver.setup();
+      if (name) {
+        const found = await dbDriver.group_findByName(name);
+        return found ? [found] : [];
+      } else {
+        return dbDriver.group_findAll();
+      }
     },
   },
   Mutation: {
@@ -207,11 +287,33 @@ const resolvers = {
       return app.versions;
     },
     updateUser: async (_, { user }) => {
-      await driver.user_update({
+      await dbDriver.setup();
+      await dbDriver.user_update({
         id: user.email,
         ...user,
       });
-      return driver.user_find(user.email);
+      return dbDriver.user_find(user.email);
+    },
+  },
+  NewApplication: {
+    versions: async ({ id }, { type, latest }) => {
+      await dbDriver.setup();
+      let found = await dbDriver.applicationVersion_findAll(id, type);
+      if (latest !== undefined) {
+        found = found.filter(({ latest }) => latest);
+      }
+      return found;
+    },
+  },
+  Group: {
+    applications: async ({ id }, { id: applicationId }) => {
+      await dbDriver.setup();
+      if (!applicationId) {
+        return dbDriver.application_findInGroups([id]);
+      } else {
+        const found = await dbDriver.application_find(applicationId);
+        return found ? [found] : [];
+      }
     },
   },
   Module: {
@@ -267,7 +369,10 @@ const apolloServer = new ApolloServer({
   resolvers,
 });
 
-const handler = apolloServer.createHandler({ path: "/api/graphql" });
+const handler = apolloServer.createHandler({
+  path: "/api/graphql",
+  cors: true,
+});
 
 export const config = {
   api: {
