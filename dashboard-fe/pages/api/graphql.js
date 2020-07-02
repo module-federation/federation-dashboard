@@ -62,6 +62,13 @@ const typeDefs = gql`
     consumes: [NewConsume!]!
   }
 
+  type NewApplicationOverride {
+    id: ID!
+    application: Application!
+    version: String
+    name: String!
+  }
+
   type NewOverride {
     id: ID!
     application: NewApplication!
@@ -90,6 +97,7 @@ const typeDefs = gql`
     name: String!
     group: String!
     metadata: [Metadata!]!
+    overrides: [NewApplicationOverride!]
     versions(type: String, latest: Boolean): [ApplicationVersion!]!
   }
 

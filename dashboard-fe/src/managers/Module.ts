@@ -22,7 +22,6 @@ export default class ModuleManager {
         }
       })
     );
-    console.log([found]);
     return found;
   }
 }

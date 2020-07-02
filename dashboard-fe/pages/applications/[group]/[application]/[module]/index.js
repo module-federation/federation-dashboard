@@ -7,6 +7,7 @@ import {
   Table,
   TableRow,
   TableCell,
+  TableBody,
 } from "@material-ui/core";
 import Link from "next/link";
 import gql from "graphql-tag";
@@ -81,28 +82,30 @@ const ConsumesTable = ({ consumed }) => {
         Used By
       </Typography>
       <Table>
-        {consumed
-          .filter(({ consumingApplication }) => consumingApplication)
-          .map(({ name, consumingApplication, usedIn }) => (
-            <TableRow key={[consumingApplication.id, name].join()}>
-              <TableCell>
-                <Typography>
-                  <Link
-                    href={`/applications/${consumingApplication.name}/${name}`}
-                  >
-                    <a>{consumingApplication.name}</a>
-                  </Link>
-                </Typography>
-              </TableCell>
-              <TableCell>
-                {usedIn.map(({ file, url }) => (
-                  <Typography variant="body2">
-                    <a href={url}>{file}</a>
+        <TableBody>
+          {consumed
+            .filter(({ consumingApplication }) => consumingApplication)
+            .map(({ name, consumingApplication, usedIn }) => (
+              <TableRow key={[consumingApplication.id, name].join()}>
+                <TableCell>
+                  <Typography>
+                    <Link
+                      href={`/applications/${store.group}/${consumingApplication.name}/${name}`}
+                    >
+                      <a>{consumingApplication.name}</a>
+                    </Link>
                   </Typography>
-                ))}
-              </TableCell>
-            </TableRow>
-          ))}
+                </TableCell>
+                <TableCell>
+                  {usedIn.map(({ file, url }) => (
+                    <Typography variant="body2" key={[file, url].join(":")}>
+                      <a href={url}>{file}</a>
+                    </Typography>
+                  ))}
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
       </Table>
     </>
   );
@@ -141,8 +144,10 @@ const ModulePage = () => {
         {mod && (
           <div>
             <Typography variant="h4" className={classes.moduleHeader}>
-              <Link href={`/applications/${router.query.application}`}>
-                {router.query.application}
+              <Link
+                href={`/applications/${store.group}/${router.query.application}`}
+              >
+                <a>{router.query.application}</a>
               </Link>
               /{mod.name}
             </Typography>

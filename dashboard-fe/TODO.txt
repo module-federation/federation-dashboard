@@ -1,5 +1,6 @@
 * Create secondary GraphQL schema and start porting the UI to it
 * Build a synthetic data maker
+* Fix versioning
 * Come up with a better group landing page
 * Move the sidebar to a hierarchic scheme with group selector
 * Add group and deployment type option to the plugin
@@ -10,3 +11,4 @@ Done:
 
 * Need to figure out a better way to pre-load the database
 * Migrate `latest` applicationVersion logic to application manager
+* Keep versioning from blowing up

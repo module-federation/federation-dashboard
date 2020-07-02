@@ -14,6 +14,7 @@ export default class ApplicationManager {
         id: application.id,
         name: application.name,
         group: application.group || "default",
+        overrides: [],
         metadata: [],
       });
     }
