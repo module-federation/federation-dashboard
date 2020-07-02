@@ -3,6 +3,8 @@ import { Typography, Tabs, Tab, makeStyles } from "@material-ui/core";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import Link from "next/link";
+import { observer } from "mobx-react";
+import { get } from "lodash";
 
 import ApplicationsTable from "../components/ApplicationsTable";
 import ModuleChordChart from "../components/ModuleChordChart";
@@ -13,40 +15,36 @@ const ModuleUMLDiagram =
     : require("../components/ModuleUMLDiagram.tsx").default;
 import Layout from "../components/Layout";
 import withAuth from "../components/with-auth";
+import store from "../src/store";
 
 const GET_APPS = gql`
-  {
-    dashboard {
-      versionManagementEnabled
-    }
-    applications {
-      id
-      name
-      modules {
+  query($group: String!, $type: String!) {
+    groups(name: $group) {
+      applications {
         id
         name
-        requires {
-          name
+        versions(latest: true, type: $type) {
+          modules {
+            id
+            name
+            requires
+          }
+          overrides {
+            id
+            name
+            version
+          }
+          consumes {
+            application {
+              id
+              name
+            }
+            name
+            usedIn {
+              file
+            }
+          }
         }
-      }
-      overrides {
-        id
-        name
-        version
-      }
-      consumes {
-        application {
-          id
-          name
-        }
-        name
-        usedIn {
-          file
-        }
-      }
-      versions {
-        versions
-        latest
       }
     }
   }
@@ -59,18 +57,27 @@ const useHomeStyles = makeStyles({
 });
 
 const Home = () => {
-  const { data } = useQuery(GET_APPS);
+  const { data } = useQuery(GET_APPS, {
+    variables: {
+      type: store.versionType,
+      group: store.group,
+    },
+  });
   const [currentTab, currentTabSet] = React.useState(0);
   const classes = useHomeStyles();
+
+  const applications = get(data, "groups[0].applications", []).filter(
+    ({ versions }) => versions && versions.length > 0
+  );
 
   return (
     <Layout>
       <Head>
         <title>Federated Modules Dashboard</title>
       </Head>
-      {data && data.applications.length > 0 && (
+      {applications && (
         <>
-          {data.applications.length > 1 && (
+          {applications.length > 1 && (
             <>
               <Tabs
                 value={currentTab}
@@ -85,25 +92,25 @@ const Home = () => {
                 <Tab label="Dependency Table" />
               </Tabs>
               <div style={{ display: currentTab === 0 ? "block" : "none" }}>
-                <ModuleUMLDiagram applications={data.applications} />
+                <ModuleUMLDiagram applications={applications} />
               </div>
               <div style={{ display: currentTab === 1 ? "block" : "none" }}>
-                <ModuleNodeGraph applications={data.applications} />
+                <ModuleNodeGraph applications={applications} />
               </div>
               <div style={{ display: currentTab === 2 ? "block" : "none" }}>
-                <ModuleChordChart applications={data.applications} />
+                <ModuleChordChart applications={applications} />
               </div>
               <div style={{ display: currentTab === 3 ? "block" : "none" }}>
-                <ApplicationsTable applications={data.applications} />
+                <ApplicationsTable applications={applications} />
               </div>
             </>
           )}
-          {data.applications.length === 1 && (
-            <ApplicationsTable applications={data.applications} />
+          {applications.length === 1 && (
+            <ApplicationsTable applications={applications} />
           )}
         </>
       )}
-      {data && data.applications.length === 0 && (
+      {data && applications.length === 0 && (
         <>
           <img src="/empty-data.svg" style={{ maxHeight: 400 }}></img>
           <Typography variant="h5">
@@ -135,4 +142,4 @@ const Home = () => {
   );
 };
 
-export default withAuth(Home);
+export default withAuth(observer(Home));

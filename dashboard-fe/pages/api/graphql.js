@@ -88,7 +88,7 @@ const typeDefs = gql`
     application: NewApplication!
     name: String!
     file: String
-    requires: [Override!]!
+    requires: [String!]!
     consumedBy: [NewConsume]!
   }
 

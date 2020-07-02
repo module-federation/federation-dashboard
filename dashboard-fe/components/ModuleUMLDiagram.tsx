@@ -209,7 +209,8 @@ class ModuleUMLDiagram extends React.PureComponent {
     const links = [];
     const ports = {};
 
-    props.applications.forEach(({ name, modules }) => {
+    props.applications.forEach(({ name, versions }) => {
+      const modules = versions[0].modules;
       const node = new DefaultNodeModel(name, NODE_COLOR_DEFAULT);
 
       node.registerListener({
@@ -266,8 +267,8 @@ class ModuleUMLDiagram extends React.PureComponent {
       nodes.push(node);
     });
 
-    props.applications.forEach(({ name: fromApp, consumes }) => {
-      consumes
+    props.applications.forEach(({ name: fromApp, versions }) => {
+      versions[0].consumes
         .filter(({ application }) => application)
         .forEach(({ application: { name: appName }, name: moduleName }) => {
           links.push(

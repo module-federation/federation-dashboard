@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
 const ApplicationsTable = ({ applications }) => {
   const classes = useStyles();
   const modules = applications
-    .map(({ id, name, modules }) =>
-      modules.map((mod) => ({
+    .map(({ id, name, versions }) =>
+      versions[0].modules.map((mod) => ({
         ...mod,
         absoluteId: `${id}:${mod.name}`,
         applicationId: id,
@@ -29,14 +29,14 @@ const ApplicationsTable = ({ applications }) => {
     )
     .flat();
   const modulesById = Object.fromEntries(
-    modules.map(({ id, name, applicationId }) => [
+    modules.map(({ name, applicationId }) => [
       `${applicationId}:${name}`,
       { name, applicationId, applications: {} },
     ])
   );
 
-  applications.forEach(({ id: consumingApplication, consumes }) => {
-    consumes
+  applications.forEach(({ id: consumingApplication, versions }) => {
+    versions[0].consumes
       .filter(({ application }) => application)
       .forEach(({ name, application: { id: applicationId }, usedIn }) => {
         modulesById[`${applicationId}:${name}`].applications[
@@ -46,15 +46,15 @@ const ApplicationsTable = ({ applications }) => {
   });
 
   const overridesComplete = {};
-  applications.forEach(({ id, overrides }) =>
-    overrides.forEach(({ name }) => {
+  applications.forEach(({ id, versions }) =>
+    versions[0].overrides.forEach(({ name }) => {
       overridesComplete[name] = [...(overridesComplete[name] || []), id];
     })
   );
 
   const findVersion = (applicationId, name) => {
-    const { overrides } = applications.find(({ id }) => id === applicationId);
-    let ov = overrides.find(({ name: ovName }) => ovName === name);
+    const { versions } = applications.find(({ id }) => id === applicationId);
+    let ov = versions[0].overrides.find(({ name: ovName }) => ovName === name);
     return ov ? ` (${ov.version})` : "";
   };
 
@@ -129,9 +129,7 @@ const ApplicationsTable = ({ applications }) => {
               <TableCell align="left" width="5%">
                 <Typography variant="body1" noWrap>
                   {requires
-                    .map(
-                      ({ name }) => `${name}${findVersion(applicationId, name)}`
-                    )
+                    .map((name) => `${name}${findVersion(applicationId, name)}`)
                     .join(", ")}
                 </Typography>
               </TableCell>
