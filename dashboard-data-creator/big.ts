@@ -11,6 +11,21 @@ const cart = new Application("cart", "frontend");
 const checkout = new Application("checkout", "frontend");
 const pdp = new Application("pdp", "frontend");
 
+const cms = new Application("cms", "admin");
+cms.addConsumes("admin-shared", "Header");
+cms.addConsumes("admin-shared", "Footer");
+const admin_shared = new Application("admin-shared", "admin");
+admin_shared.addModule("Header", "src/Header.jsx");
+admin_shared.addModule("Footer", "src/Footer.jsx");
+const collections = new Application("collections", "admin");
+collections.addConsumes("admin-shared", "Header");
+collections.addConsumes("admin-shared", "Footer");
+collections.addConsumes("assets", "Image");
+const assets = new Application("assets", "admin");
+collections.addConsumes("admin-shared", "Header");
+collections.addConsumes("admin-shared", "Footer");
+assets.addModule("Image", "src/Image.jsx");
+
 async function buildProjects() {
   await interactiveHold("Upload home project");
   await home.pushDevelopmentVersion();
@@ -51,6 +66,12 @@ async function buildProjects() {
   await cart.pushDevelopmentVersion();
   await checkout.pushDevelopmentVersion();
   await pdp.pushDevelopmentVersion();
+
+  await interactiveHold("Adding admin applications");
+  await cms.pushDevelopmentVersion();
+  await admin_shared.pushDevelopmentVersion();
+  await collections.pushDevelopmentVersion();
+  await assets.pushDevelopmentVersion();
 
   process.exit(0);
 }

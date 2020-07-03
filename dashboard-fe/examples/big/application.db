@@ -1,5 +1,9 @@
-{"id":"home","name":"home","group":"frontend","overrides":[],"metadata":[],"_id":"SuYBKjMDVKVcW6o9"}
-{"id":"search","name":"search","group":"frontend","overrides":[],"metadata":[],"_id":"HCj52vdZffvHsBEh"}
-{"id":"cart","name":"cart","group":"frontend","overrides":[],"metadata":[],"_id":"JhiMsBltdeeQqbpR"}
-{"id":"checkout","name":"checkout","group":"frontend","overrides":[],"metadata":[],"_id":"iS0aDZG6aDrtLOsU"}
-{"id":"pdp","name":"pdp","group":"frontend","overrides":[],"metadata":[],"_id":"1tBDtU9FaVkCm4Em"}
+{"id":"search","name":"search","group":"frontend","overrides":[],"metadata":[],"_id":"2bzBe7u5yN7AWmCv"}
+{"id":"cms","name":"cms","group":"admin","overrides":[],"metadata":[],"_id":"3UOLHBiUelYQpxxx"}
+{"id":"home","name":"home","group":"frontend","overrides":[],"metadata":[],"_id":"4d7vLvNTbHZoOtkQ"}
+{"id":"pdp","name":"pdp","group":"frontend","overrides":[],"metadata":[],"_id":"8Oz4HLmgY3dyAeO5"}
+{"id":"assets","name":"assets","group":"admin","overrides":[],"metadata":[],"_id":"MrTB2H1tzc61Ch9B"}
+{"id":"collections","name":"collections","group":"admin","overrides":[],"metadata":[],"_id":"RhP6y39Ppd4S3mXJ"}
+{"id":"checkout","name":"checkout","group":"frontend","overrides":[],"metadata":[],"_id":"Uz1u7Xut7Hzb3KLZ"}
+{"id":"cart","name":"cart","group":"frontend","overrides":[],"metadata":[],"_id":"ezieFgbl6WRyAqaE"}
+{"id":"admin-shared","name":"admin-shared","group":"admin","overrides":[],"metadata":[],"_id":"x06R7RHRUeOHAmrh"}
