@@ -44,6 +44,11 @@ const GET_INITIAL_DATA = gql`
   }
 `;
 
+const getLocalStorage =
+  typeof window === "undefined"
+    ? () => undefined
+    : (key) => global.localStorage.getItem(key);
+
 class Store {
   client = client;
   @observable selectedApplication = null;
@@ -52,13 +57,23 @@ class Store {
   @observable versionManagementEnabled = false;
   @observable groups = [];
 
-  @observable group = "default";
-  @observable versionType = "development";
+  @observable group = getLocalStorage("group") || "default";
+  @observable versionType = getLocalStorage("versionType") || "development";
   versionTypes = ["development", "production"];
 
   @observable isAuthorized = false;
   @observable authUser = null;
   @observable user = null;
+
+  @action setGroup(g) {
+    this.group = g;
+    global.localStorage.setItem("group", this.group);
+  }
+
+  @action setVersionType(vt) {
+    this.versionType = vt;
+    global.localStorage.setItem("versionType", this.versionType);
+  }
 
   @action setAuthUser(authUser) {
     this.authUser = authUser;

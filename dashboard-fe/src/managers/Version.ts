@@ -2,6 +2,8 @@ import dbDriver from "../database/drivers";
 
 export default class VersionManager {
   static async publishVersion(group, application, version) {
+    await driver.setup();
+
     const app = await dbDriver.applicationVersion_find(
       application,
       "production",

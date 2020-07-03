@@ -65,11 +65,11 @@ const SideBar = ({ restricted }) => {
   return (
     <List>
       {store.groups.length && (
-        <ListItem dense>
+        <ListItem>
           <Select
             variant="outlined"
             value={store.group}
-            onChange={(evt) => (store.group = evt.target.value)}
+            onChange={(evt) => store.setGroup(evt.target.value)}
             fullWidth
           >
             {store.groups.map(({ id, name }) => (
@@ -80,11 +80,11 @@ const SideBar = ({ restricted }) => {
           </Select>
         </ListItem>
       )}
-      <ListItem dense>
+      <ListItem>
         <Select
           variant="outlined"
           value={store.versionType}
-          onChange={(evt) => (store.versionType = evt.target.value)}
+          onChange={(evt) => store.setVersionType(evt.target.value)}
           fullWidth
         >
           {store.versionTypes.map((name) => (

@@ -193,13 +193,16 @@ const LINK_COLOR_SELECTED = "gray";
 const LINK_COLOR_UNSELECTED = "rgba(0,192,255,0)";
 const LINK_SIZE_DEFAULT = 3;
 
-class ModuleUMLDiagram extends React.PureComponent {
+class ModuleUMLDiagram extends React.Component {
   engine: DiagramEngine;
   model: DiagramModel;
 
   constructor(props) {
     super(props);
+    this.rebuild();
+  }
 
+  rebuild() {
     this.engine = createEngine();
     this.engine.getNodeFactories().registerFactory(new NicerNodeFactory());
 
@@ -209,8 +212,8 @@ class ModuleUMLDiagram extends React.PureComponent {
     const links = [];
     const ports = {};
 
-    props.applications.forEach(({ name, versions }) => {
-      const modules = versions[0].modules;
+    this.props.applications.forEach(({ name, versions }) => {
+      const { modules } = versions[0];
       const node = new DefaultNodeModel(name, NODE_COLOR_DEFAULT);
 
       node.registerListener({
@@ -267,7 +270,7 @@ class ModuleUMLDiagram extends React.PureComponent {
       nodes.push(node);
     });
 
-    props.applications.forEach(({ name: fromApp, versions }) => {
+    this.props.applications.forEach(({ name: fromApp, versions }) => {
       versions[0].consumes
         .filter(({ application }) => application)
         .forEach(({ application: { name: appName }, name: moduleName }) => {
@@ -289,8 +292,8 @@ class ModuleUMLDiagram extends React.PureComponent {
       this.model.addLink(link);
     });
 
-    this.model.setLocked(true);
     this.engine.setModel(this.model);
+    this.model.setLocked(true);
   }
 
   render() {

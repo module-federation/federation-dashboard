@@ -75,38 +75,40 @@ const Home = () => {
       <Head>
         <title>Federated Modules Dashboard</title>
       </Head>
-      {applications && (
+      {applications && applications.length > 0 && (
         <>
-          {applications.length > 1 && (
-            <>
-              <Tabs
-                value={currentTab}
-                onChange={(event, newValue) => {
-                  currentTabSet(newValue);
-                }}
-                aria-label="simple tabs example"
-              >
-                <Tab label="UML" />
-                <Tab label="Node Graph" />
-                <Tab label="Dependency Graph" />
-                <Tab label="Dependency Table" />
-              </Tabs>
-              <div style={{ display: currentTab === 0 ? "block" : "none" }}>
-                <ModuleUMLDiagram applications={applications} />
-              </div>
-              <div style={{ display: currentTab === 1 ? "block" : "none" }}>
-                <ModuleNodeGraph applications={applications} />
-              </div>
-              <div style={{ display: currentTab === 2 ? "block" : "none" }}>
-                <ModuleChordChart applications={applications} />
-              </div>
-              <div style={{ display: currentTab === 3 ? "block" : "none" }}>
-                <ApplicationsTable applications={applications} />
-              </div>
-            </>
-          )}
-          {applications.length === 1 && (
+          <Tabs
+            value={currentTab}
+            onChange={(event, newValue) => {
+              currentTabSet(newValue);
+            }}
+            aria-label="simple tabs example"
+          >
+            <Tab label="UML" />
+            <Tab label="Dependency Table" />
+            {applications.length > 1 && <Tab label="Node Graph" />}
+            {applications.length > 1 && <Tab label="Dependency Graph" />}
+          </Tabs>
+          <div style={{ display: currentTab === 0 ? "block" : "none" }}>
+            {applications.length > 0 && (
+              <ModuleUMLDiagram
+                applications={applications}
+                size={applications.length}
+              />
+            )}
+          </div>
+          <div style={{ display: currentTab === 1 ? "block" : "none" }}>
             <ApplicationsTable applications={applications} />
+          </div>
+          {applications.length > 1 && (
+            <div style={{ display: currentTab === 2 ? "block" : "none" }}>
+              <ModuleNodeGraph applications={applications} />
+            </div>
+          )}
+          {applications.length > 1 && (
+            <div style={{ display: currentTab === 3 ? "block" : "none" }}>
+              <ModuleChordChart applications={applications} />
+            </div>
           )}
         </>
       )}

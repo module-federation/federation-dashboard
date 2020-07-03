@@ -1,4 +1,3 @@
-* Use localStorage for group and type
 * Build a synthetic data maker
 * Fix versioning so that we push new production versions
 * Come up with a better group landing page
@@ -9,6 +8,7 @@
 
 Done:
 
+* Use localStorage for group and type
 * Diagnose type change failure
 * Fix versioning
 * Create secondary GraphQL schema and start porting the UI to it

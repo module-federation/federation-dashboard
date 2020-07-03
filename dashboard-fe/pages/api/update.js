@@ -1,4 +1,3 @@
-import { update } from "./db";
 import ApplicationManager from "../../src/managers/Application";
 
 export const config = {
@@ -19,10 +18,10 @@ const dataIsValid = (data) =>
   data.consumes !== undefined &&
   data.modules !== undefined;
 
-export default (req, res) => {
+export default async (req, res) => {
   if (dataIsValid(req.body)) {
-    ApplicationManager.update(req.body);
-    update(req.body);
+    console.log(`Updating ${req.body.name}`);
+    await ApplicationManager.update(req.body);
     res.send(true);
   } else {
     res.send(false);

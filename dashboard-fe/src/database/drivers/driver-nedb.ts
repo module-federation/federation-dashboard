@@ -100,16 +100,18 @@ export default class DriverNedb implements Driver {
   );
   private groupsTable: TableDriver<Group> = new TableDriver<Group>(groups);
   private usersTable: TableDriver<User> = new TableDriver<User>(users);
-  private isSetup = false;
+  private static isSetup = false;
+  private static isInSetup = false;
 
   constructor() {}
 
-  private async setup() {
-    if (this.isSetup) {
+  async setup() {
+    if (DriverNedb.isSetup || DriverNedb.isInSetup) {
       return false;
     }
+    DriverNedb.isInSetup = true;
 
-    const defaultGroup = await this.group_findByName("default");
+    const defaultGroup = await this.group_find("default");
     if (!defaultGroup) {
       await this.group_update({
         id: "default",
@@ -118,7 +120,7 @@ export default class DriverNedb implements Driver {
       });
     }
 
-    this.isSetup = true;
+    DriverNedb.isSetup = true;
   }
 
   async application_find(id: String): Promise<Application | null> {

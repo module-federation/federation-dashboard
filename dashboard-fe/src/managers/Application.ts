@@ -5,18 +5,32 @@ import Override from "../database/override";
 import Consume from "../database/consume";
 import Dependency from "../database/dependency";
 import ApplicationVersion from "../database/applicationVersion";
+import Group from "../database/group";
 
 export default class ApplicationManager {
   static async update(application: any) {
+    await driver.setup();
+
     const app = await driver.application_find(application.id);
+    const groupName = application.group || "default";
     if (!app) {
+      console.log(`Adding app ${application.id}`);
       driver.application_update({
         id: application.id,
         name: application.name,
-        group: application.group || "default",
+        group: groupName,
         overrides: [],
         metadata: [],
       });
+    }
+
+    const group = await driver.group_find(groupName);
+    if (!group) {
+      const g = new Group();
+      g.id = groupName;
+      g.name = groupName;
+      g.metadata = [];
+      await driver.group_update(g);
     }
 
     const dependencies = [

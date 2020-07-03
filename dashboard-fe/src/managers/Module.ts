@@ -3,6 +3,8 @@ import driver from "../database/drivers";
 
 export default class ModuleManager {
   static async getConsumedBy(group, type, applicationID, name) {
+    await driver.setup();
+
     const applications = await driver.application_findInGroups([group]);
     const found = [];
     await Promise.all(
