@@ -73,6 +73,24 @@ async function buildProjects() {
   await collections.pushDevelopmentVersion();
   await assets.pushDevelopmentVersion();
 
+  await interactiveHold("Add more production versions");
+  home.bumpVersion("1.1.0");
+  await home.pushProductionVersion();
+  home.bumpVersion("1.1.1");
+  await home.pushProductionVersion();
+  search.bumpVersion("1.1.0");
+  await search.pushProductionVersion();
+  cart.bumpVersion("1.1.0");
+  await cart.pushProductionVersion();
+  checkout.bumpVersion("1.1.0");
+  await checkout.pushProductionVersion();
+  pdp.bumpVersion("1.1.0");
+  await pdp.pushProductionVersion();
+  pdp.bumpVersion("1.1.1");
+  await pdp.pushProductionVersion();
+  pdp.bumpVersion("1.2.0");
+  await pdp.pushProductionVersion();
+
   process.exit(0);
 }
 

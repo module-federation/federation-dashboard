@@ -3,7 +3,7 @@ import Joi from "@hapi/joi";
 import Metadata, { schema as metadataSchema } from "./metadata";
 import ApplicationOverride, {
   schema as applicationOverrideSchema,
-} from "./override";
+} from "./applicationOverride";
 
 export const schema = Joi.object({
   id: Joi.string().required(),

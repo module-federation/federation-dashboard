@@ -1,5 +1,6 @@
-* Build a synthetic data maker
-* Fix versioning so that we push new production versions
+* Fix the freaking UML diagram
+* Show a comparison between two versions
+* Add a timestamp so that we can distinguish between development versions
 * Come up with a better group landing page
 * Move the sidebar to a hierarchic scheme with group selector
 * Add group and deployment type option to the plugin
@@ -8,6 +9,8 @@
 
 Done:
 
+* Fix versioning so that we push new production versions
+* Build a synthetic data maker
 * Use localStorage for group and type
 * Diagnose type change failure
 * Fix versioning

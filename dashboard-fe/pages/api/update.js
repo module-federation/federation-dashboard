@@ -20,7 +20,7 @@ const dataIsValid = (data) =>
 
 export default async (req, res) => {
   if (dataIsValid(req.body)) {
-    console.log(`Updating ${req.body.name}`);
+    console.log(`Updating ${req.body.name}#${req.body.version}`);
     await ApplicationManager.update(req.body);
     res.send(true);
   } else {

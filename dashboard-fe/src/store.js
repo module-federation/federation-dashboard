@@ -1,4 +1,4 @@
-import { observable, action, autorun } from "mobx";
+import { observable, action, autorun, computed } from "mobx";
 import "mobx-react-lite/batchingOptOut";
 import gql from "graphql-tag";
 import ApolloClient from "apollo-boost";
@@ -64,6 +64,10 @@ class Store {
   @observable isAuthorized = false;
   @observable authUser = null;
   @observable user = null;
+
+  @computed get showVersionManagement() {
+    return this.versionManagementEnabled && this.versionType === "production";
+  }
 
   @action setGroup(g) {
     this.group = g;

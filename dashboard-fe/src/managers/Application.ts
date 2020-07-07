@@ -52,6 +52,7 @@ export default class ApplicationManager {
       })),
     ].map((d) => d);
 
+    console.log(`application.version = ${application.version}`);
     const version: ApplicationVersion = {
       applicationId: application.id as String,
       version: (application.version as String) || "1.0.0",

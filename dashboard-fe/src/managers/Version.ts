@@ -2,7 +2,7 @@ import dbDriver from "../database/drivers";
 
 export default class VersionManager {
   static async publishVersion(group, application, version) {
-    await driver.setup();
+    await dbDriver.setup();
 
     const app = await dbDriver.applicationVersion_find(
       application,
@@ -20,10 +20,7 @@ export default class VersionManager {
     );
     await Promise.all(
       found
-        .filter(
-          ({ version: v, type: t }) =>
-            v !== version.version && t == version.type
-        )
+        .filter(({ version: v, type: t }) => v !== app.version && t == app.type)
         .map((appVersion) =>
           dbDriver.applicationVersion_update({
             ...appVersion,
@@ -36,11 +33,7 @@ export default class VersionManager {
   }
 
   static async setRemoteVersion(group, application, remote, version) {
-    const app = await dbDriver.applicationVersion_find(
-      application,
-      "production",
-      version
-    );
+    const app = await dbDriver.application_find(application);
     const overridesWithoutRemote = app.overrides.filter(
       ({ name }) => name !== remote
     );
@@ -54,7 +47,7 @@ export default class VersionManager {
       app.overrides = overridesWithoutRemote;
     }
 
-    await dbDriver.applicationVersion_update(app);
+    await dbDriver.application_update(app);
 
     return app;
   }

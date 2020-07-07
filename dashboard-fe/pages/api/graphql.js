@@ -18,7 +18,7 @@ const typeDefs = gql`
       group: String!
       application: String!
       version: String!
-    ): Application!
+    ): ApplicationVersion!
     setRemoteVersion(
       group: String!
       application: String!
@@ -154,7 +154,13 @@ const resolvers = {
   },
   Mutation: {
     publishVersion: async (_, { group, application, version }) => {
-      return VersionManager.publishVersion(group, application, version);
+      const out = await VersionManager.publishVersion(
+        group,
+        application,
+        version
+      );
+      console.log(out);
+      return out;
     },
     setRemoteVersion: async (_, { group, application, remote, version }) => {
       return VersionManager.setRemoteVersion(
