@@ -59,7 +59,7 @@
     "react-d3-graph": "^2.4.1",
     "react-dom": "16.13.1",
     "react-force-graph-2d": "^1.16.0",
-    "react-hook-form": "^5.7.2",
+    "react-hook-form": "^6.0.0",
     "dotenv": "^8.2.0",
     "recoil": "^0.0.10"
   },
