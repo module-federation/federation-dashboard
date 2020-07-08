@@ -1,4 +1,3 @@
-* Fix the freaking UML diagram
 * Show a comparison between two versions
 * Add a timestamp so that we can distinguish between development versions
 * Come up with a better group landing page
@@ -9,6 +8,7 @@
 
 Done:
 
+* Fix the freaking UML diagram
 * Fix versioning so that we push new production versions
 * Build a synthetic data maker
 * Use localStorage for group and type

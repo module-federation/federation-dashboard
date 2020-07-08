@@ -7,5 +7,3 @@
 {"id":"admin-shared","name":"admin-shared","group":"admin","overrides":[],"metadata":[],"_id":"jyOLGwkC9XnyJfoG"}
 {"id":"cart","name":"cart","group":"frontend","overrides":[],"metadata":[],"_id":"l20DOeJpdSxNTYCb"}
 {"id":"assets","name":"assets","group":"admin","overrides":[],"metadata":[],"_id":"rPyjivmFibHzGfLX"}
-{"id":"home","name":"home","group":"frontend","overrides":[{"name":"search","version":"1.1.0"}],"metadata":[],"_id":"PE0L43Gy11rL6frC"}
-{"id":"home","name":"home","group":"frontend","overrides":[{"name":"search","version":"1.0.0"}],"metadata":[],"_id":"PE0L43Gy11rL6frC"}

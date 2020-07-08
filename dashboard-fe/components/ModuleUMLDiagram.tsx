@@ -8,8 +8,10 @@ import createEngine, {
   DefaultNodeFactory,
   DefaultPortLabel,
 } from "@projectstorm/react-diagrams";
+import { Button } from "@material-ui/core";
 import { CanvasWidget } from "@projectstorm/react-canvas-core";
 import styled from "@emotion/styled";
+import { observer } from "mobx-react";
 
 import store from "../src/store";
 
@@ -142,11 +144,12 @@ class LayoutWidget extends React.Component<
   { model: DiagramModel; engine: DiagramEngine },
   any
 > {
-  engine: DagreEngine;
-
   constructor(props) {
     super(props);
-    this.engine = new DagreEngine({
+  }
+
+  autoDistribute() {
+    const engine: DagreEngine = new DagreEngine({
       graph: {
         rankdir: "RL",
         ranker: "network-simplex",
@@ -155,15 +158,14 @@ class LayoutWidget extends React.Component<
       },
       includeLinks: true,
     });
-  }
-
-  autoDistribute = () => {
-    this.engine.redistribute(this.props.model);
+    engine.redistribute(this.props.model);
     this.reroute();
     this.props.engine.repaintCanvas();
-  };
+    this.forceUpdate();
+  }
 
   componentDidMount(): void {
+    this.isDiagramMounted = true;
     setTimeout(() => {
       this.autoDistribute();
     }, 0);
@@ -178,9 +180,12 @@ class LayoutWidget extends React.Component<
 
   render() {
     return (
-      <CanvasContainer>
-        <CanvasWidget engine={this.props.engine} />
-      </CanvasContainer>
+      <div>
+        <Button onClick={() => this.autoDistribute()}>Layout</Button>
+        <CanvasContainer>
+          <CanvasWidget engine={this.props.engine} />
+        </CanvasContainer>
+      </div>
     );
   }
 }
@@ -193,112 +198,111 @@ const LINK_COLOR_SELECTED = "gray";
 const LINK_COLOR_UNSELECTED = "rgba(0,192,255,0)";
 const LINK_SIZE_DEFAULT = 3;
 
-class ModuleUMLDiagram extends React.Component {
-  engine: DiagramEngine;
-  model: DiagramModel;
+const ModuleUMLDiagram = observer(({ applications }) => {
+  const diagramRef = React.useRef(null);
 
-  constructor(props) {
-    super(props);
-    this.rebuild();
-  }
+  React.useEffect(() => {
+    console.log("Changing state");
+    if (diagramRef) {
+      window.setTimeout(() => {
+        diagramRef.current.autoDistribute();
+      }, 0);
+    }
+  }, [store.versionType, store.group]);
 
-  rebuild() {
-    this.engine = createEngine();
-    this.engine.getNodeFactories().registerFactory(new NicerNodeFactory());
+  const engine = createEngine();
+  engine.getNodeFactories().registerFactory(new NicerNodeFactory());
 
-    this.model = new DiagramModel();
+  const model = new DiagramModel();
 
-    const nodes: NodeModel[] = [];
-    const links = [];
-    const ports = {};
+  const nodes: NodeModel[] = [];
+  const links = [];
+  const ports = {};
 
-    this.props.applications.forEach(({ name, versions }) => {
-      const { modules } = versions[0];
-      const node = new DefaultNodeModel(name, NODE_COLOR_DEFAULT);
+  applications.forEach(({ name, versions }) => {
+    const { modules } = versions[0];
+    const node = new DefaultNodeModel(name, NODE_COLOR_DEFAULT);
 
-      node.registerListener({
-        eventDidFire: (evt) => {
-          if (evt.function === "selectionChanged") {
-            const selected = node.getOptions().selected;
-            if (selected) {
-              store.selectedApplication = name;
-              store.detailDrawerOpen = true;
+    node.registerListener({
+      eventDidFire: (evt) => {
+        if (evt.function === "selectionChanged") {
+          const selected = node.getOptions().selected;
+          if (selected) {
+            store.selectedApplication = name;
+            store.detailDrawerOpen = true;
 
-              nodes.forEach((n) => {
-                if (node === n) {
-                  // @ts-ignore
-                  n.getOptions().color =
-                    node === n ? NODE_COLOR_SELECTED : NODE_COLOR_UNSELECTED;
-                }
-              });
-
-              links.forEach((l) => {
-                const sourceName = l.sourcePort.getOptions().id;
-                const targetName = l.targetPort.getOptions().id;
-                l.getOptions().color =
-                  sourceName === name || targetName.startsWith(name)
-                    ? LINK_COLOR_SELECTED
-                    : LINK_COLOR_UNSELECTED;
-                l.getOptions().width =
-                  sourceName === name || targetName.startsWith(name) ? 3 : 0;
-              });
-            } else {
-              store.selectedApplication = null;
-              store.detailDrawerOpen = false;
-
-              nodes.forEach((n) => {
+            nodes.forEach((n) => {
+              if (node === n) {
                 // @ts-ignore
-                n.getOptions().color = NODE_COLOR_DEFAULT;
-              });
-              links.forEach((l) => {
-                l.getOptions().color = LINK_COLOR_DEFAULT;
-                l.getOptions().width = LINK_SIZE_DEFAULT;
-              });
-            }
+                n.getOptions().color =
+                  node === n ? NODE_COLOR_SELECTED : NODE_COLOR_UNSELECTED;
+              }
+            });
+
+            links.forEach((l) => {
+              const sourceName = l.sourcePort.getOptions().id;
+              const targetName = l.targetPort.getOptions().id;
+              l.getOptions().color =
+                sourceName === name || targetName.startsWith(name)
+                  ? LINK_COLOR_SELECTED
+                  : LINK_COLOR_UNSELECTED;
+              l.getOptions().width =
+                sourceName === name || targetName.startsWith(name) ? 3 : 0;
+            });
+          } else {
+            store.selectedApplication = null;
+            store.detailDrawerOpen = false;
+
+            nodes.forEach((n) => {
+              // @ts-ignore
+              n.getOptions().color = NODE_COLOR_DEFAULT;
+            });
+            links.forEach((l) => {
+              l.getOptions().color = LINK_COLOR_DEFAULT;
+              l.getOptions().width = LINK_SIZE_DEFAULT;
+            });
           }
-        },
+        }
+      },
+    });
+
+    ports[name] = node.addOutPort("");
+    ports[name].getOptions().id = name;
+
+    modules.forEach(({ name: moduleName }) => {
+      const id = `${name}:${moduleName}`;
+      ports[id] = node.addInPort(moduleName);
+      ports[id].getOptions().id = id;
+    });
+    nodes.push(node);
+  });
+
+  applications.forEach(({ name: fromApp, versions }) => {
+    versions[0].consumes
+      .filter(({ application }) => application)
+      .forEach(({ application: { name: appName }, name: moduleName }) => {
+        links.push(
+          ports[fromApp].link(
+            ports[`${appName}:${moduleName}`]
+            // engine.getLinkFactories().getFactory(PathFindingLinkFactory.NAME)
+          )
+        );
       });
+  });
 
-      ports[name] = node.addOutPort("");
-      ports[name].getOptions().id = name;
+  nodes.forEach((node, index) => {
+    node.setPosition(index * 200, index * 200);
+    model.addNode(node);
+  });
 
-      modules.forEach(({ name: moduleName }) => {
-        const id = `${name}:${moduleName}`;
-        ports[id] = node.addInPort(moduleName);
-        ports[id].getOptions().id = id;
-      });
-      nodes.push(node);
-    });
+  links.forEach((link) => {
+    model.addLink(link);
+  });
 
-    this.props.applications.forEach(({ name: fromApp, versions }) => {
-      versions[0].consumes
-        .filter(({ application }) => application)
-        .forEach(({ application: { name: appName }, name: moduleName }) => {
-          links.push(
-            ports[fromApp].link(
-              ports[`${appName}:${moduleName}`]
-              // engine.getLinkFactories().getFactory(PathFindingLinkFactory.NAME)
-            )
-          );
-        });
-    });
+  engine.setModel(model);
+  model.setLocked(true);
 
-    nodes.forEach((node, index) => {
-      node.setPosition(index * 200, index * 200);
-      this.model.addNode(node);
-    });
-
-    links.forEach((link) => {
-      this.model.addLink(link);
-    });
-
-    this.engine.setModel(this.model);
-    this.model.setLocked(true);
-  }
-
-  render() {
-    return <LayoutWidget model={this.model} engine={this.engine} />;
-  }
-}
+  return <LayoutWidget model={model} engine={engine} ref={diagramRef} />;
+});
 
 export default ModuleUMLDiagram;
