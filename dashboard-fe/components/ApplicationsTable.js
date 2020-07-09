@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import ArrowIcon from "@material-ui/icons/Forward";
 import Link from "next/link";
+import { UpArrow, DownArrow } from "./icons";
 
 const useStyles = makeStyles((theme) => ({
   headerRow: {
@@ -108,15 +109,11 @@ const ApplicationsTable = ({ applications }) => {
                     }}
                   >
                     {modulesById[absoluteId].applicationId === appId && (
-                      <ArrowIcon
-                        style={{ color: "green", transform: "rotate(-90deg)" }}
-                      />
+                      <UpArrow />
                     )}
                     {modulesById[absoluteId].applications[appId] && (
                       <>
-                        <ArrowIcon
-                          style={{ color: "blue", transform: "rotate(90deg)" }}
-                        />
+                        <DownArrow />
                         <Typography>
                           {" "}
                           {modulesById[absoluteId].applications[appId].count}

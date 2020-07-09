@@ -47,6 +47,7 @@ const typeDefs = gql`
     type: String!
     version: String!
     latest: Boolean!
+    posted: String!
     remote: String!
     remotes: [Remote!]!
     dependencies: [Dependency]!

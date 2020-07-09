@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import moment from "moment";
 
 export const dashboardEndpoint = "http://localhost:3000/api/update";
 
@@ -50,6 +51,7 @@ const templateData = {
     { name: "webpack-dev-server", version: "3.11" },
   ],
   optionalDependencies: [],
+  posted: moment(),
   id: "nav",
   name: "nav",
   remote: "http://localhost:3003/remoteEntry.js",
@@ -153,8 +155,8 @@ export default class Builder {
     name: "",
     group: "",
     dependencies: [...templateData.dependencies],
-    devDependencies: [...templateData.dependencies],
-    optionalDependencies: [...templateData.dependencies],
+    devDependencies: [...templateData.devDependencies],
+    optionalDependencies: [...templateData.optionalDependencies],
     overrides: [...templateData.overrides],
     consumes: [],
     modules: [],
@@ -195,6 +197,34 @@ export default class Builder {
       name: module,
       usedIn,
     });
+  }
+
+  setOverrideVersion(name, version) {
+    this.payload.overrides = this.payload.overrides.map((d) => ({
+      ...d,
+      version: d.name === name ? version : d.version,
+    }));
+  }
+
+  setDependencyVersion(name, version) {
+    this.payload.dependencies = this.payload.dependencies.map((d) => ({
+      ...d,
+      version: d.name === name ? version : d.version,
+    }));
+    this.payload.devDependencies = this.payload.devDependencies.map((d) => ({
+      ...d,
+      version: d.name === name ? version : d.version,
+    }));
+    this.payload.optionalDependencies = this.payload.optionalDependencies.map(
+      (d) => ({
+        ...d,
+        version: d.name === name ? version : d.version,
+      })
+    );
+  }
+
+  setPosted(date) {
+    this.payload.posted = date;
   }
 
   bumpVersion(version) {

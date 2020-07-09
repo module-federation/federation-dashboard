@@ -4,6 +4,7 @@ rm -fr examples/big && DATA_DIR=examples/big yarn dev
 
 import Application from "./builder";
 import { interactiveHold } from "./runner";
+import moment from "moment";
 
 const home = new Application("home", "frontend");
 const search = new Application("search", "frontend");
@@ -26,18 +27,48 @@ collections.addConsumes("admin-shared", "Header");
 collections.addConsumes("admin-shared", "Footer");
 assets.addModule("Image", "src/Image.jsx");
 
+const adminApplications = [cms, admin_shared, collections, assets];
+const productionApplications = [home, search, cart, checkout, pdp];
+const applications = [...adminApplications, ...productionApplications];
+
 async function buildProjects() {
+  applications.forEach((app) =>
+    app.setPosted(moment().subtract(21, "days").toDate())
+  );
+
   await interactiveHold("Upload home project");
+  home.bumpVersion("1.0.0");
   await home.pushDevelopmentVersion();
+  await home.pushProductionVersion();
+  applications.forEach((app) =>
+    app.setPosted(moment().subtract(14, "days").toDate())
+  );
 
   await interactiveHold("Update home project");
   home.addModule("Header", "src/Header.jsx");
   home.addModule("Footer", "src/Footer.jsx");
+  home.bumpVersion("1.1.0");
   await home.pushDevelopmentVersion();
+  await home.pushProductionVersion();
+  applications.forEach((app) =>
+    app.setPosted(moment().subtract(10, "days").toDate())
+  );
+
+  await interactiveHold("Update home project");
+  home.bumpVersion("1.2.0");
+  home.addModule("MiniLogin", "src/MiniLogin.jsx");
+  await home.pushProductionVersion();
+  await home.pushDevelopmentVersion();
+  applications.forEach((app) =>
+    app.setPosted(moment().subtract(8, "days").toDate())
+  );
 
   await interactiveHold("Upload search project");
   search.addConsumes("home", "Header");
   await search.pushDevelopmentVersion();
+  applications.forEach((app) =>
+    app.setPosted(moment().subtract(6, "days").toDate())
+  );
 
   await interactiveHold("Adding AutoCompleteSearch to search project");
   search.addModule("AutoCompleteSearch", "src/AutoCompleteSearch.jsx");
@@ -45,11 +76,15 @@ async function buildProjects() {
 
   await interactiveHold("Connecting home project");
   home.addConsumes("search", "AutoCompleteSearch");
+  home.bumpVersion("1.2.1");
   await home.pushDevelopmentVersion();
+  await home.pushProductionVersion();
+  applications.forEach((app) =>
+    app.setPosted(moment().subtract(4, "days").toDate())
+  );
 
   await interactiveHold("Pushing production versions");
   await search.pushProductionVersion();
-  await home.pushProductionVersion();
 
   await interactiveHold("Adding cart, checkout, pdp");
   pdp.addConsumes("home", "Header");
@@ -72,12 +107,25 @@ async function buildProjects() {
   await admin_shared.pushDevelopmentVersion();
   await collections.pushDevelopmentVersion();
   await assets.pushDevelopmentVersion();
+  applications.forEach((app) =>
+    app.setPosted(moment().subtract(2, "days").toDate())
+  );
 
   await interactiveHold("Add more production versions");
-  home.bumpVersion("1.1.0");
+
+  home.bumpVersion("1.3.0");
+  home.addModule("LogoutButton", "src/LogoutButton.jsx");
   await home.pushProductionVersion();
-  home.bumpVersion("1.1.1");
+
+  applications.forEach((app) =>
+    app.setPosted(moment().subtract(1, "days").toDate())
+  );
+
+  home.bumpVersion("1.3.1");
+  home.setOverrideVersion("react", "16.13.1");
+  home.setDependencyVersion("react", "16.13.1");
   await home.pushProductionVersion();
+
   search.bumpVersion("1.1.0");
   await search.pushProductionVersion();
   cart.bumpVersion("1.1.0");

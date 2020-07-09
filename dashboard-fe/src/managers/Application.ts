@@ -56,6 +56,7 @@ export default class ApplicationManager {
     const version: ApplicationVersion = {
       applicationId: application.id as String,
       version: (application.version as String) || "1.0.0",
+      posted: application.posted || new Date(),
       type: (application.type as String) || "development",
       latest: true,
       modules: application.modules as Array<Module>,

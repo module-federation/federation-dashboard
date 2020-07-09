@@ -15,6 +15,7 @@ export const schema = Joi.object({
   applicationId: Joi.string().required(),
   type: Joi.any().valid("development", "production").required(),
   version: Joi.string().required(),
+  posted: Joi.date().required(),
   latest: Joi.boolean().required(),
   remote: Joi.string().required(),
   remotes: Joi.array().items(remoteSchema).required(),
@@ -29,6 +30,7 @@ export default class ApplicationVersion {
   type: String;
   remote: String;
   version: String;
+  posted: Date;
   latest: Boolean;
   remotes: Array<Remote>;
   overrides: Array<Override>;

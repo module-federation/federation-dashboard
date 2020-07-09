@@ -1,4 +1,3 @@
-import Head from "next/head";
 import {
   Grid,
   Paper,
@@ -14,14 +13,13 @@ import {
 } from "@material-ui/core";
 import Link from "next/link";
 import gql from "graphql-tag";
-import { useLazyQuery, useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 import { observer } from "mobx-react";
 import _ from "lodash";
 
-import Layout from "../../../../components/Layout";
-import store from "../../../../src/store";
+import store from "../../src/store";
 
 const useStyles = makeStyles({
   title: {
@@ -44,7 +42,7 @@ const useStyles = makeStyles({
   },
 });
 
-const GET_REMOTE_VERSIONS = gql`
+export const GET_REMOTE_VERSIONS = gql`
   query($name: String!, $type: String!, $group: String!) {
     groups(name: $group) {
       applications(id: $name) {
@@ -57,7 +55,7 @@ const GET_REMOTE_VERSIONS = gql`
   }
 `;
 
-const GET_HEAD_VERSION = gql`
+export const GET_HEAD_VERSION = gql`
   query($name: String!, $group: String!, $type: String!) {
     groups(name: $group) {
       applications(id: $name) {
@@ -101,7 +99,7 @@ const GET_HEAD_VERSION = gql`
   }
 `;
 
-const GET_APPS = gql`
+export const GET_APPS = gql`
   query($name: String!, $group: String!, $type: String!) {
     groups(name: $group) {
       applications(id: $name) {
@@ -116,7 +114,7 @@ const GET_APPS = gql`
   }
 `;
 
-const SET_VERSION = gql`
+export const SET_VERSION = gql`
   mutation($group: String!, $application: String!, $version: String!) {
     publishVersion(
       group: $group
@@ -128,7 +126,7 @@ const SET_VERSION = gql`
   }
 `;
 
-const SET_REMOTE_VERSION = gql`
+export const SET_REMOTE_VERSION = gql`
   mutation(
     $group: String!
     $application: String!
@@ -146,7 +144,7 @@ const SET_REMOTE_VERSION = gql`
   }
 `;
 
-const ConsumesTable = observer(({ consumes }) => {
+export const ConsumesTable = observer(({ consumes }) => {
   const classes = useStyles();
   return (
     <>
@@ -231,58 +229,60 @@ const DependenciesTable = observer(({ title, dependencies, overrides }) => {
   );
 });
 
-const RemoteVersionSelector = observer(({ application, remote, version }) => {
-  const router = useRouter();
-  const { data } = useQuery(GET_REMOTE_VERSIONS, {
-    variables: { name: remote, type: store.versionType, group: store.group },
-  });
-  const [setRemoteVersion] = useMutation(SET_REMOTE_VERSION);
-
-  const versions = _.get(data, "groups[0].applications[0].versions", []);
-  if (!versions.length) {
-    return null;
-  }
-
-  const currentVersion =
-    version || versions.find(({ latest }) => latest).version;
-
-  const handleVersionChange = (newVersion) => {
-    setRemoteVersion({
-      variables: {
-        group: store.group,
-        application,
-        remote,
-        version: newVersion === currentVersion ? null : newVersion,
-      },
-      refetchQueries: [
-        {
-          query: GET_HEAD_VERSION,
-          variables: {
-            name: router.query.application,
-            type: store.versionType,
-            group: store.group,
-          },
-        },
-      ],
+export const RemoteVersionSelector = observer(
+  ({ application, remote, version }) => {
+    const router = useRouter();
+    const { data } = useQuery(GET_REMOTE_VERSIONS, {
+      variables: { name: remote, type: store.versionType, group: store.group },
     });
-  };
+    const [setRemoteVersion] = useMutation(SET_REMOTE_VERSION);
 
-  return (
-    <Select
-      variant="outlined"
-      value={currentVersion}
-      onChange={(evt) => handleVersionChange(evt.target.value)}
-    >
-      {versions.map((v) => (
-        <MenuItem key={v.version} value={v.version}>
-          {v.version} {v.latest ? "(default)" : ""}
-        </MenuItem>
-      ))}
-    </Select>
-  );
-});
+    const versions = _.get(data, "groups[0].applications[0].versions", []);
+    if (!versions.length) {
+      return null;
+    }
 
-const RemoteVersionManager = observer(
+    const currentVersion =
+      version || versions.find(({ latest }) => latest).version;
+
+    const handleVersionChange = (newVersion) => {
+      setRemoteVersion({
+        variables: {
+          group: store.group,
+          application,
+          remote,
+          version: newVersion === currentVersion ? null : newVersion,
+        },
+        refetchQueries: [
+          {
+            query: GET_HEAD_VERSION,
+            variables: {
+              name: router.query.application,
+              type: store.versionType,
+              group: store.group,
+            },
+          },
+        ],
+      });
+    };
+
+    return (
+      <Select
+        variant="outlined"
+        value={currentVersion}
+        onChange={(evt) => handleVersionChange(evt.target.value)}
+      >
+        {versions.map((v) => (
+          <MenuItem key={v.version} value={v.version}>
+            {v.version} {v.latest ? "(default)" : ""}
+          </MenuItem>
+        ))}
+      </Select>
+    );
+  }
+);
+
+export const RemoteVersionManager = observer(
   ({ appName, application, applicationOverrides }) => {
     const classes = useStyles();
     const apps = Array.from(
@@ -333,7 +333,7 @@ const RemoteVersionManager = observer(
   }
 );
 
-const OverridesTable = observer(({ overrides }) => {
+export const OverridesTable = observer(({ overrides }) => {
   const classes = useStyles();
   return (
     <>
@@ -368,7 +368,7 @@ const OverridesTable = observer(({ overrides }) => {
   );
 });
 
-const ModulesTable = observer(({ application, modules, overrides }) => {
+export const ModulesTable = observer(({ application, modules, overrides }) => {
   const classes = useStyles();
   const findVersion = (name) => {
     let ov = overrides.find(({ name: ovName }) => ovName === name);
@@ -423,7 +423,7 @@ const ModulesTable = observer(({ application, modules, overrides }) => {
   );
 });
 
-const ApplicationSection = observer(
+export const CurrentVersion = observer(
   ({ name, applicationOverrides, application, versions }) => {
     const router = useRouter();
     const classes = useStyles();
@@ -569,61 +569,3 @@ const ApplicationSection = observer(
     );
   }
 );
-
-const Application = () => {
-  const classes = useStyles();
-  const router = useRouter();
-  const [getVersioningData, { data: versioningData }] = useLazyQuery(GET_APPS);
-  const [getData, { data }] = useLazyQuery(GET_HEAD_VERSION);
-
-  React.useEffect(() => {
-    if (router.query.application) {
-      getData({
-        variables: {
-          name: router.query.application,
-          type: store.versionType,
-          group: store.group,
-        },
-      });
-      getVersioningData({
-        variables: {
-          name: router.query.application,
-          type: store.versionType,
-          group: store.group,
-        },
-      });
-    }
-  }, [router]);
-
-  const applicationOverrides = _.get(
-    data,
-    "groups[0].applications[0].overrides"
-  );
-  const application = _.get(data, "groups[0].applications[0].versions[0]");
-  const name = _.get(data, "groups[0].applications[0].name");
-  const versions = _.get(
-    versioningData,
-    "groups[0].applications[0].versions",
-    []
-  );
-
-  return (
-    <Layout>
-      <Head>
-        <title>Federated Modules Dashboard</title>
-      </Head>
-      <div className={classes.container}>
-        {application && (
-          <ApplicationSection
-            name={name}
-            applicationOverrides={applicationOverrides}
-            application={application}
-            versions={versions}
-          />
-        )}
-      </div>
-    </Layout>
-  );
-};
-
-export default observer(Application);
