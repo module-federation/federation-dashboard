@@ -11,6 +11,7 @@ const typeDefs = gql`
     dashboard: DashboardInfo!
     userByEmail(email: String): User
     groups(name: String): [Group!]!
+    siteSettings: SiteSettings!
   }
 
   type Mutation {
@@ -26,6 +27,32 @@ const typeDefs = gql`
       version: String
     ): Application!
     updateUser(user: UserInput!): User!
+    updateSiteSettings(settings: SiteSettingsInput): SiteSettings!
+  }
+
+  enum WebhookEventType {
+    addApplication
+    updateApplication
+    deleteApplication
+    addApplicationVersion
+    updateApplicationVersion
+    deleteApplicationVersion
+  }
+
+  type Webhook {
+    event: WebhookEventType!
+    url: String!
+  }
+  type SiteSettings {
+    webhooks: [Webhook]!
+  }
+
+  input WebhookInput {
+    event: WebhookEventType!
+    url: String!
+  }
+  input SiteSettingsInput {
+    webhooks: [WebhookInput]!
   }
 
   type DashboardInfo {
@@ -152,6 +179,9 @@ const resolvers = {
         return dbDriver.group_findAll();
       }
     },
+    siteSettings: () => {
+      return dbDriver.siteSettings_get();
+    },
   },
   Mutation: {
     publishVersion: async (_, { group, application, version }) => {
@@ -160,7 +190,6 @@ const resolvers = {
         application,
         version
       );
-      console.log(out);
       return out;
     },
     setRemoteVersion: async (_, { group, application, remote, version }) => {
@@ -178,6 +207,11 @@ const resolvers = {
         ...user,
       });
       return dbDriver.user_find(user.email);
+    },
+    updateSiteSettings: async (_, { settings }) => {
+      await dbDriver.setup();
+      await dbDriver.siteSettings_update(settings);
+      return dbDriver.siteSettings_get();
     },
   },
   Application: {

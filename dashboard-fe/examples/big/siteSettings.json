@@ -1,0 +1,12 @@
+{
+  "webhooks": [
+    {
+      "event": "deleteApplication",
+      "url": "http://localhost:3001/hook/deleteApplication"
+    },
+    {
+      "event": "addApplication",
+      "url": "http://localhost:3001/hook/addApplication"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
-* Show a comparison between two versions
-* Add a timestamp so that we can distinguish between development versions
+* Implement webhooks through managers
+* Figure out why overrides is coming in with the wrong version number (maybe it should get data from the parent?)
 * Come up with a better group landing page
 * Move the sidebar to a hierarchic scheme with group selector
 * Add group and deployment type option to the plugin
@@ -8,6 +8,9 @@
 
 Done:
 
+* Add a timestamp so that we can distinguish between development versions
+* Add webhooks UI
+* Show a comparison between two versions
 * Fix the freaking UML diagram
 * Fix versioning so that we push new production versions
 * Build a synthetic data maker

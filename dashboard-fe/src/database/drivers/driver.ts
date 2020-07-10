@@ -3,6 +3,7 @@ import ApplicationVersion from "../applicationVersion";
 import MetricValue from "../metricValue";
 import Group from "../group";
 import User from "../user";
+import SiteSettings from "../siteSettings";
 
 export default abstract class Driver {
   abstract async setup();
@@ -55,4 +56,9 @@ export default abstract class Driver {
   abstract async user_findAll(): Promise<Array<User>>;
   abstract async user_update(user: User): Promise<Array<User>>;
   abstract async user_delete(id: String): Promise<Array<User>>;
+
+  abstract async siteSettings_get(): Promise<SiteSettings>;
+  abstract async siteSettings_update(
+    settings: SiteSettings
+  ): Promise<SiteSettings>;
 }

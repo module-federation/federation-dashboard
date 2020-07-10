@@ -1,6 +1,7 @@
 import Datastore from "nedb";
 import path from "path";
 import Joi from "@hapi/joi";
+import fs from "fs";
 
 import Application, { schema as applicationSchema } from "../application";
 import ApplicationVersion, {
@@ -9,6 +10,7 @@ import ApplicationVersion, {
 import MetricValue, { schema as metricValueSchema } from "../metricValue";
 import Group, { schema as groupSchema } from "../group";
 import User, { schema as userSchema } from "../user";
+import SiteSettings, { schema as siteSettingsSchema } from "../siteSettings";
 
 import Driver from "./driver";
 
@@ -34,6 +36,8 @@ const users = new Datastore({
   filename: path.join(dir, "/users.db"),
 });
 users.loadDatabase();
+
+const siteSettingsPath = path.join(dir, "/siteSettings.json");
 
 class TableDriver<T> {
   private store: Datastore;
@@ -257,5 +261,26 @@ export default class DriverNedb implements Driver {
   }
   async user_delete(id: String): Promise<Array<User>> {
     return this.usersTable.delete(id);
+  }
+
+  async siteSettings_get(): Promise<SiteSettings> {
+    let settings = {
+      webhooks: [],
+    };
+    if (fs.existsSync(siteSettingsPath)) {
+      try {
+        settings = JSON.parse(fs.readFileSync(siteSettingsPath).toString());
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      fs.writeFileSync(siteSettingsPath, JSON.stringify(settings));
+    }
+    return Promise.resolve(settings);
+  }
+  async siteSettings_update(settings: SiteSettings): Promise<SiteSettings> {
+    Joi.assert(settings, siteSettingsSchema);
+    fs.writeFileSync(siteSettingsPath, JSON.stringify(settings));
+    return Promise.resolve(settings);
   }
 }
