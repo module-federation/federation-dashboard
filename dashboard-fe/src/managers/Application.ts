@@ -7,6 +7,8 @@ import Dependency from "../database/dependency";
 import ApplicationVersion from "../database/applicationVersion";
 import Group from "../database/group";
 
+import "../webhooks";
+
 export default class ApplicationManager {
   static async update(application: any) {
     await driver.setup();

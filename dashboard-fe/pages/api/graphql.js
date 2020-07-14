@@ -31,10 +31,8 @@ const typeDefs = gql`
   }
 
   enum WebhookEventType {
-    addApplication
     updateApplication
     deleteApplication
-    addApplicationVersion
     updateApplicationVersion
     deleteApplicationVersion
   }

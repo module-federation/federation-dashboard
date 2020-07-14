@@ -2,6 +2,7 @@ import Datastore from "nedb";
 import path from "path";
 import Joi from "@hapi/joi";
 import fs from "fs";
+import bus from "../../event-bus";
 
 import Application, { schema as applicationSchema } from "../application";
 import ApplicationVersion, {
@@ -154,6 +155,7 @@ export default class DriverNedb implements Driver {
   }
   async application_update(application: Application): Promise<null> {
     Joi.assert(application, applicationSchema);
+    bus.publish("updateApplication", application);
     return this.applicationTable.update({ id: application.id }, application);
   }
   async application_delete(id: String): Promise<null> {
@@ -212,6 +214,7 @@ export default class DriverNedb implements Driver {
       },
       version
     );
+    bus.publish("updateApplicationVersion", version);
   }
 
   async applicationVersion_delete(

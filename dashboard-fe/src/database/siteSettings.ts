@@ -1,10 +1,8 @@
 import Joi from "@hapi/joi";
 
-export enum URLType {
-  "addApplication",
+export enum EventType {
   "updateApplication",
   "deleteApplication",
-  "addApplicationVersion",
   "updateApplicationVersion",
   "deleteApplicationVersion",
 }
@@ -12,10 +10,8 @@ export enum URLType {
 export const webhookSchema = Joi.object({
   event: Joi.any()
     .valid(
-      "addApplication",
       "updateApplication",
       "deleteApplication",
-      "addApplicationVersion",
       "updateApplicationVersion",
       "deleteApplicationVersion"
     )
@@ -28,8 +24,8 @@ export const schema = Joi.object({
 });
 
 export class Webhook {
-  event: URLType;
-  url: String = "";
+  event: EventType;
+  url: string = "";
 }
 
 export default class SiteSettings {

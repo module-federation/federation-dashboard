@@ -41,10 +41,8 @@ const SET_SETTINGS = gql`
 `;
 
 const EVENTS = [
-  "addApplication",
   "updateApplication",
   "deleteApplication",
-  "addApplicationVersion",
   "updateApplicationVersion",
   "deleteApplicationVersion",
 ];
