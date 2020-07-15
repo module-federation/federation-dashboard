@@ -20,12 +20,12 @@ import _ from "lodash";
 import store from "../../src/store";
 
 const GET_APPS = gql`
-  query($group: String!, $type: String!) {
+  query($group: String!, $environment: String!) {
     groups(name: $group) {
       applications {
         id
         name
-        versions(latest: true, type: $type) {
+        versions(latest: true, environment: $environment) {
           remote
         }
       }
@@ -65,7 +65,7 @@ const NewApp = () => {
   const { data } = useQuery(GET_APPS, {
     variables: {
       group: store.group,
-      type: store.versionType,
+      environment: store.environment,
     },
   });
   const classes = useStyles();

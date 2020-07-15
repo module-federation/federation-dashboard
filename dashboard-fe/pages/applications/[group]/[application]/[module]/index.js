@@ -44,11 +44,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GET_MODULES = gql`
-  query($group: String!, $app: String!, $type: String!, $name: String!) {
+  query($group: String!, $app: String!, $environment: String!, $name: String!) {
     groups(name: $group) {
       applications(id: $app) {
         name
-        versions(type: $type, latest: true) {
+        versions(environment: $environment, latest: true) {
           remote
           modules(name: $name) {
             id
@@ -119,7 +119,7 @@ const ModulePage = () => {
       getData({
         variables: {
           group: router.query.group,
-          type: store.versionType,
+          environment: store.environment,
           name: router.query.module,
           app: router.query.application,
         },

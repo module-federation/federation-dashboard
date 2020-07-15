@@ -1,9 +1,8 @@
-* Change type to environment and uncouple it from current production/development
-* Figure out why overrides is coming in with the wrong version number (maybe it should get data from the parent?)
 * Add group and deployment type option to the plugin
 
 Done:
 
+* Change type to environment and uncouple it from current production/development
 * Add a timestamp so that we can distinguish between development versions
 * Add webhooks UI
 * Show a comparison between two versions
@@ -20,8 +19,10 @@ Done:
 
 After PR land:
 
+* Figure out why overrides is coming in with the wrong version number (maybe it should get data from the parent?)
 * Implement webhooks through managers
 * Come up with a better group landing page
 * Move the sidebar to a hierarchic scheme with group selector
 * Come up with some methodology to switch drivers
 * Implement a mongo driver
+* Expand tagging coverage with indexing

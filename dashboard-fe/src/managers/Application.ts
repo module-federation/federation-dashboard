@@ -72,7 +72,7 @@ export default class ApplicationManager {
       applicationId: application.id as String,
       version: (application.version as String) || "1.0.0",
       posted: application.posted || new Date(),
-      type: (application.type as String) || "development",
+      environment: (application.environment as String) || "development",
       latest: true,
       modules,
       consumes: application.consumes as Array<Consume>,
@@ -83,14 +83,14 @@ export default class ApplicationManager {
     };
     const appVer = await driver.applicationVersion_find(
       version.applicationId,
-      version.type,
+      version.environment,
       version.version
     );
 
     if (appVer) {
       if (_.isEqual(appVer, version)) {
         console.log(
-          `${version.applicationId}#${version.version}:${version.type} is unchanged`
+          `${version.applicationId}#${version.version}:${version.environment} is unchanged`
         );
         return;
       }
@@ -101,13 +101,13 @@ export default class ApplicationManager {
     // Demote any previous versions to not latest
     const found = await driver.applicationVersion_findLatest(
       version.applicationId,
-      version.type
+      version.environment
     );
     await Promise.all(
       found
         .filter(
-          ({ version: v, type: t }) =>
-            v !== version.version && t == version.type
+          ({ version: v, environment: t }) =>
+            v !== version.version && t == version.environment
         )
         .map((appVersion) =>
           driver.applicationVersion_update({

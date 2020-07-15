@@ -18,12 +18,12 @@ import withAuth from "../components/with-auth";
 import store from "../src/store";
 
 const GET_APPS = gql`
-  query($group: String!, $type: String!) {
+  query($group: String!, $environment: String!) {
     groups(name: $group) {
       applications {
         id
         name
-        versions(latest: true, type: $type) {
+        versions(latest: true, environment: $environment) {
           modules {
             id
             name
@@ -59,7 +59,7 @@ const useHomeStyles = makeStyles({
 const Home = () => {
   const { data } = useQuery(GET_APPS, {
     variables: {
-      type: store.versionType,
+      environment: store.environment,
       group: store.group,
     },
   });

@@ -21,12 +21,12 @@ import { observer } from "mobx-react";
 import store from "../src/store";
 
 const GET_SIDEBAR_DATA = gql`
-  query($group: String!, $type: String!) {
+  query($group: String!, $environment: String!) {
     groups(name: $group) {
       applications {
         id
         name
-        versions(type: $type, latest: true) {
+        versions(environment: $environment, latest: true) {
           modules {
             id
             name
@@ -41,7 +41,7 @@ const SideBar = ({ restricted }) => {
   const { data } = useQuery(GET_SIDEBAR_DATA, {
     variables: {
       group: store.group,
-      type: store.versionType,
+      environment: store.environment,
     },
   });
 
@@ -83,11 +83,11 @@ const SideBar = ({ restricted }) => {
       <ListItem>
         <Select
           variant="outlined"
-          value={store.versionType}
-          onChange={(evt) => store.setVersionType(evt.target.value)}
+          value={store.environment}
+          onChange={(evt) => store.setEnvironment(evt.target.value)}
           fullWidth
         >
-          {store.versionTypes.map((name) => (
+          {store.environments.map((name) => (
             <MenuItem key={name} value={name}>
               {name}
             </MenuItem>

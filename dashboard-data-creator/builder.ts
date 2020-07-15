@@ -244,12 +244,12 @@ export default class Builder {
   }
 
   async pushDevelopmentVersion() {
-    this.payload.type = "development";
+    this.payload.environment = "development";
     return this.push();
   }
 
   async pushProductionVersion() {
-    this.payload.type = "production";
+    this.payload.environment = "production";
     return this.push();
   }
 

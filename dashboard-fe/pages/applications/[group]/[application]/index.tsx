@@ -31,14 +31,14 @@ const Application = () => {
       getData({
         variables: {
           name: router.query.application,
-          type: store.versionType,
+          environment: store.environment,
           group: store.group,
         },
       });
       getVersioningData({
         variables: {
           name: router.query.application,
-          type: store.versionType,
+          environment: store.environment,
           group: store.group,
         },
       });
@@ -77,7 +77,7 @@ const Application = () => {
             </div>
             <div style={{ display: currentTab === 1 ? "block" : "none" }}>
               <VersionComparison
-                type={store.versionType}
+                environment={store.environment}
                 group={store.group}
                 name={name}
               />

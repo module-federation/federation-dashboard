@@ -45,12 +45,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GET_APPS = gql`
-  query($type: String!, $group: String!) {
+  query($environment: String!, $group: String!) {
     groups(name: $group) {
       applications {
         id
         name
-        versions(latest: true, type: $type) {
+        versions(latest: true, environment: $environment) {
           overrides {
             id
             name
@@ -71,7 +71,7 @@ const Dependencies = () => {
   const { data } = useQuery(GET_APPS, {
     variables: {
       group: store.group,
-      type: store.versionType,
+      environment: store.environment,
     },
   });
   const classes = useStyles();

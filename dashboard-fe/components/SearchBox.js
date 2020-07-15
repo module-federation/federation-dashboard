@@ -9,12 +9,12 @@ import { observer } from "mobx-react";
 import store from "../src/store";
 
 const GET_SIDEBAR_DATA = gql`
-  query($group: String!, $type: String!) {
+  query($group: String!, $environment: String!) {
     groups(name: $group) {
       applications {
         id
         name
-        versions(type: $type, latest: true) {
+        versions(environment: $environment, latest: true) {
           modules {
             id
             name
@@ -45,7 +45,7 @@ const SearchBox = () => {
   const { data } = useQuery(GET_SIDEBAR_DATA, {
     variables: {
       group: store.group,
-      type: store.versionType,
+      environment: store.environment,
     },
   });
   const classes = useStyles();

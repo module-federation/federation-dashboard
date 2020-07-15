@@ -24,24 +24,24 @@ export default abstract class Driver {
 
   abstract async applicationVersion_find(
     applicationId: String,
-    type: String,
+    environment: String,
     version: String
   ): Promise<ApplicationVersion | null>;
   abstract async applicationVersion_findAll(
     applicationId: String,
-    type: String,
+    environment: String,
     version: String
   ): Promise<Array<ApplicationVersion>>;
   abstract async applicationVersion_findLatest(
     applicationId: String,
-    type: String
+    environment: String
   ): Promise<Array<ApplicationVersion>>;
   abstract async applicationVersion_update(
     version: ApplicationVersion
   ): Promise<null>;
   abstract async applicationVersion_delete(
     applicationId: String,
-    type: String,
+    environment: String,
     version: String
   ): Promise<null>;
 

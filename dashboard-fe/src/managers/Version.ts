@@ -4,6 +4,7 @@ export default class VersionManager {
   static async publishVersion(group, application, version) {
     await dbDriver.setup();
 
+    // TODO: Pass in the environment
     const app = await dbDriver.applicationVersion_find(
       application,
       "production",

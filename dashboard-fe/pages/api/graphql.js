@@ -69,7 +69,7 @@ const typeDefs = gql`
   }
 
   type ApplicationVersion {
-    type: String!
+    environment: String!
     version: String!
     latest: Boolean!
     posted: String!
@@ -123,7 +123,7 @@ const typeDefs = gql`
     metadata: [Metadata!]!
     tags: [String!]!
     overrides: [ApplicationOverride!]!
-    versions(type: String, latest: Boolean): [ApplicationVersion!]!
+    versions(environment: String, latest: Boolean): [ApplicationVersion!]!
   }
 
   type Group {
@@ -216,10 +216,10 @@ const resolvers = {
     },
   },
   Application: {
-    versions: async ({ id }, { type, latest }, ctx) => {
-      ctx.type = type;
+    versions: async ({ id }, { environment, latest }, ctx) => {
+      ctx.environment = environment;
       await dbDriver.setup();
-      let found = await dbDriver.applicationVersion_findAll(id, type);
+      let found = await dbDriver.applicationVersion_findAll(id, environment);
       if (latest !== undefined) {
         found = found.filter(({ latest }) => latest);
       }
@@ -241,7 +241,7 @@ const resolvers = {
       await dbDriver.setup();
       return ModuleManager.getConsumedBy(
         ctx.group,
-        ctx.type,
+        ctx.environment,
         parent.applicationID,
         parent.name
       );

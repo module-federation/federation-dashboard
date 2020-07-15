@@ -36,10 +36,10 @@ const useStyles = makeStyles({
 });
 
 export const GET_ALL_VERSIONS = gql`
-  query($name: String!, $group: String!, $type: String!) {
+  query($name: String!, $group: String!, $environment: String!) {
     groups(name: $group) {
       applications(id: $name) {
-        versions(type: $type) {
+        versions(environment: $environment) {
           version
           posted
           modules {
@@ -75,10 +75,10 @@ export const GET_ALL_VERSIONS = gql`
   }
 `;
 
-export const VersionComparison = ({ group, type, name }) => {
+export const VersionComparison = ({ group, environment, name }) => {
   const classes = useStyles();
   const { data } = useQuery(GET_ALL_VERSIONS, {
-    variables: { name, type, group },
+    variables: { name, environment, group },
   });
 
   if (!data) {

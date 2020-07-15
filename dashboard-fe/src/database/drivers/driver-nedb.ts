@@ -164,12 +164,12 @@ export default class DriverNedb implements Driver {
 
   async applicationVersion_find(
     applicationId: String,
-    type: String,
+    environment: String,
     version: String
   ): Promise<ApplicationVersion | null> {
     const versions = await this.applicationVersionsTable.search({
       applicationId,
-      type,
+      environment,
       version,
     });
     return versions.length > 0 ? versions[0] : null;
@@ -177,14 +177,14 @@ export default class DriverNedb implements Driver {
 
   async applicationVersion_findAll(
     applicationId: String,
-    type: String,
+    environment: String,
     version: String
   ): Promise<Array<ApplicationVersion>> {
     const q = {
       applicationId,
     };
-    if (type) {
-      q.type = type;
+    if (environment) {
+      q.environment = environment;
     }
     if (version) {
       q.version = version;
@@ -195,11 +195,11 @@ export default class DriverNedb implements Driver {
 
   async applicationVersion_findLatest(
     applicationId: String,
-    type: String
+    environment: String
   ): Promise<Array<ApplicationVersion>> {
     return this.applicationVersionsTable.search({
       applicationId,
-      type,
+      environment,
       latest: true,
     });
   }
@@ -209,7 +209,7 @@ export default class DriverNedb implements Driver {
     await this.applicationVersionsTable.update(
       {
         applicationId: version.applicationId,
-        type: version.type,
+        environment: version.environment,
         version: version.version,
       },
       version
@@ -219,10 +219,10 @@ export default class DriverNedb implements Driver {
 
   async applicationVersion_delete(
     applicationId: String,
-    type: String,
+    environment: String,
     version: String
   ): Promise<null> {
-    const id = [applicationId, type, version].join(":");
+    const id = [applicationId, environment, version].join(":");
     return this.applicationVersionsTable.delete(id);
   }
 

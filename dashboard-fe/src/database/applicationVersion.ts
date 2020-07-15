@@ -6,14 +6,9 @@ import Override, { schema as overrideSchema } from "./override";
 import Consume, { schema as consumeSchema } from "./consume";
 import Dependency, { schema as dependencySchema } from "./dependency";
 
-export enum ApplicationVersionType {
-  "development",
-  "production",
-}
-
 export const schema = Joi.object({
   applicationId: Joi.string().required(),
-  type: Joi.any().valid("development", "production").required(),
+  environment: Joi.string().required(),
   version: Joi.string().required(),
   posted: Joi.date().required(),
   latest: Joi.boolean().required(),
@@ -27,7 +22,7 @@ export const schema = Joi.object({
 
 export default class ApplicationVersion {
   applicationId: String;
-  type: String;
+  environment: String;
   remote: String;
   version: String;
   posted: Date;

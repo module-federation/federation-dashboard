@@ -43,10 +43,10 @@ const useStyles = makeStyles({
 });
 
 export const GET_REMOTE_VERSIONS = gql`
-  query($name: String!, $type: String!, $group: String!) {
+  query($name: String!, $environment: String!, $group: String!) {
     groups(name: $group) {
       applications(id: $name) {
-        versions(type: $type) {
+        versions(environment: $environment) {
           version
           latest
         }
@@ -56,7 +56,7 @@ export const GET_REMOTE_VERSIONS = gql`
 `;
 
 export const GET_HEAD_VERSION = gql`
-  query($name: String!, $group: String!, $type: String!) {
+  query($name: String!, $group: String!, $environment: String!) {
     groups(name: $group) {
       applications(id: $name) {
         id
@@ -65,7 +65,7 @@ export const GET_HEAD_VERSION = gql`
           version
           name
         }
-        versions(latest: true, type: $type) {
+        versions(latest: true, environment: $environment) {
           modules {
             id
             file
@@ -100,12 +100,12 @@ export const GET_HEAD_VERSION = gql`
 `;
 
 export const GET_APPS = gql`
-  query($name: String!, $group: String!, $type: String!) {
+  query($name: String!, $group: String!, $environment: String!) {
     groups(name: $group) {
       applications(id: $name) {
         id
         name
-        versions(type: $type) {
+        versions(environment: $environment) {
           version
           latest
         }
@@ -121,7 +121,7 @@ export const SET_VERSION = gql`
       application: $application
       version: $version
     ) {
-      type
+      environment
     }
   }
 `;
@@ -233,7 +233,11 @@ export const RemoteVersionSelector = observer(
   ({ application, remote, version }) => {
     const router = useRouter();
     const { data } = useQuery(GET_REMOTE_VERSIONS, {
-      variables: { name: remote, type: store.versionType, group: store.group },
+      variables: {
+        name: remote,
+        environment: store.environment,
+        group: store.group,
+      },
     });
     const [setRemoteVersion] = useMutation(SET_REMOTE_VERSION);
 
@@ -258,7 +262,7 @@ export const RemoteVersionSelector = observer(
             query: GET_HEAD_VERSION,
             variables: {
               name: router.query.application,
-              type: store.versionType,
+              environment: store.environment,
               group: store.group,
             },
           },
@@ -441,7 +445,7 @@ export const CurrentVersion = observer(
             query: GET_APPS,
             variables: {
               name: router.query.application,
-              type: store.versionType,
+              environment: store.environment,
               group: store.group,
             },
           },
@@ -449,7 +453,7 @@ export const CurrentVersion = observer(
             query: GET_HEAD_VERSION,
             variables: {
               name: router.query.application,
-              type: store.versionType,
+              environment: store.environment,
               group: store.group,
             },
           },

@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GET_APPS = gql`
-  query($name: String!, $group: String!, $type: String!) {
+  query($name: String!, $group: String!, $environment: String!) {
     groups(name: $group) {
       applications(id: $name) {
         id
@@ -48,7 +48,7 @@ const GET_APPS = gql`
           name
           value
         }
-        versions(latest: true, type: $type) {
+        versions(latest: true, environment: $environment) {
           consumes {
             application {
               id
@@ -225,7 +225,7 @@ const ApplicationSidebar = ({ name }) => {
   const { data } = useQuery(GET_APPS, {
     variables: {
       name: name.split("/")[0],
-      type: store.versionType,
+      environment: store.environment,
       group: store.group,
     },
   });

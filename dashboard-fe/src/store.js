@@ -58,15 +58,18 @@ class Store {
   @observable groups = [];
 
   @observable group = getLocalStorage("group") || "default";
-  @observable versionType = getLocalStorage("versionType") || "development";
-  versionTypes = ["development", "production"];
+  @observable environment = getLocalStorage("environment") || "development";
+
+  // TODO: Make these as site configurable option
+  environments = ["development", "production"];
 
   @observable isAuthorized = false;
   @observable authUser = null;
   @observable user = null;
 
   @computed get showVersionManagement() {
-    return this.versionManagementEnabled && this.versionType === "production";
+    // TODO: Make this a per-environment settable flag
+    return this.versionManagementEnabled;
   }
 
   @action setGroup(g) {
@@ -74,9 +77,9 @@ class Store {
     global.localStorage.setItem("group", this.group);
   }
 
-  @action setVersionType(vt) {
-    this.versionType = vt;
-    global.localStorage.setItem("versionType", this.versionType);
+  @action setEnvironment(vt) {
+    this.environment = vt;
+    global.localStorage.setItem("environment", this.environment);
   }
 
   @action setAuthUser(authUser) {
