@@ -6,6 +6,6 @@ export const schema = Joi.object({
 });
 
 export default class Metadata {
-  name: String = "";
-  value: String = "";
+  name: string = "";
+  value: string = "";
 }

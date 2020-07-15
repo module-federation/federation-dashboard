@@ -162,22 +162,34 @@ export default class Builder {
     modules: [],
     remote: "",
     version: "1.0.0",
+    metadata: {},
+    tags: [],
   };
 
-  constructor(name, group, port = 8080) {
+  constructor(name, group, port = 8080, metadata = {}, tags = []) {
     this.payload.id = name;
     this.payload.name = name;
     this.payload.group = group;
     this.payload.remote = `http://localhost:${port}/${name}/remoteEntry.js`;
+    this.payload.metadata = metadata;
+    this.payload.tags = tags;
   }
 
-  addModule(name, file, requires = ["react", "antd", "@emotion/core"]) {
+  addModule(
+    name,
+    file,
+    metadata = {},
+    tags = [],
+    requires = ["react", "antd", "@emotion/core"]
+  ) {
     this.payload.modules.push({
       id: `${this.payload.name}:${name}`,
       name,
       applicationID: this.payload.name,
       requires,
       file,
+      metadata,
+      tags,
     });
   }
 

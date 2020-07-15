@@ -1,10 +1,6 @@
-* Implement webhooks through managers
+* Change type to environment and uncouple it from current production/development
 * Figure out why overrides is coming in with the wrong version number (maybe it should get data from the parent?)
-* Come up with a better group landing page
-* Move the sidebar to a hierarchic scheme with group selector
 * Add group and deployment type option to the plugin
-* Come up with some methodology to switch drivers
-* Implement a mongo driver
 
 Done:
 
@@ -21,3 +17,11 @@ Done:
 * Need to figure out a better way to pre-load the database
 * Migrate `latest` applicationVersion logic to application manager
 * Keep versioning from blowing up
+
+After PR land:
+
+* Implement webhooks through managers
+* Come up with a better group landing page
+* Move the sidebar to a hierarchic scheme with group selector
+* Come up with some methodology to switch drivers
+* Implement a mongo driver

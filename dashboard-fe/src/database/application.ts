@@ -10,6 +10,7 @@ export const schema = Joi.object({
   name: Joi.string().required(),
   group: Joi.string().required(),
   overrides: Joi.array().items(applicationOverrideSchema).required(),
+  tags: Joi.array().items(Joi.string()).required(),
   metadata: Joi.array().items(metadataSchema).required(),
 });
 
@@ -18,5 +19,6 @@ export default class Application {
   name: String;
   group: String;
   metadata: Array<Metadata>;
+  tags: Array<string>;
   overrides: Array<ApplicationOverride>;
 }

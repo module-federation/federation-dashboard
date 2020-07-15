@@ -112,6 +112,8 @@ const typeDefs = gql`
     file: String
     requires: [String!]!
     consumedBy: [Consume]!
+    metadata: [Metadata!]!
+    tags: [String!]!
   }
 
   type Application {
@@ -119,6 +121,7 @@ const typeDefs = gql`
     name: String!
     group: String!
     metadata: [Metadata!]!
+    tags: [String!]!
     overrides: [ApplicationOverride!]!
     versions(type: String, latest: Boolean): [ApplicationVersion!]!
   }

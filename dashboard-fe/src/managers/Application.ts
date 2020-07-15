@@ -9,6 +9,12 @@ import Group from "../database/group";
 
 import "../webhooks";
 
+const convertMetadata = (metadataObj) =>
+  Object.entries(metadataObj).map(([name, value]) => ({
+    name: name.toString(),
+    value: value.toString(),
+  }));
+
 export default class ApplicationManager {
   static async update(application: any) {
     await driver.setup();
@@ -22,7 +28,8 @@ export default class ApplicationManager {
         name: application.name,
         group: groupName,
         overrides: [],
-        metadata: [],
+        metadata: convertMetadata(application.metadata),
+        tags: application.tags,
       });
     }
 
@@ -54,6 +61,12 @@ export default class ApplicationManager {
       })),
     ].map((d) => d);
 
+    const modules = application.modules.map((module) => ({
+      ...module,
+      metadata: convertMetadata(module.metadata),
+      tags: module.tags || [],
+    }));
+
     console.log(`application.version = ${application.version}`);
     const version: ApplicationVersion = {
       applicationId: application.id as String,
@@ -61,7 +74,7 @@ export default class ApplicationManager {
       posted: application.posted || new Date(),
       type: (application.type as String) || "development",
       latest: true,
-      modules: application.modules as Array<Module>,
+      modules,
       consumes: application.consumes as Array<Consume>,
       overrides: application.overrides as Array<Override>,
       dependencies: dependencies as Array<Dependency>,
