@@ -1,12 +1,8 @@
 import "cross-fetch/polyfill";
-import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
 import Head from "next/head";
 import CssBaseline from "@material-ui/core/CssBaseline";
-
-const client = new ApolloClient({
-  uri: "http://localhost:3000/api/graphql",
-});
+import store from "../src/store";
 
 function MyApp({ Component, pageProps }) {
   React.useEffect(() => {
@@ -27,7 +23,7 @@ function MyApp({ Component, pageProps }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <CssBaseline />
-      <ApolloProvider client={client}>
+      <ApolloProvider client={store.client}>
         <Component {...pageProps} />
       </ApolloProvider>
     </React.Fragment>

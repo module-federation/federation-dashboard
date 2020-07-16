@@ -4,7 +4,8 @@ import store from "../src/store";
 const ModuleNodeGraph = ({ applications }) => {
   const nodes = [];
   const links = [];
-  applications.forEach(({ id: appId, name: appName, modules }) => {
+
+  applications.forEach(({ id: appId, name, versions }) => {
     nodes.push({
       color: "darkgreen",
       id: appId,
@@ -12,7 +13,7 @@ const ModuleNodeGraph = ({ applications }) => {
       size: 800,
       symbolType: "wye",
     });
-    modules.forEach(({ id: moduleId, name: moduleName }) => {
+    versions[0].modules.forEach(({ id: moduleId, name: moduleName }) => {
       nodes.push({
         color: "darkblue",
         id: moduleId,
@@ -27,8 +28,9 @@ const ModuleNodeGraph = ({ applications }) => {
       });
     });
   });
-  applications.forEach(({ id: appId, name: appName, consumes }) => {
-    consumes
+
+  applications.forEach(({ id: appId, name: appName, versions }) => {
+    versions[0].consumes
       .filter(({ application }) => application)
       .forEach(
         ({ application: { id: modApp }, name: modName, id: modId, usedIn }) => {
@@ -40,6 +42,7 @@ const ModuleNodeGraph = ({ applications }) => {
         }
       );
   });
+
   const data = {
     nodes,
     links,
@@ -73,10 +76,12 @@ const ModuleNodeGraph = ({ applications }) => {
     directed: true,
     panAndZoom: true,
   };
+
   const onClickNode = (nodeId) => {
     store.selectedApplication = nodeId.replace(":", "/");
     store.detailDrawerOpen = true;
   };
+
   return (
     <div
       style={{

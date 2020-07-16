@@ -6,6 +6,10 @@ const convertToGraph = ({
   topLevelPackage,
   metadata,
   versionData,
+  environment,
+  version,
+  posted,
+  group,
 }) => {
   validateParams({ federationRemoteEntry, modules, topLevelPackage, metadata });
 
@@ -125,6 +129,10 @@ const convertToGraph = ({
       ...mod,
       requires: Array.from(mod.requires.values()),
     })),
+    environment,
+    version,
+    posted,
+    group,
   };
 
   return out;
