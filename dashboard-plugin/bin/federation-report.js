@@ -1,3 +1,17 @@
+/* TODO: We need to figure out a new way to do this because the server is currently
+looking for version information in the /api/update call where we send `environment` and `version`
+in the payload. I'm hoping we don't need to do this at all now. 
+
+In the new model you can just do:
+
+    new DashboardPlugin({
+      ...,
+      group: 'admin',            // Default if not specified
+      publishVersion: '1.1.0',   // '1.0.0' if not specified
+      environment: 'production', // 'development' if not specified
+    }),
+*/
+/*
 const fs = require("fs");
 const path = require("path");
 const fetch = require("node-fetch");
@@ -66,3 +80,4 @@ if (pkg.versionData) {
     })
     .catch((err) => console.error(err));
 }
+*/

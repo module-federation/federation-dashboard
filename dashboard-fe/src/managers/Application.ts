@@ -10,7 +10,7 @@ import Group from "../database/group";
 import "../webhooks";
 
 const convertMetadata = (metadataObj) =>
-  Object.entries(metadataObj).map(([name, value]) => ({
+  Object.entries(metadataObj || {}).map(([name, value]) => ({
     name: name.toString(),
     value: value.toString(),
   }));
@@ -29,7 +29,7 @@ export default class ApplicationManager {
         group: groupName,
         overrides: [],
         metadata: convertMetadata(application.metadata),
-        tags: application.tags,
+        tags: application.tags || [],
       });
     }
 
@@ -67,12 +67,15 @@ export default class ApplicationManager {
       tags: module.tags || [],
     }));
 
+    application.version = application.version || "1.0.0";
+    application.environment = application.environment || "development";
+
     console.log(`application.version = ${application.version}`);
     const version: ApplicationVersion = {
-      applicationId: application.id as String,
-      version: (application.version as String) || "1.0.0",
+      applicationId: application.id as string,
+      version: application.version,
       posted: application.posted || new Date(),
-      environment: (application.environment as String) || "development",
+      environment: application.environment,
       latest: true,
       modules,
       consumes: application.consumes as Array<Consume>,

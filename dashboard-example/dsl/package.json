@@ -30,5 +30,12 @@
     "lodash": "^4.17.15",
     "react": "^16.13.0",
     "react-dom": "^16.13.0"
+  },
+  "versionData": {
+    "container": "remoteEntry.js",
+    "outputPath": "/Users/jherr/projects/federation-dashboard/dashboard-example/dsl/dist",
+    "dashboardFileName": "dashboard.json",
+    "context": "/Users/jherr/projects/federation-dashboard/dashboard-example/dsl",
+    "name": "dsl"
   }
 }

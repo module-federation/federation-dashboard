@@ -19,5 +19,12 @@
     "serve": "serve dist -p 3005",
     "clean": "rm -rf dist"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "versionData": {
+    "container": "remoteEntry.js",
+    "outputPath": "/Users/jherr/projects/federation-dashboard/dashboard-example/utils/dist",
+    "dashboardFileName": "dashboard.json",
+    "context": "/Users/jherr/projects/federation-dashboard/dashboard-example/utils",
+    "name": "utils"
+  }
 }
