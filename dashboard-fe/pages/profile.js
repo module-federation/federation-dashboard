@@ -1,23 +1,21 @@
 import React from "react";
+import { observer } from "mobx-react";
 
 import Layout from "../components/Layout";
-import { useFetchUser } from "../lib/user";
+import store from "../src/store";
 
-export default function Profile() {
-  const { user, loading } = useFetchUser();
-
+function Profile() {
   return (
-    <Layout user={user} loading={loading}>
+    <Layout>
       <h1>Profile</h1>
-
-      {loading && <p>Loading profile...</p>}
-
-      {!loading && user && (
+      {store.user && (
         <>
           <p>Profile:</p>
-          <pre>{JSON.stringify(user, null, 2)}</pre>
+          <pre>{JSON.stringify(store.user, null, 2)}</pre>
         </>
       )}
     </Layout>
   );
 }
+
+export default observer(Profile);

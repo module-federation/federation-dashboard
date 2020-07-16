@@ -14,15 +14,21 @@ import Layout from "../../components/Layout";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { Code, CodeWrapper, GeneratedCode } from "../../components/Code";
-import React from "react";
-import { useFetchUser } from "../../lib/user";
+import { observer } from "mobx-react";
+import _ from "lodash";
+
+import store from "../../src/store";
 
 const GET_APPS = gql`
-  {
-    applications {
-      id
-      name
-      remote
+  query($group: String!, $environment: String!) {
+    groups(name: $group) {
+      applications {
+        id
+        name
+        versions(latest: true, environment: $environment) {
+          remote
+        }
+      }
     }
   }
 `;
@@ -44,7 +50,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default () => {
+const NewApp = () => {
   const { register, watch, control } = useForm({
     defaultValues: {
       name: "test-app",
@@ -55,16 +61,22 @@ export default () => {
       automaticFederation: true,
     },
   });
-  const { user, loading } = useFetchUser();
   const [applications, applicationsSet] = React.useState([]);
-  const { data } = useQuery(GET_APPS);
+  const { data } = useQuery(GET_APPS, {
+    variables: {
+      group: store.group,
+      environment: store.environment,
+    },
+  });
   const classes = useStyles();
+
+  const externalApplications = _.get(data, "groups[0].applications", []);
 
   const scriptTags = applications
     .map(
       (n) =>
         `<script src="${
-          data.applications.find(({ name }) => name === n).remote
+          externalApplications.find(({ name }) => name === n).versions[0].remote
         }"></script>`
     )
     .join("\n");
@@ -112,7 +124,7 @@ const ignoreVersion = [${watch("ignoreVersion")
         .join(", ");
 
   return (
-    <Layout user={user} loading={loading}>
+    <Layout>
       <Head>
         <title>New Federated Module Application</title>
       </Head>
@@ -220,7 +232,7 @@ ${exposesCode}
           <Grid item xs={3}>
             <Typography variant="h5">Import Modules</Typography>
             <FormGroup aria-label="Imported applications">
-              {data.applications.map(({ name }) => (
+              {externalApplications.map(({ name }) => (
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -263,3 +275,5 @@ ${exposesCode}
     </Layout>
   );
 };
+
+export default observer(NewApp);
