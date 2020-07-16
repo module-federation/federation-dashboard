@@ -1,7 +1,9 @@
 import { ResponsiveChord } from "@nivo/chord";
 
 const ModuleChordChart = ({ applications }) => {
-  const modules = applications.map(({ modules }) => modules).flat();
+  const modules = applications
+    .map(({ versions }) => versions[0].modules)
+    .flat();
   const columns = applications.length + modules.length;
   const matrix = new Array(columns)
     .fill(0)
@@ -9,16 +11,16 @@ const ModuleChordChart = ({ applications }) => {
   const keys = [];
   const appById = {};
   const modulesById = {};
-  applications.forEach(({ id, name: appName, modules }) => {
+  applications.forEach(({ id, name: appName, versions }) => {
     appById[id] = keys.length;
     keys.push(appName);
-    modules.forEach(({ name: moduleName }) => {
+    versions[0].modules.forEach(({ name: moduleName }) => {
       modulesById[`${appName}/${moduleName}`] = keys.length;
       keys.push(`${appName}/${moduleName}`);
     });
   });
-  applications.forEach(({ id, consumes }) => {
-    consumes
+  applications.forEach(({ id, versions }) => {
+    versions[0].consumes
       .filter(({ application }) => application)
       .forEach(({ application: { name: appName }, name, usedIn }) => {
         const modId = `${appName}/${name}`;
