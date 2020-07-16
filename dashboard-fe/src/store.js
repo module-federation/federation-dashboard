@@ -124,8 +124,10 @@ const store = new Store();
 
 if (typeof window !== "undefined") {
   autorun(async () => {
-    const user = await fetchUser();
-    store.setAuthUser(user);
+    if (process.env.WITH_AUTH == "true") {
+      const user = await fetchUser();
+      store.setAuthUser(user);
+    }
 
     client
       .query({
