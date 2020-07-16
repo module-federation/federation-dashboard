@@ -33,9 +33,9 @@
   },
   "versionData": {
     "container": "remoteEntry.js",
-    "outputPath": "/Users/jherr/projects/federation-dashboard/dashboard-example/dsl/dist",
+    "outputPath": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/dsl/dist",
     "dashboardFileName": "dashboard.json",
-    "context": "/Users/jherr/projects/federation-dashboard/dashboard-example/dsl",
+    "context": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/dsl",
     "name": "dsl"
   }
 }

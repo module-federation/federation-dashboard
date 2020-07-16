@@ -4,9 +4,7 @@ export const schema = Joi.object({
   id: Joi.string().required(),
   email: Joi.string().required(),
   name: Joi.string().required(),
-  groups: Joi.array()
-    .items(Joi.string().required())
-    .required(),
+  groups: Joi.array().items(Joi.string().required()).required(),
   defaultGroup: Joi.string().required(),
 });
 
