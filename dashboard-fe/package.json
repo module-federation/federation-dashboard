@@ -30,7 +30,8 @@
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
     "@auth0/auth0-react": "^1.0.0",
-    "@auth0/nextjs-auth0": "^0.13.0",
+    "@auth0/nextjs-auth0": "^0.15.0",
+    "@babel/plugin-proposal-decorators": "^7.10.3",
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
     "@hapi/joi": "^17.1.1",
@@ -75,6 +76,6 @@
     "jest-babel": "^1.0.1",
     "prettier": "^2.0.5",
     "regenerator-runtime": "^0.13.5",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.6"
   }
 }
