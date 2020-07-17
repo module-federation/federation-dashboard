@@ -6,7 +6,7 @@ import createLoginUrl from "../src/url-helper";
 import RedirectToLogin from "./login-redirect";
 
 export default function withAuth(InnerComponent) {
-  if (process.env.WITH_AUTH !== "true") {
+  if (process.env.WITH_AUTH != "true") {
     const NoAuth = (props) => {
       return <div>{<InnerComponent {...props} user={null} />}</div>;
     };
