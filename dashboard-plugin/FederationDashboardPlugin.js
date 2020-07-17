@@ -68,18 +68,6 @@ class FederationDashboardPlugin {
         chunkDependencies,
       };
 
-      if (this._options.version) {
-        Object.assign(rawData, {
-          versionData: {
-            container: RemoteEntryChunk.files[0],
-            outputPath: stats.outputPath,
-            dashboardFileName: this._options.filename,
-            context: this._webpackContext,
-            name: FederationPluginOptions.name,
-          },
-        });
-      }
-
       let graphData = null;
       try {
         graphData = convertToGraph(rawData);
@@ -242,17 +230,6 @@ class FederationDashboardPlugin {
   }
 
   writeStatsFiles(stats, dashData) {
-    if (this._packageJson) {
-      const updatedPackage = Object.assign({}, this._packageJson, {
-        versionData: JSON.parse(this._dashData).versionData,
-      });
-      fs.writeFile(
-        path.join(this._webpackContext, "package.json"),
-        JSON.stringify(updatedPackage, null, 2),
-        { encoding: "utf-8" },
-        () => {}
-      );
-    }
     if (this._options.filename) {
       const hashPath = path.join(stats.outputPath, this._options.filename);
       fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, () => {});
