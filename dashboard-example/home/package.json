@@ -29,12 +29,5 @@
     "lodash": "^4.17.15",
     "react": "^16.13.0",
     "react-dom": "^16.13.0"
-  },
-  "versionData": {
-    "container": "remoteEntry.js",
-    "outputPath": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/home/dist",
-    "dashboardFileName": "dashboard.json",
-    "context": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/home",
-    "name": "home"
   }
 }

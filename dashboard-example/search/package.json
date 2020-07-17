@@ -29,12 +29,5 @@
     "antd": "^4.2.5",
     "react": "^16.13.0",
     "react-dom": "^16.13.0"
-  },
-  "versionData": {
-    "container": "remoteEntry.js",
-    "outputPath": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/search/dist",
-    "dashboardFileName": "dashboard.json",
-    "context": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/search",
-    "name": "search"
   }
 }

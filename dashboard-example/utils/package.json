@@ -19,12 +19,5 @@
     "serve": "serve dist -p 3005",
     "clean": "rm -rf dist"
   },
-  "dependencies": {},
-  "versionData": {
-    "container": "remoteEntry.js",
-    "outputPath": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/utils/dist",
-    "dashboardFileName": "dashboard.json",
-    "context": "/Volumes/lulu_dev/federation-dashboard/dashboard-example/utils",
-    "name": "utils"
-  }
+  "dependencies": {}
 }
