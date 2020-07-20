@@ -97,32 +97,40 @@ const SideBar = ({ restricted }) => {
       {group && (
         <>
           <ListSubheader inset>Applications</ListSubheader>
-          {group.applications.map(({ id, name, versions }) => (
-            <div key={`application:${id}`}>
-              <Link href={`/applications/${store.group}/${id}`}>
-                <ListItem button dense>
-                  <ListItemIcon>
-                    <WebIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={name} />
-                </ListItem>
-              </Link>
-              {versions.length > 0 &&
-                versions[0].modules.map(({ id: modId, name }) => (
-                  <Link
-                    href={`/applications/${store.group}/${id}/${name}`}
-                    key={`module:${modId}`}
-                  >
-                    <ListItem button dense>
-                      <ListItemIcon>
-                        <WidgetsIcon />
-                      </ListItemIcon>
-                      <ListItemText primary={name} />
-                    </ListItem>
-                  </Link>
-                ))}
-            </div>
-          ))}
+          {group.applications.map(({ id, name, versions }) => {
+            return (
+              <div key={`application:${id}`}>
+                <Link
+                  href={`/applications/${store.group}/${encodeURIComponent(
+                    id
+                  )}`}
+                >
+                  <ListItem button dense>
+                    <ListItemIcon>
+                      <WebIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={name} />
+                  </ListItem>
+                </Link>
+                {versions.length > 0 &&
+                  versions[0].modules.map(({ id: modId, name }) => (
+                    <Link
+                      href={`/applications/${
+                        store.group
+                      }/${id}/${encodeURIComponent(name)}`}
+                      key={`module:${modId}`}
+                    >
+                      <ListItem button dense>
+                        <ListItemIcon>
+                          <WidgetsIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={name} />
+                      </ListItem>
+                    </Link>
+                  ))}
+              </div>
+            );
+          })}
           <Link href={`/applications/new`}>
             <ListItem button>
               <ListItemIcon>

@@ -6,7 +6,7 @@ import Application from "./builder";
 import { interactiveHold } from "./runner";
 import moment from "moment";
 
-const home = new Application("home", "frontend", 8080, { team: "earth" }, [
+const home = new Application("team/home", "frontend", 8080, { team: "earth" }, [
   "react-app",
 ]);
 const search = new Application("search", "frontend", 8080, { team: "venus" }, [
