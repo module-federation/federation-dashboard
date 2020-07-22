@@ -19,6 +19,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { observer } from "mobx-react";
 
 import store from "../src/store";
+import { ApplicationLink, ModuleLink } from "./links";
 
 const GET_SIDEBAR_DATA = gql`
   query($group: String!, $environment: String!) {
@@ -100,24 +101,20 @@ const SideBar = ({ restricted }) => {
           {group.applications.map(({ id, name, versions }) => {
             return (
               <div key={`application:${id}`}>
-                <Link
-                  href={`/applications/${store.group}/${encodeURIComponent(
-                    id
-                  )}`}
-                >
+                <ApplicationLink group={store.group} application={id}>
                   <ListItem button dense>
                     <ListItemIcon>
                       <WebIcon />
                     </ListItemIcon>
                     <ListItemText primary={name} />
                   </ListItem>
-                </Link>
+                </ApplicationLink>
                 {versions.length > 0 &&
                   versions[0].modules.map(({ id: modId, name }) => (
-                    <Link
-                      href={`/applications/${
-                        store.group
-                      }/${id}/${encodeURIComponent(name)}`}
+                    <ModuleLink
+                      group={store.group}
+                      application={id}
+                      module={name}
                       key={`module:${modId}`}
                     >
                       <ListItem button dense>
@@ -126,7 +123,7 @@ const SideBar = ({ restricted }) => {
                         </ListItemIcon>
                         <ListItemText primary={name} />
                       </ListItem>
-                    </Link>
+                    </ModuleLink>
                   ))}
               </div>
             );

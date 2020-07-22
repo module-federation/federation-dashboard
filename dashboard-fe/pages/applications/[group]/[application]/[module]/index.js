@@ -23,6 +23,7 @@ import {
   GeneratedCode,
 } from "../../../../../components/Code";
 import store from "../../../../../src/store";
+import { ModuleLink, ApplicationLink } from "../../../../../components/links";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -87,11 +88,13 @@ const ConsumesTable = ({ consumed }) => {
               <TableRow key={[consumingApplication.id, name].join()}>
                 <TableCell>
                   <Typography>
-                    <Link
-                      href={`/applications/${store.group}/${consumingApplication.name}/${name}`}
+                    <ModuleLink
+                      group={store.group}
+                      application={consumingApplication.name}
+                      module={name}
                     >
                       <a>{consumingApplication.name}</a>
-                    </Link>
+                    </ModuleLink>
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -142,11 +145,12 @@ const ModulePage = () => {
         {mod && (
           <div>
             <Typography variant="h4" className={classes.moduleHeader}>
-              <Link
-                href={`/applications/${store.group}/${router.query.application}`}
+              <ApplicationLink
+                group={store.group}
+                application={router.query.application}
               >
                 <a>{router.query.application}</a>
-              </Link>
+              </ApplicationLink>
               /{mod.name}
             </Typography>
             <Grid container spacing={3}>

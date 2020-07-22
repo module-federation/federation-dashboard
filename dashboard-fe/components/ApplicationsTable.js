@@ -8,8 +8,9 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import ArrowIcon from "@material-ui/icons/Forward";
-import Link from "next/link";
 import { UpArrow, DownArrow } from "./icons";
+import { ApplicationLink, ModuleLink } from "./links";
+import store from "../src/store";
 
 const useStyles = makeStyles((theme) => ({
   headerRow: {
@@ -40,9 +41,11 @@ const ApplicationsTable = ({ applications }) => {
     versions[0].consumes
       .filter(({ application }) => application)
       .forEach(({ name, application: { id: applicationId }, usedIn }) => {
-        modulesById[`${applicationId}:${name}`].applications[
-          consumingApplication
-        ] = { count: usedIn.length };
+        if (modulesById[`${applicationId}:${name}`]) {
+          modulesById[`${applicationId}:${name}`].applications[
+            consumingApplication
+          ] = { count: usedIn.length };
+        }
       });
   });
 
@@ -67,9 +70,9 @@ const ApplicationsTable = ({ applications }) => {
           {applications.map(({ id, name, versions }) => (
             <TableCell align="center" key={`application:${id}`}>
               <Typography variant="h5">
-                <Link href={`/applications/${name}`}>
-                  <a className={classes.headerCell}>{name}</a>
-                </Link>
+                <ApplicationLink group={store.group} application={name}>
+                  <a>{name}</a>
+                </ApplicationLink>
               </Typography>
             </TableCell>
           ))}
@@ -90,9 +93,13 @@ const ApplicationsTable = ({ applications }) => {
             <TableRow key={`module:${absoluteId}`}>
               <TableCell align="right">
                 <Typography variant="body1">
-                  <Link href={`/applications/${applicationName}/${name}`}>
+                  <ModuleLink
+                    group={store.group}
+                    application={applicationName}
+                    module={name}
+                  >
                     <a>{name}</a>
-                  </Link>
+                  </ModuleLink>
                 </Typography>
               </TableCell>
               {applications.map(({ id: appId, name }) => (

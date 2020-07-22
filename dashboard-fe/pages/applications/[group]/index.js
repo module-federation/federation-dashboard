@@ -1,10 +1,10 @@
 import Head from "next/head";
-import Link from "next/link";
 import gql from "graphql-tag";
 import { useLazyQuery } from "@apollo/react-hooks";
 import { useRouter } from "next/router";
 
 import Layout from "../../../components/Layout";
+import { ApplicationLink } from "../../../components/links";
 
 const GET_APPS = gql`
   query($name: String!) {
@@ -39,9 +39,9 @@ const GroupPage = () => {
       {group &&
         group.applications.map(({ id, name }) => (
           <div key={id}>
-            <Link href={`/applications/${router.query.group}/${id}`}>
-              {name}
-            </Link>
+            <ApplicationLink group={router.query.group} application={id}>
+              <a>{name}</a>
+            </ApplicationLink>
           </div>
         ))}
     </Layout>
