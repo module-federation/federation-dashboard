@@ -179,7 +179,9 @@ export const VersionComparison = ({ group, environment, name }) => {
         {uniqueModules.map((module) => (
           <TableRow>
             <TableCell key={["module", module].join("")}>
-              <ModuleLink group={group} application={name} name={module} />
+              <ModuleLink group={group} application={name} module={module}>
+                {module}
+              </ModuleLink>
             </TableCell>
             {versions.map(({ version, modules }) => (
               <TableCell
@@ -206,8 +208,10 @@ export const VersionComparison = ({ group, environment, name }) => {
               <ModuleLink
                 group={group}
                 application={consumeApp[module]}
-                name={module}
-              />
+                module={module}
+              >
+                <a>{module}</a>
+              </ModuleLink>
             </TableCell>
             {versions.map(({ version, consumes }) => (
               <TableCell

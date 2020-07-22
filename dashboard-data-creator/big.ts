@@ -6,7 +6,7 @@ import Application from "./builder";
 import { interactiveHold } from "./runner";
 import moment from "moment";
 
-const home = new Application("home", "frontend", 8080, { team: "earth" }, [
+const home = new Application("team/home", "frontend", 8080, { team: "earth" }, [
   "react-app",
 ]);
 const search = new Application("search", "frontend", 8080, { team: "venus" }, [
@@ -122,7 +122,7 @@ async function buildProjects() {
   );
 
   await interactiveHold("Upload search project");
-  search.addConsumes("home", "Header");
+  search.addConsumes("team/home", "Header");
   await search.pushDevelopmentVersion();
   applications.forEach((app) =>
     app.setPosted(moment().subtract(6, "days").toDate())
@@ -145,12 +145,12 @@ async function buildProjects() {
   await search.pushProductionVersion();
 
   await interactiveHold("Adding cart, checkout, pdp");
-  pdp.addConsumes("home", "Header");
-  checkout.addConsumes("home", "Header");
-  cart.addConsumes("home", "Header");
-  pdp.addConsumes("home", "Footer");
-  checkout.addConsumes("home", "Footer");
-  cart.addConsumes("home", "Footer");
+  pdp.addConsumes("team/home", "Header");
+  checkout.addConsumes("team/home", "Header");
+  cart.addConsumes("team/home", "Header");
+  pdp.addConsumes("team/home", "Footer");
+  checkout.addConsumes("team/home", "Footer");
+  cart.addConsumes("team/home", "Footer");
 
   pdp.addModule("HeroImage", "src/HeroImage.jsx");
   checkout.addModule("ExpressCheckout", "src/ExpressCheckout.jsx");
