@@ -19,6 +19,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { observer } from "mobx-react";
 
 import store from "../src/store";
+import { ApplicationLink, ModuleLink } from "./links";
 
 const GET_SIDEBAR_DATA = gql`
   query($group: String!, $environment: String!) {
@@ -97,32 +98,36 @@ const SideBar = ({ restricted }) => {
       {group && (
         <>
           <ListSubheader inset>Applications</ListSubheader>
-          {group.applications.map(({ id, name, versions }) => (
-            <div key={`application:${id}`}>
-              <Link href={`/applications/${store.group}/${id}`}>
-                <ListItem button dense>
-                  <ListItemIcon>
-                    <WebIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={name} />
-                </ListItem>
-              </Link>
-              {versions.length > 0 &&
-                versions[0].modules.map(({ id: modId, name }) => (
-                  <Link
-                    href={`/applications/${store.group}/${id}/${name}`}
-                    key={`module:${modId}`}
-                  >
-                    <ListItem button dense>
-                      <ListItemIcon>
-                        <WidgetsIcon />
-                      </ListItemIcon>
-                      <ListItemText primary={name} />
-                    </ListItem>
-                  </Link>
-                ))}
-            </div>
-          ))}
+          {group.applications.map(({ id, name, versions }) => {
+            return (
+              <div key={`application:${id}`}>
+                <ApplicationLink group={store.group} application={id}>
+                  <ListItem button dense>
+                    <ListItemIcon>
+                      <WebIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={name} />
+                  </ListItem>
+                </ApplicationLink>
+                {versions.length > 0 &&
+                  versions[0].modules.map(({ id: modId, name }) => (
+                    <ModuleLink
+                      group={store.group}
+                      application={id}
+                      module={name}
+                      key={`module:${modId}`}
+                    >
+                      <ListItem button dense>
+                        <ListItemIcon>
+                          <WidgetsIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={name} />
+                      </ListItem>
+                    </ModuleLink>
+                  ))}
+              </div>
+            );
+          })}
           <Link href={`/applications/new`}>
             <ListItem button>
               <ListItemIcon>

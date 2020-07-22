@@ -11,7 +11,6 @@ import {
 } from "@material-ui/core";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
-import Link from "next/link";
 import clsx from "clsx";
 import { observer } from "mobx-react";
 import _ from "lodash";
@@ -19,6 +18,7 @@ import _ from "lodash";
 import store from "../src/store";
 import Layout from "../components/Layout";
 import withAuth from "../components/with-auth";
+import { ApplicationLink } from "../components/links";
 
 const useStyles = makeStyles((theme) => ({
   headerRow: {
@@ -162,9 +162,9 @@ const Dependencies = () => {
                 {applications.map(({ name, id }) => (
                   <TableCell key={["header", name, id].join(":")}>
                     <Typography>
-                      <Link href={`/applications/${id}`}>
+                      <ApplicationLink group={store.group} application={id}>
                         <a className={classes.headerCell}>{name}</a>
-                      </Link>
+                      </ApplicationLink>
                     </Typography>
                   </TableCell>
                 ))}

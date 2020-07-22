@@ -20,6 +20,7 @@ import { observer } from "mobx-react";
 import _ from "lodash";
 
 import store from "../../src/store";
+import { ModuleLink } from "../links";
 
 const useStyles = makeStyles({
   title: {
@@ -159,11 +160,13 @@ export const ConsumesTable = observer(({ consumes }) => {
               <TableRow key={[application.id, name].join()}>
                 <TableCell>
                   <Typography>
-                    <Link
-                      href={`/applications/${store.group}/${application.name}/${name}`}
+                    <ModuleLink
+                      group={store.group}
+                      application={application.name}
+                      module={name}
                     >
                       <a>{name}</a>
-                    </Link>
+                    </ModuleLink>
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -402,11 +405,13 @@ export const ModulesTable = observer(({ application, modules, overrides }) => {
             <TableRow key={[application.id, name].join()}>
               <TableCell>
                 <Typography>
-                  <Link
-                    href={`/applications/${store.group}/${application.name}/${name}`}
+                  <ModuleLink
+                    group={store.group}
+                    application={application.name}
+                    module={name}
                   >
                     <a>{name}</a>
-                  </Link>
+                  </ModuleLink>
                 </Typography>
               </TableCell>
               <TableCell>

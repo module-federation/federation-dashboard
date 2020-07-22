@@ -15,6 +15,7 @@ import { observer } from "mobx-react";
 import _ from "lodash";
 
 import store from "../src/store";
+import { ApplicationLink, ModuleLink } from "./links";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -94,9 +95,9 @@ const ConsumedBy = ({ consumedBy, moduleName }) => (
   <>
     {consumedBy.map(({ consumingApplication: { name: consumer } }) => (
       <span key={[name, moduleName, consumer].join(":")}>
-        <Link href={`/applications/${store.group}/${consumer}`}>
+        <ApplicationLink group={store.group} application={consumer}>
           <a>{consumer}</a>
-        </Link>{" "}
+        </ApplicationLink>{" "}
       </span>
     ))}
   </>
@@ -113,17 +114,20 @@ const ConsumesTable = ({ consumes }) => {
             <TableRow key={[application.id, name].join()}>
               <TableCell>
                 <Typography>
-                  <Link
-                    href={`/applications/${store.group}/${application.name}`}
+                  <ApplicationLink
+                    group={store.group}
+                    application={application.name}
                   >
                     <a>{application.name}</a>
-                  </Link>
+                  </ApplicationLink>
                   /
-                  <Link
-                    href={`/applications/${store.group}/${application.name}/${name}`}
+                  <ModuleLink
+                    group={store.group}
+                    application={application.name}
+                    module={name}
                   >
                     <a>{name}</a>
-                  </Link>
+                  </ModuleLink>
                 </Typography>
               </TableCell>
               <TableCell>
@@ -160,11 +164,13 @@ const ConsumersTable = ({ modules, name }) => {
               <TableRow key={moduleName}>
                 <TableCell>
                   <Typography>
-                    <Link
-                      href={`/applications/${store.group}/${name}/${moduleName}`}
+                    <ModuleLink
+                      group={store.group}
+                      application={name}
+                      module={module}
                     >
                       <a>{moduleName}</a>
-                    </Link>
+                    </ModuleLink>
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -172,11 +178,12 @@ const ConsumersTable = ({ modules, name }) => {
                     {consumedBy.map(
                       ({ consumingApplication: { name: consumer } }) => (
                         <span key={[name, moduleName, consumer].join(":")}>
-                          <Link
-                            href={`/applications/${store.group}/${consumer}`}
+                          <ApplicationLink
+                            group={store.group}
+                            application={consumer}
                           >
                             <a>{consumer}</a>
-                          </Link>{" "}
+                          </ApplicationLink>{" "}
                         </span>
                       )
                     )}
