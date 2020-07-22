@@ -281,12 +281,18 @@ const ModuleUMLDiagram = observer(({ applications }) => {
     versions[0].consumes
       .filter(({ application }) => application)
       .forEach(({ application: { name: appName }, name: moduleName }) => {
-        links.push(
-          ports[fromApp].link(
-            ports[`${appName}:${moduleName}`]
-            // engine.getLinkFactories().getFactory(PathFindingLinkFactory.NAME)
-          )
-        );
+        if (ports[fromApp]) {
+          let link = null;
+          try {
+            link = ports[fromApp].link(
+              ports[`${appName}:${moduleName}`]
+              // engine.getLinkFactories().getFactory(PathFindingLinkFactory.NAME)
+            );
+          } catch (e) {}
+          if (link) {
+            links.push(link);
+          }
+        }
       });
   });
 
