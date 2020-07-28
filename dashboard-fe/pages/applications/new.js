@@ -58,7 +58,7 @@ const NewApp = () => {
       shared: "react,react-dom",
       singleton: "react,react-dom",
       exclude: "express",
-      automaticFederation: false,
+      automaticFederation: true,
     },
   });
   const [applications, applicationsSet] = React.useState([]);
@@ -95,7 +95,6 @@ const NewApp = () => {
       return `      \"${mod}\": "${fname}"`;
     })
     .join(",\n");
-  console.log(watch("automaticFederation"));
 
   const automaticPreamble = watch("automaticFederation")
     ? `
@@ -148,7 +147,7 @@ const deps = require("./package.json");
                 <FormControlLabel
                   control={<Checkbox type="checkbox" />}
                   label="Use automatic federation"
-                  key={"automaticFederation"}
+                  key={name}
                 />
               }
               control={control}
