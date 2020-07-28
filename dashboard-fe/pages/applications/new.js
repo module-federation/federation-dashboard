@@ -92,7 +92,7 @@ const NewApp = () => {
     .map((file) => {
       const fname = file.trim();
       const mod = fname.replace(/.*\//, "");
-      return `      \"${mod}\": "${fname}"`;
+      return `      \"./${mod}\": "${fname}"`;
     })
     .join(",\n");
 
@@ -207,7 +207,6 @@ const deps = require("./package.json");
                 <GeneratedCode>
                   {`  new ModuleFederationPlugin({
     name: "${watch("name")}",
-    library: { type: "var", name: "${watch("name")}" },
     filename: "remoteEntry.js",
     remotes: {${remotesCode}},
     exposes: {
