@@ -98,25 +98,16 @@ const NewApp = () => {
 
   const automaticPreamble = watch("automaticFederation")
     ? `
-const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
-const packageJson = require("./package.json");
-const exclude = [${watch("exclude")
+let deps = require("./package.json");
+
+[${watch("ignoreVersion")
         .split(",")
-        .map((n) => `"${n.trim()}"`)}];
-const ignoreVersion = [${watch("ignoreVersion")
-        .split(",")
-        .map((n) => `"${n.trim()}"`)}];
+        .map((n) => `"${n.trim()}"`)}].forEach((i)=>{delete deps.i})
 `
     : "";
   const sharedCode = watch("automaticFederation")
     ? `
-      AutomaticVendorFederation({
-        exclude,
-        ignoreVersion,
-        packageJson,
-        shareFrom: ["dependencies"],
-        ignorePatchVersion: true,
-      })
+      ...deps
     `
     : watch("shared")
         .split(",")
