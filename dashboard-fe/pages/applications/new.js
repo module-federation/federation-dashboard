@@ -56,8 +56,8 @@ const NewApp = () => {
       name: "test-app",
       files: "./src/Component1,./src/Component2",
       shared: "react,react-dom",
-      ignoreVersion: "react,react-dom",
-      exclude: "lodash",
+      singleton: "react,react-dom",
+      exclude: "express",
       automaticFederation: true,
     },
   });
@@ -96,23 +96,25 @@ const NewApp = () => {
     })
     .join(",\n");
 
+  console.log(watch("automaticFederation"))
   const automaticPreamble = watch("automaticFederation")
     ? `
-let deps = require("./package.json");
+const deps = require("./package.json");
 
-[${watch("ignoreVersion")
+[${watch("exclude")
         .split(",")
         .map((n) => `"${n.trim()}"`)}].forEach((i)=>{delete deps.i})
 `
     : "";
-  const sharedCode = watch("automaticFederation")
-    ? `
-      ...deps
-    `
-    : watch("shared")
-        .split(",")
-        .map((mod) => `"${mod.trim()}"`)
-        .join(", ");
+const singleton = watch("singleton")
+  .split(",")
+  .map((mod) => `{ "${mod.trim()}": { singleton:true } }`)
+  .join(",\n      ");
+
+  const sharedCode = `
+      ...deps,
+      ${singleton}
+    `;
 
   return (
     <Layout>
@@ -178,8 +180,8 @@ let deps = require("./package.json");
             )}
             {watch("automaticFederation") && (
               <TextField
-                name="ignoreVersion"
-                label="Ignore Versions"
+                name="singleton"
+                label="Singletons"
                 helperText="comma seperated"
                 variant="outlined"
                 fullWidth
