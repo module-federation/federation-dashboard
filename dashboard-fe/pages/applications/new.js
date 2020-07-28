@@ -58,7 +58,7 @@ const NewApp = () => {
       shared: "react,react-dom",
       singleton: "react,react-dom",
       exclude: "express",
-      automaticFederation: true,
+      automaticFederation: false,
     },
   });
   const [applications, applicationsSet] = React.useState([]);
@@ -95,8 +95,8 @@ const NewApp = () => {
       return `      \"${mod}\": "${fname}"`;
     })
     .join(",\n");
+  console.log(watch("automaticFederation"));
 
-  console.log(watch("automaticFederation"))
   const automaticPreamble = watch("automaticFederation")
     ? `
 const deps = require("./package.json");
@@ -106,15 +106,15 @@ const deps = require("./package.json");
         .map((n) => `"${n.trim()}"`)}].forEach((i)=>{delete deps.i})
 `
     : "";
-const singleton = watch("singleton")
-  .split(",")
-  .map((mod) => `{ "${mod.trim()}": { singleton:true } }`)
-  .join(",\n      ");
+  const singleton = watch("singleton")
+    .split(",")
+    .map((mod) => `{ "${mod.trim()}": { singleton:true } }`)
+    .join(",\n      ");
 
-  const sharedCode = `
-      ...deps,
-      ${singleton}
-    `;
+  const sharedCode = [
+    watch("automaticFederation") ? "\n      ...deps" : null,
+    watch("automaticFederation") ? '' + singleton : "\n      " + singleton,
+  ].filter((i) => !!i) .join(",\n      ");
 
   return (
     <Layout>
@@ -148,7 +148,7 @@ const singleton = watch("singleton")
                 <FormControlLabel
                   control={<Checkbox type="checkbox" />}
                   label="Use automatic federation"
-                  key={name}
+                  key={"automaticFederation"}
                 />
               }
               control={control}
@@ -214,7 +214,7 @@ const singleton = watch("singleton")
     exposes: {
 ${exposesCode}
     },
-    shared: [${sharedCode}]
+    shared: {${sharedCode}}
   })  
 `}
                 </GeneratedCode>
