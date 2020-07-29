@@ -9,6 +9,7 @@ import {
   Grid,
   Paper,
 } from "@material-ui/core";
+import Template from "webpack/lib/Template";
 import { useForm, Controller } from "react-hook-form";
 import Layout from "../../components/Layout";
 import gql from "graphql-tag";
@@ -80,41 +81,80 @@ const NewApp = () => {
         }"></script>`
     )
     .join("\n");
+
   const remotesCode =
     applications.length > 0
-      ? "\n" +
-        applications.map((name) => `      "${name}": "${name}"`).join(",\n") +
-        "\n    "
-      : "";
+      ? Template.asString([applications.map((name) => `"${name}": "${name}"`)])
+      : undefined;
 
-  const exposesCode = watch("files")
-    .split(",")
-    .map((file) => {
-      const fname = file.trim();
-      const mod = fname.replace(/.*\//, "");
-      return `      \"./${mod}\": "${fname}"`;
-    })
-    .join(",\n");
+  const exposesCode = Template.asString(
+    watch("files")
+      .split(",")
+      .map((file) => {
+        const fname = file.trim();
+        const mod = fname.replace(/.*\//, "");
+        return `"./${mod}": "${fname}"`;
+      })
+  );
 
   const automaticPreamble = watch("automaticFederation")
-    ? `
-const deps = require("./package.json");
+    ? Template.asString([
+        'const deps = require("./package.json");',
+        "[",
+        Template.indent(
+          watch("exclude")
+            .split(",")
+            .map((n) => `"${n.trim()}"`)
+        ),
+        "].forEach((i)=>{delete deps.i})",
+      ])
+    : null;
 
-[${watch("exclude")
-        .split(",")
-        .map((n) => `"${n.trim()}"`)}].forEach((i)=>{delete deps.i})
-`
-    : "";
-  const singleton = watch("singleton")
-    .split(",")
-    .map((mod) => `{ "${mod.trim()}": { singleton:true } }`)
-    .join(",\n      ");
+  const singleton = Template.asString(
+    watch("singleton")
+      .split(",")
+      .map((mod) => `{ "${mod.trim()}": { singleton:true } }`)
+  );
 
-  const sharedCode = [
-    watch("automaticFederation") ? "\n      ...deps" : null,
-    watch("automaticFederation") ? '' + singleton : "\n      " + singleton,
-  ].filter((i) => !!i) .join(",\n      ");
+  const sharedCode = Template.asString(
+    [watch("automaticFederation") ? "...deps" : null, singleton].filter(Boolean)
+  );
 
+  const remotesTemplate = remotesCode
+    ? Template.asString(["remotes: {", remotesCode, "}"])
+    : null;
+
+  const exposesTemplate = exposesCode
+    ? Template.asString(["exposes: {", Template.indent(exposesCode), "}"])
+    : null;
+
+  const sharedTemplate = sharedCode
+    ? Template.asString(["shared: {", Template.indent(sharedCode), "}"])
+    : null;
+
+  const pluginTemplate = Template.indent(
+    Template.asString([
+      "new ModuleFederationPlugin({",
+      Template.indent(
+        Template.asString(
+          [
+            `name: "${watch("name")}",`,
+            'filename: "remoteEntry.js",',
+            remotesTemplate,
+            exposesTemplate,
+            sharedTemplate,
+          ].filter(Boolean)
+        )
+      ),
+      "})",
+    ])
+  );
+  const boilerplate = Template.asString([
+    'const { ModuleFederationPlugin } = require("webpack").container;',
+    automaticPreamble,
+  ]).replace(/^\t/gm, "  ");
+
+  const codeSample = Template.asString([pluginTemplate]).replace(/\t/g, "  ");
   return (
     <Layout>
       <Head>
@@ -147,7 +187,7 @@ const deps = require("./package.json");
                 <FormControlLabel
                   control={<Checkbox type="checkbox" />}
                   label="Use automatic federation"
-                  key={name}
+                  key={"automaticFederation"}
                 />
               }
               control={control}
@@ -199,23 +239,13 @@ const deps = require("./package.json");
                 Add this code to your Webpack configuration file.
               </Typography>
               <CodeWrapper>
-                <GeneratedCode>
-                  {`const { ModuleFederationPlugin } = require("webpack").container;`}
-                  {automaticPreamble}
-                </GeneratedCode>
-                <Code>{`plugins: [`}</Code>
-                <GeneratedCode>
-                  {`  new ModuleFederationPlugin({
-    name: "${watch("name")}",
-    filename: "remoteEntry.js",
-    remotes: {${remotesCode}},
-    exposes: {
-${exposesCode}
-    },
-    shared: {${sharedCode}}
-  })  
-`}
-                </GeneratedCode>
+                <GeneratedCode>{boilerplate}</GeneratedCode>
+                <Code>
+                  {`// webpack config`}
+                  <br />
+                  {`plugins: [`}
+                </Code>
+                <GeneratedCode>{codeSample}</GeneratedCode>
                 <Code>{`]`}</Code>
               </CodeWrapper>
             </Paper>
