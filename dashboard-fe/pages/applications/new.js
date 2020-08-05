@@ -182,17 +182,18 @@ const NewApp = () => {
               inputRef={register()}
               className={classes.textField}
             />
-            <Controller
-              as={
-                <FormControlLabel
-                  control={<Checkbox type="checkbox" />}
-                  label="Use automatic federation"
-                  key={"automaticFederation"}
-                />
-              }
-              control={control}
-              name="automaticFederation"
-            />
+
+            {/*<Controller*/}
+            {/*  as={*/}
+            {/*    <FormControlLabel*/}
+            {/*      control={<Checkbox type="checkbox" />}*/}
+            {/*      label="Use automatic federation"*/}
+            {/*      key={"automaticFederation"}*/}
+            {/*    />*/}
+            {/*  }*/}
+            {/*  control={control}*/}
+            {/*  name="automaticFederation"*/}
+            {/*/>*/}
             {!watch("automaticFederation") && (
               <TextField
                 name="shared"
