@@ -501,7 +501,7 @@ export const CurrentVersion = observer(
     const router = useRouter();
     const classes = useStyles();
     const [publishVersion] = useMutation(SET_VERSION);
-
+console.log(versions)
     const handleVersionChange = (application, version) => {
       publishVersion({
         variables: {
@@ -608,6 +608,14 @@ export const CurrentVersion = observer(
             <Grid item xs={6}>
               <Paper className={classes.panel} elevation={3}>
                 <ConsumesTable consumes={application.consumes} />
+              </Paper>
+            </Grid>
+          )}
+
+          {application?.exposes?.length > 0 && (
+            <Grid item xs={6}>
+              <Paper className={classes.panel} elevation={3}>
+                <ExposesTable consumes={application.exposes} />
               </Paper>
             </Grid>
           )}
