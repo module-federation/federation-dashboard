@@ -56,6 +56,24 @@ export const GET_REMOTE_VERSIONS = gql`
   }
 `;
 
+const GET_EXPOSES_DATA = gql`
+  query($group: String!, $environment: String!) {
+    groups(name: $group) {
+      applications {
+        id
+        name
+        versions(environment: $environment, latest: true) {
+          modules {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
+
 export const GET_HEAD_VERSION = gql`
   query($name: String!, $group: String!, $environment: String!) {
     groups(name: $group) {
@@ -146,6 +164,52 @@ export const SET_REMOTE_VERSION = gql`
 `;
 
 export const ConsumesTable = observer(({ consumes }) => {
+  const classes = useStyles();
+  return (
+    <>
+      <Typography variant="h6" className={classes.panelTitle}>
+        Consumes
+      </Typography>
+      <Table>
+        <TableBody>
+          {consumes
+            .filter(({ application }) => application)
+            .map(({ name, application, usedIn }) => (
+              <TableRow key={[application.id, name].join()}>
+                <TableCell>
+                  <Typography>
+                    <ModuleLink
+                      group={store.group}
+                      application={application.name}
+                      module={name}
+                    >
+                      <a>{name}</a>
+                    </ModuleLink>
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  {usedIn.map(({ file, url }) => (
+                    <Typography variant="body2" key={[file, url].join(":")}>
+                      <a href={url}>{file}</a>
+                    </Typography>
+                  ))}
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </>
+  );
+});
+export const ExposesTable = observer(({ consumes }) => {
+  const { data } = useQuery(GET_EXPOSES_DATA, {
+    variables: {
+      group: store.group,
+      environment: store.environment,
+    },
+  });
+  console.log(data)
+  return null
   const classes = useStyles();
   return (
     <>

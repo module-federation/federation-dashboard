@@ -109,22 +109,22 @@ const SideBar = ({ restricted }) => {
                     <ListItemText primary={name} />
                   </ListItem>
                 </ApplicationLink>
-                {versions.length > 0 &&
-                  versions[0].modules.map(({ id: modId, name }) => (
-                    <ModuleLink
-                      group={store.group}
-                      application={id}
-                      module={name}
-                      key={`module:${modId}`}
-                    >
-                      <ListItem button dense>
-                        <ListItemIcon>
-                          <WidgetsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={name} />
-                      </ListItem>
-                    </ModuleLink>
-                  ))}
+                {/*{versions.length > 0 &&*/}
+                {/*  versions[0].modules.map(({ id: modId, name }) => (*/}
+                {/*    <ModuleLink*/}
+                {/*      group={store.group}*/}
+                {/*      application={id}*/}
+                {/*      module={name}*/}
+                {/*      key={`module:${modId}`}*/}
+                {/*    >*/}
+                {/*      <ListItem button dense>*/}
+                {/*        <ListItemIcon>*/}
+                {/*          <WidgetsIcon />*/}
+                {/*        </ListItemIcon>*/}
+                {/*        <ListItemText primary={name} />*/}
+                {/*      </ListItem>*/}
+                {/*    </ModuleLink>*/}
+                {/*  ))}*/}
               </div>
             );
           })}
