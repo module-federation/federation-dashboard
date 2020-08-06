@@ -56,24 +56,6 @@ export const GET_REMOTE_VERSIONS = gql`
   }
 `;
 
-const GET_EXPOSES_DATA = gql`
-  query($group: String!, $environment: String!) {
-    groups(name: $group) {
-      applications {
-        id
-        name
-        versions(environment: $environment, latest: true) {
-          modules {
-            id
-            name
-          }
-        }
-      }
-    }
-  }
-`;
-
-
 export const GET_HEAD_VERSION = gql`
   query($name: String!, $group: String!, $environment: String!) {
     groups(name: $group) {
@@ -164,52 +146,6 @@ export const SET_REMOTE_VERSION = gql`
 `;
 
 export const ConsumesTable = observer(({ consumes }) => {
-  const classes = useStyles();
-  return (
-    <>
-      <Typography variant="h6" className={classes.panelTitle}>
-        Consumes
-      </Typography>
-      <Table>
-        <TableBody>
-          {consumes
-            .filter(({ application }) => application)
-            .map(({ name, application, usedIn }) => (
-              <TableRow key={[application.id, name].join()}>
-                <TableCell>
-                  <Typography>
-                    <ModuleLink
-                      group={store.group}
-                      application={application.name}
-                      module={name}
-                    >
-                      <a>{name}</a>
-                    </ModuleLink>
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  {usedIn.map(({ file, url }) => (
-                    <Typography variant="body2" key={[file, url].join(":")}>
-                      <a href={url}>{file}</a>
-                    </Typography>
-                  ))}
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
-    </>
-  );
-});
-export const ExposesTable = observer(({ consumes }) => {
-  const { data } = useQuery(GET_EXPOSES_DATA, {
-    variables: {
-      group: store.group,
-      environment: store.environment,
-    },
-  });
-  console.log(data)
-  return null
   const classes = useStyles();
   return (
     <>
@@ -439,7 +375,7 @@ export const OverridesTable = observer(({ overrides }) => {
   );
 });
 
-export const ModulesTable = observer(({ application, modules, overrides }) => {
+export const ModulesTable = observer(({name:applicationName, application, modules, overrides }) => {
   const classes = useStyles();
   const findVersion = (name) => {
     let ov = overrides.find(({ name: ovName }) => ovName === name);
@@ -448,7 +384,7 @@ export const ModulesTable = observer(({ application, modules, overrides }) => {
   return (
     <>
       <Typography variant="h6" className={classes.panelTitle}>
-        Modules
+        Exposed Modules
       </Typography>
       <Table>
         <TableHead>
@@ -465,31 +401,33 @@ export const ModulesTable = observer(({ application, modules, overrides }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {modules.map(({ name, file, requires }) => (
-            <TableRow key={[application.id, name].join()}>
-              <TableCell>
-                <Typography>
-                  <ModuleLink
-                    group={store.group}
-                    application={application.name}
-                    module={name}
-                  >
-                    <a>{name}</a>
-                  </ModuleLink>
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography>{file}</Typography>
-              </TableCell>
-              <TableCell>
-                <Typography>
-                  {requires
-                    .map((name) => `${name}${findVersion(name)}`)
-                    .join(", ")}
-                </Typography>
-              </TableCell>
-            </TableRow>
-          ))}
+          {modules.map(({ name, file, requires }) => {
+            return (
+              <TableRow key={[application.id, name].join()}>
+                <TableCell>
+                  <Typography>
+                    <ModuleLink
+                      group={store.group}
+                      application={applicationName}
+                      module={name}
+                    >
+                      <a>{name}</a>
+                    </ModuleLink>
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography>{file}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography>
+                    {requires
+                      .map((name) => `${name}${findVersion(name)}`)
+                      .join(", ")}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </>
@@ -501,7 +439,6 @@ export const CurrentVersion = observer(
     const router = useRouter();
     const classes = useStyles();
     const [publishVersion] = useMutation(SET_VERSION);
-console.log(versions)
     const handleVersionChange = (application, version) => {
       publishVersion({
         variables: {
@@ -542,7 +479,6 @@ console.log(versions)
 
     const currentVersion =
       versions.length > 0 ? versions.find(({ latest }) => latest).version : "";
-
     return (
       <div>
         <Grid container>
@@ -579,6 +515,7 @@ console.log(versions)
           <Grid item xs={12}>
             <Paper className={classes.panel} elevation={3}>
               <ModulesTable
+                name={name}
                 application={application}
                 modules={application.modules}
                 overrides={application.overrides}
@@ -608,14 +545,6 @@ console.log(versions)
             <Grid item xs={6}>
               <Paper className={classes.panel} elevation={3}>
                 <ConsumesTable consumes={application.consumes} />
-              </Paper>
-            </Grid>
-          )}
-
-          {application?.exposes?.length > 0 && (
-            <Grid item xs={6}>
-              <Paper className={classes.panel} elevation={3}>
-                <ExposesTable consumes={application.exposes} />
               </Paper>
             </Grid>
           )}
