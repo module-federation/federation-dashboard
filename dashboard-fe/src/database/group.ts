@@ -9,7 +9,7 @@ export const schema = Joi.object({
 });
 
 export default class Group {
-  id: String;
-  name: String;
-  metadata: Array<Metadata>;
+  id: string;
+  name: string;
+  metadata: Metadata[];
 }

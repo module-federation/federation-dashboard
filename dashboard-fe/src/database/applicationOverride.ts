@@ -6,6 +6,6 @@ export const schema = Joi.object({
 });
 
 export default class ApplicationOverride {
-  name: String;
-  version: String;
+  name: string;
+  version: string;
 }
