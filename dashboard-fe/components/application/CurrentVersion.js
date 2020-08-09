@@ -375,7 +375,7 @@ export const OverridesTable = observer(({ overrides }) => {
   );
 });
 
-export const ModulesTable = observer(({ application, modules, overrides }) => {
+export const ModulesTable = observer(({name:applicationName, application, modules, overrides }) => {
   const classes = useStyles();
   const findVersion = (name) => {
     let ov = overrides.find(({ name: ovName }) => ovName === name);
@@ -384,7 +384,7 @@ export const ModulesTable = observer(({ application, modules, overrides }) => {
   return (
     <>
       <Typography variant="h6" className={classes.panelTitle}>
-        Modules
+        Exposed Modules
       </Typography>
       <Table>
         <TableHead>
@@ -401,31 +401,33 @@ export const ModulesTable = observer(({ application, modules, overrides }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {modules.map(({ name, file, requires }) => (
-            <TableRow key={[application.id, name].join()}>
-              <TableCell>
-                <Typography>
-                  <ModuleLink
-                    group={store.group}
-                    application={application.name}
-                    module={name}
-                  >
-                    <a>{name}</a>
-                  </ModuleLink>
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography>{file}</Typography>
-              </TableCell>
-              <TableCell>
-                <Typography>
-                  {requires
-                    .map((name) => `${name}${findVersion(name)}`)
-                    .join(", ")}
-                </Typography>
-              </TableCell>
-            </TableRow>
-          ))}
+          {modules.map(({ name, file, requires }) => {
+            return (
+              <TableRow key={[application.id, name].join()}>
+                <TableCell>
+                  <Typography>
+                    <ModuleLink
+                      group={store.group}
+                      application={applicationName}
+                      module={name}
+                    >
+                      <a>{name}</a>
+                    </ModuleLink>
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography>{file}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography>
+                    {requires
+                      .map((name) => `${name}${findVersion(name)}`)
+                      .join(", ")}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </>
@@ -437,7 +439,6 @@ export const CurrentVersion = observer(
     const router = useRouter();
     const classes = useStyles();
     const [publishVersion] = useMutation(SET_VERSION);
-
     const handleVersionChange = (application, version) => {
       publishVersion({
         variables: {
@@ -478,7 +479,6 @@ export const CurrentVersion = observer(
 
     const currentVersion =
       versions.length > 0 ? versions.find(({ latest }) => latest).version : "";
-
     return (
       <div>
         <Grid container>
@@ -515,6 +515,7 @@ export const CurrentVersion = observer(
           <Grid item xs={12}>
             <Paper className={classes.panel} elevation={3}>
               <ModulesTable
+                name={name}
                 application={application}
                 modules={application.modules}
                 overrides={application.overrides}
