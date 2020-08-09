@@ -21,7 +21,10 @@ export default class VersionManager {
     );
     await Promise.all(
       found
-        .filter(({ version: v, type: t }) => v !== app.version && t == app.type)
+        .filter(
+          ({ version: v, environment: t }) =>
+            v !== app.version && t == app.environment
+        )
         .map((appVersion) =>
           dbDriver.applicationVersion_update({
             ...appVersion,
