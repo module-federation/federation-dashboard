@@ -6,12 +6,16 @@ import {
   ListSubheader,
   Select,
   MenuItem,
+  ListItemSecondaryAction,
+  IconButton
 } from "@material-ui/core";
 import Link from "next/link";
 import LockIcon from "@material-ui/icons/Lock";
 import ShareIcon from "@material-ui/icons/Share";
 import WebIcon from "@material-ui/icons/Web";
 import PlusIcon from "@material-ui/icons/Add";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import ExpandLess from "@material-ui/icons/ExpandLess";
 import WidgetsIcon from "@material-ui/icons/Widgets";
 import React from "react";
 import gql from "graphql-tag";
@@ -38,15 +42,66 @@ const GET_SIDEBAR_DATA = gql`
   }
 `;
 
+
+
 const SideBar = ({ restricted }) => {
+  const [subListOpen,setSubListOpen] = React.useState(null)
   const { data } = useQuery(GET_SIDEBAR_DATA, {
     variables: {
       group: store.group,
       environment: store.environment,
     },
   });
+  const renderSubList = (subList, subListParent, classes) => {
+    console.log(subList);
+    /*let id = subListParent + new Date().getTime();*/
+    return (
+      <Collapse
+        in={subListOpen == subListParent}
+        timeout="auto"
+        unmountOnExit
+        key={/*id*/ subListParent}
+      >
+        <List component="div" disablePadding>
+          {/*{this.renderListItems(subList, classes)}*/}
+          <span>ITEMS</span>
+        </List>
+      </Collapse>
+    );
+  };
+
+
+  const renderSubListButton = subListParent => {
+    return (
+      <ListItemSecondaryAction>
+        <IconButton
+          color="inherit"
+          aria-label={
+            subListOpen == subListParent
+              ? "Close Submmenu"
+              : "Open Submenu"
+          }
+          onClick={() => setSubListOpen(subListParent)}
+        >
+          {subListOpen == subListParent ? (
+            <ExpandLess />
+          ) : (
+            <ExpandMore />
+          )}
+        </IconButton>
+      </ListItemSecondaryAction>
+    );
+  };
+
 
   const group = data && data.groups.length > 0 ? data.groups[0] : null;
+  group.applications.map(({ id, name, versions }) => {
+    if(versions.length > 0) {
+    versions[0].modules.map(({ id: modId, name }) => {
+
+    })
+    }
+  })
 
   if (restricted) {
     return (
@@ -107,24 +162,26 @@ const SideBar = ({ restricted }) => {
                       <WebIcon />
                     </ListItemIcon>
                     <ListItemText primary={name} />
+                    {versions.length > 0 && renderSubListButton(id)}
                   </ListItem>
                 </ApplicationLink>
-                {versions.length > 0 &&
-                  versions[0].modules.map(({ id: modId, name }) => (
-                    <ModuleLink
-                      group={store.group}
-                      application={id}
-                      module={name}
-                      key={`module:${modId}`}
-                    >
-                      <ListItem button dense>
-                        <ListItemIcon>
-                          <WidgetsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={name} />
-                      </ListItem>
-                    </ModuleLink>
-                  ))}
+                {isSub && renderSubList(page[key], key, classes)}
+                {/*{versions.length > 0 &&*/}
+                {/*  versions[0].modules.map(({ id: modId, name }) => (*/}
+                {/*    <ModuleLink*/}
+                {/*      group={store.group}*/}
+                {/*      application={id}*/}
+                {/*      module={name}*/}
+                {/*      key={`module:${modId}`}*/}
+                {/*    >*/}
+                {/*      <ListItem button dense>*/}
+                {/*        <ListItemIcon>*/}
+                {/*          <WidgetsIcon />*/}
+                {/*        </ListItemIcon>*/}
+                {/*        <ListItemText primary={name} />*/}
+                {/*      </ListItem>*/}
+                {/*    </ModuleLink>*/}
+                {/*  ))}*/}
               </div>
             );
           })}
