@@ -6,6 +6,6 @@ export const schema = Joi.object({
 });
 
 export default class Remote {
-  internalName: String;
-  name: String;
+  internalName: string;
+  name: string;
 }

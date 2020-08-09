@@ -9,6 +9,7 @@ import moment from "moment";
 const home = new Application("team/home", "frontend", 8080, { team: "earth" }, [
   "react-app",
 ]);
+
 const search = new Application("search", "frontend", 8080, { team: "venus" }, [
   "react-app",
 ]);
@@ -65,6 +66,32 @@ const applications = [...adminApplications, ...productionApplications];
 async function buildProjects() {
   applications.forEach((app) =>
     app.setPosted(moment().subtract(21, "days").toDate())
+  );
+
+  await Promise.all(
+    new Array(21)
+      .fill(0)
+      .map((_, i) => i)
+      .map((day) =>
+        home.addMetric(
+          "on-load",
+          moment().subtract(day, "days").toDate().toString(),
+          200 + day
+        )
+      )
+  );
+
+  await Promise.all(
+    new Array(21)
+      .fill(0)
+      .map((_, i) => i)
+      .map((day) =>
+        home.addMetric(
+          "fmp",
+          moment().subtract(day, "days").toDate().toString(),
+          130 + day / 3.0
+        )
+      )
   );
 
   await interactiveHold("Upload home project");

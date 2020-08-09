@@ -2,6 +2,7 @@ import fetch from "node-fetch";
 import moment from "moment";
 
 export const dashboardEndpoint = "http://localhost:3000/api/update";
+export const dashboardGraphQLEndpoint = "http://localhost:3000/api/graphql";
 
 const RANDOM_FILE_NAMES = [
   "index.js",
@@ -251,6 +252,27 @@ export default class Builder {
   async pushProductionVersion() {
     this.payload.environment = "production";
     return this.push();
+  }
+
+  async addMetric(name: string, date: string, value: number) {
+    return fetch(dashboardGraphQLEndpoint, {
+      method: "POST",
+      body: JSON.stringify({
+        variables: {
+          group: this.payload.group,
+          application: this.payload.id,
+          name,
+          date,
+          value,
+        },
+        query: `mutation ($group: String!, $application: String!, $name: String!, $date: String!, $value: Float!) {
+            addMetric(group: $group, application: $application, name: $name, date: $date, value: $value)
+          }`,
+      }),
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
   }
 
   private async push() {
