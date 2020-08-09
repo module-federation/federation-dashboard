@@ -9,9 +9,9 @@ export const schema = Joi.object({
 });
 
 export default class User {
-  id: String = "";
-  email: String = "";
-  name: String = "";
-  groups: Array<string> = [];
-  defaultGroup: String;
+  id: string = "";
+  email: string = "";
+  name: string = "";
+  groups: string[] = [];
+  defaultGroup: string;
 }

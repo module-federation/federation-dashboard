@@ -78,9 +78,9 @@ export default class ApplicationManager {
       environment: application.environment,
       latest: true,
       modules,
-      consumes: application.consumes as Array<Consume>,
-      overrides: application.overrides as Array<Override>,
-      dependencies: dependencies as Array<Dependency>,
+      consumes: application.consumes as Consume[],
+      overrides: application.overrides as Override[],
+      dependencies: dependencies as Dependency[],
       remotes: [],
       remote: application.remote,
     };

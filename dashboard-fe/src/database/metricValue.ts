@@ -5,13 +5,13 @@ export const schema = Joi.object({
   id: Joi.string().required(),
   name: Joi.string().required(),
   date: Joi.date().required(),
-  value: Joi.string().required(),
+  value: Joi.number().required(),
 });
 
 export default class MetricValue {
-  type: String;
-  id: String;
-  name: String;
+  type: string;
+  id: string;
+  name: string;
   date: Date;
-  value: Number;
+  value: number;
 }

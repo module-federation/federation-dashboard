@@ -12,11 +12,11 @@ export const schema = Joi.object({
 });
 
 export default class Module {
-  id: String;
-  name: String;
-  applicationID: String;
-  requires: Array<String>;
-  file: String;
-  tags: Array<string>;
-  metadata: Array<Metadata>;
+  id: string;
+  name: string;
+  applicationID: string;
+  requires: string[];
+  file: string;
+  tags: string[];
+  metadata: Metadata[];
 }

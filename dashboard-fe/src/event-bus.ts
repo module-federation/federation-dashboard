@@ -1,7 +1,7 @@
 type Subscriber = (type: String, payload: any) => void;
 
 class EventBus {
-  private subscribers: Array<Subscriber> = [];
+  private subscribers: Subscriber[] = [];
 
   subscribe(subscriber: Subscriber) {
     this.subscribers.push(subscriber);

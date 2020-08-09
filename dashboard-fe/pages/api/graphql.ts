@@ -7,6 +7,8 @@ import ModuleManager from "../../src/managers/Module";
 import VersionManager from "../../src/managers/Version";
 
 const typeDefs = gql`
+  scalar Date
+
   type Query {
     dashboard: DashboardInfo!
     userByEmail(email: String): User
@@ -28,6 +30,13 @@ const typeDefs = gql`
     ): Application!
     updateUser(user: UserInput!): User!
     updateSiteSettings(settings: SiteSettingsInput): SiteSettings!
+    addMetric(
+      group: String!
+      application: String!
+      name: String!
+      date: String!
+      value: Float!
+    ): Boolean!
   }
 
   enum WebhookEventType {
@@ -105,6 +114,12 @@ const typeDefs = gql`
     url: String
   }
 
+  type MetricValue {
+    name: String!
+    date: Date!
+    value: Float!
+  }
+
   type Module {
     id: ID!
     application: Application!
@@ -122,6 +137,7 @@ const typeDefs = gql`
     group: String!
     metadata: [Metadata!]!
     tags: [String!]!
+    metrics(names: [String!]): [MetricValue!]!
     overrides: [ApplicationOverride!]!
     versions(environment: String, latest: Boolean): [ApplicationVersion!]!
   }
@@ -185,6 +201,17 @@ const resolvers = {
     },
   },
   Mutation: {
+    addMetric: async (_, { group, application, date, name, value }) => {
+      await dbDriver.setup();
+      dbDriver.application_addMetrics(application, {
+        date: new Date(Date.parse(date)),
+        id: application,
+        type: "application",
+        name,
+        value,
+      });
+      return true;
+    },
     publishVersion: async (_, { group, application, version }) => {
       const out = await VersionManager.publishVersion(
         group,
@@ -224,6 +251,16 @@ const resolvers = {
         found = found.filter(({ latest }) => latest);
       }
       return found;
+    },
+    metrics: async ({ id }, { names }, ctx) => {
+      await dbDriver.setup();
+      const metrics = await dbDriver.application_getMetrics(id);
+      if (names) {
+      } else {
+      }
+      return names
+        ? metrics.filter(({ name }) => names.includes(name))
+        : metrics;
     },
   },
   Consume: {

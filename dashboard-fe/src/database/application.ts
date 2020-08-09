@@ -15,10 +15,10 @@ export const schema = Joi.object({
 });
 
 export default class Application {
-  id: String;
-  name: String;
-  group: String;
-  metadata: Array<Metadata>;
-  tags: Array<string>;
-  overrides: Array<ApplicationOverride>;
+  id: string;
+  name: string;
+  group: string;
+  metadata: Metadata[];
+  tags: string[];
+  overrides: ApplicationOverride[];
 }

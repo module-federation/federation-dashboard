@@ -21,7 +21,7 @@ export const schema = Joi.object({
 });
 
 export default class Dependency {
-  name: String;
-  version: String;
+  name: string;
+  version: string;
   type: DependencyType;
 }
