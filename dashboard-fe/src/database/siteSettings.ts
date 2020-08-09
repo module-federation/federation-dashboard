@@ -29,5 +29,5 @@ export class Webhook {
 }
 
 export default class SiteSettings {
-  webhooks: Array<Webhook> = [];
+  webhooks: Webhook[] = [];
 }
