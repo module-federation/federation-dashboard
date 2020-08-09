@@ -156,7 +156,7 @@ const SideBar = ({ restricted }) => {
                     {versions.length > 0 && renderSubListButton(id)}
                   </ListItem>
                 </ApplicationLink>
-                {isSub && renderSubList(page[key], key, classes)}
+                {/*{versions.length && renderSubList(page[key], key, classes)}*/}
                 {/*{versions.length > 0 &&*/}
                 {/*  versions[0].modules.map(({ id: modId, name }) => (*/}
                 {/*    <ModuleLink*/}
