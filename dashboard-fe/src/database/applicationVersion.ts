@@ -21,15 +21,15 @@ export const schema = Joi.object({
 });
 
 export default class ApplicationVersion {
-  applicationId: String;
-  environment: String;
-  remote: String;
-  version: String;
+  applicationId: string;
+  environment: string;
+  remote: string;
+  version: string;
   posted: Date;
   latest: Boolean;
-  remotes: Array<Remote>;
-  overrides: Array<Override>;
-  modules: Array<Module>;
-  consumes: Array<Consume>;
-  dependencies: Array<Dependency>;
+  remotes: Remote[];
+  overrides: Override[];
+  modules: Module[];
+  consumes: Consume[];
+  dependencies: Dependency[];
 }

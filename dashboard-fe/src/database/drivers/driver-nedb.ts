@@ -47,7 +47,7 @@ class TableDriver<T> {
     this.store = store;
   }
 
-  async find(id: String): Promise<T | null> {
+  async find(id: string): Promise<T | null> {
     return new Promise((resolve) => {
       this.store.find({ id }, (_, docs) => {
         if (docs.length > 0) {
@@ -86,7 +86,7 @@ class TableDriver<T> {
     });
   }
 
-  async delete(id: String): Promise<null> {
+  async delete(id: string): Promise<null> {
     return new Promise((resolve) => {
       this.store.remove({ id }, {}, () => resolve());
     });
@@ -128,22 +128,22 @@ export default class DriverNedb implements Driver {
     DriverNedb.isSetup = true;
   }
 
-  async application_find(id: String): Promise<Application | null> {
+  async application_find(id: string): Promise<Application | null> {
     return this.applicationTable.find(id);
   }
   async application_findInGroups(
-    groups: Array<String>
+    groups: string[]
   ): Promise<Array<Application> | null> {
     return this.applicationTable.search({ group: { $in: groups } });
   }
-  async application_getMetrics(id: String): Promise<Array<MetricValue> | null> {
+  async application_getMetrics(id: string): Promise<Array<MetricValue> | null> {
     return this.metricsTable.search({
       type: "application",
       id,
     });
   }
   async application_addMetrics(
-    id: String,
+    id: string,
     metric: MetricValue
   ): Promise<Array<MetricValue> | null> {
     Joi.assert(metric, metricValueSchema);
@@ -158,14 +158,14 @@ export default class DriverNedb implements Driver {
     bus.publish("updateApplication", application);
     return this.applicationTable.update({ id: application.id }, application);
   }
-  async application_delete(id: String): Promise<null> {
+  async application_delete(id: string): Promise<null> {
     return this.applicationTable.delete(id);
   }
 
   async applicationVersion_find(
-    applicationId: String,
-    environment: String,
-    version: String
+    applicationId: string,
+    environment: string,
+    version: string
   ): Promise<ApplicationVersion | null> {
     const versions = await this.applicationVersionsTable.search({
       applicationId,
@@ -176,11 +176,11 @@ export default class DriverNedb implements Driver {
   }
 
   async applicationVersion_findAll(
-    applicationId: String,
-    environment: String,
-    version: String
+    applicationId: string,
+    environment: string,
+    version?: string
   ): Promise<Array<ApplicationVersion>> {
-    const q = {
+    const q: any = {
       applicationId,
     };
     if (environment) {
@@ -194,8 +194,8 @@ export default class DriverNedb implements Driver {
   }
 
   async applicationVersion_findLatest(
-    applicationId: String,
-    environment: String
+    applicationId: string,
+    environment: string
   ): Promise<Array<ApplicationVersion>> {
     return this.applicationVersionsTable.search({
       applicationId,
@@ -204,7 +204,7 @@ export default class DriverNedb implements Driver {
     });
   }
 
-  async applicationVersion_update(version: ApplicationVersion): Promise<null> {
+  async applicationVersion_update(version: ApplicationVersion): Promise<any> {
     Joi.assert(version, applicationVersionSchema);
     await this.applicationVersionsTable.update(
       {
@@ -218,18 +218,18 @@ export default class DriverNedb implements Driver {
   }
 
   async applicationVersion_delete(
-    applicationId: String,
-    environment: String,
-    version: String
+    applicationId: string,
+    environment: string,
+    version: string
   ): Promise<null> {
     const id = [applicationId, environment, version].join(":");
     return this.applicationVersionsTable.delete(id);
   }
 
-  async group_find(id: String): Promise<Group> {
+  async group_find(id: string): Promise<Group> {
     return this.groupsTable.find(id);
   }
-  async group_findByName(name: String): Promise<Group> {
+  async group_findByName(name: string): Promise<Group> {
     return this.groupsTable
       .search({ name })
       .then((data) => (data && data.length ? data[0] : null));
@@ -244,14 +244,14 @@ export default class DriverNedb implements Driver {
     return this.groupsTable.update({ id: group.id }, group);
   }
 
-  async group_delete(id: String): Promise<Array<Group>> {
+  async group_delete(id: string): Promise<Array<Group>> {
     return this.groupsTable.delete(id);
   }
 
-  async user_find(id: String): Promise<User> {
+  async user_find(id: string): Promise<User> {
     return this.usersTable.find(id);
   }
-  async user_findByEmail(email: String): Promise<User> {
+  async user_findByEmail(email: string): Promise<User> {
     const found = await this.usersTable.search({ email });
     return Promise.resolve(found.length > 0 ? found[0] : null);
   }
@@ -262,7 +262,7 @@ export default class DriverNedb implements Driver {
     Joi.assert(user, userSchema);
     return this.usersTable.update({ id: user.id }, user);
   }
-  async user_delete(id: String): Promise<Array<User>> {
+  async user_delete(id: string): Promise<Array<User>> {
     return this.usersTable.delete(id);
   }
 

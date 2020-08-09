@@ -15,13 +15,13 @@ export const schema = Joi.object({
 });
 
 export class ConsumeUsedIn {
-  file: String;
-  url: String;
+  file: string;
+  url: string;
 }
 
 export default class Consume {
-  consumingApplicationID: String;
-  applicationID: String;
-  name: String;
-  usedIn: Array<ConsumeUsedIn>;
+  consumingApplicationID: string;
+  applicationID: string;
+  name: string;
+  usedIn: ConsumeUsedIn[];
 }

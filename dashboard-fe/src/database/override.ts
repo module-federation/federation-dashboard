@@ -9,9 +9,9 @@ export const schema = Joi.object({
 });
 
 export default class Override {
-  id: String;
-  name: String;
-  version: String;
-  location: String;
-  applicationID: String;
+  id: string;
+  name: string;
+  version: string;
+  location: string;
+  applicationID: string;
 }
