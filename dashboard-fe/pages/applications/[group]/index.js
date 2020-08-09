@@ -22,6 +22,9 @@ const GroupPage = () => {
   const [getData, { data }] = useLazyQuery(GET_APPS);
 
   const group = data && data.groups.length > 0 ? data.groups[0] : null;
+  if (!group) {
+    return null;
+  }
 
   React.useEffect(() => {
     if (router.query.group) {

@@ -7,7 +7,7 @@ import {
   Select,
   MenuItem,
   ListItemSecondaryAction,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
 import Link from "next/link";
 import LockIcon from "@material-ui/icons/Lock";
@@ -42,10 +42,8 @@ const GET_SIDEBAR_DATA = gql`
   }
 `;
 
-
-
 const SideBar = ({ restricted }) => {
-  const [subListOpen,setSubListOpen] = React.useState(null)
+  const [subListOpen, setSubListOpen] = React.useState(null);
   const { data } = useQuery(GET_SIDEBAR_DATA, {
     variables: {
       group: store.group,
@@ -70,38 +68,31 @@ const SideBar = ({ restricted }) => {
     );
   };
 
-
-  const renderSubListButton = subListParent => {
+  const renderSubListButton = (subListParent) => {
     return (
       <ListItemSecondaryAction>
         <IconButton
           color="inherit"
           aria-label={
-            subListOpen == subListParent
-              ? "Close Submmenu"
-              : "Open Submenu"
+            subListOpen == subListParent ? "Close Submmenu" : "Open Submenu"
           }
           onClick={() => setSubListOpen(subListParent)}
         >
-          {subListOpen == subListParent ? (
-            <ExpandLess />
-          ) : (
-            <ExpandMore />
-          )}
+          {subListOpen == subListParent ? <ExpandLess /> : <ExpandMore />}
         </IconButton>
       </ListItemSecondaryAction>
     );
   };
 
-
   const group = data && data.groups.length > 0 ? data.groups[0] : null;
+  if (!group) {
+    return null;
+  }
   group.applications.map(({ id, name, versions }) => {
-    if(versions.length > 0) {
-    versions[0].modules.map(({ id: modId, name }) => {
-
-    })
+    if (versions.length > 0) {
+      versions[0].modules.map(({ id: modId, name }) => {});
     }
-  })
+  });
 
   if (restricted) {
     return (
