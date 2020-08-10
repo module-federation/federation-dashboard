@@ -6,7 +6,7 @@ import ApolloClient from "apollo-boost";
 import { fetchUser } from "./user";
 
 const client = new ApolloClient({
-  uri: "http://localhost:3000/api/graphql",
+  uri: (process.browser ? window.location.origin : 'http://localhost:3000') + "/api/graphql",
 });
 
 const GET_USER = gql`
