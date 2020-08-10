@@ -60,7 +60,7 @@
     "mobx-react": "^6.2.2",
     "moment": "^2.27.0",
     "nedb": "^1.8.0",
-    "next": "9.5.1",
+    "next": "9.5.2",
     "node-fetch": "^2.6.0",
     "pathfinding": "^0.4.18",
     "paths-js": "^0.4.10",
