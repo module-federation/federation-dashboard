@@ -184,3 +184,5 @@ export const generateMultiSeriesChartData = (data) => {
 
   return Object.values(metricGroups);
 };
+
+export const cache = {};
