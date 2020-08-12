@@ -7,3 +7,7 @@
 {"id":"search","name":"search","group":"frontend","overrides":[],"metadata":[{"name":"team","value":"venus"}],"tags":["react-app"],"_id":"fI64e3DiQwPEf9pX"}
 {"id":"checkout","name":"checkout","group":"frontend","overrides":[],"metadata":[{"name":"team","value":"mars"}],"tags":["react-app","buy-flow"],"_id":"npi0zaNv3oVh0luS"}
 {"id":"cart","name":"cart","group":"frontend","overrides":[],"metadata":[{"name":"team","value":"saturn"}],"tags":["react-app","buy-flow"],"_id":"u8Bn3m7XAJiLhrg9"}
+{"id":"home","name":"home","group":"default","overrides":[],"metadata":[],"tags":[],"_id":"jq0NMGUKjBaEVrfE"}
+{"id":"dsl","name":"dsl","group":"default","overrides":[],"metadata":[],"tags":[],"_id":"bWrqespubKJKB2ei"}
+{"id":"nav","name":"nav","group":"default","overrides":[],"metadata":[],"tags":[],"_id":"Cc5QneqTHeCjyw22"}
+{"id":"utils","name":"utils","group":"default","overrides":[],"metadata":[],"tags":[],"_id":"idAZg9rkEU6fp3vP"}

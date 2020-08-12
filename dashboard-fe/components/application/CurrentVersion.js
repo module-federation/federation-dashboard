@@ -375,64 +375,66 @@ export const OverridesTable = observer(({ overrides }) => {
   );
 });
 
-export const ModulesTable = observer(({name:applicationName, application, modules, overrides }) => {
-  const classes = useStyles();
-  const findVersion = (name) => {
-    let ov = overrides.find(({ name: ovName }) => ovName === name);
-    return ov ? ` (${ov.version})` : "";
-  };
-  return (
-    <>
-      <Typography variant="h6" className={classes.panelTitle}>
-        Exposed Modules
-      </Typography>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <Typography>Name</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>File</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>Requires</Typography>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {modules.map(({ name, file, requires }) => {
-            return (
-              <TableRow key={[application.id, name].join()}>
-                <TableCell>
-                  <Typography>
-                    <ModuleLink
-                      group={store.group}
-                      application={applicationName}
-                      module={name}
-                    >
-                      <a>{name}</a>
-                    </ModuleLink>
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography>{file}</Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography>
-                    {requires
-                      .map((name) => `${name}${findVersion(name)}`)
-                      .join(", ")}
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </>
-  );
-});
+export const ModulesTable = observer(
+  ({ name: applicationName, application, modules, overrides }) => {
+    const classes = useStyles();
+    const findVersion = (name) => {
+      let ov = overrides.find(({ name: ovName }) => ovName === name);
+      return ov ? ` (${ov.version})` : "";
+    };
+    return (
+      <>
+        <Typography variant="h6" className={classes.panelTitle}>
+          Exposed Modules
+        </Typography>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <Typography>Name</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>File</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>Requires</Typography>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {modules.map(({ name, file, requires }) => {
+              return (
+                <TableRow key={[application.id, name].join()}>
+                  <TableCell>
+                    <Typography>
+                      <ModuleLink
+                        group={store.group}
+                        application={applicationName}
+                        module={name}
+                      >
+                        <a>{name}</a>
+                      </ModuleLink>
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography>{file}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography>
+                      {requires
+                        .map((name) => `${name}${findVersion(name)}`)
+                        .join(", ")}
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </>
+    );
+  }
+);
 
 export const CurrentVersion = observer(
   ({ name, applicationOverrides, application, versions }) => {
