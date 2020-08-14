@@ -153,8 +153,11 @@ class Report extends React.Component {
 
 Report.getInitialProps = async ({ query }) => {
   const isProd = process.env.NODE_ENV !== "development";
+
   const hostname = isProd
-    ? "http://mf-dash.ddns.net:3000/"
+    ? process.browser
+      ? "http://mf-dash.ddns.net:3000/"
+      : "http://localhost:3000/"
     : "http://localhost:3000/";
   const { meta, ...report } = await fetch(
     hostname + "api/get-report?report=" + query.report
