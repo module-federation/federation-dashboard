@@ -1,15 +1,13 @@
 const lighthouse = require("lighthouse");
 const chromeLauncher = require("chrome-launcher");
 const argv = require("yargs").argv;
-const url = require("url");
 const fs = require("fs");
 const glob = require("glob");
 const path = require("path");
-const { dirname } = require("path");
 const merge = require("deepmerge");
 const cliProgress = require("cli-progress");
-const { exec } = require("child_process");
-
+const psi = require("psi");
+const config = require("../src/config");
 const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 
 const RUNS = 30;
@@ -27,11 +25,11 @@ const launchChromeAndRunLighthouse = async (url) => {
   });
   const opts = {
     port: chrome.port,
-    // extraHeaders:{"x-lll-access-token":"e8126c64c3486e84081fffad6a0ab22d4267bb41"}
   };
 
   if (!hasStarted) {
     hasStarted = true;
+    console.log("using Local Lighthouse for Perf Test\n");
     console.log("url:", url, "\n");
     console.log("Warming CDN Cache...\n");
     await lighthouse(url, opts);
@@ -67,6 +65,27 @@ const launchChromeAndRunLighthouse = async (url) => {
       console.error(error);
       return launchChromeAndRunLighthouse(url);
     });
+};
+const launchPageSpeedInsightsLighthouse = async (url) => {
+  const opts = {
+    key: config.PAGESPEED_KEY,
+    strategy: "desktop",
+    threshold: 0,
+  };
+  if (!hasStarted) {
+    console.log("using PageSpeedInsights for Perf Test\n");
+    hasStarted = true;
+    console.log("url:", url, "\n");
+    console.log("Warming CDN Cache...\n");
+    await psi(url, opts);
+    await psi(url, opts);
+    bar1.start(RUNS, 0);
+  }
+  const data2 = await psi(url, opts);
+  return {
+    js: data2.data.lighthouseResult,
+    json: JSON.stringify(data2.data.lighthouseResult),
+  };
 };
 
 const getContents = (pathStr) => {
@@ -171,7 +190,9 @@ export const init = (url = argv.url, title = argv.title) => {
       let testResults = [];
 
       for (let i = 1; i <= RUNS; i++) {
-        const taskRunResult = await launchChromeAndRunLighthouse(argv.url);
+        const taskRunResult = config.USE_CLOUD
+          ? await launchPageSpeedInsightsLighthouse(argv.url)
+          : await launchChromeAndRunLighthouse(argv.url);
         bar1.update(i);
         delete taskRunResult.js.stackPacks;
         delete taskRunResult.js.configSettings;
