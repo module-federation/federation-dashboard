@@ -72,8 +72,21 @@ const Perfrmance = ({ linkList }) => {
       ),
     });
   };
+  const getLatest = ({ type, index }) => {
+    fetch("/api/add-url", { method: "POST", body: null });
+    fetch("/api/add-url", {
+      method: "POST",
+      body: JSON.stringify(
+        todos.map((item) => {
+          if (item.name === "PageSpeedInsights") {
+            item.new = true;
+          }
+          return item;
+        })
+      ),
+    });
+  };
 
-  //
   return (
     <Fragment>
       <Form
@@ -84,6 +97,7 @@ const Perfrmance = ({ linkList }) => {
         onChangeName={(e) => setInputNameValue(e.target.value)}
       />
       <button onClick={reRunAllTests}>Re-run All</button>
+      <button onClick={getLatest}>Get latest Perf</button>
       <ul>
         {todos.map((todo, index) => (
           <ListItem

@@ -33,10 +33,10 @@ if (typeof window === "undefined") {
       SESSION_COOKIE_LIFETIME: 60 * 60 * 8,
     });
   }
-  Object.assign(envVars,{
+  Object.assign(envVars, {
     PAGESPEED_KEY: process.env.PAGESPEED_KEY,
-    USE_CLOUD: process.env.USE_CLOUD == true,
-  })
+    USE_CLOUD: process.env.USE_CLOUD == "true",
+  });
   module.exports = envVars;
 } else {
   const envVars = {};
