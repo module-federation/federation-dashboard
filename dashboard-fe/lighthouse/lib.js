@@ -69,7 +69,8 @@ const launchChromeAndRunLighthouse = async url => {
 const launchPageSpeedInsightsLighthouse = async (url) => {
   const opts = {
     key: config.PAGESPEED_KEY,
-    strategy: "desktop",
+    strategy: "mobile",
+    // strategy: "desktop",
     threshold: 0,
   };
   if (!hasStarted) {
