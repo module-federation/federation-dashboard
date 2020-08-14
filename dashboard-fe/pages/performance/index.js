@@ -115,7 +115,9 @@ const Perfrmance = ({ linkList }) => {
 Perfrmance.getInitialProps = async () => {
   const isProd = process.env.NODE_ENV !== "development";
   const hostname = isProd
-    ? "http://mf-dash.ddns.net:3000/"
+    ? process.browser
+      ? "http://mf-dash.ddns.net:3000/"
+      : "http://localhost:3000/"
     : "http://localhost:3000/";
 
   const urlList = await fetch(hostname + "api/get-url-list").then((res) =>
