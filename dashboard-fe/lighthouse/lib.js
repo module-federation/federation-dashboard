@@ -82,11 +82,15 @@ const launchPageSpeedInsightsLighthouse = async (url) => {
     await psi(url, opts);
     bar1.start(RUNS, 0);
   }
-  const data2 = await psi(url, opts);
-  return {
-    js: data2.data.lighthouseResult,
-    json: JSON.stringify(data2.data.lighthouseResult),
-  };
+  try {
+    const data2 = await psi(url, opts);
+    return {
+      js: data2.data.lighthouseResult,
+      json: JSON.stringify(data2.data.lighthouseResult),
+    };
+  } catch (e) {
+    return launchPageSpeedInsightsLighthouse(url);
+  }
 };
 
 const getContents = pathStr => {
