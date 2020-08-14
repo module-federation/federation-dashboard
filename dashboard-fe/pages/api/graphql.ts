@@ -6,6 +6,8 @@ import dbDriver from "../../src/database/drivers";
 import ModuleManager from "../../src/managers/Module";
 import VersionManager from "../../src/managers/Version";
 
+import "../../src/webhooks";
+
 const typeDefs = gql`
   scalar Date
 
@@ -17,6 +19,15 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    updateApplicationSettings(
+      group: String!
+      application: String!
+      settings: ApplicationSettingsInput!
+    ): ApplicationSettings
+    updateGroupSettings(
+      group: String!
+      settings: GroupSettingsInput!
+    ): GroupSettings
     publishVersion(
       group: String!
       application: String!
@@ -32,10 +43,29 @@ const typeDefs = gql`
     updateSiteSettings(settings: SiteSettingsInput): SiteSettings!
     addMetric(
       group: String!
-      application: String!
+      application: String
       name: String!
       date: String!
       value: Float!
+      url: String
+      q1: Float
+      q2: Float
+      q3: Float
+      max: Float
+      min: Float
+    ): Boolean!
+    updateMetric(
+      group: String!
+      application: String
+      name: String!
+      date: String!
+      value: Float!
+      url: String
+      q1: Float
+      q2: Float
+      q3: Float
+      max: Float
+      min: Float
     ): Boolean!
   }
 
@@ -60,6 +90,30 @@ const typeDefs = gql`
   }
   input SiteSettingsInput {
     webhooks: [WebhookInput]!
+  }
+
+  input MetadataInput {
+    name: String!
+    value: String!
+  }
+
+  input TrackedURLVariantInput {
+    name: String!
+    search: String
+    new: Boolean
+  }
+
+  input TrackedURLInput {
+    url: String!
+    metadata: [MetadataInput]
+    variants: [TrackedURLVariantInput!]!
+  }
+
+  input GroupSettingsInput {
+    trackedURLs: [TrackedURLInput]
+  }
+  input ApplicationSettingsInput {
+    trackedURLs: [TrackedURLInput]
   }
 
   type DashboardInfo {
@@ -115,6 +169,7 @@ const typeDefs = gql`
   }
 
   type MetricValue {
+    url: String
     name: String!
     date: Date!
     value: Float!
@@ -131,6 +186,22 @@ const typeDefs = gql`
     tags: [String!]!
   }
 
+  type TrackedURL {
+    url: String!
+    variants: [TrackedURLVariant!]!
+    metadata: [Metadata!]!
+  }
+
+  type ApplicationSettings {
+    trackedURLs: [TrackedURL]
+  }
+
+  type TrackedURLVariant {
+    name: String!
+    search: String!
+    new: Boolean!
+  }
+
   type Application {
     id: String!
     name: String!
@@ -140,6 +211,11 @@ const typeDefs = gql`
     metrics(names: [String!]): [MetricValue!]!
     overrides: [ApplicationOverride!]!
     versions(environment: String, latest: Boolean): [ApplicationVersion!]!
+    settings: ApplicationSettings
+  }
+
+  type GroupSettings {
+    trackedURLs: [TrackedURL]
   }
 
   type Group {
@@ -147,6 +223,8 @@ const typeDefs = gql`
     name: String!
     metadata: [Metadata!]!
     applications(id: String): [Application!]!
+    metrics(names: [String!]): [MetricValue!]!
+    settings: GroupSettings
   }
 
   type Metadata {
@@ -180,7 +258,7 @@ const resolvers = {
   Query: {
     dashboard: () => {
       return {
-        versionManagementEnabled: versionManagementEnabled()
+        versionManagementEnabled: versionManagementEnabled(),
       };
     },
     userByEmail: async (_, { email }) => {
@@ -188,6 +266,7 @@ const resolvers = {
       return dbDriver.user_findByEmail(email);
     },
     groups: async (_, { name }, ctx) => {
+      console.log("gorups quwery");
       await dbDriver.setup();
       if (name) {
         const found = await dbDriver.group_findByName(name);
@@ -198,17 +277,47 @@ const resolvers = {
     },
     siteSettings: () => {
       return dbDriver.siteSettings_get();
-    }
+    },
   },
   Mutation: {
-    addMetric: async (_, { group, application, date, name, value }) => {
+    updateApplicationSettings: async (_, { group, application, settings }) => {
+      await dbDriver.setup();
+      const app = await dbDriver.application_find(application);
+      app.settings = settings;
+      await dbDriver.application_update(app);
+      return settings;
+    },
+    updateGroupSettings: async (_, { group, settings }) => {
+      await dbDriver.setup();
+      const grp = await dbDriver.group_find(group);
+      grp.settings = settings;
+      await dbDriver.group_update(grp);
+      return settings;
+    },
+    addMetric: async (_, { group, application, date, name, value, url }) => {
       await dbDriver.setup();
       dbDriver.application_addMetrics(application, {
         date: new Date(Date.parse(date)),
-        id: application,
-        type: "application",
+        id: application ? application : group,
+        type: application ? "application" : "group",
         name,
-        value
+        value,
+        url,
+        //TODO add extra keys
+      });
+      return true;
+    },
+
+    updateMetric: async (_, { group, application, date, name, value, url }) => {
+      await dbDriver.setup();
+      console.log("Mutation", group, value, name);
+      dbDriver.group_updateMetric(application, {
+        id: application ? application : group,
+        type: application ? "application" : "group",
+        name,
+        value,
+        url,
+        //TODO add extra keys
       });
       return true;
     },
@@ -232,7 +341,7 @@ const resolvers = {
       await dbDriver.setup();
       await dbDriver.user_update({
         id: user.email,
-        ...user
+        ...user,
       });
       return dbDriver.user_find(user.email);
     },
@@ -240,7 +349,7 @@ const resolvers = {
       await dbDriver.setup();
       await dbDriver.siteSettings_update(settings);
       return dbDriver.siteSettings_get();
-    }
+    },
   },
   Application: {
     versions: async ({ id }, { environment, latest }, ctx) => {
@@ -261,7 +370,7 @@ const resolvers = {
       return names
         ? metrics.filter(({ name }) => names.includes(name))
         : metrics;
-    }
+    },
   },
   Consume: {
     consumingApplication: async (parent, args, ctx) => {
@@ -271,7 +380,7 @@ const resolvers = {
     application: async (parent, args, ctx) => {
       await dbDriver.setup();
       return dbDriver.application_find(parent.applicationID);
-    }
+    },
   },
   Module: {
     consumedBy: async (parent, args, ctx) => {
@@ -282,16 +391,26 @@ const resolvers = {
         parent.applicationID,
         parent.name
       );
-    }
+    },
   },
   ApplicationVersion: {
     modules: async ({ modules }, { name }) => {
       return name
         ? modules.filter(({ name: moduleName }) => name === moduleName)
         : modules;
-    }
+    },
   },
   Group: {
+    metrics: async ({ id }, { names }, ctx) => {
+      await dbDriver.setup();
+      const metrics = await dbDriver.group_getMetrics(id);
+      if (names) {
+      } else {
+      }
+      return names
+        ? metrics.filter(({ name }) => names.includes(name))
+        : metrics;
+    },
     applications: async ({ id }, { id: applicationId }, ctx) => {
       ctx.group = id;
       await dbDriver.setup();
@@ -301,24 +420,23 @@ const resolvers = {
         const found = await dbDriver.application_find(applicationId);
         return found ? [found] : [];
       }
-    }
-  }
+    },
+  },
 };
 
 const apolloServer = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
 });
 
 const handler = apolloServer.createHandler({
   path: "/api/graphql",
-  cors: true
 });
 
 export const config = {
   api: {
-    bodyParser: false
-  }
+    bodyParser: false,
+  },
 };
 
 export default handler;

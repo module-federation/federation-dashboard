@@ -4,6 +4,7 @@ ENV PATH $PATH:/usr/src/app/node_modules/.bin
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN yarn install
+RUN yarn list webpack
 RUN test -f .env || touch .env
 COPY . .
 
@@ -14,13 +15,6 @@ ARG auth0_client_key
 
 ENV NODE_ENV=production
 ENV PATH $PATH:/usr/src/app/node_modules/.bin
-# Auth0 Env Vars
-ENV AUTH0_CLIENT_ID=JldqTRWvEuGSRedeHGMA7hwfOUz4YW3n
-ENV AUTH0_CLIENT_SECRET=$auth0_client_key
-ENV AUTH0_DOMAIN="federation-dashboard.us.auth0.com"
-ENV REDIRECT_URI="http://localhost:3000/api/callback"
-ENV POST_LOGOUT_REDIRECT_URI="http://localhost:3000"
-ENV SESSION_COOKIE_SECRET=$auth0_cookie_secret
 WORKDIR /usr/src/app
 RUN yarn build
 RUN yarn install --production

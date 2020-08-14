@@ -17,6 +17,7 @@ export default abstract class Driver {
   abstract async application_getMetrics(
     id: string
   ): Promise<Array<MetricValue> | null>;
+
   abstract async application_addMetrics(
     id: string,
     metric: MetricValue
@@ -50,6 +51,13 @@ export default abstract class Driver {
   abstract async group_findAll(): Promise<Array<Group>>;
   abstract async group_update(group: Group): Promise<Array<Group>>;
   abstract async group_delete(id: string): Promise<Array<Group>>;
+  abstract async group_getMetrics(
+    id: string
+  ): Promise<Array<MetricValue> | null>;
+
+  abstract async group_updateMetric(
+    id: string
+  ): Promise<Array<MetricValue> | null>;
 
   abstract async user_find(id: string): Promise<User>;
   abstract async user_findByEmail(email: string): Promise<User>;
