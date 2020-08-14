@@ -1,51 +1,53 @@
 const lighthouse = require("lighthouse");
 const chromeLauncher = require("chrome-launcher");
 const argv = require("yargs").argv;
-const url = require("url");
 const fs = require("fs");
 const glob = require("glob");
 const path = require("path");
-const { dirname } = require("path");
 const merge = require("deepmerge");
 const cliProgress = require("cli-progress");
-const { exec } = require("child_process");
-
+const psi = require("psi");
+const config = require("../src/config");
 const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+import Promise from "bluebird";
 
 const RUNS = 30;
 let hasStarted = false;
 
-const launchChromeAndRunLighthouse = async url => {
+const launchChromeAndRunLighthouse = async (url) => {
   const chrome = await chromeLauncher.launch({
     chromeFlags: [
       "--headless",
       "--disable-gpu",
       "--disable-cache",
       "--disable-extensions",
-      "--no-sandbox"
-    ]
+    ],
   });
   const opts = {
-    port: chrome.port
+    port: chrome.port,
   };
 
   if (!hasStarted) {
     hasStarted = true;
+    console.log("using Local Lighthouse for Perf Test\n");
     console.log("url:", url, "\n");
     console.log("Warming CDN Cache...\n");
-    await lighthouse(url, opts);
-    await lighthouse(url, opts);
-    await lighthouse(url, opts);
+    await Promise.all([
+      lighthouse(url, opts),
+      lighthouse(url, opts),
+      lighthouse(url, opts),
+    ]);
     bar1.start(RUNS, 0);
   }
+  console.log('starting test')
   return lighthouse(url, opts)
-    .then(results => {
+    .then((results) => {
       try {
         results.lhr.audits.metrics.details.items[0];
         return chrome.kill().then(() => {
           return {
             js: results.lhr,
-            json: results.report
+            json: results.report,
           };
         });
       } catch (e) {
@@ -54,7 +56,7 @@ const launchChromeAndRunLighthouse = async url => {
         });
       }
     })
-    .catch(error => {
+    .catch((error) => {
       if (chrome.kill) {
         return chrome.kill().then(() => {
           return launchChromeAndRunLighthouse(url);
@@ -62,81 +64,47 @@ const launchChromeAndRunLighthouse = async url => {
       }
       return launchChromeAndRunLighthouse(url);
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
       return launchChromeAndRunLighthouse(url);
     });
 };
+const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
+  const mode = desktop ? "desktop" : "mobile";
+  const opts = {
+    key: config.PAGESPEED_KEY,
+    strategy: mode,
+    threshold: 0,
+  };
+  if (!hasStarted) {
+    console.log("MODE:", mode);
+    console.log("using PageSpeedInsights for Perf Test\n");
+    hasStarted = true;
+    console.log("url:", url, "\n");
+    console.log("Warming CDN Cache...\n");
+    await Promise.all([await psi(url, opts), await psi(url, opts),await psi(url, opts)]);
+    bar1.start(RUNS, 0);
+  }
+  try {
+    const data2 = await psi(url, opts);
 
-const getContents = pathStr => {
+    return {
+      js: data2.data.lighthouseResult,
+      json: JSON.stringify(data2.data.lighthouseResult),
+    };
+  } catch (e) {
+    return launchPageSpeedInsightsLighthouse(url);
+  }
+};
+
+const getContents = (pathStr) => {
   const output = fs.readFileSync(pathStr, "utf8", (err, results) => {
     return results;
   });
   return JSON.parse(output);
 };
 
-const metricFilter = [
-  "first-contentful-paint",
-  "first-meaningful-paint",
-  "speed-index",
-  "estimated-input-latency",
-  "total-blocking-time",
-  "max-potential-fid",
-  "time-to-first-byte",
-  "first-cpu-idle",
-  "interactive",
-  "accessibility",
-  "seo",
-  "largest-contentful-paint",
-  "total-byte-weight"
-];
-
-const compareReports = (from, to) => {
-  const calcPercentageDiff = (from, to) => {
-    const per = ((to - from) / from) * 100;
-    return Math.round(per * 100) / 100;
-  };
-
-  for (let auditObj in from["audits"]) {
-    if (metricFilter.includes(auditObj)) {
-      const percentageDiff = calcPercentageDiff(
-        from["audits"][auditObj].numericValue,
-        to["audits"][auditObj].numericValue
-      );
-      const delta = Math.abs(
-        toFixed(
-          from["audits"][auditObj].numericValue -
-            to["audits"][auditObj].numericValue,
-          2
-        )
-      );
-      const measurementSlower =
-        auditObj === "total-byte-weight" ? "bigger" : "slower";
-      const measurementFaster =
-        auditObj === "total-byte-weight" ? "smaller" : "faster";
-      let logColor = "\x1b[37m";
-      const log = (() => {
-        if (Math.sign(percentageDiff) === 1) {
-          logColor = "\x1b[31m";
-          return `${percentageDiff.toString().replace("-", "") +
-            "%"} ${measurementSlower}. Total:${Math.abs(
-            toFixed(to["audits"][auditObj].numericValue, 2)
-          )} Delta:${delta} `;
-        } else if (Math.sign(percentageDiff) === 0) {
-          return "unchanged";
-        } else {
-          logColor = "\x1b[32m";
-          return `${percentageDiff.toString().replace("-", "") +
-            "%"} ${measurementFaster}. Total:${Math.abs(
-            toFixed(to["audits"][auditObj].numericValue, 2)
-          )} Delta:${delta}`;
-        }
-      })();
-      console.log(logColor, `${from["audits"][auditObj].title} is ${log}`);
-    }
-  }
-};
-const average = array =>
+const average = (array) =>
   toFixed(array.reduce((a, b) => a + b) / array.length, 2);
 
 function toFixed(num, fixed) {
@@ -144,15 +112,12 @@ function toFixed(num, fixed) {
   return num.toString().match(re)[0];
 }
 
-export const init = (url = argv.url, title = argv.title) => {
+export const init = (url = argv.url, title = argv.title, desktop = true) => {
   argv.url = url;
   argv.title = title;
-  if (argv.from && argv.to) {
-    compareReports(
-      getContents(argv.from + ".json"),
-      getContents(argv.to + ".json")
-    );
-  } else if (argv.url) {
+  const mode = desktop ? "desktop" : "mobile";
+
+  if (argv.url) {
     const urlObj = new URL(argv.url);
     let dirName = urlObj.host.replace("www.", "");
     if (urlObj.pathname !== "/") {
@@ -160,47 +125,72 @@ export const init = (url = argv.url, title = argv.title) => {
     }
 
     dirName = "public/reports/" + dirName;
-    console.log(dirName);
+
     if (!fs.existsSync(dirName)) {
       fs.mkdirSync(dirName, { recursive: true });
     }
-    const runner = async title => {
-      let testResults = [];
 
+    const runner = async (title) => {
+      let fakeArray = [];
+      let tracker = [];
       for (let i = 1; i <= RUNS; i++) {
-        const taskRunResult = await launchChromeAndRunLighthouse(argv.url);
-        bar1.update(i);
-        delete taskRunResult.js.stackPacks;
-        delete taskRunResult.js.configSettings;
-        delete taskRunResult.js.categoryGroups;
-        delete taskRunResult.js.environment;
-        delete taskRunResult.js.userAgent;
-        delete taskRunResult.js.i18n;
-        delete taskRunResult.js.audits["screenshot-thumbnails"];
-        delete taskRunResult.js.audits["final-screenshot"];
-        testResults.push(taskRunResult);
+        fakeArray.push("");
       }
+      const promResults = Promise.map(
+        fakeArray,
+        async () => {
+          const taskRunResult = config.USE_CLOUD
+            ? await launchPageSpeedInsightsLighthouse(argv.url, desktop)
+            : await launchChromeAndRunLighthouse(argv.url);
+          tracker.push("");
+          bar1.update(tracker.length);
+          delete taskRunResult.js.stackPacks;
+          delete taskRunResult.js.configSettings;
+          delete taskRunResult.js.categoryGroups;
+          delete taskRunResult.js.environment;
+          delete taskRunResult.js.userAgent;
+          delete taskRunResult.js.i18n;
+          delete taskRunResult.js.audits["screenshot-thumbnails"];
+          delete taskRunResult.js.audits["final-screenshot"];
+          return taskRunResult;
+        },
+        { concurrency: config.USE_CLOUD ? 10 : 1 }
+      );
+      const testResults = await promResults;
       if (title) {
         const scatterData = {
           [title]: testResults.map(({ js }) => {
             return js;
-          })
+          }),
         };
         fs.readFile(
           `${dirName}/scatter.json`,
           "utf8",
           function readFileCallback(err, data) {
             if (err) {
-              fs.writeFile(
+              fs.writeFileSync(
                 `${dirName}/scatter.json`,
                 JSON.stringify({ ...scatterData, meta: { url } }),
-                "utf8",
-                () => {}
+                "utf8"
               ); // write it back
             } else {
               const oldScatterData = JSON.parse(data); //now it an object
+
+              Object.keys(oldScatterData).map((key) => {
+                if (Array.isArray(oldScatterData[key])) {
+                  oldScatterData[key] = oldScatterData[key].map((oldData) => {
+                    delete oldData.timing;
+                    delete oldData.audits["screenshot-thumbnails"];
+                    delete oldData.audits["final-screenshot"];
+                    delete oldData.audits["network-requests"];
+                    delete oldData.audits["uses-long-cache-ttl"];
+                    return oldData;
+                  });
+                }
+              });
+
               const json = JSON.stringify(
-                merge.all([oldScatterData, scatterData])
+                Object.assign(oldScatterData, scatterData)
               ); //convert it back to json
               fs.writeFile(`${dirName}/scatter.json`, json, "utf8", () => {});
             }
@@ -211,7 +201,7 @@ export const init = (url = argv.url, title = argv.title) => {
     };
 
     return runner(argv.title)
-      .then(allResults => {
+      .then((allResults) => {
         bar1.stop();
         console.log("\n");
         hasStarted = false;
@@ -220,7 +210,10 @@ export const init = (url = argv.url, title = argv.title) => {
         const auditKeys = Object.keys(allResults[0].js.audits);
         const avg = {};
         allResults.forEach(({ js: { audits } }) => {
-          auditKeys.forEach(key => {
+          auditKeys.forEach((key) => {
+            if (!audits[key]) {
+              return;
+            }
             if (!audits[key].numericValue) {
               return;
             }
@@ -234,16 +227,24 @@ export const init = (url = argv.url, title = argv.title) => {
           avg[key] = { numericValue: average(value) };
         });
         const averagedJson = merge.all([averageAudit.js.audits, avg]);
-        Object.assign(averageAudit.js, { audits: averagedJson });
+        Object.assign(averageAudit.js, {
+          audits: averagedJson,
+          variant: title,
+          mode,
+        });
         averageAudit.json = JSON.stringify(
-          Object.assign(JSON.parse(averageAudit.json), { audits: averagedJson })
+          Object.assign(JSON.parse(averageAudit.json), {
+            audits: averagedJson,
+            variant: title,
+            mode,
+          })
         );
         return averageAudit;
       })
-      .then(results => {
+      .then((results) => {
         const prevReports = glob(`${dirName}/*.json`, {
           sync: true,
-          ignore: `${dirName}/scatter.json`
+          ignore: `${dirName}/scatter.json`,
         });
 
         if (prevReports.length) {
@@ -253,7 +254,7 @@ export const init = (url = argv.url, title = argv.title) => {
               new Date(path.parse(prevReports[report]).name.replace(/_/g, ":"))
             );
           }
-          const max = dates.reduce(function(a, b) {
+          const max = dates.reduce(function (a, b) {
             return Math.max(a, b);
           });
           const recentReport = new Date(max).toISOString();
@@ -261,14 +262,12 @@ export const init = (url = argv.url, title = argv.title) => {
           const recentReportContents = getContents(
             dirName + "/" + recentReport.replace(/:/g, "_") + ".json"
           );
-
-          compareReports(recentReportContents, results.js);
         }
 
         fs.writeFile(
           `${dirName}/${results.js["fetchTime"].replace(/:/g, "_")}.json`,
           results.json,
-          err => {
+          (err) => {
             if (err) throw err;
           }
         );
