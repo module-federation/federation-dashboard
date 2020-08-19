@@ -239,7 +239,6 @@ export const init = (url = argv.url, title = argv.title) => {
                 }
               });
 
-              debugger;
               const json = JSON.stringify(
                 Object.assign(oldScatterData, scatterData)
               ); //convert it back to json
