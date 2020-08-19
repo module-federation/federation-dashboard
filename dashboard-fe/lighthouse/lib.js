@@ -10,7 +10,7 @@ const psi = require("psi");
 const config = require("../src/config");
 const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 
-const RUNS = 1;
+const RUNS = 30;
 let hasStarted = false;
 
 const launchChromeAndRunLighthouse = async (url) => {
@@ -66,11 +66,10 @@ const launchChromeAndRunLighthouse = async (url) => {
       return launchChromeAndRunLighthouse(url);
     });
 };
-const launchPageSpeedInsightsLighthouse = async (url) => {
+const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
   const opts = {
     key: config.PAGESPEED_KEY,
-    strategy: "mobile",
-    // strategy: "desktop",
+    strategy: desktop ? "desktop" : "mobile",
     threshold: 0,
   };
   if (!hasStarted) {
@@ -171,7 +170,7 @@ function toFixed(num, fixed) {
   return num.toString().match(re)[0];
 }
 
-export const init = (url = argv.url, title = argv.title) => {
+export const init = (url = argv.url, title = argv.title, desktop = true) => {
   argv.url = url;
   argv.title = title;
   if (argv.from && argv.to) {
@@ -196,7 +195,7 @@ export const init = (url = argv.url, title = argv.title) => {
 
       for (let i = 1; i <= RUNS; i++) {
         const taskRunResult = config.USE_CLOUD
-          ? await launchPageSpeedInsightsLighthouse(argv.url)
+          ? await launchPageSpeedInsightsLighthouse(argv.url, desktop)
           : await launchChromeAndRunLighthouse(argv.url);
         bar1.update(i);
         delete taskRunResult.js.stackPacks;
@@ -234,6 +233,8 @@ export const init = (url = argv.url, title = argv.title) => {
                     delete oldData.timing;
                     delete oldData.audits["screenshot-thumbnails"];
                     delete oldData.audits["final-screenshot"];
+                    delete oldData.audits["network-requests"];
+                    delete oldData.audits["uses-long-cache-ttl"];
                     return oldData;
                   });
                 }
