@@ -10,7 +10,7 @@ const psi = require("psi");
 const config = require("../src/config");
 const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 
-const RUNS = 30;
+const RUNS = 1;
 let hasStarted = false;
 
 const launchChromeAndRunLighthouse = async (url) => {
@@ -228,8 +228,20 @@ export const init = (url = argv.url, title = argv.title) => {
               ); // write it back
             } else {
               const oldScatterData = JSON.parse(data); //now it an object
+              Object.keys(oldScatterData).map((key) => {
+                if (Array.isArray(oldScatterData[key])) {
+                  oldScatterData[key] = oldScatterData[key].map((oldData) => {
+                    delete oldData.timing;
+                    delete oldData.audits["screenshot-thumbnails"];
+                    delete oldData.audits["final-screenshot"];
+                    return oldData;
+                  });
+                }
+              });
+
+              debugger;
               const json = JSON.stringify(
-                merge.all([oldScatterData, scatterData])
+                Object.assign(oldScatterData, scatterData)
               ); //convert it back to json
               fs.writeFile(`${dirName}/scatter.json`, json, "utf8", () => {});
             }
