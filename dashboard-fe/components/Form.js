@@ -1,21 +1,30 @@
 import React from "react";
-
+import Button from "@material-ui/core/Button";
+import Input from "@material-ui/core/Input";
 export default function Form(props) {
   return (
     <form onSubmit={props.onSubmit} style={{ paddingLeft: 40, marginTop: 16 }}>
-      <input
+      <Input
         type="text"
         value={props.value}
         onChange={props.onChange}
         placeholder="http://"
       />
-      <input
+      <Input
         type="text"
         value={props.name}
         onChange={props.onChangeName}
         placeholder="Baseline Test"
       />
-      <button type="submit">Add Page</button>
+      <Button variant="outlined" type="submit">
+        Add Page
+      </Button>
+      <Button variant="outlined" onClick={props.reRunAllTests}>
+        Re-run All
+      </Button>
+      <Button variant="outlined" onClick={props.getLatest}>
+        Get latest Perf
+      </Button>
     </form>
   );
 }
