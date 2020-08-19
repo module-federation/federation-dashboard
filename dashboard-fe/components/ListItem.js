@@ -1,16 +1,24 @@
 import React from "react";
 import Link from "next/link";
-export default function ListItem(props) {
-  const { url, done, dirName } = props.todo;
+import ListItem from "@material-ui/core/ListItem";
+import Button from "@material-ui/core/Button";
+
+export default function Item(props) {
+  const { url, dirName } = props.todo;
   return (
-    <li style={{ textDecoration: done ? "line-through" : "" }}>
-      {url}
-      {!done ? <button onClick={props.completed}>Completed</button> : ""}
-      <button onClick={props.remove}>Remove</button>
-      <button onClick={props.reRun}>Re-run</button>
+    <ListItem style={{ textDecoration: done ? "line-through" : "" }}>
+      <Link href={`performance/reports/${dirName}`}>
+        <a>{url}</a>
+      </Link>
+      <Button variant="outlined" onClick={props.remove}>
+        Remove
+      </Button>
+      <Button variant="outlined" onClick={props.reRun}>
+        Re-run
+      </Button>
       <Link href={`performance/reports/${dirName}`}>
         <a>View Reports</a>
       </Link>
-    </li>
+    </ListItem>
   );
 }
