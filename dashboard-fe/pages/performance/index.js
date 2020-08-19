@@ -79,7 +79,7 @@ const Perfrmance = ({ linkList }) => {
       method: "POST",
       body: JSON.stringify(
         todos.map((item) => {
-          if (item.name === "PageSpeedInsights") {
+          if (item.name === "PageSpeedInsightsDesktop") {
             item.new = true;
           }
           return item;
