@@ -73,6 +73,7 @@ const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
     threshold: 0,
   };
   if (!hasStarted) {
+    console.log('MODE:', desktop ? "desktop" : "mobile")
     console.log("using PageSpeedInsights for Perf Test\n");
     hasStarted = true;
     console.log("url:", url, "\n");
