@@ -123,8 +123,8 @@ Perfrmance.getInitialProps = async () => {
   const urlList = await fetch(hostname + "api/get-url-list").then(res =>
     res.json()
   );
-  debugger;
-  const linkList = urlList.map(url => {
+
+  const linkList = urlList.map((url) => {
     const urlObj = new URL(url.url);
     let dirName = urlObj.host.replace("www.", "");
     if (urlObj.pathname !== "/") {

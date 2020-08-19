@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 export default function Item(props) {
   const { url, dirName } = props.todo;
   return (
-    <ListItem style={{ textDecoration: done ? "line-through" : "" }}>
+    <ListItem>
       <Link href={`performance/reports/${dirName}`}>
         <a>{url}</a>
       </Link>
