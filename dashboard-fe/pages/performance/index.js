@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
+import List from "@material-ui/core/List";
 
 import ListItem from "../../components/ListItem";
 import Form from "../../components/Form";
@@ -42,7 +43,6 @@ const Perfrmance = ({ linkList }) => {
   const _handleBntClick = ({ type, index }) => {
     const newArr = todos.slice();
     if (type === "remove") newArr.splice(index, 1);
-    else if (type === "completed") newArr[index].done = true;
 
     setTodos(newArr);
     fetch("/api/add-url", { method: "POST", body: null });
@@ -72,6 +72,7 @@ const Perfrmance = ({ linkList }) => {
       )
     });
   };
+
   const getLatest = ({ type, index }) => {
     fetch("/api/add-url", { method: "POST", body: null });
     fetch("/api/add-url", {
@@ -91,24 +92,23 @@ const Perfrmance = ({ linkList }) => {
     <Fragment>
       <Form
         onSubmit={_handleSubmit}
+        reRunAllTests={reRunAllTests}
+        getLatest={getLatest}
         value={inputValue}
         name={inputName}
         onChange={e => setInputValue(e.target.value)}
         onChangeName={e => setInputNameValue(e.target.value)}
       />
-      <button onClick={reRunAllTests}>Re-run All</button>
-      <button onClick={getLatest}>Get latest Perf</button>
-      <ul>
+      <List>
         {todos.map((todo, index) => (
           <ListItem
             key={index}
             todo={todo}
             reRun={() => _handleBntReRun(index)}
             remove={() => _handleBntClick({ type: "remove", index })}
-            completed={() => _handleBntClick({ type: "completed", index })}
           />
         ))}
-      </ul>
+      </List>
     </Fragment>
   );
 };
