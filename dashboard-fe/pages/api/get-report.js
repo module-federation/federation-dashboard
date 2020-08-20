@@ -1,13 +1,16 @@
 import fs from "fs";
 import path from "path";
-
+function getData(fileName, type) {
+  return fs.promises.readFile(fileName, { encoding: type });
+}
 export default async (req, res) => {
   res.statusCode = 200;
 
   const safePath = req.query.report.split("/").slice(-1)[0];
   console.log("get Report", safePath);
   const hostname = "http://" + req.headers.host + "/";
-  const url = hostname + path.join("reports", safePath, "scatter.json");
-  const json = await fetch(url).then(res => res.json());
+
+ const json = await getData( path.join("public/reports", safePath, "scatter.json",'utf8'))
+     console.log(json)
   res.send(json);
 };
