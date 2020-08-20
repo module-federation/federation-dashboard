@@ -21,16 +21,19 @@ const generateLighthouseReport = (sourceData) => {
         const freshDataSource = Object.values(
           JSON.parse(fs.readFileSync("public/urls.json", "utf8"))
         );
-        const wr = JSON.stringify(
-          freshDataSource.map((x) => {
-            if (x.url === url && x.name === name) {
-              x.new = false;
-            }
-            return x;
-          })
-        );
+        const wr = freshDataSource.map((x) => {
+          if (x.url === url && x.name === name) {
+            x.new = false;
+          }
+          return x;
+        });
+
+        const write = wr.reduce((acc, item) => {
+          acc[`${item.url}-${item.name}`] = item;
+          return acc;
+        }, freshDataSource);
         if (!sourceData.name) {
-          fs.writeFileSync("public/urls.json", wr);
+          fs.writeFileSync("public/urls.json", JSON.stringify(write));
         }
       });
     },
