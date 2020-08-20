@@ -70,10 +70,10 @@ const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
   const opts = {
     key: config.PAGESPEED_KEY,
     strategy: desktop ? "desktop" : "mobile",
-    threshold: 0,
+    threshold: 0
   };
   if (!hasStarted) {
-    console.log('MODE:', desktop ? "desktop" : "mobile")
+    console.log("MODE:", desktop ? "desktop" : "mobile");
     console.log("using PageSpeedInsights for Perf Test\n");
     hasStarted = true;
     console.log("url:", url, "\n");
@@ -86,7 +86,7 @@ const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
     const data2 = await psi(url, opts);
     return {
       js: data2.data.lighthouseResult,
-      json: JSON.stringify(data2.data.lighthouseResult),
+      json: JSON.stringify(data2.data.lighthouseResult)
     };
   } catch (e) {
     return launchPageSpeedInsightsLighthouse(url);
@@ -226,9 +226,9 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
               ); // write it back
             } else {
               const oldScatterData = JSON.parse(data); //now it an object
-              Object.keys(oldScatterData).map((key) => {
+              Object.keys(oldScatterData).map(key => {
                 if (Array.isArray(oldScatterData[key])) {
-                  oldScatterData[key] = oldScatterData[key].map((oldData) => {
+                  oldScatterData[key] = oldScatterData[key].map(oldData => {
                     delete oldData.timing;
                     delete oldData.audits["screenshot-thumbnails"];
                     delete oldData.audits["final-screenshot"];

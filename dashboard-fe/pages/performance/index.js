@@ -78,13 +78,13 @@ const Perfrmance = ({ linkList }) => {
     fetch("/api/add-url", {
       method: "POST",
       body: JSON.stringify(
-        todos.map((item) => {
+        todos.map(item => {
           if (item.name === "PageSpeedInsightsDesktop") {
             item.new = true;
           }
           return item;
         })
-      ),
+      )
     });
   };
 
@@ -124,7 +124,7 @@ Perfrmance.getInitialProps = async () => {
     res.json()
   );
 
-  const linkList = urlList.map((url) => {
+  const linkList = urlList.map(url => {
     const urlObj = new URL(url.url);
     let dirName = urlObj.host.replace("www.", "");
     if (urlObj.pathname !== "/") {

@@ -6,6 +6,8 @@ import {
   generateMultiSeriesChartData
 } from "../../../lighthouse/utils";
 import Form from "../../../components/FormVarient";
+import { ListItem, List, IconButton } from "@material-ui/core";
+import { Delete } from "@material-ui/icons";
 
 const CanvasJSChart = dynamic(
   async () => (await import("canvasjs-react-charts")).CanvasJSChart,
@@ -43,6 +45,19 @@ class Report extends React.Component {
         {
           name: this.state.inputValue,
           new: true,
+          url: this.props.meta.url
+        }
+      ])
+    });
+  };
+
+  onDelete = name => {
+    this.setState({ inputValue: "" });
+    fetch("/api/remove-url", {
+      method: "POST",
+      body: JSON.stringify([
+        {
+          name,
           url: this.props.meta.url
         }
       ])
@@ -127,7 +142,9 @@ class Report extends React.Component {
       <>
         <div>
           <Form
+            appKeys={this.props.appKeys}
             onSubmit={this._handleSubmit}
+            onDelete={this.onDelete}
             value={this.state.inputValue}
             onChange={e => this.setState({ inputValue: e.target.value })}
           />
@@ -166,7 +183,8 @@ Report.getInitialProps = async ({ query }) => {
     scatterChartData: generateScatterChartData(report),
     whiskerChartData: generateWhiskerChartData(report),
     multiSeriesChartData: generateMultiSeriesChartData(report),
-    meta
+    meta,
+    appKeys: Object.keys(report)
   };
 };
 export default Report;
