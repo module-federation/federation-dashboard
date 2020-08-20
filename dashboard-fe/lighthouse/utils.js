@@ -27,17 +27,17 @@ export const hexToRgbA = (hex, tr) => {
   throw new Error("Bad Hex");
 };
 
-export const generateScatterChartData = (data) =>
+export const generateScatterChartData = data =>
   Object.entries(data).map(([group, results]) => {
     const obj = {
       type: "scatter",
       name: group,
       showInLegend: true,
       markerType: "circle",
-      markerColor: randomColor(),
+      markerColor: randomColor()
     };
 
-    const charable = results.map((result) => {
+    const charable = results.map(result => {
       return [
         "first-contentful-paint",
         "first-meaningful-paint",
@@ -50,14 +50,14 @@ export const generateScatterChartData = (data) =>
         "interactive",
         "accessibility",
         "seo",
-        "largest-contentful-paint",
+        "largest-contentful-paint"
       ]
-        .filter((key) => result.audits[key])
+        .filter(key => result.audits[key])
         .map((key, index) => {
           return {
             y: parseInt(toFixed(result.audits[key].numericValue)),
             x: index,
-            label: key,
+            label: key
           };
         });
     });
@@ -65,7 +65,7 @@ export const generateScatterChartData = (data) =>
     return obj;
   });
 
-export const generateWhiskerChartData = (data) =>
+export const generateWhiskerChartData = data =>
   Object.entries(data).map(([group, results]) => {
     const generateColor = randomColor();
     const obj = {
@@ -75,10 +75,10 @@ export const generateWhiskerChartData = (data) =>
       lowerBoxColor: hexToRgbA(generateColor, "0.3"),
       showInLegend: true,
       markerColor: generateColor,
-      color: generateColor,
+      color: generateColor
     };
     const chartStore = { [group]: {} };
-    results.map((result) => {
+    results.map(result => {
       return [
         "first-contentful-paint",
         "first-meaningful-paint",
@@ -91,9 +91,9 @@ export const generateWhiskerChartData = (data) =>
         "interactive",
         "accessibility",
         "seo",
-        "largest-contentful-paint",
+        "largest-contentful-paint"
       ]
-        .filter((key) => result.audits[key])
+        .filter(key => result.audits[key])
         .map((key, index) => {
           if (!chartStore[group][key]) {
             chartStore[group][key] = [];
@@ -115,7 +115,7 @@ export const generateWhiskerChartData = (data) =>
     return obj;
   });
 
-export const generateMultiSeriesChartData = (data) => {
+export const generateMultiSeriesChartData = data => {
   const metricGroups = [
     "first-contentful-paint",
     "first-meaningful-paint",
@@ -128,14 +128,14 @@ export const generateMultiSeriesChartData = (data) => {
     "interactive",
     "accessibility",
     "seo",
-    "largest-contentful-paint",
+    "largest-contentful-paint"
   ].reduce((acc, item) => {
     acc[item] = {
       color: randomColor(),
       name: item,
       type: "bar",
       showInLegend: true,
-      dataPoints: [],
+      dataPoints: []
     };
     return acc;
   }, {});
@@ -144,7 +144,7 @@ export const generateMultiSeriesChartData = (data) => {
     const generateColor = randomColor();
 
     const chartStore = { [group]: {} };
-    results.map((result) => {
+    results.map(result => {
       return [
         "first-contentful-paint",
         "first-meaningful-paint",
@@ -157,9 +157,9 @@ export const generateMultiSeriesChartData = (data) => {
         "interactive",
         "accessibility",
         "seo",
-        "largest-contentful-paint",
+        "largest-contentful-paint"
       ]
-        .filter((key) => result.audits[key])
+        .filter(key => result.audits[key])
         .map((key, index) => {
           if (!chartStore[group][key]) {
             chartStore[group][key] = [];
@@ -177,7 +177,7 @@ export const generateMultiSeriesChartData = (data) => {
           group: group,
           label: key,
           y: [min, q1, q3, max, median],
-          x: index,
+          x: index
         };
         metricGroups[key].dataPoints.push({ label: group, y: median });
       });

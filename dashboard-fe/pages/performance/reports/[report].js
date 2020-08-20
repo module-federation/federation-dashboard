@@ -3,9 +3,11 @@ import dynamic from "next/dynamic";
 import {
   generateScatterChartData,
   generateWhiskerChartData,
-  generateMultiSeriesChartData,
+  generateMultiSeriesChartData
 } from "../../../lighthouse/utils";
 import Form from "../../../components/FormVarient";
+import { ListItem, List, IconButton } from "@material-ui/core";
+import { Delete } from "@material-ui/icons";
 
 const CanvasJSChart = dynamic(
   async () => (await import("canvasjs-react-charts")).CanvasJSChart,
@@ -16,7 +18,7 @@ class Report extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: "",
+      inputValue: ""
     };
     this.toggleDataSeries = this.toggleDataSeries.bind(this);
   }
@@ -32,7 +34,7 @@ class Report extends React.Component {
     this.chart3.render();
   }
 
-  _handleSubmit = (e) => {
+  _handleSubmit = e => {
     e.preventDefault();
     if (this.state.inputValue === "") return alert("Task name is required");
 
@@ -43,9 +45,22 @@ class Report extends React.Component {
         {
           name: this.state.inputValue,
           new: true,
-          url: this.props.meta.url,
-        },
-      ]),
+          url: this.props.meta.url
+        }
+      ])
+    });
+  };
+
+  onDelete = name => {
+    this.setState({ inputValue: "" });
+    fetch("/api/remove-url", {
+      method: "POST",
+      body: JSON.stringify([
+        {
+          name,
+          url: this.props.meta.url
+        }
+      ])
     });
   };
 
@@ -57,27 +72,27 @@ class Report extends React.Component {
       zoomEnabled: true,
       zoomType: "y",
       title: {
-        text: "Performance chart",
+        text: "Performance chart"
       },
       axisX: {
-        title: "Metric Type",
+        title: "Metric Type"
       },
       axisY: {
         scaleBreaks: {
-          autoCalculate: true, // change to false
+          autoCalculate: true // change to false
         },
         includeZero: false,
         title: "Timing",
         suffix: "ms",
         logarithmic: true,
-        logarithmBase: 2,
+        logarithmBase: 2
       },
       legend: {
         cursor: "pointer",
-        itemclick: this.toggleDataSeries,
+        itemclick: this.toggleDataSeries
       },
 
-      data: this.props.whiskerChartData,
+      data: this.props.whiskerChartData
     };
     const scatterChartOptions = {
       height: typeof window === "object" ? window.innerHeight : null,
@@ -85,65 +100,67 @@ class Report extends React.Component {
       zoomEnabled: true,
       zoomType: "x",
       title: {
-        text: "Scatter Chart",
+        text: "Scatter Chart"
       },
       axisX: {
-        title: "Metric Type",
+        title: "Metric Type"
       },
       axisY: {
         title: "Timing",
         suffix: "ms",
         includeZero: false,
-        logarithmic: true,
+        logarithmic: true
       },
       legend: {
         cursor: "pointer",
-        itemclick: this.toggleDataSeries,
+        itemclick: this.toggleDataSeries
       },
 
-      data: this.props.scatterChartData,
+      data: this.props.scatterChartData
     };
     const multiSeriesChartOptions = {
       theme: "dark2",
       animationEnabled: true,
       title: {
-        text: "Multi Series Chart - Medians",
+        text: "Multi Series Chart - Medians"
       },
       axisY: {
         title: "Metric Type",
-        includeZero: true,
+        includeZero: true
       },
       legend: {
         cursor: "pointer",
-        itemclick: this.toggleDataSeries,
+        itemclick: this.toggleDataSeries
       },
       toolTip: {
-        shared: true,
+        shared: true
         // content: toolTipFormatter
       },
-      data: this.props.multiSeriesChartData,
+      data: this.props.multiSeriesChartData
     };
     return (
       <>
         <div>
           <Form
+            appKeys={this.props.appKeys}
             onSubmit={this._handleSubmit}
+            onDelete={this.onDelete}
             value={this.state.inputValue}
-            onChange={(e) => this.setState({ inputValue: e.target.value })}
+            onChange={e => this.setState({ inputValue: e.target.value })}
           />
         </div>
         <div>
           <CanvasJSChart
             options={whiskerChartOptions}
-            onRef={(ref) => (this.chart = ref)}
+            onRef={ref => (this.chart = ref)}
           />
           <CanvasJSChart
             options={scatterChartOptions}
-            onRef={(ref) => (this.chart2 = ref)}
+            onRef={ref => (this.chart2 = ref)}
           />
           <CanvasJSChart
             options={multiSeriesChartOptions}
-            onRef={(ref) => (this.chart3 = ref)}
+            onRef={ref => (this.chart3 = ref)}
           />
         </div>
       </>
@@ -161,12 +178,13 @@ Report.getInitialProps = async ({ query }) => {
     : "http://localhost:3000/";
   const { meta, ...report } = await fetch(
     hostname + "api/get-report?report=" + query.report
-  ).then((res) => res.json());
+  ).then(res => res.json());
   return {
     scatterChartData: generateScatterChartData(report),
     whiskerChartData: generateWhiskerChartData(report),
     multiSeriesChartData: generateMultiSeriesChartData(report),
     meta,
+    appKeys: Object.keys(report)
   };
 };
 export default Report;

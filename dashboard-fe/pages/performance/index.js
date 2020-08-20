@@ -12,16 +12,16 @@ const Perfrmance = ({ linkList }) => {
   //useEffect works basically as componentDidMount and componentDidUpdate
   useEffect(() => {
     let count = 0;
-    todos.map((todo) => (!todo.done ? count++ : null));
+    todos.map(todo => (!todo.done ? count++ : null));
   });
 
   //
-  const _handleSubmit = (e) => {
+  const _handleSubmit = e => {
     if (e) e.preventDefault();
     if (inputValue === "") return alert("URL is required");
 
     const newArr = todos.slice();
-    const valueExists = todos.find((item) => {
+    const valueExists = todos.find(item => {
       return item.url === inputValue;
     });
     if (!valueExists) {
@@ -29,7 +29,7 @@ const Perfrmance = ({ linkList }) => {
         url: inputValue,
         name: inputName,
         done: false,
-        new: true,
+        new: true
       });
       setTodos(newArr);
       setInputValue("");
@@ -49,7 +49,7 @@ const Perfrmance = ({ linkList }) => {
     fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
   };
 
-  const _handleBntReRun = (index) => {
+  const _handleBntReRun = index => {
     const newArr = todos.slice();
     newArr[index].new = true;
 
@@ -63,13 +63,13 @@ const Perfrmance = ({ linkList }) => {
     fetch("/api/add-url", {
       method: "POST",
       body: JSON.stringify(
-        todos.map((item) => {
+        todos.map(item => {
           if (!item.url.includes("stage")) {
             item.new = true;
           }
           return item;
         })
-      ),
+      )
     });
   };
 
@@ -78,13 +78,13 @@ const Perfrmance = ({ linkList }) => {
     fetch("/api/add-url", {
       method: "POST",
       body: JSON.stringify(
-        todos.map((item) => {
+        todos.map(item => {
           if (item.name === "PageSpeedInsightsDesktop") {
             item.new = true;
           }
           return item;
         })
-      ),
+      )
     });
   };
 
@@ -96,8 +96,8 @@ const Perfrmance = ({ linkList }) => {
         getLatest={getLatest}
         value={inputValue}
         name={inputName}
-        onChange={(e) => setInputValue(e.target.value)}
-        onChangeName={(e) => setInputNameValue(e.target.value)}
+        onChange={e => setInputValue(e.target.value)}
+        onChangeName={e => setInputNameValue(e.target.value)}
       />
       <List>
         {todos.map((todo, index) => (
@@ -120,11 +120,11 @@ Perfrmance.getInitialProps = async () => {
       : "http://localhost:3000/"
     : "http://localhost:3000/";
 
-  const urlList = await fetch(hostname + "api/get-url-list").then((res) =>
+  const urlList = await fetch(hostname + "api/get-url-list").then(res =>
     res.json()
   );
 
-  const linkList = urlList.map((url) => {
+  const linkList = urlList.map(url => {
     const urlObj = new URL(url.url);
     let dirName = urlObj.host.replace("www.", "");
     if (urlObj.pathname !== "/") {
