@@ -132,7 +132,7 @@ class Report extends React.Component {
 
       data: this.props.scatterChartData,
     };
-    console.log("this.props.scatterChartData", this.props.scatterChartData);
+
     const timeSeriesScatterChartOptions = {
       height: typeof window === "object" ? window.innerHeight : null,
       theme: "dark2",

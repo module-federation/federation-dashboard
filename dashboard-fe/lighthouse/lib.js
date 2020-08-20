@@ -10,7 +10,7 @@ const psi = require("psi");
 const config = require("../src/config");
 const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 
-const RUNS = 3;
+const RUNS = 30;
 let hasStarted = false;
 
 const launchChromeAndRunLighthouse = async (url) => {
