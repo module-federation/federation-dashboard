@@ -16,13 +16,13 @@ export default function Form(props) {
         onChange={props.onChangeName}
         placeholder="Baseline Test"
       />
-      <Button variant="outlined" type="submit">
+      <Button variant="contained" type="submit">
         Add Page
       </Button>
-      <Button variant="outlined" onClick={props.reRunAllTests}>
+      <Button variant="contained" onClick={props.reRunAllTests}>
         Re-run All
       </Button>
-      <Button variant="outlined" onClick={props.getLatest}>
+      <Button variant="contained" onClick={props.getLatest}>
         Get latest Perf
       </Button>
     </form>

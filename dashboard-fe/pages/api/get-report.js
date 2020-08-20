@@ -8,6 +8,6 @@ export default async (req, res) => {
   console.log("get Report", safePath);
   const hostname = "http://" + req.headers.host + "/";
   const url = hostname + path.join("reports", safePath, "scatter.json");
-  const json = await fetch(url).then((res) => res.json());
+  const json = await fetch(url).then(res => res.json());
   res.send(json);
 };

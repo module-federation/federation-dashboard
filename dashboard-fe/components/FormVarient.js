@@ -1,4 +1,6 @@
 import React from "react";
+import { Delete } from "@material-ui/icons";
+import { List, Button, ListItem, IconButton } from "@material-ui/core";
 
 export default function Form(props) {
   return (
@@ -9,7 +11,22 @@ export default function Form(props) {
         onChange={props.onChange}
         placeholder="Variation Name"
       />
-      <button type="submit">Add Variatioono</button>
+      <Button variant="contained" type="submit">
+        Add Varient
+      </Button>
+      <List>
+        {props.appKeys &&
+          props.appKeys.map(i => {
+            return (
+              <ListItem>
+                {i}
+                <IconButton onClick={() => props.onDelete(i)} aria-label={i}>
+                  <Delete />
+                </IconButton>
+              </ListItem>
+            );
+          })}
+      </List>
     </form>
   );
 }

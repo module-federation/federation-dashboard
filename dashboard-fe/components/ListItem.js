@@ -10,10 +10,10 @@ export default function Item(props) {
       <Link href={`performance/reports/${dirName}`}>
         <a>{url}</a>
       </Link>
-      <Button variant="outlined" onClick={props.remove}>
+      <Button variant="contained" onClick={props.remove}>
         Remove
       </Button>
-      <Button variant="outlined" onClick={props.reRun}>
+      <Button variant="contained" onClick={props.reRun}>
         Re-run
       </Button>
       <Link href={`performance/reports/${dirName}`}>
