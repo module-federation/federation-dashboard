@@ -18,10 +18,11 @@ const generateLighthouseReport = (sourceData) => {
       //   );
       // }
       return init(url, name || "Initial Test").then(() => {
-        const freshDataSource = Object.values(
-          JSON.parse(fs.readFileSync("public/urls.json", "utf8"))
+        const freshDataSource = JSON.parse(
+          fs.readFileSync("public/urls.json", "utf8")
         );
-        const wr = freshDataSource.map((x) => {
+
+        const wr = Object.values(freshDataSource).map((x) => {
           if (x.url === url && x.name === name) {
             x.new = false;
           }
