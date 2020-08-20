@@ -8,9 +8,11 @@ export default async (req, res) => {
 
   const safePath = req.query.report.split("/").slice(-1)[0];
   console.log("get Report", safePath);
-  const hostname = "http://" + req.headers.host + "/";
 
- const json = await getData( path.join("public/reports", safePath, "scatter.json",'utf8'))
-     console.log(json)
+  const json = await getData(
+    path.join("public/reports", safePath, "scatter.json"),
+    "utf8"
+  );
+
   res.send(json);
 };
