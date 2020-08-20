@@ -32,10 +32,6 @@ class Report extends React.Component {
     this.toggleDataSeries = this.toggleDataSeries.bind(this);
   }
 
-  componentDidMount() {
-    console.log("timeSeriesScatterData", this.props.timeSeriesScatterData);
-  }
-
   toggleDataSeries(e) {
     if (typeof e.dataSeries.visible === "undefined" || e.dataSeries.visible) {
       e.dataSeries.visible = false;
