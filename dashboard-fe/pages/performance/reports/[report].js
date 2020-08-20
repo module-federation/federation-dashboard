@@ -137,8 +137,8 @@ class Report extends React.Component {
       },
       axisX: {
         title: "Date",
-        interval: 3,
-        intervalType: "day",
+        // interval: 3,
+        // intervalType: "day",
       },
       axisY: {
         title: "Timing",
