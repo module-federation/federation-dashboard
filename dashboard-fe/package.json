@@ -52,6 +52,7 @@
     "d3": "^5.16.0",
     "dagre": "^0.8.5",
     "dotenv": "^8.2.0",
+    "glob": "^7.1.6",
     "isomorphic-unfetch": "^3.0.0",
     "lighthouse": "^6.2.0",
     "lodash": "^4.17.15",
