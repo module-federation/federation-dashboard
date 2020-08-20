@@ -48,19 +48,14 @@ export default async (req, res) => {
   }
   let sourceData = JSON.parse(req.body);
 
-  const prev = JSON.parse(fs.readFileSync("public/urls.json", "utf8"));
-
-  prev.forEach((item, key) => {
-    sourceData.forEach((sourceItem) => {
-      if (sourceItem.name === item.name && sourceItem.url === item.url) {
-        prev[key] = Object.assign(item, sourceItem);
-      } else {
-        prev.push(sourceItem);
-      }
-    });
-  });
+  let prev = JSON.parse(fs.readFileSync("public/urls.json", "utf8"));
+  sourceData.reduce((acc, item) => {
+    acc[`${item.url}-${item.name}`] = item;
+    return acc;
+  }, prev);
 
   fs.writeFileSync("public/urls.json", JSON.stringify(prev || []));
+
   console.log("cache", cache);
 
   if (cache.running) {
@@ -72,13 +67,15 @@ export default async (req, res) => {
     res.json({ message: "Queued" });
     return;
   }
-  sourceData = JSON.parse(fs.readFileSync("public/urls.json", "utf8"));
+  sourceData = Object.values(
+    JSON.parse(fs.readFileSync("public/urls.json", "utf8"))
+  );
   Object.assign(cache, { running: true });
   generateLighthouseReport(sourceData).then(() => {
     if (cache.queue) {
       Object.assign(cache, { queue: false });
       generateLighthouseReport(
-        JSON.parse(fs.readFileSync("public/urls.json", "utf8"))
+        Object.values(JSON.parse(fs.readFileSync("public/urls.json", "utf8")))
       );
     }
   });
