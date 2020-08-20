@@ -18,8 +18,8 @@ const generateLighthouseReport = (sourceData) => {
       //   );
       // }
       return init(url, name || "Initial Test").then(() => {
-        const freshDataSource = JSON.parse(
-          fs.readFileSync("public/urls.json", "utf8")
+        const freshDataSource = Object.values(
+          JSON.parse(fs.readFileSync("public/urls.json", "utf8"))
         );
         const wr = JSON.stringify(
           freshDataSource.map((x) => {
