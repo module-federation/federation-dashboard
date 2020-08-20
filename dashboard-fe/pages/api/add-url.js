@@ -4,7 +4,7 @@ import deepmerge from "deepmerge";
 import Promise from "bluebird";
 import { cache } from "../../lighthouse/utils";
 
-const generateLighthouseReport = sourceData => {
+const generateLighthouseReport = (sourceData) => {
   return Promise.map(
     sourceData,
     async ({ name, url, new: isNew }) => {
@@ -22,7 +22,7 @@ const generateLighthouseReport = sourceData => {
           fs.readFileSync("public/urls.json", "utf8")
         );
         const wr = JSON.stringify(
-          freshDataSource.map(x => {
+          freshDataSource.map((x) => {
             if (x.url === url && x.name === name) {
               x.new = false;
             }
@@ -50,24 +50,15 @@ export default async (req, res) => {
 
   const prev = JSON.parse(fs.readFileSync("public/urls.json", "utf8"));
 
-  const isNewVariation = !prev.find(entry => {
-    return sourceData.find(
-      otherEntry =>
-        otherEntry.name === entry.name && otherEntry.url === entry.url
-    );
-  });
-
-  if (isNewVariation) {
-    prev.push(...sourceData);
-  } else {
-    prev.forEach((item, key) => {
-      sourceData.forEach(sourceItem => {
-        if (sourceItem.name === item.name && sourceItem.url === item.url) {
-          prev[key] = Object.assign(item, sourceItem);
-        }
-      });
+  prev.forEach((item, key) => {
+    sourceData.forEach((sourceItem) => {
+      if (sourceItem.name === item.name && sourceItem.url === item.url) {
+        prev[key] = Object.assign(item, sourceItem);
+      } else {
+        prev.push(sourceItem);
+      }
     });
-  }
+  });
 
   fs.writeFileSync("public/urls.json", JSON.stringify(prev || []));
   console.log("cache", cache);
