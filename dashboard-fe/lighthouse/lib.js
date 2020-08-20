@@ -10,21 +10,21 @@ const psi = require("psi");
 const config = require("../src/config");
 const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 
-const RUNS = 30;
+const RUNS = 3;
 let hasStarted = false;
 
-const launchChromeAndRunLighthouse = async url => {
+const launchChromeAndRunLighthouse = async (url) => {
   const chrome = await chromeLauncher.launch({
     chromeFlags: [
       "--headless",
       "--disable-gpu",
       "--disable-cache",
       "--disable-extensions",
-      "--no-sandbox"
-    ]
+      "--no-sandbox",
+    ],
   });
   const opts = {
-    port: chrome.port
+    port: chrome.port,
   };
 
   if (!hasStarted) {
@@ -38,13 +38,13 @@ const launchChromeAndRunLighthouse = async url => {
     bar1.start(RUNS, 0);
   }
   return lighthouse(url, opts)
-    .then(results => {
+    .then((results) => {
       try {
         results.lhr.audits.metrics.details.items[0];
         return chrome.kill().then(() => {
           return {
             js: results.lhr,
-            json: results.report
+            json: results.report,
           };
         });
       } catch (e) {
@@ -53,7 +53,7 @@ const launchChromeAndRunLighthouse = async url => {
         });
       }
     })
-    .catch(error => {
+    .catch((error) => {
       if (chrome.kill) {
         return chrome.kill().then(() => {
           return launchChromeAndRunLighthouse(url);
@@ -61,7 +61,7 @@ const launchChromeAndRunLighthouse = async url => {
       }
       return launchChromeAndRunLighthouse(url);
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
       return launchChromeAndRunLighthouse(url);
     });
@@ -70,7 +70,7 @@ const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
   const opts = {
     key: config.PAGESPEED_KEY,
     strategy: desktop ? "desktop" : "mobile",
-    threshold: 0
+    threshold: 0,
   };
   if (!hasStarted) {
     console.log("MODE:", desktop ? "desktop" : "mobile");
@@ -86,14 +86,14 @@ const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
     const data2 = await psi(url, opts);
     return {
       js: data2.data.lighthouseResult,
-      json: JSON.stringify(data2.data.lighthouseResult)
+      json: JSON.stringify(data2.data.lighthouseResult),
     };
   } catch (e) {
     return launchPageSpeedInsightsLighthouse(url);
   }
 };
 
-const getContents = pathStr => {
+const getContents = (pathStr) => {
   const output = fs.readFileSync(pathStr, "utf8", (err, results) => {
     return results;
   });
@@ -113,7 +113,7 @@ const metricFilter = [
   "accessibility",
   "seo",
   "largest-contentful-paint",
-  "total-byte-weight"
+  "total-byte-weight",
 ];
 
 const compareReports = (from, to) => {
@@ -143,16 +143,18 @@ const compareReports = (from, to) => {
       const log = (() => {
         if (Math.sign(percentageDiff) === 1) {
           logColor = "\x1b[31m";
-          return `${percentageDiff.toString().replace("-", "") +
-            "%"} ${measurementSlower}. Total:${Math.abs(
+          return `${
+            percentageDiff.toString().replace("-", "") + "%"
+          } ${measurementSlower}. Total:${Math.abs(
             toFixed(to["audits"][auditObj].numericValue, 2)
           )} Delta:${delta} `;
         } else if (Math.sign(percentageDiff) === 0) {
           return "unchanged";
         } else {
           logColor = "\x1b[32m";
-          return `${percentageDiff.toString().replace("-", "") +
-            "%"} ${measurementFaster}. Total:${Math.abs(
+          return `${
+            percentageDiff.toString().replace("-", "") + "%"
+          } ${measurementFaster}. Total:${Math.abs(
             toFixed(to["audits"][auditObj].numericValue, 2)
           )} Delta:${delta}`;
         }
@@ -161,7 +163,7 @@ const compareReports = (from, to) => {
     }
   }
 };
-const average = array =>
+const average = (array) =>
   toFixed(array.reduce((a, b) => a + b) / array.length, 2);
 
 function toFixed(num, fixed) {
@@ -189,7 +191,7 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
     if (!fs.existsSync(dirName)) {
       fs.mkdirSync(dirName, { recursive: true });
     }
-    const runner = async title => {
+    const runner = async (title) => {
       let testResults = [];
 
       for (let i = 1; i <= RUNS; i++) {
@@ -211,7 +213,7 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
         const scatterData = {
           [title]: testResults.map(({ js }) => {
             return js;
-          })
+          }),
         };
         fs.readFile(
           `${dirName}/scatter.json`,
@@ -226,9 +228,9 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
               ); // write it back
             } else {
               const oldScatterData = JSON.parse(data); //now it an object
-              Object.keys(oldScatterData).map(key => {
+              Object.keys(oldScatterData).map((key) => {
                 if (Array.isArray(oldScatterData[key])) {
-                  oldScatterData[key] = oldScatterData[key].map(oldData => {
+                  oldScatterData[key] = oldScatterData[key].map((oldData) => {
                     delete oldData.timing;
                     delete oldData.audits["screenshot-thumbnails"];
                     delete oldData.audits["final-screenshot"];
@@ -251,7 +253,7 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
     };
 
     return runner(argv.title)
-      .then(allResults => {
+      .then((allResults) => {
         bar1.stop();
         console.log("\n");
         hasStarted = false;
@@ -260,7 +262,7 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
         const auditKeys = Object.keys(allResults[0].js.audits);
         const avg = {};
         allResults.forEach(({ js: { audits } }) => {
-          auditKeys.forEach(key => {
+          auditKeys.forEach((key) => {
             if (!audits[key].numericValue) {
               return;
             }
@@ -280,10 +282,10 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
         );
         return averageAudit;
       })
-      .then(results => {
+      .then((results) => {
         const prevReports = glob(`${dirName}/*.json`, {
           sync: true,
-          ignore: `${dirName}/scatter.json`
+          ignore: `${dirName}/scatter.json`,
         });
 
         if (prevReports.length) {
@@ -293,7 +295,7 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
               new Date(path.parse(prevReports[report]).name.replace(/_/g, ":"))
             );
           }
-          const max = dates.reduce(function(a, b) {
+          const max = dates.reduce(function (a, b) {
             return Math.max(a, b);
           });
           const recentReport = new Date(max).toISOString();
@@ -308,7 +310,7 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
         fs.writeFile(
           `${dirName}/${results.js["fetchTime"].replace(/:/g, "_")}.json`,
           results.json,
-          err => {
+          (err) => {
             if (err) throw err;
           }
         );
