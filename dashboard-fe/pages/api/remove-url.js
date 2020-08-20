@@ -9,16 +9,22 @@ export default async (req, res) => {
   let sourceData = JSON.parse(req.body);
 
   const prev = JSON.parse(fs.readFileSync("public/urls.json", "utf8"));
-  const removedUrls = prev.filter((preUrl) => {
-    if (
-      preUrl.name === sourceData[0].name &&
-      preUrl.url === sourceData[0].url
-    ) {
-      return false;
-    }
-    return true;
-  });
-  fs.writeFileSync("public/urls.json", JSON.stringify(removedUrls || []));
+  const removedUrls = Object.values(prev)
+    .filter((preUrl) => {
+      if (
+        preUrl.name === sourceData[0].name &&
+        preUrl.url === sourceData[0].url
+      ) {
+        return false;
+      }
+      return true;
+    })
+    .reduce((acc, item) => {
+      acc[`${item.url}-${item.name}`] = item;
+      return acc;
+    }, {});
+
+  fs.writeFileSync("public/urls.json", JSON.stringify(removedUrls || {}));
 
   const urlObj = new URL(sourceData[0].url);
   let dirName = urlObj.host.replace("www.", "");
