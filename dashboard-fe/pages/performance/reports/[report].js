@@ -27,25 +27,25 @@ class Report extends React.Component {
     this.state = {
       inputValue: "",
       timeSeriesScatterData: props.timeSeriesScatterData,
-      mounted:false
+      mounted:true
     };
     this.toggleDataSeries = this.toggleDataSeries.bind(this);
   }
-  componentDidMount = async () => {
-    const { query } = this.props;
-    window.CanvasJS = require("canvasjs-react-charts");
-    console.log(window.CanvasJS);
-    const timeSeriesData = await fetch(
-      hostname + "api/get-timeseries?report=" + query.report
-    ).then((res) => res.json());
-
-    const scatterData = generateTimeSeriesScatterChartData(timeSeriesData);
-
-    this.setState({
-      timeSeriesScatterData: scatterData,
-      mounted:true
-    });
-  };
+  // componentDidMount = async () => {
+  //   const { query } = this.props;
+  //   window.CanvasJS = require("canvasjs-react-charts");
+  //   console.log(window.CanvasJS);
+  //   const timeSeriesData = await fetch(
+  //     hostname + "api/get-timeseries?report=" + query.report
+  //   ).then((res) => res.json());
+  //
+  //   const scatterData = generateTimeSeriesScatterChartData(timeSeriesData);
+  //
+  //   this.setState({
+  //     timeSeriesScatterData: scatterData,
+  //     mounted:true
+  //   });
+  // };
 
   toggleDataSeries(e) {
     if (typeof e.dataSeries.visible === "undefined" || e.dataSeries.visible) {
@@ -231,7 +231,6 @@ class Report extends React.Component {
             options={multiSeriesChartOptions}
             onRef={(ref) => (this.chart3 = ref)}
           />
-
           <CanvasJSChart
             options={timeSeriesScatterChartOptions}
             onRef={(ref) => (this.chart4 = ref)}
