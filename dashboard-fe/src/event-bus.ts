@@ -7,7 +7,7 @@ class EventBus {
     this.subscribers.push(subscriber);
   }
   publish(type: String, payload: any) {
-    this.subscribers.forEach(sub => sub(type, payload));
+    this.subscribers.forEach((sub) => sub(type, payload));
   }
 }
 
