@@ -27,6 +27,7 @@ class Report extends React.Component {
     this.state = {
       inputValue: "",
       timeSeriesScatterData: props.timeSeriesScatterData,
+      mounted:false
     };
     this.toggleDataSeries = this.toggleDataSeries.bind(this);
   }
@@ -42,6 +43,7 @@ class Report extends React.Component {
 
     this.setState({
       timeSeriesScatterData: scatterData,
+      mounted:true
     });
   };
 
@@ -192,15 +194,28 @@ class Report extends React.Component {
       },
       data: this.props.multiSeriesChartData,
     };
+    if(!this.state.mounted) {
+      return (
+          <div>
+            <Form
+                appKeys={this.props.appKeys}
+                onSubmit={this._handleSubmit}
+                onDelete={this.onDelete}
+                value={this.state.inputValue}
+                onChange={(e) => this.setState({ inputValue: e.target.value })}
+            />
+          </div>
+      )
+    }
     return (
       <>
         <div>
           <Form
-            appKeys={this.props.appKeys}
-            onSubmit={this._handleSubmit}
-            onDelete={this.onDelete}
-            value={this.state.inputValue}
-            onChange={(e) => this.setState({ inputValue: e.target.value })}
+              appKeys={this.props.appKeys}
+              onSubmit={this._handleSubmit}
+              onDelete={this.onDelete}
+              value={this.state.inputValue}
+              onChange={(e) => this.setState({ inputValue: e.target.value })}
           />
         </div>
         <div>
