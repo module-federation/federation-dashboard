@@ -113,7 +113,7 @@ export const generateTimeSeriesScatterChartData = (data) => {
         scatterObject[key].dataPoints.push({
           y: parseInt(toFixed(result.audits[key].numericValue)),
           x: new Date(result.fetchTime).getTime(),
-          label: key,
+          // label: key,
         });
       });
     return Object.values(scatterObject);
