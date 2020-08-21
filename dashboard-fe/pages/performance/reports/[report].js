@@ -26,9 +26,23 @@ class Report extends React.Component {
     super(props);
     this.state = {
       inputValue: "",
+      timeSeriesScatterData: props.timeSeriesScatterData,
     };
     this.toggleDataSeries = this.toggleDataSeries.bind(this);
   }
+  componentDidMount = async () => {
+    const {query }= this.props
+
+    const timeSeriesData = await fetch(
+      hostname + "api/get-timeseries?report=" + query.report
+    ).then((res) => res.json());
+
+    const scatterData = generateTimeSeriesScatterChartData(timeSeriesData);
+
+    this.setState({
+      timeSeriesScatterData: scatterData,
+    });
+  };
 
   toggleDataSeries(e) {
     if (typeof e.dataSeries.visible === "undefined" || e.dataSeries.visible) {
@@ -136,8 +150,8 @@ class Report extends React.Component {
       axisX: {
         title: "Date",
         labelFormatter: function (e) {
-          console.log(e.value)
-          return e.value
+          console.log(e.value);
+          return e.value;
         },
       },
       axisY: {
@@ -152,7 +166,7 @@ class Report extends React.Component {
         itemclick: this.toggleDataSeries,
       },
 
-      data: this.props.timeSeriesScatterData,
+      data: this.state.timeSeriesScatterData,
     };
     const multiSeriesChartOptions = {
       theme: "dark2",
@@ -225,6 +239,7 @@ Report.getInitialProps = async ({ query }) => {
     meta,
     appKeys: Object.keys(report),
     timeSeriesScatterData: scatterData,
+    query
   };
 };
 export default Report;
