@@ -31,8 +31,9 @@ class Report extends React.Component {
     this.toggleDataSeries = this.toggleDataSeries.bind(this);
   }
   componentDidMount = async () => {
-    const {query }= this.props
-
+    const { query } = this.props;
+    window.CanvasJS = require("canvasjs-react-charts");
+    console.log(window.CanvasJS);
     const timeSeriesData = await fetch(
       hostname + "api/get-timeseries?report=" + query.report
     ).then((res) => res.json());
@@ -150,8 +151,11 @@ class Report extends React.Component {
       axisX: {
         title: "Date",
         labelFormatter: function (e) {
-          console.log(e.value);
-          return e.value;
+          if(process.browser) {
+            const {CanvasJS} = window.CanvasJS
+            return CanvasJS.formatDate(e.value, "DD MMM")
+          }
+          return e.value
         },
       },
       axisY: {
@@ -239,7 +243,7 @@ Report.getInitialProps = async ({ query }) => {
     meta,
     appKeys: Object.keys(report),
     timeSeriesScatterData: scatterData,
-    query
+    query,
   };
 };
 export default Report;
