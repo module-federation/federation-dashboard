@@ -5,7 +5,7 @@ export const schema = Joi.object({
   id: Joi.string().required(),
   name: Joi.string().required(),
   date: Joi.date().required(),
-  value: Joi.number().required()
+  value: Joi.number().required(),
 });
 
 export default class MetricValue {

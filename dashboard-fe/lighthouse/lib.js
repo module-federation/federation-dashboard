@@ -9,6 +9,7 @@ const cliProgress = require("cli-progress");
 const psi = require("psi");
 const config = require("../src/config");
 const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+import Promise from "bluebird";
 
 const RUNS = 30;
 let hasStarted = false;
@@ -191,24 +192,34 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
     if (!fs.existsSync(dirName)) {
       fs.mkdirSync(dirName, { recursive: true });
     }
-    const runner = async (title) => {
-      let testResults = [];
 
+    const runner = async (title) => {
+      let fakeArray = [];
+      let tracker = [];
       for (let i = 1; i <= RUNS; i++) {
-        const taskRunResult = config.USE_CLOUD
-          ? await launchPageSpeedInsightsLighthouse(argv.url, desktop)
-          : await launchChromeAndRunLighthouse(argv.url);
-        bar1.update(i);
-        delete taskRunResult.js.stackPacks;
-        delete taskRunResult.js.configSettings;
-        delete taskRunResult.js.categoryGroups;
-        delete taskRunResult.js.environment;
-        delete taskRunResult.js.userAgent;
-        delete taskRunResult.js.i18n;
-        delete taskRunResult.js.audits["screenshot-thumbnails"];
-        delete taskRunResult.js.audits["final-screenshot"];
-        testResults.push(taskRunResult);
+        fakeArray.push("");
       }
+      const promResults = Promise.map(
+        fakeArray,
+        async () => {
+          const taskRunResult = config.USE_CLOUD
+            ? await launchPageSpeedInsightsLighthouse(argv.url, desktop)
+            : await launchChromeAndRunLighthouse(argv.url);
+          tracker.push('')
+          bar1.update(tracker.length);
+          delete taskRunResult.js.stackPacks;
+          delete taskRunResult.js.configSettings;
+          delete taskRunResult.js.categoryGroups;
+          delete taskRunResult.js.environment;
+          delete taskRunResult.js.userAgent;
+          delete taskRunResult.js.i18n;
+          delete taskRunResult.js.audits["screenshot-thumbnails"];
+          delete taskRunResult.js.audits["final-screenshot"];
+          return taskRunResult;
+        },
+        { concurrency: config.USE_CLOUD ? 3 : 1 }
+      );
+const testResults = await promResults
       if (title) {
         const scatterData = {
           [title]: testResults.map(({ js }) => {
