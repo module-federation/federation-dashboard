@@ -116,7 +116,6 @@ export const generateTimeSeriesScatterChartData = (data) => {
           // label: key,
         });
       });
-    return Object.values(scatterObject);
   });
   return Object.values(scatterObject);
 };
