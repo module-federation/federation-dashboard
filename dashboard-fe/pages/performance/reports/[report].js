@@ -153,7 +153,7 @@ class Report extends React.Component {
       axisX: {
         title: "Date",
         labelFormatter: function (e) {
-          if(process.browser) {
+          if(process.browser && window.CanvasJS) {
             const {CanvasJS} = window.CanvasJS
             return CanvasJS.formatDate(e.value, "DD MMM")
           }
