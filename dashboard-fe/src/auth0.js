@@ -14,7 +14,7 @@ export default process.env.WITH_AUTH == "true"
         cookieLifetime: config.SESSION_COOKIE_LIFETIME,
         storeIdToken: false,
         storeRefreshToken: false,
-        storeAccessToken: false
-      }
+        storeAccessToken: false,
+      },
     })
   : () => {};

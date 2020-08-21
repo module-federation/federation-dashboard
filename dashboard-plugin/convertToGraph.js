@@ -9,7 +9,7 @@ const convertToGraph = ({
   environment,
   version,
   posted,
-  group
+  group,
 }) => {
   validateParams({ federationRemoteEntry, modules, topLevelPackage, metadata });
 
@@ -28,7 +28,7 @@ const convertToGraph = ({
           consumingApplicationID: app,
           applicationID: data[2].replace("webpack/container/reference/", ""),
           name,
-          usedIn: new Set()
+          usedIn: new Set(),
         };
         consumes.push(consume);
         consumesByName[`${consume.applicationID}/${name}`] = consume;
@@ -50,7 +50,7 @@ const convertToGraph = ({
           name,
           applicationID: app,
           requires: new Set(),
-          file: file.import[0]
+          file: file.import[0],
         };
       });
     }
@@ -59,12 +59,12 @@ const convertToGraph = ({
   const convertDeps = (deps = {}) =>
     Object.entries(deps).map(([version, name]) => ({
       name,
-      version: version.replace(`${name}-`, "")
+      version: version.replace(`${name}-`, ""),
     }));
   const convertedDeps = {
     dependencies: convertDeps(topLevelPackage.dependencies),
     devDependencies: convertDeps(topLevelPackage.devDependencies),
-    optionalDependencies: convertDeps(topLevelPackage.optionalDependencies)
+    optionalDependencies: convertDeps(topLevelPackage.optionalDependencies),
   };
 
   modules.forEach(({ identifier, issuerName, reasons }) => {
@@ -90,8 +90,8 @@ const convertToGraph = ({
       [
         convertedDeps.dependencies,
         convertedDeps.devDependencies,
-        convertedDeps.optionalDependencies
-      ].forEach(deps => {
+        convertedDeps.optionalDependencies,
+      ].forEach((deps) => {
         const dep = deps.find(({ name }) => name === data[2]);
         if (dep) {
           version = dep.version;
@@ -103,7 +103,7 @@ const convertToGraph = ({
         name: data[2],
         version,
         location: data[2],
-        applicationID: app
+        applicationID: app,
       };
     }
   });
@@ -118,21 +118,21 @@ const convertToGraph = ({
     remote,
     versionData,
     overrides: Object.values(overrides),
-    consumes: consumes.map(con => ({
+    consumes: consumes.map((con) => ({
       ...con,
-      usedIn: Array.from(con.usedIn.values()).map(file => ({
+      usedIn: Array.from(con.usedIn.values()).map((file) => ({
         file,
-        url: `${sourceUrl}/${file}`
-      }))
+        url: `${sourceUrl}/${file}`,
+      })),
     })),
-    modules: Object.values(modulesObj).map(mod => ({
+    modules: Object.values(modulesObj).map((mod) => ({
       ...mod,
-      requires: Array.from(mod.requires.values())
+      requires: Array.from(mod.requires.values()),
     })),
     environment,
     version,
     posted,
-    group
+    group,
   };
 
   return out;
