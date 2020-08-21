@@ -137,14 +137,13 @@ class Report extends React.Component {
       },
       axisX: {
         title: "Date",
-        // interval: 3,
-        // intervalType: "day",
       },
       axisY: {
         title: "Timing",
         suffix: "ms",
         includeZero: false,
         logarithmic: true,
+        interval: 0.2,
       },
       legend: {
         cursor: "pointer",
