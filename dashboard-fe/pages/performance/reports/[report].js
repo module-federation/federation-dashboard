@@ -7,8 +7,6 @@ import {
   generateTimeSeriesScatterChartData,
 } from "../../../lighthouse/utils";
 import Form from "../../../components/FormVarient";
-import { ListItem, List, IconButton } from "@material-ui/core";
-import { Delete } from "@material-ui/icons";
 
 const isProd = process.env.NODE_ENV !== "development";
 
@@ -137,6 +135,10 @@ class Report extends React.Component {
       },
       axisX: {
         title: "Date",
+        labelFormatter: function (e) {
+          console.log(e.value)
+          return e.value
+        },
       },
       axisY: {
         title: "Timing",
