@@ -36,6 +36,7 @@ const typeDefs = gql`
       name: String!
       date: String!
       value: Float!
+      url: String
       q1: Float
       q2: Float
       q3: Float
@@ -43,11 +44,12 @@ const typeDefs = gql`
       min: Float
     ): Boolean!
     updateMetric(
-      group: String!
+   group: String!
       application: String
       name: String!
-      date: String
+      date: String!
       value: Float!
+      url: String
       q1: Float
       q2: Float
       q3: Float
@@ -132,6 +134,7 @@ const typeDefs = gql`
   }
 
   type MetricValue {
+    url:String
     name: String!
     date: Date!
     value: Float!
@@ -219,7 +222,7 @@ const resolvers = {
     },
   },
   Mutation: {
-    addMetric: async (_, { group, application, date, name, value }) => {
+    addMetric: async (_, { group, application, date, name, value,url }) => {
       await dbDriver.setup();
       dbDriver.application_addMetrics(application, {
         date: new Date(Date.parse(date)),
@@ -227,12 +230,13 @@ const resolvers = {
         type: application ? "application" : "group",
         name,
         value,
+        url
         //TODO add extra keys
       });
       return true;
     },
 
-    updateMetric: async (_, { group, application, date, name, value }) => {
+    updateMetric: async (_, { group, application, date, name, value,url }) => {
       await dbDriver.setup();
       console.log('Mutation',group,value,name)
       dbDriver.group_updateMetric(application, {
@@ -240,6 +244,7 @@ const resolvers = {
         type: application ? "application" : "group",
         name,
         value,
+        url
         //TODO add extra keys
       });
       return true;
