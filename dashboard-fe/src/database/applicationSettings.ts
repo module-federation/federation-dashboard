@@ -7,5 +7,5 @@ export const schema = Joi.object({
 });
 
 export default class ApplicationSettings {
-  trackedURLs: TrackedURL[];
+  trackedURLs?: TrackedURL[];
 }
