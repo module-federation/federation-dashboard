@@ -1,13 +1,36 @@
 import React, { useState, useEffect, Fragment } from "react";
 import List from "@material-ui/core/List";
+import gql from "graphql-tag";
 
 import ListItem from "../../components/ListItem";
 import Form from "../../components/Form";
+import { useQuery } from "@apollo/react-hooks";
+import store from "../../src/store";
+
+const GET_TRACKED = gql`
+  query($group: String!) {
+    groups(name: $group) {
+      metrics {
+        name
+        date
+        value
+      }
+    }
+  }
+`;
 
 const Perfrmance = ({ linkList }) => {
   const [todos, setTodos] = useState(linkList);
   const [inputValue, setInputValue] = useState("");
   const [inputName, setInputNameValue] = useState("Initial Baseline");
+
+  const { data } = useQuery(GET_TRACKED, {
+    variables: {
+      group: "default",
+    },
+  });
+
+  console.log(data);
 
   //useEffect works basically as componentDidMount and componentDidUpdate
   useEffect(() => {
