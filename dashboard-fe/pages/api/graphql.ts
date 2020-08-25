@@ -32,10 +32,29 @@ const typeDefs = gql`
     updateSiteSettings(settings: SiteSettingsInput): SiteSettings!
     addMetric(
       group: String!
-      application: String!
+      application: String
       name: String!
       date: String!
       value: Float!
+      url: String
+      q1: Float
+      q2: Float
+      q3: Float
+      max: Float
+      min: Float
+    ): Boolean!
+    updateMetric(
+      group: String!
+      application: String
+      name: String!
+      date: String!
+      value: Float!
+      url: String
+      q1: Float
+      q2: Float
+      q3: Float
+      max: Float
+      min: Float
     ): Boolean!
   }
 
@@ -115,6 +134,7 @@ const typeDefs = gql`
   }
 
   type MetricValue {
+    url: String
     name: String!
     date: Date!
     value: Float!
@@ -147,6 +167,7 @@ const typeDefs = gql`
     name: String!
     metadata: [Metadata!]!
     applications(id: String): [Application!]!
+    metrics(names: [String!]): [MetricValue!]!
   }
 
   type Metadata {
@@ -201,14 +222,30 @@ const resolvers = {
     },
   },
   Mutation: {
-    addMetric: async (_, { group, application, date, name, value }) => {
+    addMetric: async (_, { group, application, date, name, value, url }) => {
       await dbDriver.setup();
       dbDriver.application_addMetrics(application, {
         date: new Date(Date.parse(date)),
-        id: application,
-        type: "application",
+        id: application ? application : group,
+        type: application ? "application" : "group",
         name,
         value,
+        url,
+        //TODO add extra keys
+      });
+      return true;
+    },
+
+    updateMetric: async (_, { group, application, date, name, value, url }) => {
+      await dbDriver.setup();
+      console.log("Mutation", group, value, name);
+      dbDriver.group_updateMetric(application, {
+        id: application ? application : group,
+        type: application ? "application" : "group",
+        name,
+        value,
+        url,
+        //TODO add extra keys
       });
       return true;
     },
@@ -292,6 +329,16 @@ const resolvers = {
     },
   },
   Group: {
+    metrics: async ({ id }, { names }, ctx) => {
+      await dbDriver.setup();
+      const metrics = await dbDriver.group_getMetrics(id);
+      if (names) {
+      } else {
+      }
+      return names
+        ? metrics.filter(({ name }) => names.includes(name))
+        : metrics;
+    },
     applications: async ({ id }, { id: applicationId }, ctx) => {
       ctx.group = id;
       await dbDriver.setup();
@@ -312,7 +359,6 @@ const apolloServer = new ApolloServer({
 
 const handler = apolloServer.createHandler({
   path: "/api/graphql",
-  cors: true,
 });
 
 export const config = {
