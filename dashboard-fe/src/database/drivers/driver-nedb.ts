@@ -227,11 +227,13 @@ export default class DriverNedb implements Driver {
     });
   }
 
+  // @ts-ignore
   async group_updateMetric(
     application: Application,
     group: Group
   ): Promise<Array<Group>> {
     console.log("group_updateMetrics", group);
+    // @ts-ignore
     return this.metricsTable.update({ id: group.id }, group);
   }
 
