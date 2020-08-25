@@ -205,7 +205,7 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
           const taskRunResult = config.USE_CLOUD
             ? await launchPageSpeedInsightsLighthouse(argv.url, desktop)
             : await launchChromeAndRunLighthouse(argv.url);
-          tracker.push('')
+          tracker.push("");
           bar1.update(tracker.length);
           delete taskRunResult.js.stackPacks;
           delete taskRunResult.js.configSettings;
@@ -219,7 +219,7 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
         },
         { concurrency: config.USE_CLOUD ? 3 : 1 }
       );
-const testResults = await promResults
+      const testResults = await promResults;
       if (title) {
         const scatterData = {
           [title]: testResults.map(({ js }) => {
