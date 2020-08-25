@@ -4,7 +4,7 @@ import Metadata, { schema as metadataSchema } from "./metadata";
 
 export const schema = Joi.object({
   url: Joi.string().required(),
-  metadata: Joi.array().items(metadataSchema).required(),
+  metadata: Joi.array().items(metadataSchema),
 });
 
 export default class TrackedURL {
