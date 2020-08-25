@@ -94,9 +94,17 @@ const typeDefs = gql`
     name: String!
     value: String!
   }
+
+  input TrackedURLVariantInput {
+    name: String!
+    search: String
+    new: Boolean
+  }
+
   input TrackedURLInput {
     url: String!
-    metadata: [MetadataInput!]!
+    metadata: [MetadataInput]
+    variants: [TrackedURLVariantInput!]!
   }
 
   input GroupSettingsInput {
@@ -178,11 +186,18 @@ const typeDefs = gql`
 
   type TrackedURL {
     url: String!
+    variants: [TrackedURLVariant!]!
     metadata: [Metadata!]!
   }
 
   type ApplicationSettings {
     trackedURLs: [TrackedURL]
+  }
+
+  type TrackedURLVariant {
+    name: String!
+    search: String!
+    new: Boolean!
   }
 
   type Application {

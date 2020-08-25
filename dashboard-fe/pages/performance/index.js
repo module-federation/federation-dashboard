@@ -1,19 +1,48 @@
 import React, { useState, useEffect, Fragment } from "react";
 import List from "@material-ui/core/List";
+import Button from "@material-ui/core/Button";
 import gql from "graphql-tag";
 
 import ListItem from "../../components/ListItem";
 import Form from "../../components/Form";
-import { useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import store from "../../src/store";
+import {
+  GET_HEAD_VERSION,
+  SET_REMOTE_VERSION,
+} from "../../components/application/CurrentVersion";
 
+const makeIDfromURL = (url) => {
+  const urlObj = new URL(url);
+  console.log(urlObj);
+  let id = urlObj.host.replace("www.", "");
+  if (urlObj.pathname !== "/") {
+    id = id + urlObj.pathname.replace(/\//g, "_");
+  }
+  return { id, url: urlObj.origin + urlObj.pathname, search: urlObj.search };
+};
 const GET_TRACKED = gql`
   query($group: String!) {
     groups(name: $group) {
-      metrics {
-        name
-        date
-        value
+      settings {
+        trackedURLs {
+          url
+        }
+      }
+    }
+  }
+`;
+
+const ADD_URL = gql`
+  mutation($settings: GroupSettingsInput!) {
+    updateGroupSettings(group: "default", settings: $settings) {
+      trackedURLs {
+        id
+        metadata {
+          name
+          url
+          new
+        }
       }
     }
   }
@@ -30,7 +59,31 @@ const Perfrmance = ({ linkList }) => {
     },
   });
 
-  console.log(data);
+  const [setUrl] = useMutation(ADD_URL);
+
+  const portToGraph = () => {
+    const transform = todos.reduce((acc, item) => {
+      const { id, url, search } = makeIDfromURL(item.url);
+      if (!acc[id]) {
+        acc[id] = {
+          url: url,
+          variant: [{ search: search, name: item.name, new: item.new }],
+        };
+      } else {
+        acc[id].metadata.push({ search, name: item.name, new: item.new });
+      }
+      return acc;
+    }, {});
+    console.log(JSON.stringify(Object.values(transform)));
+
+    // setUrl({
+    //   variables: {
+    //     settings: {
+    //       trackedURLs: Object.values(transform),
+    //     },
+    //   },
+    // });
+  };
 
   //useEffect works basically as componentDidMount and componentDidUpdate
   useEffect(() => {
@@ -122,6 +175,7 @@ const Perfrmance = ({ linkList }) => {
         onChange={(e) => setInputValue(e.target.value)}
         onChangeName={(e) => setInputNameValue(e.target.value)}
       />
+      <Button onClick={portToGraph}>port to graph</Button>
       <List>
         {todos.map((todo, index) => (
           <ListItem
