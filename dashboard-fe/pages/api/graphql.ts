@@ -17,6 +17,15 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    updateApplicationSettings(
+      group: String!
+      application: String!
+      settings: ApplicationSettingsInput!
+    ): ApplicationSettings
+    updateGroupSettings(
+      group: String!
+      settings: GroupSettingsInput!
+    ): GroupSettings
     publishVersion(
       group: String!
       application: String!
@@ -79,6 +88,22 @@ const typeDefs = gql`
   }
   input SiteSettingsInput {
     webhooks: [WebhookInput]!
+  }
+
+  input MetadataInput {
+    name: String!
+    value: String!
+  }
+  input TrackedURLInput {
+    url: String!
+    metadata: [MetadataInput!]!
+  }
+
+  input GroupSettingsInput {
+    trackedURLs: [TrackedURLInput]
+  }
+  input ApplicationSettingsInput {
+    trackedURLs: [TrackedURLInput]
   }
 
   type DashboardInfo {
@@ -237,6 +262,21 @@ const resolvers = {
     },
   },
   Mutation: {
+    updateApplicationSettings: async (_, { group, application, settings }) => {
+      await dbDriver.setup();
+      const app = await dbDriver.application_find(application);
+      app.settings = settings;
+      await dbDriver.application_update(app);
+      return settings;
+    },
+    updateGroupSettings: async (_, { group, settings }) => {
+      await dbDriver.setup();
+      const grp = await dbDriver.group_find(group);
+      console.log(grp);
+      grp.settings = settings;
+      await dbDriver.group_update(grp);
+      return settings;
+    },
     addMetric: async (_, { group, application, date, name, value, url }) => {
       await dbDriver.setup();
       dbDriver.application_addMetrics(application, {
