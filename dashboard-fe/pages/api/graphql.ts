@@ -151,6 +151,15 @@ const typeDefs = gql`
     tags: [String!]!
   }
 
+  type TrackedURL {
+    url: String!
+    metadata: [Metadata!]!
+  }
+
+  type ApplicationSettings {
+    trackedURLs: [TrackedURL]
+  }
+
   type Application {
     id: String!
     name: String!
@@ -160,6 +169,11 @@ const typeDefs = gql`
     metrics(names: [String!]): [MetricValue!]!
     overrides: [ApplicationOverride!]!
     versions(environment: String, latest: Boolean): [ApplicationVersion!]!
+    settings: ApplicationSettings
+  }
+
+  type GroupSettings {
+    trackedURLs: [TrackedURL]
   }
 
   type Group {
@@ -168,6 +182,7 @@ const typeDefs = gql`
     metadata: [Metadata!]!
     applications(id: String): [Application!]!
     metrics(names: [String!]): [MetricValue!]!
+    settings: GroupSettings
   }
 
   type Metadata {

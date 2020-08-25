@@ -1,5 +1,8 @@
 import Joi from "@hapi/joi";
 
+import ApplicationSettings, {
+  schema as applicationSettingsSchema,
+} from "./applicationSettings";
 import Metadata, { schema as metadataSchema } from "./metadata";
 import ApplicationOverride, {
   schema as applicationOverrideSchema,
@@ -12,6 +15,7 @@ export const schema = Joi.object({
   overrides: Joi.array().items(applicationOverrideSchema).required(),
   tags: Joi.array().items(Joi.string()).required(),
   metadata: Joi.array().items(metadataSchema).required(),
+  settings: applicationSettingsSchema,
 });
 
 export default class Application {
@@ -21,4 +25,5 @@ export default class Application {
   metadata: Metadata[];
   tags: string[];
   overrides: ApplicationOverride[];
+  settings: ApplicationSettings;
 }
