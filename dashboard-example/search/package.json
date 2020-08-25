@@ -9,7 +9,7 @@
     "babel-loader": "8.1.0",
     "css-loader": "3.6.0",
     "html-webpack-plugin": "git://github.com/ScriptedAlchemy/html-webpack-plugin#master",
-    "less-loader": "6.2.0",
+    "less-loader": "7.0.0",
     "serve": "11.3.2",
     "style-loader": "1.2.1",
     "webpack": "5.0.0-beta.24",
