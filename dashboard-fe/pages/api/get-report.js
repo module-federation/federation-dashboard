@@ -12,7 +12,7 @@ export default async (req, res) => {
   const json = await getData(
     path.join("public/reports", safePath, "scatter.json"),
     "utf8"
-  );
+  ).catch(() => "{}");
 
   res.send(json);
 };
