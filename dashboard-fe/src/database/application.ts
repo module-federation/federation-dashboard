@@ -25,5 +25,5 @@ export default class Application {
   metadata: Metadata[];
   tags: string[];
   overrides: ApplicationOverride[];
-  settings: ApplicationSettings;
+  settings?: ApplicationSettings;
 }
