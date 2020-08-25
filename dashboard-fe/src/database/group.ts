@@ -15,5 +15,5 @@ export default class Group {
   id: string;
   name: string;
   metadata: Metadata[];
-  settings: GroupSettings;
+  settings?: GroupSettings;
 }
