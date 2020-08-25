@@ -185,8 +185,8 @@ const TimeSeriesChart = React.memo((props) => {
       title: "Timing",
       suffix: "ms",
       includeZero: false,
-      logarithmic: true,
-      interval: 0.2,
+      // logarithmic: true,
+      // interval: 0.2,
       minimum: 500,
     },
     legend: {
