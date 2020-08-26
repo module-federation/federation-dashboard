@@ -12,7 +12,7 @@ import {
   SET_REMOTE_VERSION,
 } from "../../components/application/CurrentVersion";
 
-import { makeIDfromURL } from "../../lighthouse/utils";
+import { makeIDfromURL,removeMeta } from "../../lighthouse/utils";
 const GET_TRACKED = gql`
   query($group: String!) {
     groups(name: $group) {
@@ -57,7 +57,10 @@ const Perfrmance = ({ linkList }) => {
   });
 
   React.useEffect(() => {
-    if (data) setTodos(data.groups[0].settings.trackedURLs);
+   if(data) {
+     removeMeta(data.groups[0].settings.trackedURLs);
+     setTodos(data.groups[0].settings.trackedURLs);
+   }
   }, [data]);
 
   const [setUrl] = useMutation(ADD_URL);
@@ -77,8 +80,10 @@ const Perfrmance = ({ linkList }) => {
     }, {});
 
     setUrl({
-      settings: {
-        trackedURLs: Object.values(transform),
+      variables: {
+        settings: {
+          trackedURLs: Object.values(transform),
+        },
       },
     });
   };
@@ -105,7 +110,14 @@ const Perfrmance = ({ linkList }) => {
       setTodos(newArr);
       setInputValue("");
       setInputNameValue("");
-      setUrl(newArr);
+
+      setUrl({
+        variables: {
+          settings: {
+            trackedURLs: newArr,
+          },
+        },
+      });
       // fetch("/api/add-url", { method: "POST", body: null });
       // fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
     } else {
@@ -119,7 +131,14 @@ const Perfrmance = ({ linkList }) => {
     if (type === "remove") newArr.splice(index, 1);
 
     setTodos(newArr);
-    setUrl(newArr);
+
+    setUrl({
+      variables: {
+        settings: {
+          trackedURLs: newArr,
+        },
+      },
+    });
 
     // fetch("/api/add-url", { method: "POST", body: null });
     // fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
@@ -136,7 +155,13 @@ const Perfrmance = ({ linkList }) => {
     });
     newArr[index].variants = updated;
     setTodos(newArr);
-    setUrl(newArr);
+    setUrl({
+      variables: {
+        settings: {
+          trackedURLs: newArr,
+        },
+      },
+    });
     // fetch("/api/add-url", { method: "POST", body: null });
     // fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
   };
@@ -153,7 +178,13 @@ const Perfrmance = ({ linkList }) => {
       acc.push(item);
       return acc;
     }, []);
-    setUrl(toRerun);
+    setUrl({
+      variables: {
+        settings: {
+          trackedURLs: toRerun,
+        },
+      },
+    });
     setTodos(toRerun);
 
     // fetch("/api/add-url", { method: "POST", body: null });

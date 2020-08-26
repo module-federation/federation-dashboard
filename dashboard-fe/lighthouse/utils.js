@@ -250,3 +250,12 @@ export const makeIDfromURL = (url) => {
   }
   return { id, url: urlObj.origin + urlObj.pathname, search: urlObj.search };
 };
+
+export const removeMeta = (obj) => {
+  for(let prop in obj) {
+    if (prop === '__typename')
+      delete obj[prop];
+    else if (typeof obj[prop] === 'object')
+      removeMeta(obj[prop]);
+  }
+}
