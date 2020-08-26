@@ -45,7 +45,7 @@ const ADD_URL = gql`
   }
 `;
 
-const Perfrmance = ({ linkList }) => {
+const Performance = ({ linkList }) => {
   const [todos, setTodos] = useState(linkList);
   const [inputValue, setInputValue] = useState("");
   const [inputName, setInputNameValue] = useState("Initial Baseline");
@@ -226,7 +226,7 @@ const Perfrmance = ({ linkList }) => {
     </Fragment>
   );
 };
-// Perfrmance.getInitialProps = async () => {
+// Performance.getInitialProps = async () => {
 //   const isProd = process.env.NODE_ENV !== "development";
 //   const hostname = isProd
 //     ? process.browser
@@ -248,4 +248,4 @@ const Perfrmance = ({ linkList }) => {
 //   });
 //   return { linkList };
 // };
-export default Perfrmance;
+export default Performance;
