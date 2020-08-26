@@ -6,6 +6,8 @@ import dbDriver from "../../src/database/drivers";
 import ModuleManager from "../../src/managers/Module";
 import VersionManager from "../../src/managers/Version";
 
+import "../../src/webhooks";
+
 const typeDefs = gql`
   scalar Date
 

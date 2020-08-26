@@ -4,9 +4,9 @@ import fetch from "node-fetch";
 // import "../lighthouse/add-url"
 
 const hookSusbscriber = async (type, payload) => {
-    console.log(type,payload)
+  console.log([type, payload]);
 
-    const settings = await dbDriver.siteSettings_get();
+  const settings = await dbDriver.siteSettings_get();
   return Promise.all(
     settings.webhooks
       .filter(({ event }) => event === type)
