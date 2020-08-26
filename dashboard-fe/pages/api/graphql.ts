@@ -287,7 +287,6 @@ const resolvers = {
     updateGroupSettings: async (_, { group, settings }) => {
       await dbDriver.setup();
       const grp = await dbDriver.group_find(group);
-      console.log(grp);
       grp.settings = settings;
       await dbDriver.group_update(grp);
       return settings;

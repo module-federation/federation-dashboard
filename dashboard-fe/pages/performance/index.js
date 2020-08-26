@@ -12,14 +12,7 @@ import {
   SET_REMOTE_VERSION,
 } from "../../components/application/CurrentVersion";
 
-const makeIDfromURL = (url) => {
-  const urlObj = new URL(url);
-  let id = urlObj.host.replace("www.", "");
-  if (urlObj.pathname !== "/") {
-    id = id + urlObj.pathname.replace(/\//g, "_");
-  }
-  return { id, url: urlObj.origin + urlObj.pathname, search: urlObj.search };
-};
+import { makeIDfromURL } from "../../lighthouse/utils";
 const GET_TRACKED = gql`
   query($group: String!) {
     groups(name: $group) {

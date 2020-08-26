@@ -241,3 +241,12 @@ export const generateMultiSeriesChartData = (data) => {
 
   return Object.values(metricGroups);
 };
+
+export const makeIDfromURL = (url) => {
+  const urlObj = new URL(url);
+  let id = urlObj.host.replace("www.", "");
+  if (urlObj.pathname !== "/") {
+    id = id + urlObj.pathname.replace(/\//g, "_");
+  }
+  return { id, url: urlObj.origin + urlObj.pathname, search: urlObj.search };
+};
