@@ -238,7 +238,7 @@ export default class DriverNedb implements Driver {
     application: Application,
     group: Group
   ): Promise<Array<Group>> {
-    console.log("group_updateMetrics", group);
+    bus.publish("groupMetricUpdated", group);
     // @ts-ignore
     return this.metricsTable.update({ id: group.id }, group);
   }
@@ -258,6 +258,7 @@ export default class DriverNedb implements Driver {
 
   async group_update(group: Group): Promise<Array<Group>> {
     Joi.assert(group, groupSchema);
+    bus.publish("groupUpdated", group);
     return this.groupsTable.update({ id: group.id }, group);
   }
 
