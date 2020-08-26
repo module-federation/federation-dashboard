@@ -1,7 +1,9 @@
 import Joi from "@hapi/joi";
 
 import Metadata, { schema as metadataSchema } from "./metadata";
-import TrackedURLVariant, { schema as variantSchema } from "./trackedURLVariant";
+import TrackedURLVariant, {
+  schema as variantSchema,
+} from "./trackedURLVariant";
 
 export const schema = Joi.object({
   url: Joi.string().required(),
@@ -12,5 +14,5 @@ export const schema = Joi.object({
 export default class TrackedURL {
   url: string;
   metadata?: Metadata[];
-  variants: TrackedURLVariant[];
+  variants?: TrackedURLVariant[];
 }

@@ -4,7 +4,8 @@ import ListItem from "@material-ui/core/ListItem";
 import Button from "@material-ui/core/Button";
 
 export default function Item(props) {
-  const { url, dirName } = props.todo;
+  const { url } = props.todo;
+  const dirName = null;
   return (
     <ListItem>
       <Link href={`performance/reports/${dirName}`}>
@@ -16,9 +17,9 @@ export default function Item(props) {
       <Button variant="contained" onClick={props.reRun}>
         Re-run
       </Button>
-      <Link href={`performance/reports/${dirName}`}>
-        <a>View Reports</a>
-      </Link>
+      {/*<Link href={`performance/reports/${dirName}`}>*/}
+      {/*  <a>View Reports</a>*/}
+      {/*</Link>*/}
     </ListItem>
   );
 }

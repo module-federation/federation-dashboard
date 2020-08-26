@@ -14,7 +14,6 @@ import {
 
 const makeIDfromURL = (url) => {
   const urlObj = new URL(url);
-  console.log(urlObj);
   let id = urlObj.host.replace("www.", "");
   if (urlObj.pathname !== "/") {
     id = id + urlObj.pathname.replace(/\//g, "_");
@@ -27,6 +26,11 @@ const GET_TRACKED = gql`
       settings {
         trackedURLs {
           url
+          variants {
+            name
+            search
+            new
+          }
         }
       }
     }
@@ -37,10 +41,10 @@ const ADD_URL = gql`
   mutation($settings: GroupSettingsInput!) {
     updateGroupSettings(group: "default", settings: $settings) {
       trackedURLs {
-        id
-        metadata {
+        url
+        variants {
           name
-          url
+          search
           new
         }
       }
@@ -59,6 +63,10 @@ const Perfrmance = ({ linkList }) => {
     },
   });
 
+  React.useEffect(() => {
+    if (data) setTodos(data.groups[0].settings.trackedURLs);
+  }, [data]);
+
   const [setUrl] = useMutation(ADD_URL);
 
   const portToGraph = () => {
@@ -67,31 +75,21 @@ const Perfrmance = ({ linkList }) => {
       if (!acc[id]) {
         acc[id] = {
           url: url,
-          variant: [{ search: search, name: item.name, new: item.new }],
+          variants: [{ search: search, name: item.name, new: item.new }],
         };
       } else {
-        acc[id].metadata.push({ search, name: item.name, new: item.new });
+        acc[id].variants.push({ search, name: item.name, new: item.new });
       }
       return acc;
     }, {});
-    console.log(JSON.stringify(Object.values(transform)));
 
-    // setUrl({
-    //   variables: {
-    //     settings: {
-    //       trackedURLs: Object.values(transform),
-    //     },
-    //   },
-    // });
+    setUrl({
+      settings: {
+        trackedURLs: Object.values(transform),
+      },
+    });
   };
 
-  //useEffect works basically as componentDidMount and componentDidUpdate
-  useEffect(() => {
-    let count = 0;
-    todos.map((todo) => (!todo.done ? count++ : null));
-  });
-
-  //
   const _handleSubmit = (e) => {
     if (e) e.preventDefault();
     if (inputValue === "") return alert("URL is required");
@@ -103,15 +101,22 @@ const Perfrmance = ({ linkList }) => {
     if (!valueExists) {
       newArr.splice(0, 0, {
         url: inputValue,
-        name: inputName,
-        done: false,
-        new: true,
+        variants: [
+          {
+            name: inputName,
+            new: true,
+            search: makeIDfromURL(inputValue).search,
+          },
+        ],
       });
       setTodos(newArr);
       setInputValue("");
       setInputNameValue("");
-      fetch("/api/add-url", { method: "POST", body: null });
-      fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
+      setUrl(newArr);
+      // fetch("/api/add-url", { method: "POST", body: null });
+      // fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
+    } else {
+      alert("URL already exists, add variants on the page");
     }
   };
 
@@ -121,47 +126,55 @@ const Perfrmance = ({ linkList }) => {
     if (type === "remove") newArr.splice(index, 1);
 
     setTodos(newArr);
-    fetch("/api/add-url", { method: "POST", body: null });
-    fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
+    setUrl(newArr);
+
+    // fetch("/api/add-url", { method: "POST", body: null });
+    // fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
   };
 
   const _handleBntReRun = (index) => {
     const newArr = todos.slice();
     newArr[index].new = true;
-
+    const updated = newArr[index].variants.map((variant) => {
+      if (variant.name === "Initial Baseline") {
+        variant.new = true;
+      }
+      return variant;
+    });
+    newArr[index].variants = updated;
     setTodos(newArr);
-    fetch("/api/add-url", { method: "POST", body: null });
-    fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
+    setUrl(newArr);
+    // fetch("/api/add-url", { method: "POST", body: null });
+    // fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
   };
 
   const reRunAllTests = ({ type, index }) => {
-    fetch("/api/add-url", { method: "POST", body: null });
-    fetch("/api/add-url", {
-      method: "POST",
-      body: JSON.stringify(
-        todos.map((item) => {
-          if (!item.url.includes("stage")) {
-            item.new = true;
-          }
-          return item;
-        })
-      ),
-    });
-  };
+    const toRerun = todos.reduce((acc, item) => {
+      const updated = item.variants.map((variant) => {
+        if (variant.name === "Initial Baseline") {
+          variant.new = true;
+        }
+        return variant;
+      });
+      item.variants = updated;
+      acc.push(item);
+      return acc;
+    }, []);
+    setUrl(toRerun);
+    setTodos(toRerun);
 
-  const getLatest = ({ type, index }) => {
-    fetch("/api/add-url", { method: "POST", body: null });
-    fetch("/api/add-url", {
-      method: "POST",
-      body: JSON.stringify(
-        todos.map((item) => {
-          if (item.name === "PageSpeedInsightsDesktop") {
-            item.new = true;
-          }
-          return item;
-        })
-      ),
-    });
+    // fetch("/api/add-url", { method: "POST", body: null });
+    // fetch("/api/add-url", {
+    //   method: "POST",
+    //   body: JSON.stringify(
+    //     todos.map((item) => {
+    //       if (!item.url.includes("stage")) {
+    //         item.new = true;
+    //       }
+    //       return item;
+    //     })
+    //   ),
+    // });
   };
 
   return (
@@ -169,7 +182,6 @@ const Perfrmance = ({ linkList }) => {
       <Form
         onSubmit={_handleSubmit}
         reRunAllTests={reRunAllTests}
-        getLatest={getLatest}
         value={inputValue}
         name={inputName}
         onChange={(e) => setInputValue(e.target.value)}
@@ -177,38 +189,39 @@ const Perfrmance = ({ linkList }) => {
       />
       <Button onClick={portToGraph}>port to graph</Button>
       <List>
-        {todos.map((todo, index) => (
-          <ListItem
-            key={index}
-            todo={todo}
-            reRun={() => _handleBntReRun(index)}
-            remove={() => _handleBntClick({ type: "remove", index })}
-          />
-        ))}
+        {todos &&
+          todos.map((todo, index) => (
+            <ListItem
+              key={index}
+              todo={todo}
+              reRun={() => _handleBntReRun(index)}
+              remove={() => _handleBntClick({ type: "remove", index })}
+            />
+          ))}
       </List>
     </Fragment>
   );
 };
-Perfrmance.getInitialProps = async () => {
-  const isProd = process.env.NODE_ENV !== "development";
-  const hostname = isProd
-    ? process.browser
-      ? "http://mf-dash.ddns.net:3000/"
-      : "http://localhost:3000/"
-    : "http://localhost:3000/";
-
-  const urlList = await fetch(hostname + "api/get-url-list").then((res) =>
-    res.json()
-  );
-
-  const linkList = urlList.map((url) => {
-    const urlObj = new URL(url.url);
-    let dirName = urlObj.host.replace("www.", "");
-    if (urlObj.pathname !== "/") {
-      dirName = dirName + urlObj.pathname.replace(/\//g, "_");
-    }
-    return { ...url, dirName };
-  });
-  return { linkList };
-};
+// Perfrmance.getInitialProps = async () => {
+//   const isProd = process.env.NODE_ENV !== "development";
+//   const hostname = isProd
+//     ? process.browser
+//       ? "http://mf-dash.ddns.net:3000/"
+//       : "http://localhost:3000/"
+//     : "http://localhost:3000/";
+//
+//   const urlList = await fetch(hostname + "api/get-url-list").then((res) =>
+//     res.json()
+//   );
+//
+//   const linkList = urlList.map((url) => {
+//     const urlObj = new URL(url.url);
+//     let dirName = urlObj.host.replace("www.", "");
+//     if (urlObj.pathname !== "/") {
+//       dirName = dirName + urlObj.pathname.replace(/\//g, "_");
+//     }
+//     return { ...url, dirName };
+//   });
+//   return { linkList };
+// };
 export default Perfrmance;
