@@ -6,7 +6,7 @@ export const schema = Joi.object({
   name: Joi.string().required(),
   date: Joi.date().required(),
   value: Joi.number().required(),
-  url: Joi.string(),
+  url: Joi.string()
 });
 
 export default class MetricValue {

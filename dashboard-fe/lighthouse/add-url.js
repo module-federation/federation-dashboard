@@ -5,7 +5,7 @@ import { cache } from "./utils";
 import bus from "../src/event-bus";
 import dbDriver from "../src/database/drivers";
 
-const generateLighthouseReport = (group) => {
+const generateLighthouseReport = group => {
   const { trackedURLs } = group.settings;
   // const updatedTracedURLs = trackedURLs.reduce((acc,trackedURL)=>{
   //   const clonedTracedUrl = Object.assign({},trackedURL)
@@ -16,28 +16,31 @@ const generateLighthouseReport = (group) => {
   //   return acc
   // },[])
 
-
   Promise.map(trackedURLs, async ({ url, variants }) => {
-    const updatedVariants = await Promise.map(variants, async (variant) => {
+    const updatedVariants = await Promise.map(variants, async variant => {
       const { name, search, new: isNew } = variant;
       if (!isNew) {
         return variant;
       }
       let testLink = url;
-      if (search) {
+      if (search && !testLink.includes(search)) {
         testLink = testLink + search;
       }
-     variant.new = false
+      variant.new = false;
       await init(testLink, name, name || "Latest");
-      return variant
-    })
+      return variant;
+    });
     return {
       url,
-      variants:updatedVariants
-    }
-  }).then(updatedTrackedURLs => {
-    console.log(updatedTrackedURLs)
-  })
+      variants: updatedVariants
+    };
+  }).then(async updatedTrackedURLs => {
+    await dbDriver.setup();
+    const grp = await dbDriver.group_find(group.id);
+    group.settings.trackedURLs = updatedTrackedURLs;
+    grp.settings = group.settings;
+    return dbDriver.group_update(grp);
+  });
   return;
   return Promise.map(
     sourceData,
@@ -56,7 +59,7 @@ const generateLighthouseReport = (group) => {
           fs.readFileSync("public/urls.json", "utf8")
         );
 
-        const wr = Object.values(freshDataSource).map((x) => {
+        const wr = Object.values(freshDataSource).map(x => {
           if (x.url === url && x.name === name) {
             x.new = false;
           }

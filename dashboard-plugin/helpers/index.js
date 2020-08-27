@@ -2,7 +2,7 @@ function validateParams({
   federationRemoteEntry,
   topLevelPackage,
   metadata,
-  modules,
+  modules
 }) {
   function objHasKeys(nestedObj, pathArr) {
     return pathArr.reduce(
@@ -18,7 +18,7 @@ function validateParams({
   const hasDependencies = objHasKeys(topLevelPackage, ["dependencies"]);
   const hasDevDependencies = objHasKeys(topLevelPackage, ["devDependencies"]);
   const hasOptionalDependencies = objHasKeys(topLevelPackage, [
-    "optionalDependencies",
+    "optionalDependencies"
   ]);
   if (federationRemoteEntry) {
     if (
