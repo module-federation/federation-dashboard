@@ -252,10 +252,8 @@ export const makeIDfromURL = (url) => {
 };
 
 export const removeMeta = (obj) => {
-  for(let prop in obj) {
-    if (prop === '__typename')
-      delete obj[prop];
-    else if (typeof obj[prop] === 'object')
-      removeMeta(obj[prop]);
+  for (let prop in obj) {
+    if (prop === "__typename") delete obj[prop];
+    else if (typeof obj[prop] === "object") removeMeta(obj[prop]);
   }
-}
+};

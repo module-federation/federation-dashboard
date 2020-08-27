@@ -12,7 +12,7 @@ import {
   SET_REMOTE_VERSION,
 } from "../../components/application/CurrentVersion";
 
-import { makeIDfromURL,removeMeta } from "../../lighthouse/utils";
+import { makeIDfromURL, removeMeta } from "../../lighthouse/utils";
 const GET_TRACKED = gql`
   query($group: String!) {
     groups(name: $group) {
@@ -48,7 +48,7 @@ const ADD_URL = gql`
 const Performance = ({ linkList }) => {
   const [todos, setTodos] = useState(linkList);
   const [inputValue, setInputValue] = useState("");
-  const [inputName, setInputNameValue] = useState("Initial Baseline");
+  const [inputName, setInputNameValue] = useState("Latest");
 
   const { data } = useQuery(GET_TRACKED, {
     variables: {
@@ -57,10 +57,10 @@ const Performance = ({ linkList }) => {
   });
 
   React.useEffect(() => {
-   if(data) {
-     removeMeta(data.groups[0].settings.trackedURLs);
-     setTodos(data.groups[0].settings.trackedURLs);
-   }
+    if (data) {
+      removeMeta(data.groups[0].settings.trackedURLs);
+      setTodos(data.groups[0].settings.trackedURLs);
+    }
   }, [data]);
 
   const [setUrl] = useMutation(ADD_URL);
@@ -148,7 +148,7 @@ const Performance = ({ linkList }) => {
     const newArr = todos.slice();
     newArr[index].new = true;
     const updated = newArr[index].variants.map((variant) => {
-      if (variant.name === "Initial Baseline") {
+      if (variant.name === "Latest") {
         variant.new = true;
       }
       return variant;
@@ -169,7 +169,7 @@ const Performance = ({ linkList }) => {
   const reRunAllTests = ({ type, index }) => {
     const toRerun = todos.reduce((acc, item) => {
       const updated = item.variants.map((variant) => {
-        if (variant.name === "Initial Baseline") {
+        if (variant.name === "Latest") {
           variant.new = true;
         }
         return variant;
