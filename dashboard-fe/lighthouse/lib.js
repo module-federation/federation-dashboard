@@ -188,9 +188,15 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
     }
 
     dirName = "public/reports/" + dirName;
-    console.log(dirName);
+
     if (!fs.existsSync(dirName)) {
       fs.mkdirSync(dirName, { recursive: true });
+      // create empty scatter.json file
+      fs.writeFileSync(
+          `${dirName}/scatter.json`,
+          JSON.stringify({}),
+          "utf8",
+      );
     }
 
     const runner = async (title) => {
@@ -220,16 +226,22 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
         { concurrency: config.USE_CLOUD ? 3 : 1 }
       );
       const testResults = await promResults;
+      console.log('test results')
       if (title) {
+        console.log('has title')
         const scatterData = {
           [title]: testResults.map(({ js }) => {
             return js;
           }),
         };
+        console.log('has scatter data')
+        console.log('path',`${dirName}/scatter.json`)
         fs.readFile(
           `${dirName}/scatter.json`,
           "utf8",
           function readFileCallback(err, data) {
+            console.log('data', data)
+            console.log('has data' ,!!data)
             if (err) {
               fs.writeFile(
                 `${dirName}/scatter.json`,
@@ -238,6 +250,7 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
                 () => {}
               ); // write it back
             } else {
+              console.log(data)
               const oldScatterData = JSON.parse(data); //now it an object
               Object.keys(oldScatterData).map((key) => {
                 if (Array.isArray(oldScatterData[key])) {

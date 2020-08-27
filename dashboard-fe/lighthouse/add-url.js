@@ -3,14 +3,22 @@ import { init } from "./lib";
 import Promise from "bluebird";
 import { cache } from "./utils";
 import bus from "../src/event-bus";
-import fetch from "node-fetch";
-import {dashboardGraphQLEndpoint} from "../../dashboard-data-creator/builder";
+import dbDriver from "../src/database/drivers";
 
-const generateLighthouseReport = ({ settings }) => {
-  const { trackedURLs } = settings;
+const generateLighthouseReport = (group) => {
+  const { trackedURLs } = group.settings;
+  // const updatedTracedURLs = trackedURLs.reduce((acc,trackedURL)=>{
+  //   const clonedTracedUrl = Object.assign({},trackedURL)
+  //   const updatedVariants = clonedTracedUrl.variants.map((variant)=>{
+  //     return Object.assign({},variant,{new:false})
+  //   })
+  //   acc.push(Object.assign(clonedTracedUrl,{variants:updatedVariants}))
+  //   return acc
+  // },[])
+
 
   Promise.map(trackedURLs, async ({ url, variants }) => {
-    return Promise.map(variants, async (variant) => {
+    const updatedVariants = await Promise.map(variants, async (variant) => {
       const { name, search, new: isNew } = variant;
       if (!isNew) {
         return variant;
@@ -19,28 +27,17 @@ const generateLighthouseReport = ({ settings }) => {
       if (search) {
         testLink = testLink + search;
       }
-      return init(testLink, name, name || "Latest").then(()=>{
-        fetch(dashboardGraphQLEndpoint, {
-          method: "POST",
-          body: JSON.stringify({
-            variables: {
-              group: this.payload.group,
-              application: this.payload.id,
-              name,
-              date,
-              value,
-            },
-            query: `mutation ($group: String!, $application: String!, $name: String!, $date: String!, $value: Float!) {
-            addMetric(group: $group, application: $application, name: $name, date: $date, value: $value)
-          }`,
-          }),
-          headers: {
-            "Content-type": "application/json",
-          },
-        });
-      })
-    });
-  });
+     variant.new = false
+      await init(testLink, name, name || "Latest");
+      return variant
+    })
+    return {
+      url,
+      variants:updatedVariants
+    }
+  }).then(updatedTrackedURLs => {
+    console.log(updatedTrackedURLs)
+  })
   return;
   return Promise.map(
     sourceData,
@@ -80,6 +77,7 @@ const generateLighthouseReport = ({ settings }) => {
     Object.assign(cache, { running: false });
   });
 };
+
 const subs = async (type, payload) => {
   if (type === "groupUpdated") {
     generateLighthouseReport(payload);
