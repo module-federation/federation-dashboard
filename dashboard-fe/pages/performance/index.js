@@ -1,64 +1,104 @@
 import React, { useState, useEffect, Fragment } from "react";
 import List from "@material-ui/core/List";
+import Button from "@material-ui/core/Button";
 import gql from "graphql-tag";
 
 import ListItem from "../../components/ListItem";
 import Form from "../../components/Form";
-import { useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import store from "../../src/store";
+import {
+  GET_HEAD_VERSION,
+  SET_REMOTE_VERSION
+} from "../../components/application/CurrentVersion";
 
+import { makeIDfromURL, removeMeta } from "../../lighthouse/utils";
 const GET_TRACKED = gql`
   query($group: String!) {
     groups(name: $group) {
-      metrics {
-        name
-        date
-        value
+      settings {
+        trackedURLs {
+          url
+          variants {
+            name
+            search
+            new
+          }
+        }
       }
     }
   }
 `;
 
-const Perfrmance = ({ linkList }) => {
+const ADD_URL = gql`
+  mutation($settings: GroupSettingsInput!) {
+    updateGroupSettings(group: "default", settings: $settings) {
+      trackedURLs {
+        url
+        variants {
+          name
+          search
+          new
+        }
+      }
+    }
+  }
+`;
+
+const Performance = ({ linkList }) => {
   const [todos, setTodos] = useState(linkList);
   const [inputValue, setInputValue] = useState("");
-  const [inputName, setInputNameValue] = useState("Initial Baseline");
+  const [inputName, setInputNameValue] = useState("Latest");
 
   const { data } = useQuery(GET_TRACKED, {
     variables: {
-      group: "default",
-    },
+      group: "default"
+    }
   });
 
-  console.log(data);
+  React.useEffect(() => {
+    if (data) {
+      removeMeta(data.groups[0].settings.trackedURLs);
+      setTodos(data.groups[0].settings.trackedURLs);
+    }
+  }, [data]);
 
-  //useEffect works basically as componentDidMount and componentDidUpdate
-  useEffect(() => {
-    let count = 0;
-    todos.map((todo) => (!todo.done ? count++ : null));
-  });
+  const [setUrl] = useMutation(ADD_URL);
 
-  //
-  const _handleSubmit = (e) => {
+  const _handleSubmit = e => {
     if (e) e.preventDefault();
     if (inputValue === "") return alert("URL is required");
 
     const newArr = todos.slice();
-    const valueExists = todos.find((item) => {
+    const valueExists = todos.find(item => {
       return item.url === inputValue;
     });
     if (!valueExists) {
       newArr.splice(0, 0, {
         url: inputValue,
-        name: inputName,
-        done: false,
-        new: true,
+        variants: [
+          {
+            name: inputName,
+            new: true,
+            search: makeIDfromURL(inputValue).search
+          }
+        ]
       });
       setTodos(newArr);
       setInputValue("");
       setInputNameValue("");
-      fetch("/api/add-url", { method: "POST", body: null });
-      fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
+
+      setUrl({
+        variables: {
+          settings: {
+            trackedURLs: newArr
+          }
+        }
+      });
+      // fetch("/api/add-url", { method: "POST", body: null });
+      // fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
+    } else {
+      alert("URL already exists, add variants on the page");
     }
   };
 
@@ -68,47 +108,74 @@ const Perfrmance = ({ linkList }) => {
     if (type === "remove") newArr.splice(index, 1);
 
     setTodos(newArr);
-    fetch("/api/add-url", { method: "POST", body: null });
-    fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
+
+    setUrl({
+      variables: {
+        settings: {
+          trackedURLs: newArr
+        }
+      }
+    });
+
+    // fetch("/api/add-url", { method: "POST", body: null });
+    // fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
   };
 
-  const _handleBntReRun = (index) => {
+  const _handleBntReRun = index => {
     const newArr = todos.slice();
     newArr[index].new = true;
-
+    const updated = newArr[index].variants.map(variant => {
+      if (variant.name === "Latest") {
+        variant.new = true;
+      }
+      return variant;
+    });
+    newArr[index].variants = updated;
     setTodos(newArr);
-    fetch("/api/add-url", { method: "POST", body: null });
-    fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
+    setUrl({
+      variables: {
+        settings: {
+          trackedURLs: newArr
+        }
+      }
+    });
+    // fetch("/api/add-url", { method: "POST", body: null });
+    // fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
   };
 
   const reRunAllTests = ({ type, index }) => {
-    fetch("/api/add-url", { method: "POST", body: null });
-    fetch("/api/add-url", {
-      method: "POST",
-      body: JSON.stringify(
-        todos.map((item) => {
-          if (!item.url.includes("stage")) {
-            item.new = true;
-          }
-          return item;
-        })
-      ),
+    const toRerun = todos.reduce((acc, item) => {
+      const updated = item.variants.map(variant => {
+        if (variant.name === "Latest") {
+          variant.new = true;
+        }
+        return variant;
+      });
+      item.variants = updated;
+      acc.push(item);
+      return acc;
+    }, []);
+    setUrl({
+      variables: {
+        settings: {
+          trackedURLs: toRerun
+        }
+      }
     });
-  };
+    setTodos(toRerun);
 
-  const getLatest = ({ type, index }) => {
-    fetch("/api/add-url", { method: "POST", body: null });
-    fetch("/api/add-url", {
-      method: "POST",
-      body: JSON.stringify(
-        todos.map((item) => {
-          if (item.name === "PageSpeedInsightsDesktop") {
-            item.new = true;
-          }
-          return item;
-        })
-      ),
-    });
+    // fetch("/api/add-url", { method: "POST", body: null });
+    // fetch("/api/add-url", {
+    //   method: "POST",
+    //   body: JSON.stringify(
+    //     todos.map((item) => {
+    //       if (!item.url.includes("stage")) {
+    //         item.new = true;
+    //       }
+    //       return item;
+    //     })
+    //   ),
+    // });
   };
 
   return (
@@ -116,45 +183,24 @@ const Perfrmance = ({ linkList }) => {
       <Form
         onSubmit={_handleSubmit}
         reRunAllTests={reRunAllTests}
-        getLatest={getLatest}
         value={inputValue}
         name={inputName}
-        onChange={(e) => setInputValue(e.target.value)}
-        onChangeName={(e) => setInputNameValue(e.target.value)}
+        onChange={e => setInputValue(e.target.value)}
+        onChangeName={e => setInputNameValue(e.target.value)}
       />
       <List>
-        {todos.map((todo, index) => (
-          <ListItem
-            key={index}
-            todo={todo}
-            reRun={() => _handleBntReRun(index)}
-            remove={() => _handleBntClick({ type: "remove", index })}
-          />
-        ))}
+        {todos &&
+          todos.map((todo, index) => (
+            <ListItem
+              key={index}
+              todo={todo}
+              reRun={() => _handleBntReRun(index)}
+              remove={() => _handleBntClick({ type: "remove", index })}
+            />
+          ))}
       </List>
     </Fragment>
   );
 };
-Perfrmance.getInitialProps = async () => {
-  const isProd = process.env.NODE_ENV !== "development";
-  const hostname = isProd
-    ? process.browser
-      ? "http://mf-dash.ddns.net:3000/"
-      : "http://localhost:3000/"
-    : "http://localhost:3000/";
 
-  const urlList = await fetch(hostname + "api/get-url-list").then((res) =>
-    res.json()
-  );
-
-  const linkList = urlList.map((url) => {
-    const urlObj = new URL(url.url);
-    let dirName = urlObj.host.replace("www.", "");
-    if (urlObj.pathname !== "/") {
-      dirName = dirName + urlObj.pathname.replace(/\//g, "_");
-    }
-    return { ...url, dirName };
-  });
-  return { linkList };
-};
-export default Perfrmance;
+export default Performance;

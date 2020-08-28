@@ -4,7 +4,7 @@ import {
   generateScatterChartData,
   generateWhiskerChartData,
   generateMultiSeriesChartData,
-  generateTimeSeriesScatterChartData,
+  generateTimeSeriesScatterChartData
 } from "../../../lighthouse/utils";
 import Form from "../../../components/FormVarient";
 
@@ -21,7 +21,7 @@ const CanvasJSChart = dynamic(
   { ssr: false }
 );
 
-const WhiskerChart = React.memo((props) => {
+const WhiskerChart = React.memo(props => {
   const [ready, setReady] = useState(false);
   const [gotRef, setRef] = useState(false);
   useEffect(() => {
@@ -37,43 +37,43 @@ const WhiskerChart = React.memo((props) => {
     zoomEnabled: true,
     zoomType: "y",
     title: {
-      text: "Performance chart",
+      text: "Performance chart"
     },
     axisX: {
-      title: "Metric Type",
+      title: "Metric Type"
     },
     axisY: {
       scaleBreaks: {
-        autoCalculate: true, // change to false
+        autoCalculate: true // change to false
       },
       includeZero: false,
       title: "Timing",
       suffix: "ms",
       logarithmic: false,
-      minimum: 500,
+      minimum: 500
     },
     legend: {
       cursor: "pointer",
-      itemclick: (e) => {
+      itemclick: e => {
         props.toggleDataSeries(e);
         gotRef.render();
-      },
+      }
     },
 
-    data: props.whiskerChartData,
+    data: props.whiskerChartData
   };
 
   return (
     <CanvasJSChart
       options={whiskerChartOptions}
-      onRef={(ref) => {
+      onRef={ref => {
         setRef(ref);
         createRef(ref);
       }}
     />
   );
 });
-const ScatterChart = React.memo((props) => {
+const ScatterChart = React.memo(props => {
   const [ready, setReady] = useState(false);
   const [gotRef, setRef] = useState(false);
 
@@ -89,38 +89,38 @@ const ScatterChart = React.memo((props) => {
     zoomEnabled: true,
     zoomType: "x",
     title: {
-      text: "Scatter Chart",
+      text: "Scatter Chart"
     },
     axisX: {
-      title: "Metric Type",
+      title: "Metric Type"
     },
     axisY: {
       title: "Timing",
       suffix: "ms",
       includeZero: false,
-      logarithmic: true,
+      logarithmic: true
     },
     legend: {
       cursor: "pointer",
-      itemclick: (e) => {
+      itemclick: e => {
         props.toggleDataSeries(e);
         gotRef.render();
-      },
+      }
     },
 
-    data: props.scatterChartData,
+    data: props.scatterChartData
   };
   return (
     <CanvasJSChart
       options={scatterChartOptions}
-      onRef={(ref) => {
+      onRef={ref => {
         setRef(ref);
         createRef(ref);
       }}
     />
   );
 });
-const MultiSeriesChart = React.memo((props) => {
+const MultiSeriesChart = React.memo(props => {
   const [ready, setReady] = useState(false);
   const [gotRef, setRef] = useState(false);
 
@@ -134,52 +134,52 @@ const MultiSeriesChart = React.memo((props) => {
     theme: "dark2",
     animationEnabled: true,
     title: {
-      text: "Multi Series Chart - Medians",
+      text: "Multi Series Chart - Medians"
     },
     axisY: {
       title: "Metric Type",
-      includeZero: true,
+      includeZero: true
     },
     legend: {
       cursor: "pointer",
-      itemclick: (e) => {
+      itemclick: e => {
         props.toggleDataSeries(e);
         gotRef.render();
-      },
+      }
     },
     toolTip: {
-      shared: true,
+      shared: true
       // content: toolTipFormatter
     },
-    data: props.multiSeriesChartData,
+    data: props.multiSeriesChartData
   };
 
   return (
     <CanvasJSChart
       options={multiSeriesChartOptions}
-      onRef={(ref) => {
+      onRef={ref => {
         setRef(ref);
         createRef(ref);
       }}
     />
   );
 });
-const TimeSeriesChart = React.memo((props) => {
+const TimeSeriesChart = React.memo(props => {
   const [data, setData] = useState(false);
   const [gotRef, setRef] = useState(false);
   const timeSeriesScatterChartOptions = {
     height: typeof window === "object" ? window.innerHeight : null,
     theme: "dark2",
     title: {
-      text: "Scatter Chart",
+      text: "Scatter Chart"
     },
     axisX: {
       title: "Date",
-      labelFormatter: function (e) {
+      labelFormatter: function(e) {
         const { CanvasJS } = require("canvasjs-react-charts");
 
         return CanvasJS.formatDate(e.value, "DD MMM");
-      },
+      }
     },
     axisY: {
       title: "Timing",
@@ -187,26 +187,26 @@ const TimeSeriesChart = React.memo((props) => {
       includeZero: false,
       // logarithmic: true,
       // interval: 0.2,
-      minimum: 500,
+      minimum: 500
     },
     legend: {
       cursor: "pointer",
-      itemclick: (e) => {
+      itemclick: e => {
         props.toggleDataSeries(e);
         console.log(gotRef);
         gotRef.render();
-      },
+      }
     },
 
-    data: data,
+    data: data
   };
 
   useEffect(() => {
     const { query } = props;
 
     fetch(hostname + "api/get-timeseries?report=" + query.report)
-      .then((res) => res.json())
-      .then((timeSeriesData) => {
+      .then(res => res.json())
+      .then(timeSeriesData => {
         const timeSeriesScatterData = generateTimeSeriesScatterChartData(
           timeSeriesData
         );
@@ -221,7 +221,7 @@ const TimeSeriesChart = React.memo((props) => {
   return (
     <CanvasJSChart
       options={timeSeriesScatterChartOptions}
-      onRef={(ref) => {
+      onRef={ref => {
         createRef(ref);
         setRef(ref);
       }}
@@ -233,7 +233,7 @@ class Report extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: "",
+      inputValue: ""
     };
     this.toggleDataSeries = this.toggleDataSeries.bind(this);
   }
@@ -246,7 +246,7 @@ class Report extends React.Component {
     }
   }
 
-  _handleSubmit = (e) => {
+  _handleSubmit = e => {
     e.preventDefault();
     if (this.state.inputValue === "") return alert("Task name is required");
 
@@ -257,22 +257,22 @@ class Report extends React.Component {
         {
           name: this.state.inputValue,
           new: true,
-          url: this.props.meta.url,
-        },
-      ]),
+          url: this.props.meta.url
+        }
+      ])
     });
   };
 
-  onDelete = (name) => {
+  onDelete = name => {
     this.setState({ inputValue: "" });
     fetch("/api/remove-url", {
       method: "POST",
       body: JSON.stringify([
         {
           name,
-          url: this.props.meta.url,
-        },
-      ]),
+          url: this.props.meta.url
+        }
+      ])
     });
   };
 
@@ -285,7 +285,7 @@ class Report extends React.Component {
             onSubmit={this._handleSubmit}
             onDelete={this.onDelete}
             value={this.state.inputValue}
-            onChange={(e) => this.setState({ inputValue: e.target.value })}
+            onChange={e => this.setState({ inputValue: e.target.value })}
           />
         </div>
         <div>
@@ -315,7 +315,7 @@ class Report extends React.Component {
 Report.getInitialProps = async ({ query }) => {
   const { meta, ...report } = await fetch(
     hostname + "api/get-report?report=" + query.report
-  ).then((res) => res.json());
+  ).then(res => res.json());
   // const timeSeriesData = await fetch(
   //   hostname + "api/get-timeseries?report=" + query.report
   // ).then((res) => res.json());
@@ -328,7 +328,7 @@ Report.getInitialProps = async ({ query }) => {
     meta,
     appKeys: Object.keys(report),
     // timeSeriesScatterData: scatterData,
-    query,
+    query
   };
 };
 export default Report;

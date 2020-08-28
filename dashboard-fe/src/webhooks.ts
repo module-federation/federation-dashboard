@@ -1,6 +1,7 @@
 import bus from "./event-bus";
 import dbDriver from "./database/drivers";
 import fetch from "node-fetch";
+import "../lighthouse/add-url";
 
 const hookSusbscriber = async (type, payload) => {
   const settings = await dbDriver.siteSettings_get();
@@ -11,12 +12,12 @@ const hookSusbscriber = async (type, payload) => {
         fetch(url, {
           method: "GET",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
             type,
-            payload,
-          }),
+            payload
+          })
         })
       )
   );

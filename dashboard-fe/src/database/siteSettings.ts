@@ -5,7 +5,7 @@ export enum EventType {
   "deleteApplication",
   "updateApplicationVersion",
   "deleteApplicationVersion",
-  "updateTrackedURLS",
+  "updateTrackedURLS"
 }
 
 export const webhookSchema = Joi.object({
@@ -18,11 +18,13 @@ export const webhookSchema = Joi.object({
       "updateTrackedURLS"
     )
     .required(),
-  url: Joi.string().required(),
+  url: Joi.string().required()
 });
 
 export const schema = Joi.object({
-  webhooks: Joi.array().items(webhookSchema.required()).required(),
+  webhooks: Joi.array()
+    .items(webhookSchema.required())
+    .required()
 });
 
 export class Webhook {
