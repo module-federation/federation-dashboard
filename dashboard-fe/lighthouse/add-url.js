@@ -41,7 +41,6 @@ const generateLighthouseReport = group => {
   },  { concurrency: 1 }).then(async updatedTrackedURLs => {
     Object.assign(cache, { running: false });
     if(cache.foundNew) {
-      await dbDriver.setup();
       const grp = await dbDriver.group_find(group.id);
       group.settings.trackedURLs = updatedTrackedURLs;
       grp.settings = group.settings;
