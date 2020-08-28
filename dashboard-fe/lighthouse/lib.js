@@ -101,21 +101,6 @@ const getContents = pathStr => {
   return JSON.parse(output);
 };
 
-const metricFilter = [
-  "first-contentful-paint",
-  "first-meaningful-paint",
-  "speed-index",
-  "estimated-input-latency",
-  "total-blocking-time",
-  "max-potential-fid",
-  "time-to-first-byte",
-  "first-cpu-idle",
-  "interactive",
-  "accessibility",
-  "largest-contentful-paint",
-  "total-byte-weight"
-];
-
 const average = array =>
   toFixed(array.reduce((a, b) => a + b) / array.length, 2);
 

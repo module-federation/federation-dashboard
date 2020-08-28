@@ -15,7 +15,10 @@ const generateLighthouseReport = group => {
   //   acc.push(Object.assign(clonedTracedUrl,{variants:updatedVariants}))
   //   return acc
   // },[])
-  Object.assign(cache, { running: true });
+  if(!cache.running) {
+    Object.assign(cache, {foundNew: false})
+    Object.assign(cache, {running: true});
+  }
   Promise.map(trackedURLs, async ({ url, variants }) => {
     const updatedVariants = await Promise.map(variants, async variant => {
       const { name, search, new: isNew } = variant;
@@ -27,6 +30,7 @@ const generateLighthouseReport = group => {
         testLink = testLink + search;
       }
       variant.new = false;
+      Object.assign(cache, {foundNew: true})
       await init(testLink, name, name || "Latest");
       return variant;
     },  { concurrency: 1 });
@@ -36,11 +40,15 @@ const generateLighthouseReport = group => {
     };
   },  { concurrency: 1 }).then(async updatedTrackedURLs => {
     Object.assign(cache, { running: false });
-    await dbDriver.setup();
-    const grp = await dbDriver.group_find(group.id);
-    group.settings.trackedURLs = updatedTrackedURLs;
-    grp.settings = group.settings;
-    return dbDriver.group_update(grp);
+    if(cache.foundNew) {
+      await dbDriver.setup();
+      const grp = await dbDriver.group_find(group.id);
+      group.settings.trackedURLs = updatedTrackedURLs;
+      grp.settings = group.settings;
+      return dbDriver.group_update(grp);
+    } else {
+      console.log('nothing new to update on DB')
+    }
   });
 };
 
