@@ -16,7 +16,7 @@ export default function Form(props) {
       </Button>
       <List>
         {props.appKeys &&
-          props.appKeys.map((i) => {
+          props.appKeys.map(i => {
             return (
               <ListItem>
                 {i}
