@@ -3,8 +3,8 @@ import { withStyles } from "@material-ui/core";
 export const CodeWrapper = withStyles({
   wrapper: {
     border: "1px solid #eee",
-    padding: 10,
-  },
+    padding: 10
+  }
 })(({ classes, children }) => (
   <div className={classes.wrapper}>{children}</div>
 ));
@@ -15,16 +15,16 @@ export const Code = withStyles({
     whiteSpace: "pre",
     fontStyle: "italic",
     paddingTop: 10,
-    paddingBottom: 10,
-  },
+    paddingBottom: 10
+  }
 })(({ classes, children }) => <div className={classes.code}>{children}</div>);
 
 export const GeneratedCode = withStyles({
   generatedCode: {
     fontFamily: "Courier, monospace",
     whiteSpace: "pre",
-    fontWeight: "bold",
-  },
+    fontWeight: "bold"
+  }
 })(({ classes, children }) => (
   <div className={classes.generatedCode}>{children}</div>
 ));

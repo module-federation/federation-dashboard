@@ -1,5 +1,5 @@
-const injectScript = function (d, s, id, override) {
-  const promise = new Promise((resolve) => {
+const injectScript = function(d, s, id, override) {
+  const promise = new Promise(resolve => {
     var js,
       fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) {
@@ -10,7 +10,7 @@ const injectScript = function (d, s, id, override) {
     if (override && override.version) {
       window[`remote_${override.name}`] = override.version;
     }
-    js.onload = function () {
+    js.onload = function() {
       resolve();
     };
     const src =
@@ -35,9 +35,9 @@ fetch("http://localhost:3000/api/graphql", {
         }
       }
     }
-  }`,
+  }`
 })
-  .then((res) => res.json())
+  .then(res => res.json())
   .then(({ applications }) => {
     if (!applications.versions.override.length) {
       injectScript(document, "script", "federation-dynamic-remote").then(() => {
@@ -45,7 +45,7 @@ fetch("http://localhost:3000/api/graphql", {
       });
       return;
     }
-    const allOverrides = applications.versions.override.map((override) => {
+    const allOverrides = applications.versions.override.map(override => {
       return injectScript(
         document,
         "script",
