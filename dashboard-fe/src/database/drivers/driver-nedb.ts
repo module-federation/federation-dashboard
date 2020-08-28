@@ -17,26 +17,20 @@ import Driver from "./driver";
 
 const dir = process.env.DATA_DIR || path.join(process.cwd(), "./.fm-dashboard");
 
-const applications = new Datastore({
-  filename: path.join(dir, "/application.db"),
-});
-applications.loadDatabase();
-const applicationVersions = new Datastore({
-  filename: path.join(dir, "/applicationVersions.db"),
-});
-applicationVersions.loadDatabase();
-const metrics = new Datastore({
-  filename: path.join(dir, "/metrics.db"),
-});
-metrics.loadDatabase();
-const groups = new Datastore({
-  filename: path.join(dir, "/groups.db"),
-});
-groups.loadDatabase();
-const users = new Datastore({
-  filename: path.join(dir, "/users.db"),
-});
-users.loadDatabase();
+const createDatastore = (name) => {
+  const ds = new Datastore({
+    filename: path.join(dir, `/${name}.db`),
+  });
+  ds.loadDatabase();
+  ds.persistence.setAutocompactionInterval(60 * 1000);
+  return ds;
+};
+
+const applications = createDatastore("application");
+const applicationVersions = createDatastore("applicationVersions");
+const metrics = createDatastore("metrics");
+const groups = createDatastore("groups.db");
+const users = createDatastore("users.db");
 
 const siteSettingsPath = path.join(dir, "/siteSettings.json");
 
