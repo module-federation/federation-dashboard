@@ -22,9 +22,6 @@ export default function Form(props) {
       <Button variant="contained" onClick={props.reRunAllTests}>
         Re-run All
       </Button>
-      <Button variant="contained" onClick={props.getLatest}>
-        Get latest Perf
-      </Button>
     </form>
   );
 }

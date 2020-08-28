@@ -15,12 +15,12 @@ export default async (req, res) => {
       if (er) {
         reject(er);
       }
-      resolve(files.filter((file) => !file.includes("scatter.json")));
+      resolve(files.filter(file => !file.includes("scatter.json")));
     });
   });
   const globbedData = await Promise.all(
-    globbedFiles.map((filePath) => {
-      return getData(filePath, "utf8").then((data) => JSON.parse(data));
+    globbedFiles.map(filePath => {
+      return getData(filePath, "utf8").then(data => JSON.parse(data));
     })
   );
 
