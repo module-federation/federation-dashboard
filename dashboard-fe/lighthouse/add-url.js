@@ -15,7 +15,7 @@ const generateLighthouseReport = group => {
   //   acc.push(Object.assign(clonedTracedUrl,{variants:updatedVariants}))
   //   return acc
   // },[])
-
+  Object.assign(cache, { running: true });
   Promise.map(trackedURLs, async ({ url, variants }) => {
     const updatedVariants = await Promise.map(variants, async variant => {
       const { name, search, new: isNew } = variant;
@@ -29,55 +29,18 @@ const generateLighthouseReport = group => {
       variant.new = false;
       await init(testLink, name, name || "Latest");
       return variant;
-    });
+    },  { concurrency: 1 });
     return {
       url,
       variants: updatedVariants
     };
-  }).then(async updatedTrackedURLs => {
+  },  { concurrency: 1 }).then(async updatedTrackedURLs => {
+    Object.assign(cache, { running: false });
     await dbDriver.setup();
     const grp = await dbDriver.group_find(group.id);
     group.settings.trackedURLs = updatedTrackedURLs;
     grp.settings = group.settings;
     return dbDriver.group_update(grp);
-  });
-  return;
-  return Promise.map(
-    sourceData,
-    async ({ name, url, new: isNew }) => {
-      if (!isNew) {
-        return;
-      }
-      // if (!sourceData.name) {
-      //   fs.writeFileSync(
-      //     "public/urls.json",
-      //     JSON.stringify(sourceData) || "[]"
-      //   );
-      // }
-      return init(url, name || "Latest").then(() => {
-        const freshDataSource = JSON.parse(
-          fs.readFileSync("public/urls.json", "utf8")
-        );
-
-        const wr = Object.values(freshDataSource).map(x => {
-          if (x.url === url && x.name === name) {
-            x.new = false;
-          }
-          return x;
-        });
-
-        const write = wr.reduce((acc, item) => {
-          acc[`${item.url}-${item.name}`] = item;
-          return acc;
-        }, freshDataSource);
-        if (!sourceData.name) {
-          fs.writeFileSync("public/urls.json", JSON.stringify(write));
-        }
-      });
-    },
-    { concurrency: 1 }
-  ).then(() => {
-    Object.assign(cache, { running: false });
   });
 };
 
