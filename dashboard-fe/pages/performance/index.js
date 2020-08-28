@@ -65,29 +65,6 @@ const Performance = ({ linkList }) => {
 
   const [setUrl] = useMutation(ADD_URL);
 
-  const portToGraph = () => {
-    const transform = todos.reduce((acc, item) => {
-      const { id, url, search } = makeIDfromURL(item.url);
-      if (!acc[id]) {
-        acc[id] = {
-          url: url,
-          variants: [{ search: search, name: item.name, new: item.new }]
-        };
-      } else {
-        acc[id].variants.push({ search, name: item.name, new: item.new });
-      }
-      return acc;
-    }, {});
-
-    setUrl({
-      variables: {
-        settings: {
-          trackedURLs: Object.values(transform)
-        }
-      }
-    });
-  };
-
   const _handleSubmit = e => {
     if (e) e.preventDefault();
     if (inputValue === "") return alert("URL is required");
@@ -211,7 +188,6 @@ const Performance = ({ linkList }) => {
         onChange={e => setInputValue(e.target.value)}
         onChangeName={e => setInputNameValue(e.target.value)}
       />
-      <Button onClick={portToGraph}>port to graph</Button>
       <List>
         {todos &&
           todos.map((todo, index) => (
@@ -226,26 +202,5 @@ const Performance = ({ linkList }) => {
     </Fragment>
   );
 };
-// Performance.getInitialProps = async () => {
-//   const isProd = process.env.NODE_ENV !== "development";
-//   const hostname = isProd
-//     ? process.browser
-//       ? "http://mf-dash.ddns.net:3000/"
-//       : "http://localhost:3000/"
-//     : "http://localhost:3000/";
-//
-//   const urlList = await fetch(hostname + "api/get-url-list").then((res) =>
-//     res.json()
-//   );
-//
-//   const linkList = urlList.map((url) => {
-//     const urlObj = new URL(url.url);
-//     let dirName = urlObj.host.replace("www.", "");
-//     if (urlObj.pathname !== "/") {
-//       dirName = dirName + urlObj.pathname.replace(/\//g, "_");
-//     }
-//     return { ...url, dirName };
-//   });
-//   return { linkList };
-// };
+
 export default Performance;
