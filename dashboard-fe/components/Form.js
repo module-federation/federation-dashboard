@@ -14,13 +14,13 @@ export default function Form(props) {
         type="text"
         value={props.name}
         onChange={props.onChangeName}
-        placeholder="Baseline Test"
+        placeholder="Latest"
       />
       <Button variant="contained" type="submit">
         Add Page
       </Button>
       <Button variant="contained" onClick={props.reRunAllTests}>
-        Re-run All
+        Get Latest All
       </Button>
     </form>
   );
