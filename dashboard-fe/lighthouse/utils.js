@@ -82,10 +82,10 @@ export const generateTimeSeriesScatterChartData = data => {
     "largest-contentful-paint"
   ].reduce((acc, item) => {
     const obj = {
-      type: "scatter",
+      type: "line",
       name: item,
       showInLegend: true,
-      markerType: "line",
+      markerType: "circle",
       markerColor: randomColor(),
       dataPoints: [],
       xValueType: "dateTime"
