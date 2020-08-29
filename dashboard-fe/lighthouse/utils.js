@@ -85,7 +85,7 @@ export const generateTimeSeriesScatterChartData = data => {
       type: "scatter",
       name: item,
       showInLegend: true,
-      markerType: "circle",
+      markerType: "line",
       markerColor: randomColor(),
       dataPoints: [],
       xValueType: "dateTime"
