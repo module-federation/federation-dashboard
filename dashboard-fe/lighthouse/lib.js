@@ -11,7 +11,7 @@ const config = require("../src/config");
 const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 import Promise from "bluebird";
 
-const RUNS = 5;
+const RUNS = 20;
 let hasStarted = false;
 
 const launchChromeAndRunLighthouse = async url => {
