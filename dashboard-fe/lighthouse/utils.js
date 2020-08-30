@@ -25,48 +25,49 @@ const hexToRgbA = (hex, tr) => {
   throw new Error("Bad Hex");
 };
 const generateScatterChartData = async (data) => {
-  // const workerize = __non_webpack_require__("node-inline-worker");
-  // const generateScatterChartDataWorker = workerize(async (data) => {
-  //   const { toFixed } = __non_webpack_require__(require.resolve("./utils"));
-  return Object.entries(data).map(([group, results]) => {
-    const obj = {
-      type: "scatter",
-      name: group,
-      showInLegend: true,
-      markerType: "circle",
-      // markerColor: randomColor(),
-    };
-    const charable = (Array.isArray(results) ? results : [results]).map(
-      (result) => {
-        return [
-          "first-contentful-paint",
-          "first-meaningful-paint",
-          "speed-index",
-          "estimated-input-latency",
-          "total-blocking-time",
-          "max-potential-fid",
-          "time-to-first-byte",
-          "first-cpu-idle",
-          "interactive",
-          "accessibility",
-          "seo",
-          "largest-contentful-paint",
-        ]
-          .filter((key) => result.audits[key])
-          .map((key, index) => {
-            return {
-              y: parseInt(toFixed(result.audits[key].numericValue)),
-              x: index,
-              label: key,
-            };
-          });
-      }
-    );
-    obj.dataPoints = [].concat.apply([], charable);
-    return obj;
+  const workerize = __non_webpack_require__("node-inline-worker");
+  const generateScatterChartDataWorker = workerize(async (data) => {
+    const { toFixed } = __non_webpack_require__(require.resolve("./utils"));
+    console.log("generateScatterChartDataWorker");
+    return Object.entries(data).map(([group, results]) => {
+      const obj = {
+        type: "scatter",
+        name: group,
+        showInLegend: true,
+        markerType: "circle",
+        // markerColor: randomColor(),
+      };
+      const charable = (Array.isArray(results) ? results : [results]).map(
+        (result) => {
+          return [
+            "first-contentful-paint",
+            "first-meaningful-paint",
+            "speed-index",
+            "estimated-input-latency",
+            "total-blocking-time",
+            "max-potential-fid",
+            "time-to-first-byte",
+            "first-cpu-idle",
+            "interactive",
+            "accessibility",
+            "seo",
+            "largest-contentful-paint",
+          ]
+            .filter((key) => result.audits[key])
+            .map((key, index) => {
+              return {
+                y: parseInt(toFixed(result.audits[key].numericValue)),
+                x: index,
+                label: key,
+              };
+            });
+        }
+      );
+      obj.dataPoints = [].concat.apply([], charable);
+      return obj;
+    });
   });
-  // });
-  // return generateScatterChartDataWorker(data);
+  return generateScatterChartDataWorker(data);
 };
 
 const generateTimeSeriesScatterChartData = (data) => {
