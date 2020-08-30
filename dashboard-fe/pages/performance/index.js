@@ -229,26 +229,26 @@ Performance.getInitialProps = async ({ req, res }) => {
       },
     });
 
-    const { data } = await apolloClient.query({
-      query: gql`
-        {
-          groups(name: "default") {
-            settings {
-              trackedURLs {
-                url
-                variants {
-                  name
-                  search
-                  new
-                }
-              }
-            }
-          }
-        }
-      `,
-    });
+    // const { data } = await apolloClient.query({
+    //   query: gql`
+    //     {
+    //       groups(name: "default") {
+    //         settings {
+    //           trackedURLs {
+    //             url
+    //             variants {
+    //               name
+    //               search
+    //               new
+    //             }
+    //           }
+    //         }
+    //       }
+    //     }
+    //   `,
+    // });
 
-    console.log(data);
+    // console.log(data);
   }
 
   return {};
