@@ -85,6 +85,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "7.10.4",
     "@babel/plugin-proposal-decorators": "7.10.5",
+    "@babel/plugin-proposal-optional-chaining": "^7.11.0",
     "@babel/preset-typescript": "7.10.4",
     "@types/jest": "26.0.10",
     "jest": "26.4.2",

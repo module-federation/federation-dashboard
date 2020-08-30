@@ -13,7 +13,6 @@ import {
 } from "../../components/application/CurrentVersion";
 
 import { makeIDfromURL, removeMeta } from "../../lighthouse/utils.js";
-import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 const GET_TRACKED = gql`
   query($group: String!) {
     groups(name: $group) {
@@ -46,8 +45,10 @@ const ADD_URL = gql`
   }
 `;
 
-const Performance = ({ linkList }) => {
-  const [todos, setTodos] = useState(linkList);
+const Performance = ({ groupData }) => {
+  const [todos, setTodos] = useState(
+    groupData?.groups?.[0]?.settings?.trackedURLs
+  );
   const [inputValue, setInputValue] = useState("");
   const [inputName, setInputNameValue] = useState("Latest");
 
@@ -58,7 +59,6 @@ const Performance = ({ linkList }) => {
   });
 
   React.useEffect(() => {
-    console.log(data);
     if (data && data.groups[0]) {
       removeMeta(data.groups[0].settings.trackedURLs);
       setTodos(data.groups[0].settings.trackedURLs);
@@ -97,14 +97,11 @@ const Performance = ({ linkList }) => {
           },
         },
       });
-      // fetch("/api/add-url", { method: "POST", body: null });
-      // fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
     } else {
       alert("URL already exists, add variants on the page");
     }
   };
 
-  //
   const _handleBntClick = ({ type, index }) => {
     const newArr = todos.slice();
     if (type === "remove") newArr.splice(index, 1);
@@ -118,9 +115,6 @@ const Performance = ({ linkList }) => {
         },
       },
     });
-
-    // fetch("/api/add-url", { method: "POST", body: null });
-    // fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
   };
 
   const _handleBntReRun = (index) => {
@@ -140,8 +134,6 @@ const Performance = ({ linkList }) => {
         },
       },
     });
-    // fetch("/api/add-url", { method: "POST", body: null });
-    // fetch("/api/add-url", { method: "POST", body: JSON.stringify(newArr) });
   };
 
   const reRunAllTests = ({ type, index }) => {
@@ -156,6 +148,7 @@ const Performance = ({ linkList }) => {
       acc.push(item);
       return acc;
     }, []);
+
     setUrl({
       variables: {
         settings: {
@@ -164,19 +157,6 @@ const Performance = ({ linkList }) => {
       },
     });
     setTodos(toRerun);
-
-    // fetch("/api/add-url", { method: "POST", body: null });
-    // fetch("/api/add-url", {
-    //   method: "POST",
-    //   body: JSON.stringify(
-    //     todos.map((item) => {
-    //       if (!item.url.includes("stage")) {
-    //         item.new = true;
-    //       }
-    //       return item;
-    //     })
-    //   ),
-    // });
   };
 
   return (
@@ -212,45 +192,57 @@ Performance.getInitialProps = async ({ req, res }) => {
     : "http://localhost:3000/";
 
   if (!process.browser) {
-    const link = createHttpLink({
-      uri: url + "api/graphql",
-    });
-
-    const cache = new InMemoryCache({ addTypename: false });
-    const apolloClient = new ApolloClient({
-      // Provide required constructor fields
-      cache: cache,
-      link: link,
-      queryDeduplication: false,
-      defaultOptions: {
-        watchQuery: {
-          fetchPolicy: "cache-and-network",
+    const workerize = __non_webpack_require__("node-inline-worker");
+    const runQuery = workerize(async (url) => {
+      const fetch = __non_webpack_require__("node-fetch");
+      const gql = __non_webpack_require__("graphql-tag");
+      const {
+        ApolloClient,
+        createHttpLink,
+        InMemoryCache,
+      } = __non_webpack_require__("@apollo/client");
+      const cache = new InMemoryCache({ addTypename: false });
+      const link = createHttpLink({
+        uri: url + "api/graphql",
+        fetch,
+      });
+      const apolloClient = new ApolloClient({
+        // Provide required constructor fields
+        fetchOptions: { fetch },
+        cache: cache,
+        link: link,
+        queryDeduplication: false,
+        defaultOptions: {
+          watchQuery: {
+            fetchPolicy: "cache-and-network",
+          },
         },
-      },
+      });
+
+      const { data } = await apolloClient.query({
+        query: gql`
+          {
+            groups(name: "default") {
+              settings {
+                trackedURLs {
+                  url
+                  variants {
+                    name
+                    search
+                    new
+                  }
+                }
+              }
+            }
+          }
+        `,
+      });
+
+      return data;
     });
 
-    // const { data } = await apolloClient.query({
-    //   query: gql`
-    //     {
-    //       groups(name: "default") {
-    //         settings {
-    //           trackedURLs {
-    //             url
-    //             variants {
-    //               name
-    //               search
-    //               new
-    //             }
-    //           }
-    //         }
-    //       }
-    //     }
-    //   `,
-    // });
-
-    // console.log(data);
+    const data = await runQuery(url);
+    return { groupData: data };
   }
-
-  return {};
 };
 export default Performance;
