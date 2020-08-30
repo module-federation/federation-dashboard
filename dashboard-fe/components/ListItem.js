@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import ListItem from "@material-ui/core/ListItem";
 import Button from "@material-ui/core/Button";
-import { makeIDfromURL } from "../lighthouse/utils.ts";
+import { makeIDfromURL } from "../lighthouse/utils.js";
 
 export default function Item(props) {
   const { url } = props.todo;

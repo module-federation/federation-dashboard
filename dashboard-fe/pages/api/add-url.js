@@ -2,7 +2,7 @@ import fs from "fs";
 import { init } from "../../lighthouse/lib";
 import deepmerge from "deepmerge";
 import Promise from "bluebird";
-import { cache } from "../../lighthouse/utils.ts";
+import { cache } from "../../lighthouse/utils.js";
 
 const generateLighthouseReport = sourceData => {
   return Promise.map(
