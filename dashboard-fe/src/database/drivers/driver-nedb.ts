@@ -29,8 +29,8 @@ const createDatastore = (name) => {
 const applications = createDatastore("application");
 const applicationVersions = createDatastore("applicationVersions");
 const metrics = createDatastore("metrics");
-const groups = createDatastore("groups.db");
-const users = createDatastore("users.db");
+const groups = createDatastore("groups");
+const users = createDatastore("users");
 
 const siteSettingsPath = path.join(dir, "/siteSettings.json");
 
