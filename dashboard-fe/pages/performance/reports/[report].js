@@ -28,8 +28,6 @@ const CanvasJSChart = dynamic(
   { ssr: false }
 );
 
-
-
 const ADD_VARIENT = gql`
   mutation($settings: GroupSettingsInput!) {
     updateGroupSettings(group: "default", settings: $settings) {
@@ -280,7 +278,7 @@ class Report extends React.Component {
       inputValue: ""
     };
     this.toggleDataSeries = this.toggleDataSeries.bind(this);
-    this.cache = new InMemoryCache({ addTypename: false});
+    this.cache = new InMemoryCache({ addTypename: false });
     this.apolloClient = new ApolloClient({
       // Provide required constructor fields
       cache: this.cache,
@@ -327,7 +325,7 @@ class Report extends React.Component {
       })
       .then(({ data }) => {
         const { url, search } = makeIDfromURL(this.props.meta.url);
-        const { trackedURLs } = Object.create(data.groups[0].settings)
+        const { trackedURLs } = Object.create(data.groups[0].settings);
 
         const updatedTrackedUrls = trackedURLs.reduce((acc, tracked) => {
           if (tracked.url !== url) {
@@ -357,7 +355,9 @@ class Report extends React.Component {
               new: true
             });
           }
-          acc.push(Object.assign({}, tracked, { variants: updatedExistingVariants }));
+          acc.push(
+            Object.assign({}, tracked, { variants: updatedExistingVariants })
+          );
           return acc;
         }, []);
         return Object.assign({}, data.groups[0].settings, {
@@ -366,23 +366,23 @@ class Report extends React.Component {
       })
       .then(updatedTrackedUrls => {
         this.setState({ inputValue: "" });
-       this.apolloClient.mutate({
-         variables: {settings: updatedTrackedUrls.settings},
-         mutation:gql`
-           mutation($settings: GroupSettingsInput!) {
-             updateGroupSettings(group: "default", settings: $settings) {
-               trackedURLs {
-                 url
-                 variants {
-                   name
-                   search
-                   new
-                 }
-               }
-             }
-           }
-         `}
-       )
+        this.apolloClient.mutate({
+          variables: { settings: updatedTrackedUrls },
+          mutation: gql`
+            mutation($settings: GroupSettingsInput!) {
+              updateGroupSettings(group: "default", settings: $settings) {
+                trackedURLs {
+                  url
+                  variants {
+                    name
+                    search
+                    new
+                  }
+                }
+              }
+            }
+          `
+        });
       });
 
     // fetch("/api/add-url", {

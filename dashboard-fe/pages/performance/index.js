@@ -58,8 +58,8 @@ const Performance = ({ linkList }) => {
 
   React.useEffect(() => {
     if (data) {
-      const cleaned = removeMeta(data.groups[0].settings.trackedURLs);
-      setTodos(cleaned);
+      removeMeta(data.groups[0].settings.trackedURLs);
+      setTodos(data.groups[0].settings.trackedURLs);
     }
   }, [data]);
 
