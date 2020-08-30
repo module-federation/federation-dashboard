@@ -12,7 +12,7 @@ import {
   SET_REMOTE_VERSION
 } from "../../components/application/CurrentVersion";
 
-import { makeIDfromURL, removeMeta } from "../../lighthouse/utils";
+import { makeIDfromURL, removeMeta } from "../../lighthouse/utils.ts";
 const GET_TRACKED = gql`
   query($group: String!) {
     groups(name: $group) {
@@ -58,8 +58,8 @@ const Performance = ({ linkList }) => {
 
   React.useEffect(() => {
     if (data) {
-      removeMeta(data.groups[0].settings.trackedURLs);
-      setTodos(data.groups[0].settings.trackedURLs);
+      const cleaned = removeMeta(data.groups[0].settings.trackedURLs);
+      setTodos(cleaned);
     }
   }, [data]);
 

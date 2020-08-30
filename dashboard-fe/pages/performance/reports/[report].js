@@ -6,9 +6,15 @@ import {
   generateScatterChartData,
   generateWhiskerChartData,
   generateMultiSeriesChartData,
-  generateTimeSeriesScatterChartData
+  generateTimeSeriesScatterChartData,
+  removeMeta,
+  makeIDfromURL
 } from "../../../lighthouse/utils";
+
 import Form from "../../../components/FormVarient";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
+
 const isProd = process.env.NODE_ENV !== "development";
 
 const hostname = isProd
@@ -21,6 +27,8 @@ const CanvasJSChart = dynamic(
   async () => (await import("canvasjs-react-charts")).CanvasJSChart,
   { ssr: false }
 );
+
+
 
 const ADD_VARIENT = gql`
   mutation($settings: GroupSettingsInput!) {
@@ -40,11 +48,27 @@ const ADD_VARIENT = gql`
 const WhiskerChart = React.memo(props => {
   const [ready, setReady] = useState(false);
   const [gotRef, setRef] = useState(false);
+  // const [setUrl] = useMutation(ADD_VARIENT);
+
   useEffect(() => {
     setReady(true);
   }, []);
+
+  // const { data } = useQuery(GET_TRACKED, {
+  //   variables: {
+  //     group: "default"
+  //   }
+  // });
+  //
+  // React.useEffect(() => {
+  //   if (data) {
+  //     removeMeta(data.groups[0].settings.trackedURLs);
+  //     setTodos(data.groups[0].settings.trackedURLs);
+  //   }
+  // }, [data]);
+
   if (!ready) {
-    return null;
+    return <span>Loading Dataset</span>;
   }
   const whiskerChartOptions = {
     theme: "dark2",
@@ -245,6 +269,10 @@ const TimeSeriesChart = React.memo(props => {
   );
 });
 
+const link = createHttpLink({
+  uri: "/api/graphql"
+});
+
 class Report extends React.Component {
   constructor(props) {
     super(props);
@@ -252,6 +280,18 @@ class Report extends React.Component {
       inputValue: ""
     };
     this.toggleDataSeries = this.toggleDataSeries.bind(this);
+    this.cache = new InMemoryCache({ addTypename: false});
+    this.apolloClient = new ApolloClient({
+      // Provide required constructor fields
+      cache: this.cache,
+      link: link,
+      queryDeduplication: false,
+      defaultOptions: {
+        watchQuery: {
+          fetchPolicy: "cache-and-network"
+        }
+      }
+    });
   }
 
   toggleDataSeries(e) {
@@ -266,17 +306,95 @@ class Report extends React.Component {
     e.preventDefault();
     if (this.state.inputValue === "") return alert("Task name is required");
 
-    this.setState({ inputValue: "" });
-    fetch("/api/add-url", {
-      method: "POST",
-      body: JSON.stringify([
-        {
-          name: this.state.inputValue,
-          new: true,
-          url: this.props.meta.url
-        }
-      ])
-    });
+    this.apolloClient
+      .query({
+        query: gql`
+          {
+            groups(name: "default") {
+              settings {
+                trackedURLs {
+                  url
+                  variants {
+                    name
+                    search
+                    new
+                  }
+                }
+              }
+            }
+          }
+        `
+      })
+      .then(({ data }) => {
+        const { url, search } = makeIDfromURL(this.props.meta.url);
+        const { trackedURLs } = Object.create(data.groups[0].settings)
+
+        const updatedTrackedUrls = trackedURLs.reduce((acc, tracked) => {
+          if (tracked.url !== url) {
+            acc.push(tracked);
+            return acc;
+          }
+          const updatedExistingVariants = tracked.variants.reduce(
+            (acc, variant) => {
+              console.log(variant.name, this.state.inputValue);
+              if (variant.name === this.state.inputValue) {
+                acc.push(Object.assign({}, variant, { new: true }));
+                return acc;
+              }
+              acc.push(variant);
+              return acc;
+            },
+            []
+          );
+          const isNewVariant = !updatedExistingVariants.find(variant => {
+            return this.state.name === variant.name;
+          });
+
+          if (isNewVariant) {
+            updatedExistingVariants.push({
+              name: this.state.inputValue,
+              search,
+              new: true
+            });
+          }
+          acc.push(Object.assign({}, tracked, { variants: updatedExistingVariants }));
+          return acc;
+        }, []);
+        return Object.assign({}, data.groups[0].settings, {
+          trackedURLs: updatedTrackedUrls
+        });
+      })
+      .then(updatedTrackedUrls => {
+        this.setState({ inputValue: "" });
+       this.apolloClient.mutate({
+         variables: {settings: updatedTrackedUrls.settings},
+         mutation:gql`
+           mutation($settings: GroupSettingsInput!) {
+             updateGroupSettings(group: "default", settings: $settings) {
+               trackedURLs {
+                 url
+                 variants {
+                   name
+                   search
+                   new
+                 }
+               }
+             }
+           }
+         `}
+       )
+      });
+
+    // fetch("/api/add-url", {
+    //   method: "POST",
+    //   body: JSON.stringify([
+    //     {
+    //       name: this.state.inputValue,
+    //       new: true,
+    //       url: this.props.meta.url
+    //     }
+    //   ])
+    // });
   };
 
   onDelete = name => {
