@@ -201,5 +201,8 @@ const Performance = ({ linkList }) => {
     </Fragment>
   );
 };
-
+Performance.getInitialProps = async (ctx)=>{
+  console.log(ctx)
+  return {}
+}
 export default Performance;
