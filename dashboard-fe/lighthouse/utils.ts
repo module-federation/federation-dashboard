@@ -1,6 +1,6 @@
 import randomColor from "randomcolor";
 import arraystat from "arraystat";
-import unset from 'lodash/unset'
+import unset from "lodash/unset";
 export const cache = {};
 
 export const toFixed = (num, fixed) => {
@@ -251,18 +251,15 @@ export const makeIDfromURL = url => {
 };
 
 export const removeMeta = obj => {
-
   for (let prop in obj) {
-    if (prop === "__typename") unset(obj,prop)
+    if (prop === "__typename") delete obj[prop];
     else if (typeof obj[prop] === "object") removeMeta(obj[prop]);
-
   }
 };
 
-
 export const stripTypenames = (obj: any, propToDelete: string) => {
   for (const property in obj) {
-    if (typeof obj[property] === 'object' && !(obj[property] instanceof File)) {
+    if (typeof obj[property] === "object" && !(obj[property] instanceof File)) {
       delete obj.property;
       const newData = stripTypenames(obj[property], propToDelete);
       obj[property] = newData;
@@ -273,4 +270,4 @@ export const stripTypenames = (obj: any, propToDelete: string) => {
     }
   }
   return obj;
-}
+};
