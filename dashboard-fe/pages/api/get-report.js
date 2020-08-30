@@ -1,18 +1,23 @@
-import fs from "fs";
-import path from "path";
-function getData(fileName, type) {
-  return fs.promises.readFile(fileName, { encoding: type });
-}
+import workerize from "node-inline-worker";
+
 export default async (req, res) => {
   res.statusCode = 200;
 
   const safePath = req.query.report.split("/").slice(-1)[0];
   console.log("get Report", safePath);
+  const getReport = workerize(async safePath => {
+    const fs = __non_webpack_require__('fs');
+    const path = __non_webpack_require__('path');
+    function getData(fileName, type) {
+      return fs.promises.readFile(fileName, { encoding: type });
+    }
 
-  const json = await getData(
-    path.join("public/reports", safePath, "scatter.json"),
-    "utf8"
-  ).catch(() => "{}");
+    return await getData(
+      path.join(process.cwd(), "public/reports", safePath, "scatter.json"),
+      "utf8"
+    ).catch(() => "{}");
+  });
 
+  const json = await getReport(safePath);
   res.send(json);
 };
