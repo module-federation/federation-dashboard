@@ -8,7 +8,6 @@ export default async (req, res) => {
 
   const getGlobbedFiles = workerize(async safePath => {
     console.log(safePath);
-    console.log("in worker");
     const glob = __non_webpack_require__("glob");
     const path = __non_webpack_require__("path");
     const fs = __non_webpack_require__("fs");
@@ -31,7 +30,6 @@ export default async (req, res) => {
     const globbedData = await BPromise.map(
       globbedFiles,
       async filePath => {
-        console.log("async get data", filePath);
         return getData(filePath, "utf8").then(data => JSON.parse(data));
       },
       { concurrency: 3 }
