@@ -123,7 +123,6 @@ const Performance = ({ linkList }) => {
 
   const _handleBntReRun = index => {
     const newArr = todos.slice();
-    newArr[index].new = true;
     const updated = newArr[index].variants.map(variant => {
       if (variant.name === "Latest") {
         variant.new = true;

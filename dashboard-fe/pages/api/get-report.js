@@ -6,8 +6,8 @@ export default async (req, res) => {
   const safePath = req.query.report.split("/").slice(-1)[0];
   console.log("get Report", safePath);
   const getReport = workerize(async safePath => {
-    const fs = __non_webpack_require__('fs');
-    const path = __non_webpack_require__('path');
+    const fs = __non_webpack_require__("fs");
+    const path = __non_webpack_require__("path");
     function getData(fileName, type) {
       return fs.promises.readFile(fileName, { encoding: type });
     }
