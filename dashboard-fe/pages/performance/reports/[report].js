@@ -1,5 +1,7 @@
 import React, { useRef, createRef, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import gql from "graphql-tag";
+
 import {
   generateScatterChartData,
   generateWhiskerChartData,
@@ -7,7 +9,6 @@ import {
   generateTimeSeriesScatterChartData
 } from "../../../lighthouse/utils";
 import Form from "../../../components/FormVarient";
-
 const isProd = process.env.NODE_ENV !== "development";
 
 const hostname = isProd
@@ -20,6 +21,21 @@ const CanvasJSChart = dynamic(
   async () => (await import("canvasjs-react-charts")).CanvasJSChart,
   { ssr: false }
 );
+
+const ADD_VARIENT = gql`
+  mutation($settings: GroupSettingsInput!) {
+    updateGroupSettings(group: "default", settings: $settings) {
+      trackedURLs {
+        url
+        variants {
+          name
+          search
+          new
+        }
+      }
+    }
+  }
+`;
 
 const WhiskerChart = React.memo(props => {
   const [ready, setReady] = useState(false);
