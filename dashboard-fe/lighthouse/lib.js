@@ -27,7 +27,6 @@ const launchChromeAndRunLighthouse = async (url) => {
   });
   const opts = {
     port: chrome.port,
-    // extraHeaders:{"x-lll-access-token":"e8126c64c3486e84081fffad6a0ab22d4267bb41"}
   };
 
   if (!hasStarted) {
