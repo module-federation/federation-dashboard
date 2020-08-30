@@ -11,6 +11,7 @@ export default async (req, res) => {
     const glob = __non_webpack_require__("glob");
     const path = __non_webpack_require__("path");
     const fs = __non_webpack_require__("fs");
+    const BPromise = __non_webpack_require__("bluebird");
     function getData(fileName, type) {
       return fs.promises.readFile(fileName, { encoding: type });
     }
@@ -26,10 +27,12 @@ export default async (req, res) => {
         }
       );
     });
-    const globbedData = await Promise.all(
-      globbedFiles.map(filePath => {
+    const globbedData = await BPromise.map(
+      globbedFiles,
+      async filePath => {
         return getData(filePath, "utf8").then(data => JSON.parse(data));
-      })
+      },
+      { concurrency: 3 }
     );
     return globbedData;
   });
