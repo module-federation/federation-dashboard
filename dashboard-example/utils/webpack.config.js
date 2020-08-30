@@ -8,12 +8,12 @@ module.exports = {
   mode: "development",
   devServer: {
     contentBase: path.join(__dirname, "dist"),
-    port: 3005
+    port: 3005,
   },
   output: {
     filename: "[name].[contenthash].js",
     chunkFilename: "[name].[contenthash].js",
-    publicPath: "http://localhost:3005/"
+    publicPath: "http://localhost:3005/",
   },
   module: {
     rules: [
@@ -22,14 +22,14 @@ module.exports = {
         loader: "babel-loader",
         exclude: /node_modules/,
         options: {
-          presets: ["@babel/preset-react"]
-        }
-      }
-    ]
+          presets: ["@babel/preset-react"],
+        },
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/index.html"
+      template: "./public/index.html",
     }),
     new ModuleFederationPlugin({
       name: "utils",
@@ -37,9 +37,9 @@ module.exports = {
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
-        "./analytics": "./src/analytics"
+        "./analytics": "./src/analytics",
       },
-      shared: require("./package.json").dependencies
+      shared: require("./package.json").dependencies,
     }),
     new DashboardPlugin({
       version: true,
@@ -48,10 +48,10 @@ module.exports = {
       metadata: {
         source: {
           url:
-            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/utils"
+            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/utils",
         },
-        remote: "http://localhost:3005/remoteEntry.js"
-      }
-    })
-  ]
+        remote: "http://localhost:3005/remoteEntry.js",
+      },
+    }),
+  ],
 };

@@ -6,7 +6,7 @@ import workerize from "node-inline-worker";
 export default async (req, res) => {
   res.statusCode = 200;
 
-  const getGlobbedFiles = workerize(async safePath => {
+  const getGlobbedFiles = workerize(async (safePath) => {
     console.log(safePath);
     const glob = __non_webpack_require__("glob");
     const path = __non_webpack_require__("path");
@@ -23,14 +23,14 @@ export default async (req, res) => {
           if (er) {
             reject(er);
           }
-          resolve(files.filter(file => !file.includes("scatter.json")));
+          resolve(files.filter((file) => !file.includes("scatter.json")));
         }
       );
     });
     const globbedData = await BPromise.map(
       globbedFiles,
-      async filePath => {
-        return getData(filePath, "utf8").then(data => JSON.parse(data));
+      async (filePath) => {
+        return getData(filePath, "utf8").then((data) => JSON.parse(data));
       },
       { concurrency: 3 }
     );

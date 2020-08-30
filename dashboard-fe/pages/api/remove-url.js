@@ -10,7 +10,7 @@ export default async (req, res) => {
 
   const prev = JSON.parse(fs.readFileSync("public/urls.json", "utf8"));
   const removedUrls = Object.values(prev)
-    .filter(preUrl => {
+    .filter((preUrl) => {
       if (
         preUrl.name === sourceData[0].name &&
         preUrl.url === sourceData[0].url
