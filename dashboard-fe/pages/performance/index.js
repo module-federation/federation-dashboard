@@ -12,7 +12,7 @@ import {
   SET_REMOTE_VERSION
 } from "../../components/application/CurrentVersion";
 
-import { makeIDfromURL, removeMeta } from "../../lighthouse/utils.ts";
+import { makeIDfromURL, removeMeta } from "../../lighthouse/utils.js";
 const GET_TRACKED = gql`
   query($group: String!) {
     groups(name: $group) {
