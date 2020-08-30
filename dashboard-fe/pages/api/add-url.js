@@ -4,7 +4,7 @@ import deepmerge from "deepmerge";
 import Promise from "bluebird";
 import { cache } from "../../lighthouse/utils.js";
 
-const generateLighthouseReport = sourceData => {
+const generateLighthouseReport = (sourceData) => {
   return Promise.map(
     sourceData,
     async ({ name, url, new: isNew }) => {
@@ -22,7 +22,7 @@ const generateLighthouseReport = sourceData => {
           fs.readFileSync("public/urls.json", "utf8")
         );
 
-        const wr = Object.values(freshDataSource).map(x => {
+        const wr = Object.values(freshDataSource).map((x) => {
           if (x.url === url && x.name === name) {
             x.new = false;
           }

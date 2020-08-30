@@ -13,6 +13,7 @@ import {
 } from "../../components/application/CurrentVersion";
 
 import { makeIDfromURL, removeMeta } from "../../lighthouse/utils.js";
+import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 const GET_TRACKED = gql`
   query($group: String!) {
     groups(name: $group) {
@@ -57,7 +58,8 @@ const Performance = ({ linkList }) => {
   });
 
   React.useEffect(() => {
-    if (data) {
+    console.log(data);
+    if (data && data.groups[0]) {
       removeMeta(data.groups[0].settings.trackedURLs);
       setTodos(data.groups[0].settings.trackedURLs);
     }
@@ -201,7 +203,54 @@ const Performance = ({ linkList }) => {
     </Fragment>
   );
 };
-Performance.getInitialProps = async (ctx) => {
+Performance.getInitialProps = async ({ req, res }) => {
+  const isProd = process.env.NODE_ENV !== "development";
+  const url = isProd
+    ? process.browser
+      ? "http://mf-dash.ddns.net:3000/"
+      : "http://localhost:3000/"
+    : "http://localhost:3000/";
+
+  if (!process.browser) {
+    const link = createHttpLink({
+      uri: url + "api/graphql",
+    });
+
+    const cache = new InMemoryCache({ addTypename: false });
+    const apolloClient = new ApolloClient({
+      // Provide required constructor fields
+      cache: cache,
+      link: link,
+      queryDeduplication: false,
+      defaultOptions: {
+        watchQuery: {
+          fetchPolicy: "cache-and-network",
+        },
+      },
+    });
+
+    const { data } = await apolloClient.query({
+      query: gql`
+        {
+          groups(name: "default") {
+            settings {
+              trackedURLs {
+                url
+                variants {
+                  name
+                  search
+                  new
+                }
+              }
+            }
+          }
+        }
+      `,
+    });
+
+    console.log(data);
+  }
+
   return {};
 };
 export default Performance;
