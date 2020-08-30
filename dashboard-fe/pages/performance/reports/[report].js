@@ -456,9 +456,9 @@ Report.getInitialProps = async ({ query }) => {
   //
   // const scatterData = generateTimeSeriesScatterChartData(timeSeriesData);
   return {
-    scatterChartData: generateScatterChartData(report),
-    whiskerChartData: generateWhiskerChartData(report),
-    multiSeriesChartData: generateMultiSeriesChartData(report),
+    scatterChartData: await generateScatterChartData(report),
+    whiskerChartData: await generateWhiskerChartData(report),
+    multiSeriesChartData: await generateMultiSeriesChartData(report),
     meta,
     appKeys: Object.keys(report),
     // timeSeriesScatterData: scatterData,

@@ -1,14 +1,12 @@
-import randomColor from "randomcolor";
-import arraystat from "arraystat";
-import unset from "lodash/unset";
-export const cache = {};
-
-export const toFixed = (num, fixed) => {
+const randomColor = require("randomcolor");
+const arraystat = require("arraystat");
+const cache = {};
+const toFixed = (num, fixed) => {
   var re = new RegExp("^-?\\d+(?:.\\d{0," + (fixed || -1) + "})?");
   return num.toString().match(re)[0];
 };
 
-export const hexToRgbA = (hex, tr) => {
+const hexToRgbA = (hex, tr) => {
   var c;
   if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
     c = hex.substring(1).split("");
@@ -26,47 +24,52 @@ export const hexToRgbA = (hex, tr) => {
   }
   throw new Error("Bad Hex");
 };
-
-export const generateScatterChartData = (data) =>
-  Object.entries(data).map(([group, results]) => {
-    const obj = {
-      type: "scatter",
-      name: group,
-      showInLegend: true,
-      markerType: "circle",
-      markerColor: randomColor(),
-    };
-    const charable = (Array.isArray(results) ? results : [results]).map(
-      (result) => {
-        return [
-          "first-contentful-paint",
-          "first-meaningful-paint",
-          "speed-index",
-          "estimated-input-latency",
-          "total-blocking-time",
-          "max-potential-fid",
-          "time-to-first-byte",
-          "first-cpu-idle",
-          "interactive",
-          "accessibility",
-          "seo",
-          "largest-contentful-paint",
-        ]
-          .filter((key) => result.audits[key])
-          .map((key, index) => {
-            return {
-              y: parseInt(toFixed(result.audits[key].numericValue)),
-              x: index,
-              label: key,
-            };
-          });
-      }
-    );
-    obj.dataPoints = [].concat.apply([], charable);
-    return obj;
+const generateScatterChartData = async (data) => {
+  const workerize = __non_webpack_require__("node-inline-worker");
+  const generateScatterChartDataWorker = workerize(async (data) => {
+    const { toFixed } = __non_webpack_require__(require.resolve("./utils"));
+    return Object.entries(data).map(([group, results]) => {
+      const obj = {
+        type: "scatter",
+        name: group,
+        showInLegend: true,
+        markerType: "circle",
+        // markerColor: randomColor(),
+      };
+      const charable = (Array.isArray(results) ? results : [results]).map(
+        (result) => {
+          return [
+            "first-contentful-paint",
+            "first-meaningful-paint",
+            "speed-index",
+            "estimated-input-latency",
+            "total-blocking-time",
+            "max-potential-fid",
+            "time-to-first-byte",
+            "first-cpu-idle",
+            "interactive",
+            "accessibility",
+            "seo",
+            "largest-contentful-paint",
+          ]
+            .filter((key) => result.audits[key])
+            .map((key, index) => {
+              return {
+                y: parseInt(toFixed(result.audits[key].numericValue)),
+                x: index,
+                label: key,
+              };
+            });
+        }
+      );
+      obj.dataPoints = [].concat.apply([], charable);
+      return obj;
+    });
   });
+  return generateScatterChartDataWorker(data);
+};
 
-export const generateTimeSeriesScatterChartData = (data) => {
+const generateTimeSeriesScatterChartData = async (data) => {
   const scatterObject = [
     "first-contentful-paint",
     "first-meaningful-paint",
@@ -119,129 +122,143 @@ export const generateTimeSeriesScatterChartData = (data) => {
   return Object.values(scatterObject);
 };
 
-export const generateWhiskerChartData = (data) =>
-  Object.entries(data).map(([group, results]) => {
-    const generateColor = randomColor();
-    const obj = {
-      type: "boxAndWhisker",
-      name: group,
-      upperBoxColor: hexToRgbA(generateColor, "0.3"),
-      lowerBoxColor: hexToRgbA(generateColor, "0.3"),
-      showInLegend: true,
-      markerColor: generateColor,
-      color: generateColor,
-    };
-    const chartStore = { [group]: {} };
-    results.map((result) => {
-      return [
-        "first-contentful-paint",
-        "first-meaningful-paint",
-        "speed-index",
-        "estimated-input-latency",
-        "total-blocking-time",
-        "max-potential-fid",
-        "time-to-first-byte",
-        "first-cpu-idle",
-        "interactive",
-        "accessibility",
-        "seo",
-        "largest-contentful-paint",
-      ]
-        .filter((key) => result.audits[key])
-        .map((key, index) => {
-          if (!chartStore[group][key]) {
-            chartStore[group][key] = [];
-          }
-          chartStore[group][key].push(
-            parseInt(toFixed(result.audits[key].numericValue))
-          );
-        });
-    });
+const generateWhiskerChartData = (data) => {
+  const workerize = __non_webpack_require__("node-inline-worker");
+  const generateWhiskerChartDataWorker = workerize(async (data) => {
+    const arraystat = __non_webpack_require__("arraystat");
+    const { toFixed } = __non_webpack_require__(require.resolve("./utils"));
 
-    const charable = Object.entries(chartStore).map(([key, value]) => {
-      return Object.entries(value).map(([key, value], index) => {
-        const { min, q1, q3, max, median } = arraystat(value);
-
-        return { label: key, y: [min, q1, q3, max, median], x: index };
+    return Object.entries(data).map(([group, results]) => {
+      // const generateColor = randomColor();
+      const obj = {
+        type: "boxAndWhisker",
+        name: group,
+        // upperBoxColor: hexToRgbA(generateColor, "0.3"),
+        // lowerBoxColor: hexToRgbA(generateColor, "0.3"),
+        showInLegend: true,
+        // markerColor: generateColor,
+        // color: generateColor,
+      };
+      const chartStore = { [group]: {} };
+      results.map((result) => {
+        return [
+          "first-contentful-paint",
+          "first-meaningful-paint",
+          "speed-index",
+          "estimated-input-latency",
+          "total-blocking-time",
+          "max-potential-fid",
+          "time-to-first-byte",
+          "first-cpu-idle",
+          "interactive",
+          "accessibility",
+          "seo",
+          "largest-contentful-paint",
+        ]
+          .filter((key) => result.audits[key])
+          .map((key, index) => {
+            if (!chartStore[group][key]) {
+              chartStore[group][key] = [];
+            }
+            chartStore[group][key].push(
+              parseInt(toFixed(result.audits[key].numericValue))
+            );
+          });
       });
-    });
-    obj.dataPoints = [].concat.apply([], charable);
-    return obj;
-  });
 
-export const generateMultiSeriesChartData = (data) => {
-  const metricGroups = [
-    "first-contentful-paint",
-    "first-meaningful-paint",
-    "speed-index",
-    "estimated-input-latency",
-    "total-blocking-time",
-    "max-potential-fid",
-    "time-to-first-byte",
-    "first-cpu-idle",
-    "interactive",
-    "accessibility",
-    "seo",
-    "largest-contentful-paint",
-  ].reduce((acc, item) => {
-    acc[item] = {
-      color: randomColor(),
-      name: item,
-      type: "bar",
-      showInLegend: true,
-      dataPoints: [],
-    };
-    return acc;
-  }, {});
+      const charable = Object.entries(chartStore).map(([key, value]) => {
+        return Object.entries(value).map(([key, value], index) => {
+          const { min, q1, q3, max, median } = arraystat(value);
 
-  const old = Object.entries(data).map(([group, results]) => {
-    const generateColor = randomColor();
-
-    const chartStore = { [group]: {} };
-    results.map((result) => {
-      return [
-        "first-contentful-paint",
-        "first-meaningful-paint",
-        "speed-index",
-        "estimated-input-latency",
-        "total-blocking-time",
-        "max-potential-fid",
-        "time-to-first-byte",
-        "first-cpu-idle",
-        "interactive",
-        "accessibility",
-        "seo",
-        "largest-contentful-paint",
-      ]
-        .filter((key) => result.audits[key])
-        .map((key, index) => {
-          if (!chartStore[group][key]) {
-            chartStore[group][key] = [];
-          }
-          chartStore[group][key].push(
-            parseInt(toFixed(result.audits[key].numericValue))
-          );
+          return { label: key, y: [min, q1, q3, max, median], x: index };
         });
-    });
-
-    Object.entries(chartStore).forEach(([key, value]) => {
-      return Object.entries(value).forEach(([key, value], index) => {
-        const { min, q1, q3, max, median } = arraystat(value);
-        const result = {
-          group: group,
-          label: key,
-          y: [min, q1, q3, max, median],
-          x: index,
-        };
-        metricGroups[key].dataPoints.push({ label: group, y: median });
       });
+      obj.dataPoints = [].concat.apply([], charable);
+      return obj;
     });
   });
+  return generateWhiskerChartDataWorker(data);
+};
+const generateMultiSeriesChartData = (data) => {
+  const workerize = __non_webpack_require__("node-inline-worker");
+  const generateMultiSeriesChartDataWorker = workerize(async (data) => {
+    const arraystat = __non_webpack_require__("arraystat");
+    const { toFixed } = __non_webpack_require__(require.resolve("./utils"));
 
-  return Object.values(metricGroups);
+    const metricGroups = [
+      "first-contentful-paint",
+      "first-meaningful-paint",
+      "speed-index",
+      "estimated-input-latency",
+      "total-blocking-time",
+      "max-potential-fid",
+      "time-to-first-byte",
+      "first-cpu-idle",
+      "interactive",
+      "accessibility",
+      "seo",
+      "largest-contentful-paint",
+    ].reduce((acc, item) => {
+      acc[item] = {
+        // color: randomColor(),
+        name: item,
+        type: "bar",
+        showInLegend: true,
+        dataPoints: [],
+      };
+      return acc;
+    }, {});
+
+    Object.entries(data).map(([group, results]) => {
+      // const generateColor = randomColor();
+
+      const chartStore = { [group]: {} };
+      results.map((result) => {
+        return [
+          "first-contentful-paint",
+          "first-meaningful-paint",
+          "speed-index",
+          "estimated-input-latency",
+          "total-blocking-time",
+          "max-potential-fid",
+          "time-to-first-byte",
+          "first-cpu-idle",
+          "interactive",
+          "accessibility",
+          "seo",
+          "largest-contentful-paint",
+        ]
+          .filter((key) => result.audits[key])
+          .map((key, index) => {
+            if (!chartStore[group][key]) {
+              chartStore[group][key] = [];
+            }
+            chartStore[group][key].push(
+              parseInt(toFixed(result.audits[key].numericValue))
+            );
+          });
+      });
+
+      Object.entries(chartStore).forEach(([key, value]) => {
+        return Object.entries(value).forEach(([key, value], index) => {
+          const { min, q1, q3, max, median } = arraystat(value);
+          const result = {
+            group: group,
+            label: key,
+            y: [min, q1, q3, max, median],
+            x: index,
+          };
+          metricGroups[key].dataPoints.push({ label: group, y: median });
+        });
+      });
+    });
+
+    return Object.values(metricGroups);
+  });
+  return generateMultiSeriesChartDataWorker(data);
 };
 
-export const makeIDfromURL = (url) => {
+const makeIDfromURL = (url) => {
   const urlObj = new URL(url);
   let id = urlObj.host.replace("www.", "");
   if (urlObj.pathname !== "/") {
@@ -250,9 +267,20 @@ export const makeIDfromURL = (url) => {
   return { id, url: urlObj.origin + urlObj.pathname, search: urlObj.search };
 };
 
-export const removeMeta = (obj) => {
+const removeMeta = (obj) => {
   for (let prop in obj) {
     if (prop === "__typename") delete obj[prop];
     else if (typeof obj[prop] === "object") removeMeta(obj[prop]);
   }
+};
+module.exports = {
+  removeMeta,
+  makeIDfromURL,
+  generateMultiSeriesChartData,
+  generateWhiskerChartData,
+  hexToRgbA,
+  generateScatterChartData,
+  toFixed,
+  cache,
+  generateTimeSeriesScatterChartData,
 };
