@@ -24,7 +24,7 @@ export default async (req, res) => {
           if (er) {
             reject(er);
           }
-          console.log('files')
+          console.log('files',file)
           resolve(files.filter(file => !file.includes("scatter.json")));
         }
       );
