@@ -27,7 +27,11 @@ const hexToRgbA = (hex, tr) => {
 const generateScatterChartData = async (data) => {
   const workerize = __non_webpack_require__("node-inline-worker");
   const generateScatterChartDataWorker = workerize(async (data) => {
-    const { toFixed } = __non_webpack_require__(require.resolve("./utils"));
+    const path = __non_webpack_require__("path");
+
+    const { toFixed } = __non_webpack_require__(
+      path.join(process.cwd(), "lighthouse/utils.js")
+    );
     console.log("generateScatterChartDataWorker");
     return Object.entries(data).map(([group, results]) => {
       const obj = {
@@ -124,139 +128,148 @@ const generateTimeSeriesScatterChartData = (data) => {
 };
 
 const generateWhiskerChartData = (data) => {
-  // const workerize = __non_webpack_require__("node-inline-worker");
-  // const generateWhiskerChartDataWorker = workerize(async (data) => {
-  //   const arraystat = __non_webpack_require__("arraystat");
-  //   const { toFixed } = __non_webpack_require__(require.resolve("./utils"));
+  const workerize = __non_webpack_require__("node-inline-worker");
+  const generateWhiskerChartDataWorker = workerize(async (data) => {
+    const arraystat = __non_webpack_require__("arraystat");
+    const path = __non_webpack_require__("path");
 
-  return Object.entries(data).map(([group, results]) => {
-    // const generateColor = randomColor();
-    const obj = {
-      type: "boxAndWhisker",
-      name: group,
-      // upperBoxColor: hexToRgbA(generateColor, "0.3"),
-      // lowerBoxColor: hexToRgbA(generateColor, "0.3"),
-      showInLegend: true,
-      // markerColor: generateColor,
-      // color: generateColor,
-    };
-    const chartStore = { [group]: {} };
-    results.map((result) => {
-      return [
-        "first-contentful-paint",
-        "first-meaningful-paint",
-        "speed-index",
-        "estimated-input-latency",
-        "total-blocking-time",
-        "max-potential-fid",
-        "time-to-first-byte",
-        "first-cpu-idle",
-        "interactive",
-        "accessibility",
-        "seo",
-        "largest-contentful-paint",
-      ]
-        .filter((key) => result.audits[key])
-        .map((key, index) => {
-          if (!chartStore[group][key]) {
-            chartStore[group][key] = [];
-          }
-          chartStore[group][key].push(
-            parseInt(toFixed(result.audits[key].numericValue))
-          );
-        });
-    });
+    const { toFixed } = __non_webpack_require__(
+      path.join(process.cwd(), "lighthouse/utils.js")
+    );
+    console.log("generateWhiskerChartData");
 
-    const charable = Object.entries(chartStore).map(([key, value]) => {
-      return Object.entries(value).map(([key, value], index) => {
-        const { min, q1, q3, max, median } = arraystat(value);
-
-        return { label: key, y: [min, q1, q3, max, median], x: index };
+    return Object.entries(data).map(([group, results]) => {
+      // const generateColor = randomColor();
+      const obj = {
+        type: "boxAndWhisker",
+        name: group,
+        // upperBoxColor: hexToRgbA(generateColor, "0.3"),
+        // lowerBoxColor: hexToRgbA(generateColor, "0.3"),
+        showInLegend: true,
+        // markerColor: generateColor,
+        // color: generateColor,
+      };
+      const chartStore = { [group]: {} };
+      results.map((result) => {
+        return [
+          "first-contentful-paint",
+          "first-meaningful-paint",
+          "speed-index",
+          "estimated-input-latency",
+          "total-blocking-time",
+          "max-potential-fid",
+          "time-to-first-byte",
+          "first-cpu-idle",
+          "interactive",
+          "accessibility",
+          "seo",
+          "largest-contentful-paint",
+        ]
+          .filter((key) => result.audits[key])
+          .map((key, index) => {
+            if (!chartStore[group][key]) {
+              chartStore[group][key] = [];
+            }
+            chartStore[group][key].push(
+              parseInt(toFixed(result.audits[key].numericValue))
+            );
+          });
       });
+
+      const charable = Object.entries(chartStore).map(([key, value]) => {
+        return Object.entries(value).map(([key, value], index) => {
+          const { min, q1, q3, max, median } = arraystat(value);
+
+          return { label: key, y: [min, q1, q3, max, median], x: index };
+        });
+      });
+      obj.dataPoints = [].concat.apply([], charable);
+      return obj;
     });
-    obj.dataPoints = [].concat.apply([], charable);
-    return obj;
   });
-  // });
-  // return generateWhiskerChartDataWorker(data);
+  return generateWhiskerChartDataWorker(data);
 };
 const generateMultiSeriesChartData = (data) => {
-  // const workerize = __non_webpack_require__("node-inline-worker");
-  // const generateMultiSeriesChartDataWorker = workerize(async (data) => {
-  //   const arraystat = __non_webpack_require__("arraystat");
-  //   const { toFixed } = __non_webpack_require__(require.resolve("./utils"));
+  const workerize = __non_webpack_require__("node-inline-worker");
+  const generateMultiSeriesChartDataWorker = workerize(async (data) => {
+    const arraystat = __non_webpack_require__("arraystat");
+    const path = __non_webpack_require__("path");
+    const { toFixed } = __non_webpack_require__(
+      path.join(process.cwd(), "lighthouse/utils.js")
+    );
+    console.log("generateMultiSeriesChartData");
 
-  const metricGroups = [
-    "first-contentful-paint",
-    "first-meaningful-paint",
-    "speed-index",
-    "estimated-input-latency",
-    "total-blocking-time",
-    "max-potential-fid",
-    "time-to-first-byte",
-    "first-cpu-idle",
-    "interactive",
-    "accessibility",
-    "seo",
-    "largest-contentful-paint",
-  ].reduce((acc, item) => {
-    acc[item] = {
-      // color: randomColor(),
-      name: item,
-      type: "bar",
-      showInLegend: true,
-      dataPoints: [],
-    };
-    return acc;
-  }, {});
+    const metricGroups = [
+      "first-contentful-paint",
+      "first-meaningful-paint",
+      "speed-index",
+      "estimated-input-latency",
+      "total-blocking-time",
+      "max-potential-fid",
+      "time-to-first-byte",
+      "first-cpu-idle",
+      "interactive",
+      "accessibility",
+      "seo",
+      "largest-contentful-paint",
+    ].reduce((acc, item) => {
+      acc[item] = {
+        // color: randomColor(),
+        name: item,
+        type: "bar",
+        showInLegend: true,
+        dataPoints: [],
+      };
+      return acc;
+    }, {});
 
-  Object.entries(data).map(([group, results]) => {
-    // const generateColor = randomColor();
+    Object.entries(data).map(([group, results]) => {
+      // const generateColor = randomColor();
 
-    const chartStore = { [group]: {} };
-    results.map((result) => {
-      return [
-        "first-contentful-paint",
-        "first-meaningful-paint",
-        "speed-index",
-        "estimated-input-latency",
-        "total-blocking-time",
-        "max-potential-fid",
-        "time-to-first-byte",
-        "first-cpu-idle",
-        "interactive",
-        "accessibility",
-        "seo",
-        "largest-contentful-paint",
-      ]
-        .filter((key) => result.audits[key])
-        .map((key, index) => {
-          if (!chartStore[group][key]) {
-            chartStore[group][key] = [];
-          }
-          chartStore[group][key].push(
-            parseInt(toFixed(result.audits[key].numericValue))
-          );
+      const chartStore = { [group]: {} };
+      results.map((result) => {
+        return [
+          "first-contentful-paint",
+          "first-meaningful-paint",
+          "speed-index",
+          "estimated-input-latency",
+          "total-blocking-time",
+          "max-potential-fid",
+          "time-to-first-byte",
+          "first-cpu-idle",
+          "interactive",
+          "accessibility",
+          "seo",
+          "largest-contentful-paint",
+        ]
+          .filter((key) => result.audits[key])
+          .map((key, index) => {
+            if (!chartStore[group][key]) {
+              chartStore[group][key] = [];
+            }
+            chartStore[group][key].push(
+              parseInt(toFixed(result.audits[key].numericValue))
+            );
+          });
+      });
+
+      Object.entries(chartStore).forEach(([key, value]) => {
+        return Object.entries(value).forEach(([key, value], index) => {
+          const { min, q1, q3, max, median } = arraystat(value);
+          const result = {
+            group: group,
+            label: key,
+            y: [min, q1, q3, max, median],
+            x: index,
+          };
+          metricGroups[key].dataPoints.push({ label: group, y: median });
         });
-    });
-
-    Object.entries(chartStore).forEach(([key, value]) => {
-      return Object.entries(value).forEach(([key, value], index) => {
-        const { min, q1, q3, max, median } = arraystat(value);
-        const result = {
-          group: group,
-          label: key,
-          y: [min, q1, q3, max, median],
-          x: index,
-        };
-        metricGroups[key].dataPoints.push({ label: group, y: median });
       });
     });
-  });
 
-  return Object.values(metricGroups);
-  // });
-  // return generateMultiSeriesChartDataWorker(data);
+    return Object.values(metricGroups);
+  });
+  return generateMultiSeriesChartDataWorker(data);
 };
 
 const makeIDfromURL = (url) => {
