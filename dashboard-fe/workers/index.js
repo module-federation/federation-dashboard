@@ -1,15 +1,23 @@
-// const dbDriver = require("../src/database/drivers");
-const path = require("path");
+const federatedWorkerImport = async (containerPath, shareInit) => {
+  const path = require("path");
 
-require(path.join(__dirname, "../src/database/drivers/index.ts"));
-module.exports.group = async (props, callback) => {
-  const { name } = props;
-  await dbDriver.setup();
-  if (name) {
-    const found = await dbDriver.group_findByName(name);
-    return found ? [found] : [];
-  } else {
-    callback("didnt find name " + name);
-    return dbDriver.group_findAll();
-  }
+  global.__webpack_require__ = require(path.join(
+    process.cwd(),
+    ".next/server/webpack-runtime.js"
+  ));
+  const {
+    initSharing: __webpack_init_sharing__,
+    shareScopes: __webpack_share_scopes__,
+  } = shareInit();
+  // initialize any sharing, unlikely in a worker
+  await __webpack_init_sharing__("default");
+  // require container
+  const container = require(containerPath).dashboard;
+  // Initialize the container, it may provide shared modules
+  await container.init(__webpack_share_scopes__.default);
+  return (request) => {
+    return container.get(request).then((factory) => factory());
+  };
 };
+
+module.exports = federatedWorkerImport;
