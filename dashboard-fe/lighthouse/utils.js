@@ -69,7 +69,7 @@ const generateScatterChartData = async (data) => {
   // return generateScatterChartDataWorker(data);
 };
 
-const generateTimeSeriesScatterChartData = async (data) => {
+const generateTimeSeriesScatterChartData = (data) => {
   const scatterObject = [
     "first-contentful-paint",
     "first-meaningful-paint",
