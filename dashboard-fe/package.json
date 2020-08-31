@@ -28,6 +28,9 @@
       "url": "https://twitter.com/ScriptedAlchemy"
     }
   ],
+  "resolutions": {
+    "webpack": "^5.0.0-beta.28"
+  },
   "dependencies": {
     "@apollo/client": "^3.1.4",
     "@apollo/react-hooks": "^3.1.5",
@@ -80,7 +83,8 @@
     "react-hook-form": "^6.0.3",
     "recoil": "^0.0.10",
     "webpack": "^5.0.0-beta.28",
-    "worker-farm": "^1.7.0"
+    "worker-farm": "^1.7.0",
+    "workerpool": "^6.0.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "7.10.4",

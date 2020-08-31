@@ -231,7 +231,6 @@ const TimeSeriesChart = React.memo((props) => {
       cursor: "pointer",
       itemclick: (e) => {
         props.toggleDataSeries(e);
-        console.log(gotRef);
         gotRef.render();
       },
     },
