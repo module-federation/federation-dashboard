@@ -455,10 +455,19 @@ Report.getInitialProps = async ({ query }) => {
   // ).then((res) => res.json());
   //
   // const scatterData = generateTimeSeriesScatterChartData(timeSeriesData);
+  const [
+    scatterChartData,
+    whiskerChartData,
+    multiSeriesChartData,
+  ] = await Promise.all([
+    generateScatterChartData(report),
+    generateWhiskerChartData(report),
+    generateMultiSeriesChartData(report),
+  ]);
   return {
-    scatterChartData: await generateScatterChartData(report),
-    whiskerChartData: await generateWhiskerChartData(report),
-    multiSeriesChartData: await generateMultiSeriesChartData(report),
+    scatterChartData,
+    whiskerChartData,
+    multiSeriesChartData,
     meta,
     appKeys: Object.keys(report),
     // timeSeriesScatterData: scatterData,
