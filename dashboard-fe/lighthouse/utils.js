@@ -72,42 +72,41 @@ const generateScatterChartProcessor = (data) => {
     return obj;
   });
 };
+
+const createWorker = async (data, request, moduleExport) => {
+  //i could make this an external and it would look better
+  const path = __non_webpack_require__("path");
+  // could also make this an external, then just use "require"
+  const initRemote = __non_webpack_require__(
+    // needs webpack runtime to get __webpack_require__
+    // externally require the worker code with node.js This could be inline,
+    // but i decided to move the bootstapping code somewhere else. Technically if this were not next.js
+    // we should be able to import('dashboard/utils')
+    // workers/index.js was in this file, but its cleaner to just move the boilerplate
+    path.join(process.cwd(), "workers/index.js")
+  );
+
+  // essentially do what webpack is supposed to do in a proper environment.
+  // attach the remote container, initialize share scopes.
+  // The webpack parser does something similer when you require(app1/thing), so make a RemoteModule
+  const federatedRequire = await initRemote(
+    path.join(process.cwd(), ".next/server/static/runtime/remoteEntry.js"),
+    () => ({
+      initSharing: __webpack_init_sharing__,
+      shareScopes: __webpack_share_scopes__,
+    })
+  );
+  // the getter, but abstracted. This async gets the module via the low-level api.
+  // The remote requires utils (basically this file lol) and i pull toFixed off its exports.
+  // alternatively i could copy paste, but MF provides me the power to import the current file as an entrypoint
+  const RemoteModule = await federatedRequire(request);
+  return RemoteModule[moduleExport](data);
+};
+
 const generateScatterChartData = async (data) => {
   if (!process.browser) {
-    const add = async (data) => {
-      //i could make this an external and it would look better
-      const path = __non_webpack_require__("path");
-      // could also make this an external, then just use "require"
-      const initRemote = __non_webpack_require__(
-        // needs webpack runtime to get __webpack_require__
-        // externally require the worker code with node.js This could be inline,
-        // but i decided to move the bootstapping code somewhere else. Technically if this were not next.js
-        // we should be able to import('dashboard/utils')
-        // workers/index.js was in this file, but its cleaner to just move the boilerplate
-        path.join(process.cwd(), "workers/index.js")
-      );
-
-      // essentially do what webpack is supposed to do in a proper environment.
-      // attach the remote container, initialize share scopes.
-      // The webpack parser does something similer when you require(app1/thing), so make a RemoteModule
-      const federatedRequire = await initRemote(
-        path.join(process.cwd(), ".next/server/static/runtime/remoteEntry.js"),
-        () => ({
-          initSharing: __webpack_init_sharing__,
-          shareScopes: __webpack_share_scopes__,
-        })
-      );
-      // the getter, but abstracted. This async gets the module via the low-level api.
-      // The remote requires utils (basically this file lol) and i pull toFixed off its exports.
-      // alternatively i could copy paste, but MF provides me the power to import the current file as an entrypoint
-      const { generateScatterChartProcessor } = await federatedRequire(
-        "./utils"
-      );
-      console.log("generateScatterChartDataWorker");
-      return generateScatterChartProcessor(data);
-    };
     return pool
-      .exec(add, [data])
+      .exec(createWorker, [data, "./utils", "generateScatterChartProcessor"])
       .then(function (result) {
         return result;
       })
@@ -176,150 +175,170 @@ const generateTimeSeriesScatterChartData = (data) => {
   return Object.values(scatterObject);
 };
 
-const generateWhiskerChartData = (data) => {
-  const workerize = __non_webpack_require__("node-inline-worker");
-  const generateWhiskerChartDataWorker = workerize(async (data) => {
-    const arraystat = __non_webpack_require__("arraystat");
-    const path = __non_webpack_require__("path");
-
-    const { toFixed } = __non_webpack_require__(
-      path.join(process.cwd(), "lighthouse/utils.js")
-    );
-
-    console.log("generateWhiskerChartData");
-
-    return Object.entries(data).map(([group, results]) => {
-      // const generateColor = randomColor();
-      const obj = {
-        type: "boxAndWhisker",
-        name: group,
-        // upperBoxColor: hexToRgbA(generateColor, "0.3"),
-        // lowerBoxColor: hexToRgbA(generateColor, "0.3"),
-        showInLegend: true,
-        // markerColor: generateColor,
-        // color: generateColor,
-      };
-      const chartStore = { [group]: {} };
-      results.map((result) => {
-        return [
-          "first-contentful-paint",
-          "first-meaningful-paint",
-          "speed-index",
-          "estimated-input-latency",
-          "total-blocking-time",
-          "max-potential-fid",
-          "time-to-first-byte",
-          "first-cpu-idle",
-          "interactive",
-          "accessibility",
-          "seo",
-          "largest-contentful-paint",
-        ]
-          .filter((key) => result.audits[key])
-          .map((key, index) => {
-            if (!chartStore[group][key]) {
-              chartStore[group][key] = [];
-            }
-            chartStore[group][key].push(
-              parseInt(toFixed(result.audits[key].numericValue))
-            );
-          });
-      });
-
-      const charable = Object.entries(chartStore).map(([key, value]) => {
-        return Object.entries(value).map(([key, value], index) => {
-          const { min, q1, q3, max, median } = arraystat(value);
-
-          return { label: key, y: [min, q1, q3, max, median], x: index };
+const generateWhiskerChartDataProcessor = (data) => {
+  return Object.entries(data).map(([group, results]) => {
+    // const generateColor = randomColor();
+    const obj = {
+      type: "boxAndWhisker",
+      name: group,
+      // upperBoxColor: hexToRgbA(generateColor, "0.3"),
+      // lowerBoxColor: hexToRgbA(generateColor, "0.3"),
+      showInLegend: true,
+      // markerColor: generateColor,
+      // color: generateColor,
+    };
+    const chartStore = { [group]: {} };
+    results.map((result) => {
+      return [
+        "first-contentful-paint",
+        "first-meaningful-paint",
+        "speed-index",
+        "estimated-input-latency",
+        "total-blocking-time",
+        "max-potential-fid",
+        "time-to-first-byte",
+        "first-cpu-idle",
+        "interactive",
+        "accessibility",
+        "seo",
+        "largest-contentful-paint",
+      ]
+        .filter((key) => result.audits[key])
+        .map((key, index) => {
+          if (!chartStore[group][key]) {
+            chartStore[group][key] = [];
+          }
+          chartStore[group][key].push(
+            parseInt(toFixed(result.audits[key].numericValue))
+          );
         });
+    });
+
+    const charable = Object.entries(chartStore).map(([key, value]) => {
+      return Object.entries(value).map(([key, value], index) => {
+        const { min, q1, q3, max, median } = arraystat(value);
+
+        return { label: key, y: [min, q1, q3, max, median], x: index };
       });
-      obj.dataPoints = [].concat.apply([], charable);
-      return obj;
+    });
+    obj.dataPoints = [].concat.apply([], charable);
+    return obj;
+  });
+};
+
+const generateWhiskerChartData = (data) => {
+  if (!process.browser) {
+    return pool
+      .exec(createWorker, [
+        data,
+        "./utils",
+        "generateWhiskerChartDataProcessor",
+      ])
+      .then(function (result) {
+        return result;
+      })
+      .catch(function (err) {
+        console.error(err);
+      })
+      .then(function (result) {
+        // pool.terminate(); // terminate all workers when done
+        return result;
+      });
+  }
+  return {};
+};
+
+const generateMultiSeriesChartProcessor = (data) => {
+  const metricGroups = [
+    "first-contentful-paint",
+    "first-meaningful-paint",
+    "speed-index",
+    "estimated-input-latency",
+    "total-blocking-time",
+    "max-potential-fid",
+    "time-to-first-byte",
+    "first-cpu-idle",
+    "interactive",
+    "accessibility",
+    "seo",
+    "largest-contentful-paint",
+  ].reduce((acc, item) => {
+    acc[item] = {
+      // color: randomColor(),
+      name: item,
+      type: "bar",
+      showInLegend: true,
+      dataPoints: [],
+    };
+    return acc;
+  }, {});
+
+  Object.entries(data).map(([group, results]) => {
+    // const generateColor = randomColor();
+
+    const chartStore = { [group]: {} };
+    results.map((result) => {
+      return [
+        "first-contentful-paint",
+        "first-meaningful-paint",
+        "speed-index",
+        "estimated-input-latency",
+        "total-blocking-time",
+        "max-potential-fid",
+        "time-to-first-byte",
+        "first-cpu-idle",
+        "interactive",
+        "accessibility",
+        "seo",
+        "largest-contentful-paint",
+      ]
+        .filter((key) => result.audits[key])
+        .map((key, index) => {
+          if (!chartStore[group][key]) {
+            chartStore[group][key] = [];
+          }
+          chartStore[group][key].push(
+            parseInt(toFixed(result.audits[key].numericValue))
+          );
+        });
+    });
+
+    Object.entries(chartStore).forEach(([key, value]) => {
+      return Object.entries(value).forEach(([key, value], index) => {
+        const { min, q1, q3, max, median } = arraystat(value);
+        const result = {
+          group: group,
+          label: key,
+          y: [min, q1, q3, max, median],
+          x: index,
+        };
+        metricGroups[key].dataPoints.push({ label: group, y: median });
+      });
     });
   });
-  return generateWhiskerChartDataWorker(data);
+
+  return Object.values(metricGroups);
 };
 const generateMultiSeriesChartData = (data) => {
-  const workerize = __non_webpack_require__("node-inline-worker");
-  const generateMultiSeriesChartDataWorker = workerize(async (data) => {
-    const arraystat = __non_webpack_require__("arraystat");
-    const path = __non_webpack_require__("path");
-    const { toFixed } = __non_webpack_require__(
-      path.join(process.cwd(), "lighthouse/utils.js")
-    );
-    console.log("generateMultiSeriesChartData");
-
-    const metricGroups = [
-      "first-contentful-paint",
-      "first-meaningful-paint",
-      "speed-index",
-      "estimated-input-latency",
-      "total-blocking-time",
-      "max-potential-fid",
-      "time-to-first-byte",
-      "first-cpu-idle",
-      "interactive",
-      "accessibility",
-      "seo",
-      "largest-contentful-paint",
-    ].reduce((acc, item) => {
-      acc[item] = {
-        // color: randomColor(),
-        name: item,
-        type: "bar",
-        showInLegend: true,
-        dataPoints: [],
-      };
-      return acc;
-    }, {});
-
-    Object.entries(data).map(([group, results]) => {
-      // const generateColor = randomColor();
-
-      const chartStore = { [group]: {} };
-      results.map((result) => {
-        return [
-          "first-contentful-paint",
-          "first-meaningful-paint",
-          "speed-index",
-          "estimated-input-latency",
-          "total-blocking-time",
-          "max-potential-fid",
-          "time-to-first-byte",
-          "first-cpu-idle",
-          "interactive",
-          "accessibility",
-          "seo",
-          "largest-contentful-paint",
-        ]
-          .filter((key) => result.audits[key])
-          .map((key, index) => {
-            if (!chartStore[group][key]) {
-              chartStore[group][key] = [];
-            }
-            chartStore[group][key].push(
-              parseInt(toFixed(result.audits[key].numericValue))
-            );
-          });
+  if (!process.browser) {
+    return pool
+      .exec(createWorker, [
+        data,
+        "./utils",
+        "generateMultiSeriesChartProcessor",
+      ])
+      .then(function (result) {
+        return result;
+      })
+      .catch(function (err) {
+        console.error(err);
+      })
+      .then(function (result) {
+        // pool.terminate(); // terminate all workers when done
+        return result;
       });
-
-      Object.entries(chartStore).forEach(([key, value]) => {
-        return Object.entries(value).forEach(([key, value], index) => {
-          const { min, q1, q3, max, median } = arraystat(value);
-          const result = {
-            group: group,
-            label: key,
-            y: [min, q1, q3, max, median],
-            x: index,
-          };
-          metricGroups[key].dataPoints.push({ label: group, y: median });
-        });
-      });
-    });
-
-    return Object.values(metricGroups);
-  });
-  return generateMultiSeriesChartDataWorker(data);
+  }
+  return {};
 };
 
 const makeIDfromURL = (url) => {
@@ -348,4 +367,6 @@ module.exports = {
   cache,
   generateTimeSeriesScatterChartData,
   generateScatterChartProcessor,
+  generateWhiskerChartDataProcessor,
+  generateMultiSeriesChartProcessor,
 };
