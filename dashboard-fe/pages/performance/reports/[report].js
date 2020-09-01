@@ -14,7 +14,9 @@ import {
 import Form from "../../../components/FormVarient";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
-
+if (process.browser) {
+  // try {import("dashboard/utils") } catch (e) {}
+}
 const isProd = process.env.NODE_ENV !== "development";
 
 const hostname = isProd
@@ -239,7 +241,12 @@ const TimeSeriesChart = React.memo((props) => {
 
   useEffect(() => {
     const { query } = props;
-
+    // if (process.browser) {
+    //   if (window.dashboard) {
+    //     console.log(window.dashboard)
+    //     window.dashboard.get("./utils");
+    //   }
+    // }
     fetch(hostname + "api/get-timeseries?report=" + query.report)
       .then((res) => res.json())
       .then((timeSeriesData) => {

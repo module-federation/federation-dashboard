@@ -117,10 +117,12 @@ const Performance = ({ groupData }) => {
     });
   };
 
-  const _handleBntReRun = (index) => {
+  const _handleBntReRun = ({ index, type }) => {
     const newArr = todos.slice();
     const updated = newArr[index].variants.map((variant) => {
-      if (variant.name === "Latest") {
+      if (type === "variants") {
+        variant.new = true;
+      } else if (variant.name === "Latest") {
         variant.new = true;
       }
       return variant;
@@ -175,7 +177,8 @@ const Performance = ({ groupData }) => {
             <ListItem
               key={index}
               todo={todo}
-              reRun={() => _handleBntReRun(index)}
+              reRun={() => _handleBntReRun({ index })}
+              reRunVariants={() => _handleBntReRun({ index, type: "variants" })}
               remove={() => _handleBntClick({ type: "remove", index })}
             />
           ))}

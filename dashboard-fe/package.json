@@ -79,6 +79,7 @@
     "react-hook-form": "^6.0.3",
     "recoil": "^0.0.10",
     "webpack": "^5.0.0-beta.28",
+    "webpack-merge": "^5.1.3",
     "worker-farm": "^1.7.0",
     "workerpool": "^6.0.0"
   },
