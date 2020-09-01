@@ -329,17 +329,17 @@ class Report extends React.Component {
         `,
       })
       .then(({ data }) => {
-        const { url, search } = makeIDfromURL(this.props.meta.url);
         const { trackedURLs } = Object.create(data.groups[0].settings);
 
         const updatedTrackedUrls = trackedURLs.reduce((acc, tracked) => {
+          const { url, search } = makeIDfromURL(tracked.url);
+
           if (tracked.url !== url) {
             acc.push(tracked);
             return acc;
           }
           const updatedExistingVariants = tracked.variants.reduce(
             (acc, variant) => {
-              console.log(variant.name, this.state.inputValue);
               if (variant.name === this.state.inputValue) {
                 acc.push(Object.assign({}, variant, { new: true }));
                 return acc;
