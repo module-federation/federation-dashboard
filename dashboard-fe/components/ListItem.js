@@ -18,6 +18,9 @@ export default function Item(props) {
       <Button variant="contained" onClick={props.reRun}>
         Re-run
       </Button>
+      <Button variant="contained" onClick={props.reRunVariants}>
+        Re-run All Variants
+      </Button>
       <Link href={`performance/reports/${dirName}`}>
         <a>View Reports</a>
       </Link>
