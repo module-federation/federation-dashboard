@@ -88,7 +88,6 @@ const WhiskerChart = React.memo((props) => {
       title: "Timing",
       suffix: "ms",
       logarithmic: false,
-      minimum: 500,
     },
     legend: {
       cursor: "pointer",
