@@ -35,7 +35,7 @@ const generateLighthouseReport = (group) => {
           }
           variant.new = false;
           Object.assign(cache, { foundNew: true });
-          await init(testLink, name, name || "Latest");
+          await init(testLink, name || "Latest", true);
           return variant;
         },
         { concurrency: 1 }
