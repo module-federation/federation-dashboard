@@ -68,19 +68,19 @@ const launchChromeAndRunLighthouse = async (url) => {
     });
 };
 const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
+  const mode = desktop ? "desktop" : "mobile";
   const opts = {
     key: config.PAGESPEED_KEY,
-    strategy: desktop ? "desktop" : "mobile",
+    strategy: mode,
     threshold: 0,
   };
   if (!hasStarted) {
-    console.log("MODE:", desktop ? "desktop" : "mobile");
+    console.log("MODE:", mode);
     console.log("using PageSpeedInsights for Perf Test\n");
     hasStarted = true;
     console.log("url:", url, "\n");
     console.log("Warming CDN Cache...\n");
-    await psi(url, opts);
-    await psi(url, opts);
+    await Promise.all([await psi(url, opts),await psi(url, opts)])
     bar1.start(RUNS, 0);
   }
   try {
@@ -112,12 +112,9 @@ function toFixed(num, fixed) {
 export const init = (url = argv.url, title = argv.title, desktop = true) => {
   argv.url = url;
   argv.title = title;
-  if (argv.from && argv.to) {
-    compareReports(
-      getContents(argv.from + ".json"),
-      getContents(argv.to + ".json")
-    );
-  } else if (argv.url) {
+  const mode = desktop ? "desktop" : "mobile";
+
+  if (argv.url) {
     const urlObj = new URL(argv.url);
     let dirName = urlObj.host.replace("www.", "");
     if (urlObj.pathname !== "/") {
@@ -227,9 +224,17 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
           avg[key] = { numericValue: average(value) };
         });
         const averagedJson = merge.all([averageAudit.js.audits, avg]);
-        Object.assign(averageAudit.js, { audits: averagedJson });
+        Object.assign(averageAudit.js, {
+          audits: averagedJson,
+          variant: title,
+          mode,
+        });
         averageAudit.json = JSON.stringify(
-          Object.assign(JSON.parse(averageAudit.json), { audits: averagedJson })
+          Object.assign(JSON.parse(averageAudit.json), {
+            audits: averagedJson,
+            variant: title,
+            mode,
+          })
         );
         return averageAudit;
       })
