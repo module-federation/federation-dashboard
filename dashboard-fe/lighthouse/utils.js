@@ -3,7 +3,7 @@ const arraystat = require("arraystat");
 const workerpool = require("workerpool");
 const pool = workerpool.pool({
   options: {
-    minWorkers: 1,
+    minWorkers: 2,
     workerType: "auto",
   },
 });
