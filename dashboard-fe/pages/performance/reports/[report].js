@@ -2,6 +2,8 @@ import React, { useRef, createRef, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import gql from "graphql-tag";
 
+const queryString = require("query-string");
+
 import {
   generateScatterChartData,
   generateWhiskerChartData,
@@ -14,6 +16,7 @@ import {
 import Form from "../../../components/FormVarient";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
+
 if (process.browser) {
   // try {import("dashboard/utils") } catch (e) {}
 }
@@ -281,6 +284,8 @@ class Report extends React.Component {
     super(props);
     this.state = {
       inputValue: "",
+      queryValue: "",
+      newQueryObject: {},
     };
     this.toggleDataSeries = this.toggleDataSeries.bind(this);
     this.cache = new InMemoryCache({ addTypename: false });
@@ -305,9 +310,30 @@ class Report extends React.Component {
     }
   }
 
+  updateExistingQuery = () => {
+    let value;
+    try {
+      console.log("is valid url");
+      value = makeIDfromURL(this.state.queryValue).search;
+    } catch (e) {
+      console.log("is incomplete query param");
+      value = this.state.queryValue;
+    }
+    let newQueryObject = queryString.parse(value);
+    if (!newQueryObject) {
+      newQueryObject = queryString.parse("?" + value);
+    }
+    this.setState(Object.assign({}, this.state, { newQueryObject }));
+  };
+
   _handleSubmit = (e) => {
+    let newQueryObject;
+    if (this.state.queryValue) {
+      this.updateExistingQuery();
+    }
     e.preventDefault();
-    if (this.state.inputValue === "") return alert("Task name is required");
+
+    // if (this.state.inputValue === "") return alert("Task name is required");
 
     this.apolloClient
       .query({
@@ -354,11 +380,26 @@ class Report extends React.Component {
           });
 
           if (isNewVariant) {
-            updatedExistingVariants.push({
-              name: this.state.inputValue,
-              search,
-              new: true,
+            const { id } = makeIDfromURL(tracked.url);
+
+            const OriginalTest = tracked.variants.find(({ name }) => {
+              return name === "Latest";
             });
+            if (id === this.props.query.report) {
+              const originalQueryString = queryString.parse(
+                OriginalTest.search || ""
+              );
+              console.log(
+                "merged Query string",
+                Object.assign(originalQueryString, this.state.newQueryObject)
+              );
+
+              updatedExistingVariants.push({
+                name: this.state.inputValue,
+                search: queryString.stringify(originalQueryString),
+                new: true,
+              });
+            }
           }
           acc.push(
             Object.assign({}, tracked, { variants: updatedExistingVariants })
@@ -423,8 +464,10 @@ class Report extends React.Component {
             appKeys={this.props.appKeys}
             onSubmit={this._handleSubmit}
             onDelete={this.onDelete}
-            value={this.state.inputValue}
-            onChange={(e) => this.setState({ inputValue: e.target.value })}
+            values={this.state}
+            onChange={(formObj) => {
+              this.setState(Object.assign({}, this.state, formObj));
+            }}
           />
         </div>
         <div>
