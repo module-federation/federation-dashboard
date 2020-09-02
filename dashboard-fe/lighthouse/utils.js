@@ -114,7 +114,7 @@ const generateScatterChartData = async (data) => {
         console.error(err);
       })
       .then(function (result) {
-        // pool.terminate(); // terminate all workers when done
+        pool.terminate(); // terminate all workers when done
         return result;
       });
   }
@@ -241,7 +241,7 @@ const generateWhiskerChartData = (data) => {
         console.error(err);
       })
       .then(function (result) {
-        // pool.terminate(); // terminate all workers when done
+        pool.terminate(); // terminate all workers when done
         return result;
       });
   }
@@ -334,7 +334,7 @@ const generateMultiSeriesChartData = (data) => {
         console.error(err);
       })
       .then(function (result) {
-        // pool.terminate(); // terminate all workers when done
+        pool.terminate(); // terminate all workers when done
         return result;
       });
   }
