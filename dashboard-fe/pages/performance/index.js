@@ -70,10 +70,11 @@ const Performance = ({ groupData }) => {
   const _handleSubmit = (e) => {
     if (e) e.preventDefault();
     if (inputValue === "") return alert("URL is required");
+    const {url,search} = makeIDfromURL(inputValue)
 
     const newArr = todos.slice();
     const valueExists = todos.find((item) => {
-      return item.url === inputValue;
+      return item.url === url;
     });
     if (!valueExists) {
       newArr.splice(0, 0, {
@@ -82,7 +83,7 @@ const Performance = ({ groupData }) => {
           {
             name: inputName,
             new: true,
-            search: makeIDfromURL(inputValue).search,
+            search,
           },
         ],
       });
