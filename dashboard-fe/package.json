@@ -75,6 +75,7 @@
     "pathfinding": "^0.4.18",
     "paths-js": "^0.4.10",
     "psi": "^4.0.1",
+    "query-string": "^6.13.1",
     "randomcolor": "^0.6.2",
     "react": "16.13.1",
     "react-d3-graph": "^2.4.1",
