@@ -46,7 +46,7 @@ const ADD_URL = gql`
 `;
 
 const Performance = ({ groupData }) => {
-  console.log('in performance page')
+  console.log("in performance page");
   const [todos, setTodos] = useState(
     groupData?.groups?.[0]?.settings?.trackedURLs
   );
@@ -122,7 +122,10 @@ const Performance = ({ groupData }) => {
   const _handleBntReRun = ({ index, type }) => {
     const newArr = todos.slice();
     const updated = newArr[index].variants.map((variant) => {
-      if (type === "variants") {
+      if (
+        type === "variants" &&
+        variant.name.toUpperCase().includes("FROZEN")
+      ) {
         variant.new = true;
       } else if (variant.name === "Latest") {
         variant.new = true;
@@ -243,7 +246,7 @@ Performance.getInitialProps = async ({ req, res }) => {
       });
 
       return data;
-    }
+    };
 
     const data = await runQuery(url);
     return { groupData: data };
