@@ -46,6 +46,7 @@ const ADD_URL = gql`
 `;
 
 const Performance = ({ groupData }) => {
+  console.log('in performance page')
   const [todos, setTodos] = useState(
     groupData?.groups?.[0]?.settings?.trackedURLs
   );
@@ -70,7 +71,7 @@ const Performance = ({ groupData }) => {
   const _handleSubmit = (e) => {
     if (e) e.preventDefault();
     if (inputValue === "") return alert("URL is required");
-    const {url,search} = makeIDfromURL(inputValue)
+    const { url, search } = makeIDfromURL(inputValue);
 
     const newArr = todos.slice();
     const valueExists = todos.find((item) => {
@@ -196,8 +197,7 @@ Performance.getInitialProps = async ({ req, res }) => {
     : "http://localhost:3000/";
 
   if (!process.browser) {
-    const workerize = __non_webpack_require__("node-inline-worker");
-    const runQuery = workerize(async (url) => {
+    const runQuery = async (url) => {
       const fetch = __non_webpack_require__("node-fetch");
       const gql = __non_webpack_require__("graphql-tag");
       const {
@@ -243,7 +243,7 @@ Performance.getInitialProps = async ({ req, res }) => {
       });
 
       return data;
-    });
+    }
 
     const data = await runQuery(url);
     return { groupData: data };
