@@ -1,9 +1,12 @@
 const randomColor = require("randomcolor");
 const arraystat = require("arraystat");
 const workerpool = require("workerpool");
+
 const pool = workerpool.pool({
   options: {
-    minWorkers: 2,
+    minWorkers: 3,
+    maxQueueSize:8,
+    timeout:6000,
     workerType: "auto",
   },
 });
@@ -11,8 +14,41 @@ const cache = {};
 
 const toFixed = (num, fixed) => {
   var re = new RegExp("^-?\\d+(?:.\\d{0," + (fixed || -1) + "})?");
+
   return num.toString().match(re)[0];
+
 };
+const getReport = async (safePath) => {
+  if (!process.browser) {
+    return pool
+        .exec(createWorker, [safePath, "./utils", "getReportWorker"])
+        .then(function (result) {
+          return result;
+        })
+        .catch(function (err) {
+          console.error(err);
+        })
+        .then(function (result) {
+          return result;
+        });
+  }
+}
+const getReportWorker = async (safePath) => {
+    if (!process.browser) {
+
+      const fs = __non_webpack_require__("fs");
+      const path = __non_webpack_require__("path");
+
+      function getData(fileName, type) {
+        return fs.promises.readFile(fileName, {encoding: type});
+      }
+
+      return await getData(
+          path.join(process.cwd(), "public/reports", safePath, "scatter.json"),
+          "utf8"
+      ).catch(() => "{}");
+    }
+}
 
 const hexToRgbA = (hex, tr) => {
   var c;
@@ -74,33 +110,35 @@ const generateScatterChartProcessor = (data) => {
 };
 
 const createWorker = async (data, request, moduleExport) => {
-  //i could make this an external and it would look better
-  const path = __non_webpack_require__("path");
-  // could also make this an external, then just use "require"
-  const initRemote = __non_webpack_require__(
-    // needs webpack runtime to get __webpack_require__
-    // externally require the worker code with node.js This could be inline,
-    // but i decided to move the bootstapping code somewhere else. Technically if this were not next.js
-    // we should be able to import('dashboard/utils')
-    // workers/index.js was in this file, but its cleaner to just move the boilerplate
-    path.join(process.cwd(), "workers/index.js")
-  );
 
-  // essentially do what webpack is supposed to do in a proper environment.
-  // attach the remote container, initialize share scopes.
-  // The webpack parser does something similer when you require(app1/thing), so make a RemoteModule
-  const federatedRequire = await initRemote(
-    path.join(process.cwd(), ".next/server/static/runtime/remoteEntry.js"),
-    () => ({
-      initSharing: __webpack_init_sharing__,
-      shareScopes: __webpack_share_scopes__,
-    })
-  );
-  // the getter, but abstracted. This async gets the module via the low-level api.
-  // The remote requires utils (basically this file lol) and i pull toFixed off its exports.
-  // alternatively i could copy paste, but MF provides me the power to import the current file as an entrypoint
-  const RemoteModule = await federatedRequire(request);
-  return RemoteModule[moduleExport](data);
+  if(!process.browser) {
+    const path = __non_webpack_require__("path");
+    // could also make this an external, then just use "require"
+    const initRemote = __non_webpack_require__(
+        // needs webpack runtime to get __webpack_require__
+        // externally require the worker code with node.js This could be inline,
+        // but i decided to move the bootstapping code somewhere else. Technically if this were not next.js
+        // we should be able to import('dashboard/utils')
+        // workers/index.js was in this file, but its cleaner to just move the boilerplate
+        path.join(process.cwd(), "workers/index.js")
+    );
+
+    // essentially do what webpack is supposed to do in a proper environment.
+    // attach the remote container, initialize share scopes.
+    // The webpack parser does something similer when you require(app1/thing), so make a RemoteModule
+    const federatedRequire = await initRemote(
+        path.join(process.cwd(), ".next/server/static/runtime/remoteEntry.js"),
+        () => ({
+          initSharing: __webpack_init_sharing__,
+          shareScopes: __webpack_share_scopes__,
+        })
+    );
+    // the getter, but abstracted. This async gets the module via the low-level api.
+    // The remote requires utils (basically this file lol) and i pull toFixed off its exports.
+    // alternatively i could copy paste, but MF provides me the power to import the current file as an entrypoint
+    const RemoteModule = await federatedRequire(request);
+    return RemoteModule[moduleExport](data);
+  }
 };
 
 const generateScatterChartData = async (data) => {
@@ -354,6 +392,7 @@ const removeMeta = (obj) => {
   }
 };
 module.exports = {
+  createWorker,
   removeMeta,
   makeIDfromURL,
   generateMultiSeriesChartData,
@@ -362,8 +401,12 @@ module.exports = {
   generateScatterChartData,
   toFixed,
   cache,
+  pool,
   generateTimeSeriesScatterChartData,
   generateScatterChartProcessor,
   generateWhiskerChartDataProcessor,
   generateMultiSeriesChartProcessor,
+  getReport,
+  getReportWorker
+
 };

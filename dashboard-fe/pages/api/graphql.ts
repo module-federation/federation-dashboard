@@ -266,6 +266,8 @@ const resolvers = {
       return dbDriver.user_findByEmail(email);
     },
     groups: async (_, { name }, ctx) => {
+
+      console.log('gorups quwery')
       await dbDriver.setup();
       if (name) {
         const found = await dbDriver.group_findByName(name);
