@@ -18,6 +18,7 @@ const generateLighthouseReport = (group) => {
   if (!cache.running) {
     Object.assign(cache, { foundNew: false });
     Object.assign(cache, { running: true });
+  } else {
   }
   Promise.map(
     trackedURLs,
@@ -45,7 +46,7 @@ const generateLighthouseReport = (group) => {
         variants: updatedVariants,
       };
     },
-    { concurrency: 1 }
+    { concurrency: 2 }
   ).then(async (updatedTrackedURLs) => {
     Object.assign(cache, { running: false });
     if (cache.foundNew) {
