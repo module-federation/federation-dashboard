@@ -411,7 +411,6 @@ class Report extends React.Component {
         });
       })
       .then((updatedTrackedUrls) => {
-        this.setState({ inputValue: "" });
         this.apolloClient.mutate({
           variables: { settings: updatedTrackedUrls },
           mutation: gql`
@@ -429,6 +428,9 @@ class Report extends React.Component {
             }
           `,
         });
+      })
+      .then((...args) => {
+        this.setState({ inputValue: "" });
       });
 
     // fetch("/api/add-url", {

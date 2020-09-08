@@ -80,7 +80,7 @@ const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
     hasStarted = true;
     console.log("url:", url, "\n");
     console.log("Warming CDN Cache...\n");
-    await Promise.all([await psi(url, opts),await psi(url, opts)])
+    await Promise.all([await psi(url, opts), await psi(url, opts)]);
     bar1.start(RUNS, 0);
   }
   try {
