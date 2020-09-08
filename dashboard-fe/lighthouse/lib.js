@@ -151,7 +151,7 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
           delete taskRunResult.js.audits["final-screenshot"];
           return taskRunResult;
         },
-        { concurrency: config.USE_CLOUD ? 3 : 1 }
+        { concurrency: config.USE_CLOUD ? 5 : 1 }
       );
       const testResults = await promResults;
       if (title) {

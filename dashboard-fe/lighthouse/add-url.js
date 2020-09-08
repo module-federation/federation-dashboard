@@ -39,14 +39,14 @@ const generateLighthouseReport = (group) => {
           await init(testLink, name || "Latest", true);
           return variant;
         },
-        { concurrency: 1 }
+        { concurrency: 2 }
       );
       return {
         url,
         variants: updatedVariants,
       };
     },
-    { concurrency: 2 }
+    { concurrency: 1 }
   ).then(async (updatedTrackedURLs) => {
     Object.assign(cache, { running: false });
     if (cache.foundNew) {
