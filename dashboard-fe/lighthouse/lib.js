@@ -21,7 +21,6 @@ const launchChromeAndRunLighthouse = async (url) => {
       "--disable-gpu",
       "--disable-cache",
       "--disable-extensions",
-      "--no-sandbox",
     ],
   });
   const opts = {
@@ -85,6 +84,7 @@ const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
   }
   try {
     const data2 = await psi(url, opts);
+
     return {
       js: data2.data.lighthouseResult,
       json: JSON.stringify(data2.data.lighthouseResult),
