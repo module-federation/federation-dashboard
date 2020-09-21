@@ -115,7 +115,7 @@ const Performance = ({ groupData }) => {
         settings: {
           trackedURLs: newArr,
         },
-      },
+      },na
     });
   };
 
@@ -124,7 +124,7 @@ const Performance = ({ groupData }) => {
     const updated = newArr[index].variants.map((variant) => {
       if (
         type === "variants" &&
-        variant.name.toUpperCase().includes("FROZEN")
+        !variant.name.toUpperCase().includes("FROZEN")
       ) {
         variant.new = true;
       } else if (variant.name === "Latest") {
