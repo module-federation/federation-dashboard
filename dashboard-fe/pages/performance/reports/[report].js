@@ -396,7 +396,7 @@ class Report extends React.Component {
 
               updatedExistingVariants.push({
                 name: this.state.inputValue,
-                search: "?" + queryString.stringify(originalQueryString),
+                search: originalQueryString ?  "?" + queryString.stringify(originalQueryString) : "",
                 new: true,
               });
             }
