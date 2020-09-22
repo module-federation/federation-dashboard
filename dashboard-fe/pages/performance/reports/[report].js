@@ -396,7 +396,9 @@ class Report extends React.Component {
 
               updatedExistingVariants.push({
                 name: this.state.inputValue,
-                search: originalQueryString ?  "?" + queryString.stringify(originalQueryString) : "",
+                search: originalQueryString
+                  ? "?" + queryString.stringify(originalQueryString)
+                  : "",
                 new: true,
               });
             }
@@ -446,16 +448,82 @@ class Report extends React.Component {
   };
 
   onDelete = (name) => {
-    this.setState({ inputValue: "" });
-    fetch("/api/remove-url", {
-      method: "POST",
-      body: JSON.stringify([
-        {
-          name,
-          url: this.props.meta.url,
-        },
-      ]),
-    });
+
+    this.apolloClient
+      .query({
+        query: gql`
+          {
+            groups(name: "default") {
+              settings {
+                trackedURLs {
+                  url
+                  variants {
+                    name
+                    search
+                    new
+                    new
+                  }
+                }
+              }
+            }
+          }
+        `,
+      })
+      .then(({ data }) => {
+        const { trackedURLs } = Object.create(data.groups[0].settings);
+        const { report } = this.props.query;
+        const groupToDeleteFrom = trackedURLs.reduce((acc, group) => {
+          if (report === makeIDfromURL(group.url).id) {
+
+console.log('removing')
+            const freshVariants = group.variants.filter((variant) => {
+
+              fetch("/api/remove-url", {
+                method: "POST",
+                body: JSON.stringify([
+                  {
+                    name,
+                    url: report,
+                  },
+                ]),
+              });
+              return variant.name !== name;
+            });
+            const updatedGroup = Object.assign({}, group, {
+              variants: freshVariants,
+            });
+            acc.push(updatedGroup);
+            return acc;
+          }
+          acc.push(group);
+          return acc;
+        }, []);
+        return Object.assign({}, data.groups[0].settings, {
+          trackedURLs: groupToDeleteFrom,
+        });
+      })
+      .then((updatedTrackedUrls) => {
+        this.apolloClient.mutate({
+          variables: { settings: updatedTrackedUrls },
+          mutation: gql`
+            mutation($settings: GroupSettingsInput!) {
+              updateGroupSettings(group: "default", settings: $settings) {
+                trackedURLs {
+                  url
+                  variants {
+                    name
+                    search
+                    new
+                  }
+                }
+              }
+            }
+          `,
+        });
+      })
+      .then(() => {
+        // window.location.reload()
+      });
   };
 
   render() {
