@@ -475,18 +475,16 @@ class Report extends React.Component {
         const groupToDeleteFrom = trackedURLs.reduce((acc, group) => {
           if (report === makeIDfromURL(group.url).id) {
 
-console.log('removing')
+            fetch("/api/remove-url", {
+              method: "POST",
+              body: JSON.stringify([
+                {
+                  name,
+                  url: report,
+                },
+              ]),
+            });
             const freshVariants = group.variants.filter((variant) => {
-
-              fetch("/api/remove-url", {
-                method: "POST",
-                body: JSON.stringify([
-                  {
-                    name,
-                    url: report,
-                  },
-                ]),
-              });
               return variant.name !== name;
             });
             const updatedGroup = Object.assign({}, group, {
