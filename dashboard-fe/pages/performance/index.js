@@ -115,7 +115,7 @@ const Performance = ({ groupData }) => {
         settings: {
           trackedURLs: newArr,
         },
-      },na
+      },
     });
   };
 
