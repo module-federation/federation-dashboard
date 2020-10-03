@@ -27,10 +27,11 @@ export default async (req, res) => {
         }
       );
     });
+    console.log('globbed files',globbedFiles);
     const globbedData = await BPromise.map(
       globbedFiles,
       async (filePath) => {
-        return getData(filePath, "utf8").then((data) => JSON.parse(data));
+        return getData(filePath, "utf8").then((data) => JSON.parse(data)).catch(e=>console.log(e));
       },
       { concurrency: 3 }
     );
@@ -39,8 +40,8 @@ export default async (req, res) => {
   });
 
   const safePath = req.query.report.split("/").slice(-1)[0];
-
+console.log('getting globbed files')
   const globbedData = await getGlobbedFiles(safePath);
-
+console.log('got blobbed files')
   res.send(globbedData);
 };
