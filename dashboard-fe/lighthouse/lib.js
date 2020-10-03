@@ -32,9 +32,7 @@ const launchChromeAndRunLighthouse = async (url) => {
     console.log("using Local Lighthouse for Perf Test\n");
     console.log("url:", url, "\n");
     console.log("Warming CDN Cache...\n");
-    await lighthouse(url, opts);
-    await lighthouse(url, opts);
-    await lighthouse(url, opts);
+    await Promise.all([lighthouse(url, opts),lighthouse(url, opts),lighthouse(url, opts)])
     bar1.start(RUNS, 0);
   }
   return lighthouse(url, opts)
@@ -151,7 +149,7 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
           delete taskRunResult.js.audits["final-screenshot"];
           return taskRunResult;
         },
-        { concurrency: config.USE_CLOUD ? 5 : 1 }
+        { concurrency: config.USE_CLOUD ? 10 : 1 }
       );
       const testResults = await promResults;
       if (title) {
