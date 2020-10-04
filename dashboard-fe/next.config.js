@@ -30,7 +30,6 @@ module.exports = {
           new webpack.container.ModuleFederationPlugin({
             name: "dashboard",
             filename: "static/runtime/remoteEntry.js",
-            // library: { type: 'var', name: "dashboard" },
             exposes: {
               "./utils": "./lighthouse/utils",
             },
