@@ -32,7 +32,11 @@ const launchChromeAndRunLighthouse = async (url) => {
     console.log("using Local Lighthouse for Perf Test\n");
     console.log("url:", url, "\n");
     console.log("Warming CDN Cache...\n");
-    await Promise.all([lighthouse(url, opts),lighthouse(url, opts),lighthouse(url, opts)])
+    await Promise.all([
+      lighthouse(url, opts),
+      lighthouse(url, opts),
+      lighthouse(url, opts),
+    ]);
     bar1.start(RUNS, 0);
   }
   return lighthouse(url, opts)

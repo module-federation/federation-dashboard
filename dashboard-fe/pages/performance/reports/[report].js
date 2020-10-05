@@ -448,7 +448,6 @@ class Report extends React.Component {
   };
 
   onDelete = (name) => {
-
     this.apolloClient
       .query({
         query: gql`
@@ -474,7 +473,6 @@ class Report extends React.Component {
         const { report } = this.props.query;
         const groupToDeleteFrom = trackedURLs.reduce((acc, group) => {
           if (report === makeIDfromURL(group.url).id) {
-
             fetch("/api/remove-url", {
               method: "POST",
               body: JSON.stringify([
