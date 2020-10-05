@@ -8,8 +8,7 @@ export default async (req, res) => {
   }
   let [sourceData] = JSON.parse(req.body);
 
-
-  const  dirName = "public/reports/" + sourceData.url + "/scatter.json";
+  const dirName = "public/reports/" + sourceData.url + "/scatter.json";
 
   const scatterData = JSON.parse(fs.readFileSync(dirName, "utf8"));
   delete scatterData[sourceData.name];
