@@ -1,12 +1,22 @@
 import fs from "fs";
 import path from "path";
 import glob from "glob";
-import workerize from "node-inline-worker";
+import workerpool from "workerpool"
+const pool = workerpool.pool({
+  options: {
+    minWorkers: 3,
+    maxQueueSize: 8,
+    timeout: 4000,
+    workerType: "auto",
+  },
+});
 
 export default async (req, res) => {
   res.statusCode = 200;
+console.log('should get clobbed files')
+  const getGlobbedFiles = async (safePath) => {
+    console.log('getting globbed files')
 
-  const getGlobbedFiles = workerize(async (safePath) => {
     console.log(safePath);
     const glob = __non_webpack_require__("glob");
     const path = __non_webpack_require__("path");
@@ -31,17 +41,25 @@ export default async (req, res) => {
     const globbedData = await BPromise.map(
       globbedFiles,
       async (filePath) => {
-        return getData(filePath, "utf8").then((data) => JSON.parse(data)).catch(e=>console.log(e));
+        return getData(filePath, "utf8").then((data) => JSON.parse(data)).catch(e=>console.error(e));
       },
       { concurrency: 3 }
     );
 
     return globbedData;
-  });
-
+  }
   const safePath = req.query.report.split("/").slice(-1)[0];
-console.log('getting globbed files')
-  const globbedData = await getGlobbedFiles(safePath);
-console.log('got blobbed files')
+
+  const globbedData = await pool.exec(getGlobbedFiles, [safePath])
+    .then(function (result) {
+      return result
+    })
+    .catch(function (err) {
+      console.error(err);
+    })
+    .then(function () {
+      pool.terminate();
+    });
+
   res.send(globbedData);
 };

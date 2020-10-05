@@ -6,7 +6,7 @@ const pool = workerpool.pool({
   options: {
     minWorkers: 3,
     maxQueueSize: 8,
-    timeout: 6000,
+    timeout: 4000,
     workerType: "auto",
   },
 });
