@@ -46,7 +46,6 @@ const ADD_URL = gql`
 `;
 
 const Performance = ({ groupData }) => {
-  console.log("in performance page");
   const [todos, setTodos] = useState(
     groupData?.groups?.[0]?.settings?.trackedURLs
   );
@@ -146,7 +145,8 @@ const Performance = ({ groupData }) => {
   const reRunAllTests = ({ type, index }) => {
     const toRerun = todos.reduce((acc, item) => {
       const updated = item.variants.map((variant) => {
-        if (variant.name === "Latest") {
+        const isFrozen = variant.name.toLowerCase().includes('frozen')
+        if (!isFrozen) {
           variant.new = true;
         }
         return variant;
