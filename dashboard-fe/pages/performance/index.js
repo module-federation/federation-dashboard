@@ -123,7 +123,7 @@ const Performance = ({ groupData }) => {
     const updated = newArr[index].variants.map((variant) => {
       if (
         type === "variants" &&
-        !variant.name.toUpperCase().includes("FROZEN")
+        !variant.name.toLowerCase().includes("FROZEN")
       ) {
         variant.new = true;
       } else if (variant.name === "Latest") {
@@ -193,7 +193,7 @@ const Performance = ({ groupData }) => {
 };
 Performance.getInitialProps = async ({ req, res }) => {
   const isProd = process.env.NODE_ENV !== "development";
-  const url = !isProd
+  const url = isProd
     ? process.browser
       ? "http://mf-dash.ddns.net:3000/"
       : "http://localhost:3000/"
