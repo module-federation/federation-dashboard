@@ -15,11 +15,7 @@ const generateLighthouseReport = (group) => {
   //   acc.push(Object.assign(clonedTracedUrl,{variants:updatedVariants}))
   //   return acc
   // },[])
-  if (!cache.running) {
-    Object.assign(cache, { foundNew: false });
-    Object.assign(cache, { running: true });
-  } else {
-  }
+
   Promise.map(
     trackedURLs,
     async ({ url, variants }) => {
@@ -39,7 +35,7 @@ const generateLighthouseReport = (group) => {
           await init(testLink, name || "Latest", true);
           return variant;
         },
-        { concurrency: 2 }
+        { concurrency: 1 }
       );
       return {
         url,
