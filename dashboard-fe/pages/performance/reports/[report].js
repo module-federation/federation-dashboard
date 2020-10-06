@@ -311,7 +311,7 @@ class Report extends React.Component {
   }
 
   updateExistingQuery = () => {
-    let value;
+    let value = null;
     try {
       console.log("is valid url");
       value = makeIDfromURL(this.state.queryValue).search;

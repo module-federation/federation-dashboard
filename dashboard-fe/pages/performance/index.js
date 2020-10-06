@@ -155,7 +155,7 @@ const Performance = ({ groupData }) => {
       acc.push(item);
       return acc;
     }, []);
-
+console.log(toRerun);
     setUrl({
       variables: {
         settings: {
