@@ -11,7 +11,7 @@ const config = require("../src/config");
 const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 import Promise from "bluebird";
 
-const RUNS = 20;
+const RUNS = 30;
 let hasStarted = false;
 
 const launchChromeAndRunLighthouse = async (url) => {
@@ -39,6 +39,7 @@ const launchChromeAndRunLighthouse = async (url) => {
     ]);
     bar1.start(RUNS, 0);
   }
+  console.log('starting test')
   return lighthouse(url, opts)
     .then((results) => {
       try {
@@ -81,7 +82,7 @@ const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
     hasStarted = true;
     console.log("url:", url, "\n");
     console.log("Warming CDN Cache...\n");
-    await Promise.all([await psi(url, opts), await psi(url, opts)]);
+    await Promise.all([await psi(url, opts), await psi(url, opts),await psi(url, opts)]);
     bar1.start(RUNS, 0);
   }
   try {
