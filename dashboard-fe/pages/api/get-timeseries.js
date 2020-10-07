@@ -78,6 +78,9 @@ export default async (req, res) => {
       pool.terminate();
       return result;
     });
+
   res.statusCode = 200;
-  res.json(globbedData);
+  res.json(globbedData.filter((lhr)=>{
+    return lhr.variant === "Latest"
+  }))
 };
