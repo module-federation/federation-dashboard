@@ -17,9 +17,9 @@ import Driver from "./driver";
 
 const dir = process.env.DATA_DIR || path.join(process.cwd(), "./.fm-dashboard");
 
-const createDatastore = name => {
+const createDatastore = (name) => {
   const ds = new Datastore({
-    filename: path.join(dir, `/${name}.db`)
+    filename: path.join(dir, `/${name}.db`),
   });
   ds.loadDatabase();
   ds.persistence.setAutocompactionInterval(60 * 1000);
@@ -29,8 +29,8 @@ const createDatastore = name => {
 const applications = createDatastore("application");
 const applicationVersions = createDatastore("applicationVersions");
 const metrics = createDatastore("metrics");
-const groups = createDatastore("groups.db");
-const users = createDatastore("users.db");
+const groups = createDatastore("groups");
+const users = createDatastore("users");
 
 const siteSettingsPath = path.join(dir, "/siteSettings.json");
 
@@ -42,7 +42,7 @@ class TableDriver<T> {
   }
 
   async find(id: string): Promise<T | null> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.store.find({ id }, (_, docs) => {
         if (docs.length > 0) {
           delete docs[0]._id;
@@ -55,7 +55,7 @@ class TableDriver<T> {
   }
 
   async search(query: any): Promise<Array<T> | null> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.store.find(query, (_, docs) => {
         resolve(docs.map(({ _id, ...data }) => ({ ...data })) || []);
       });
@@ -63,13 +63,13 @@ class TableDriver<T> {
   }
 
   async insert(data: T): Promise<null> {
-    return new Promise(async resolve => {
+    return new Promise(async (resolve) => {
       this.store.insert(data, () => resolve());
     });
   }
 
   async update(query: any, data: T): Promise<null> {
-    return new Promise(async resolve => {
+    return new Promise(async (resolve) => {
       this.store.find(query, (_, docs) => {
         if (docs.length > 0) {
           this.store.update(query, { $set: data }, {}, () => resolve());
@@ -81,7 +81,7 @@ class TableDriver<T> {
   }
 
   async delete(id: string): Promise<null> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.store.remove({ id }, {}, () => resolve());
     });
   }
@@ -115,7 +115,7 @@ export default class DriverNedb implements Driver {
       await this.group_update({
         id: "default",
         name: "default",
-        metadata: []
+        metadata: [],
       });
     }
 
@@ -133,9 +133,10 @@ export default class DriverNedb implements Driver {
   async application_getMetrics(id: string): Promise<Array<MetricValue> | null> {
     return this.metricsTable.search({
       type: "application",
-      id
+      id,
     });
   }
+
   async application_addMetrics(
     id: string,
     metric: MetricValue
@@ -219,6 +220,22 @@ export default class DriverNedb implements Driver {
     const id = [applicationId, environment, version].join(":");
     return this.applicationVersionsTable.delete(id);
   }
+  async group_getMetrics(id: string): Promise<Array<MetricValue> | null> {
+    return this.metricsTable.search({
+      type: "group",
+      id,
+    });
+  }
+
+  // @ts-ignore
+  async group_updateMetric(
+    application: Application,
+    group: Group
+  ): Promise<Array<Group>> {
+    bus.publish("groupMetricUpdated", group);
+    // @ts-ignore
+    return this.metricsTable.update({ id: group.id }, group);
+  }
 
   async group_find(id: string): Promise<Group> {
     return this.groupsTable.find(id);
@@ -226,7 +243,7 @@ export default class DriverNedb implements Driver {
   async group_findByName(name: string): Promise<Group> {
     return this.groupsTable
       .search({ name })
-      .then(data => (data && data.length ? data[0] : null));
+      .then((data) => (data && data.length ? data[0] : null));
   }
 
   async group_findAll(): Promise<Array<Group>> {
@@ -235,6 +252,7 @@ export default class DriverNedb implements Driver {
 
   async group_update(group: Group): Promise<Array<Group>> {
     Joi.assert(group, groupSchema);
+    bus.publish("groupUpdated", group);
     return this.groupsTable.update({ id: group.id }, group);
   }
 
@@ -262,7 +280,7 @@ export default class DriverNedb implements Driver {
 
   async siteSettings_get(): Promise<SiteSettings> {
     let settings = {
-      webhooks: []
+      webhooks: [],
     };
     if (fs.existsSync(siteSettingsPath)) {
       try {
