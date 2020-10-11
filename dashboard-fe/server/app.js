@@ -12,9 +12,9 @@ module.exports = ({ nextRoutesHandler }) => {
   const routesHandler = nextRoutesHandler || createNextRouteHandler({ log });
 
   app.use(cookieParser());
-  const ips = ["34.100.90.12"];
+  const ips = process.env.IP_WHITELIST.split(' ')
 
-  app.use(ipfilter(ips));
+  app.use(ipfilter(ips,{ mode: 'allow' }));
   app.use(routesHandler);
 
   return app;
