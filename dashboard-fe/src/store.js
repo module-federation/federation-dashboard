@@ -6,7 +6,9 @@ import ApolloClient from "apollo-boost";
 import { fetchUser } from "./user";
 
 const client = new ApolloClient({
-  uri: (process.browser ? window.location.origin : 'http://localhost:3000') + "/api/graphql",
+  uri:
+    (process.browser ? window.location.origin : "http://localhost:3000") +
+    "/api/graphql"
 });
 
 const GET_USER = gql`
@@ -47,7 +49,7 @@ const GET_INITIAL_DATA = gql`
 const getLocalStorage =
   typeof window === "undefined"
     ? () => undefined
-    : (key) => global.localStorage.getItem(key);
+    : key => global.localStorage.getItem(key);
 
 class Store {
   client = client;
@@ -90,10 +92,10 @@ class Store {
         .query({
           query: GET_USER,
           variables: {
-            email: this.authUser.email,
-          },
+            email: this.authUser.email
+          }
         })
-        .then((data) => {
+        .then(data => {
           if (data.data.userByEmail) {
             this.user = data.data.userByEmail;
           } else {
@@ -105,11 +107,11 @@ class Store {
                     email: this.authUser.email,
                     name: this.authUser.name,
                     groups: ["default"],
-                    defaultGroup: "default",
-                  },
-                },
+                    defaultGroup: "default"
+                  }
+                }
               })
-              .then((updateData) => {
+              .then(updateData => {
                 this.user = updateData.data.updateUser;
               });
           }
@@ -131,7 +133,7 @@ if (typeof window !== "undefined") {
 
     client
       .query({
-        query: GET_INITIAL_DATA,
+        query: GET_INITIAL_DATA
       })
       .then(({ data: { dashboard, groups } }) => {
         store.versionManagementEnabled = dashboard.versionManagementEnabled;
