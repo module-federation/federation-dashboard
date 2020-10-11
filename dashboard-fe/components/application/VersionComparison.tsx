@@ -7,7 +7,7 @@ import {
   TableRow,
   TableBody,
   TableCell,
-  Typography,
+  Typography
 } from "@material-ui/core";
 import { useQuery } from "@apollo/react-hooks";
 import moment from "moment";
@@ -18,21 +18,21 @@ import { ModuleLink } from "../links";
 
 const useStyles = makeStyles({
   headerCell: {
-    textAlign: "center",
+    textAlign: "center"
   },
   headerVersion: {
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
   headerDate: {
     fontStyle: "italic",
-    fontSize: "small",
+    fontSize: "small"
   },
   sectionHeading: {
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
   centeredCell: {
-    textAlign: "center",
-  },
+    textAlign: "center"
+  }
 });
 
 export const GET_ALL_VERSIONS = gql`
@@ -78,7 +78,7 @@ export const GET_ALL_VERSIONS = gql`
 export const VersionComparison = ({ group, environment, name }) => {
   const classes = useStyles();
   const { data } = useQuery(GET_ALL_VERSIONS, {
-    variables: { name, environment, group },
+    variables: { name, environment, group }
   });
 
   if (!data) {
@@ -86,9 +86,9 @@ export const VersionComparison = ({ group, environment, name }) => {
   }
 
   const versions = (data?.groups?.[0].applications?.[0].versions || [])
-    .map((version) => ({
+    .map(version => ({
       ...version,
-      postedDate: Date.parse(version.posted).valueOf(),
+      postedDate: Date.parse(version.posted).valueOf()
     }))
     .sort((a, b) => {
       if (a.postedDate < b.postedDate) {
@@ -106,7 +106,7 @@ export const VersionComparison = ({ group, environment, name }) => {
   const overridesCounts = {};
   const dependenciesCounts = {};
   const overrideNames = {};
-  versions.forEach((version) => {
+  versions.forEach(version => {
     version.overrides.forEach(({ name, version }) => {
       overrideNames[name] = true;
       overridesCounts[`${name}:${version}`] =
@@ -140,7 +140,7 @@ export const VersionComparison = ({ group, environment, name }) => {
       .filter(([k, v]) => v !== versions.length)
       .map(([k]) => k.split(":")[0])
   );
-  uniqueDependencies.forEach((name) => {
+  uniqueDependencies.forEach(name => {
     if (overrideNames[name]) {
       uniqueOverrides.push(name);
     }
@@ -176,7 +176,7 @@ export const VersionComparison = ({ group, environment, name }) => {
             Exposes
           </TableCell>
         </TableRow>
-        {uniqueModules.map((module) => (
+        {uniqueModules.map(module => (
           <TableRow>
             <TableCell key={["module", module].join("")}>
               <ModuleLink group={group} application={name} module={module}>
@@ -202,7 +202,7 @@ export const VersionComparison = ({ group, environment, name }) => {
             Consumes
           </TableCell>
         </TableRow>
-        {uniqueConsumes.map((module) => (
+        {uniqueConsumes.map(module => (
           <TableRow>
             <TableCell key={["consumes", module].join("")}>
               <ModuleLink
@@ -232,7 +232,7 @@ export const VersionComparison = ({ group, environment, name }) => {
             Shared
           </TableCell>
         </TableRow>
-        {uniqueOverrides.map((module) => (
+        {uniqueOverrides.map(module => (
           <TableRow>
             <TableCell key={["override", module].join("")}>{module}</TableCell>
             {versions.map(({ version, dependencies }) => (
@@ -258,7 +258,7 @@ export const VersionComparison = ({ group, environment, name }) => {
             Dependencies
           </TableCell>
         </TableRow>
-        {uniqueDependencies.map((module) => (
+        {uniqueDependencies.map(module => (
           <TableRow>
             <TableCell key={["dependency", module].join("")}>
               {module}

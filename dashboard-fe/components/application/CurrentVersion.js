@@ -9,7 +9,7 @@ import {
   TableBody,
   TableCell,
   Select,
-  MenuItem,
+  MenuItem
 } from "@material-ui/core";
 import Link from "next/link";
 import gql from "graphql-tag";
@@ -24,23 +24,23 @@ import { ModuleLink } from "../links";
 
 const useStyles = makeStyles({
   title: {
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
   container: {
-    padding: 10,
+    padding: 10
   },
   panel: {
-    padding: 10,
+    padding: 10
   },
   panelTitle: {
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
   dependenciesTable: {
-    marginBottom: "3em",
+    marginBottom: "3em"
   },
   overridden: {
-    fontWeight: "bold",
-  },
+    fontWeight: "bold"
+  }
 });
 
 export const GET_REMOTE_VERSIONS = gql`
@@ -239,8 +239,8 @@ export const RemoteVersionSelector = observer(
       variables: {
         name: remote,
         environment: store.environment,
-        group: store.group,
-      },
+        group: store.group
+      }
     });
     const [setRemoteVersion] = useMutation(SET_REMOTE_VERSION);
 
@@ -252,13 +252,13 @@ export const RemoteVersionSelector = observer(
     const currentVersion =
       version || versions.find(({ latest }) => latest).version;
 
-    const handleVersionChange = (newVersion) => {
+    const handleVersionChange = newVersion => {
       setRemoteVersion({
         variables: {
           group: store.group,
           application,
           remote,
-          version: newVersion === currentVersion ? null : newVersion,
+          version: newVersion === currentVersion ? null : newVersion
         },
         refetchQueries: [
           {
@@ -266,10 +266,10 @@ export const RemoteVersionSelector = observer(
             variables: {
               name: router.query.application,
               environment: store.environment,
-              group: store.group,
-            },
-          },
-        ],
+              group: store.group
+            }
+          }
+        ]
       });
     };
 
@@ -277,9 +277,9 @@ export const RemoteVersionSelector = observer(
       <Select
         variant="outlined"
         value={currentVersion}
-        onChange={(evt) => handleVersionChange(evt.target.value)}
+        onChange={evt => handleVersionChange(evt.target.value)}
       >
-        {versions.map((v) => (
+        {versions.map(v => (
           <MenuItem key={v.version} value={v.version}>
             {v.version} {v.latest ? "(default)" : ""}
           </MenuItem>
@@ -319,7 +319,7 @@ export const RemoteVersionManager = observer(
             </TableRow>
           </TableHead>
           <TableBody>
-            {apps.map((name) => (
+            {apps.map(name => (
               <TableRow key={["rvm", name].join()}>
                 <TableCell>
                   <Typography>{name}</Typography>
@@ -375,64 +375,66 @@ export const OverridesTable = observer(({ overrides }) => {
   );
 });
 
-export const ModulesTable = observer(({name:applicationName, application, modules, overrides }) => {
-  const classes = useStyles();
-  const findVersion = (name) => {
-    let ov = overrides.find(({ name: ovName }) => ovName === name);
-    return ov ? ` (${ov.version})` : "";
-  };
-  return (
-    <>
-      <Typography variant="h6" className={classes.panelTitle}>
-        Exposed Modules
-      </Typography>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <Typography>Name</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>File</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>Requires</Typography>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {modules.map(({ name, file, requires }) => {
-            return (
-              <TableRow key={[application.id, name].join()}>
-                <TableCell>
-                  <Typography>
-                    <ModuleLink
-                      group={store.group}
-                      application={applicationName}
-                      module={name}
-                    >
-                      <a>{name}</a>
-                    </ModuleLink>
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography>{file}</Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography>
-                    {requires
-                      .map((name) => `${name}${findVersion(name)}`)
-                      .join(", ")}
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </>
-  );
-});
+export const ModulesTable = observer(
+  ({ name: applicationName, application, modules, overrides }) => {
+    const classes = useStyles();
+    const findVersion = name => {
+      let ov = overrides.find(({ name: ovName }) => ovName === name);
+      return ov ? ` (${ov.version})` : "";
+    };
+    return (
+      <>
+        <Typography variant="h6" className={classes.panelTitle}>
+          Exposed Modules
+        </Typography>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <Typography>Name</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>File</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>Requires</Typography>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {modules.map(({ name, file, requires }) => {
+              return (
+                <TableRow key={[application.id, name].join()}>
+                  <TableCell>
+                    <Typography>
+                      <ModuleLink
+                        group={store.group}
+                        application={applicationName}
+                        module={name}
+                      >
+                        <a>{name}</a>
+                      </ModuleLink>
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography>{file}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography>
+                      {requires
+                        .map(name => `${name}${findVersion(name)}`)
+                        .join(", ")}
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </>
+    );
+  }
+);
 
 export const CurrentVersion = observer(
   ({ name, applicationOverrides, application, versions }) => {
@@ -444,7 +446,7 @@ export const CurrentVersion = observer(
         variables: {
           group: store.group,
           application: name,
-          version,
+          version
         },
         refetchQueries: [
           {
@@ -452,18 +454,18 @@ export const CurrentVersion = observer(
             variables: {
               name: router.query.application,
               environment: store.environment,
-              group: store.group,
-            },
+              group: store.group
+            }
           },
           {
             query: GET_HEAD_VERSION,
             variables: {
               name: router.query.application,
               environment: store.environment,
-              group: store.group,
-            },
-          },
-        ],
+              group: store.group
+            }
+          }
+        ]
       });
     };
 
@@ -495,11 +497,11 @@ export const CurrentVersion = observer(
                   <Select
                     variant="outlined"
                     value={currentVersion}
-                    onChange={(evt) =>
+                    onChange={evt =>
                       handleVersionChange(application.id, evt.target.value)
                     }
                   >
-                    {versions.map((v) => (
+                    {versions.map(v => (
                       <MenuItem key={v.version} value={v.version}>
                         {v.version}
                       </MenuItem>

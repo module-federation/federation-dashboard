@@ -23,7 +23,7 @@ export default async (req, res) => {
       }
       return init(url, name || "Initial Test").then(() => {
         const wr = JSON.stringify(
-          sourceData.map((x) => {
+          sourceData.map(x => {
             if (x.url === url) {
               x.new = false;
             }

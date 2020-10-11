@@ -6,6 +6,6 @@ export default async (req, res) => {
   const safePath = req.query.report.split("/").slice(-1)[0];
   const hostname = "http://" + req.headers.host + "/";
   const url = hostname + path.join("reports", safePath, "scatter.json");
-  const json = await fetch(url).then((res) => res.json());
+  const json = await fetch(url).then(res => res.json());
   res.send(json);
 };

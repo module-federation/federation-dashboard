@@ -23,8 +23,8 @@ const Header = ({ children }) => (
           <MiniSearch
             inputProps={{
               style: {
-                width: 200,
-              },
+                width: 200
+              }
             }}
           />
         </React.Suspense>

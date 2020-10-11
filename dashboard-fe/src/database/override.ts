@@ -5,7 +5,7 @@ export const schema = Joi.object({
   name: Joi.string().required(),
   version: Joi.string().required(),
   location: Joi.string().required(),
-  applicationID: Joi.string().required(),
+  applicationID: Joi.string().required()
 });
 
 export default class Override {

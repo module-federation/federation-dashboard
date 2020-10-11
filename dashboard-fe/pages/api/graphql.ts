@@ -180,7 +180,7 @@ const resolvers = {
   Query: {
     dashboard: () => {
       return {
-        versionManagementEnabled: versionManagementEnabled(),
+        versionManagementEnabled: versionManagementEnabled()
       };
     },
     userByEmail: async (_, { email }) => {
@@ -198,7 +198,7 @@ const resolvers = {
     },
     siteSettings: () => {
       return dbDriver.siteSettings_get();
-    },
+    }
   },
   Mutation: {
     addMetric: async (_, { group, application, date, name, value }) => {
@@ -208,7 +208,7 @@ const resolvers = {
         id: application,
         type: "application",
         name,
-        value,
+        value
       });
       return true;
     },
@@ -232,7 +232,7 @@ const resolvers = {
       await dbDriver.setup();
       await dbDriver.user_update({
         id: user.email,
-        ...user,
+        ...user
       });
       return dbDriver.user_find(user.email);
     },
@@ -240,7 +240,7 @@ const resolvers = {
       await dbDriver.setup();
       await dbDriver.siteSettings_update(settings);
       return dbDriver.siteSettings_get();
-    },
+    }
   },
   Application: {
     versions: async ({ id }, { environment, latest }, ctx) => {
@@ -261,7 +261,7 @@ const resolvers = {
       return names
         ? metrics.filter(({ name }) => names.includes(name))
         : metrics;
-    },
+    }
   },
   Consume: {
     consumingApplication: async (parent, args, ctx) => {
@@ -271,7 +271,7 @@ const resolvers = {
     application: async (parent, args, ctx) => {
       await dbDriver.setup();
       return dbDriver.application_find(parent.applicationID);
-    },
+    }
   },
   Module: {
     consumedBy: async (parent, args, ctx) => {
@@ -282,14 +282,14 @@ const resolvers = {
         parent.applicationID,
         parent.name
       );
-    },
+    }
   },
   ApplicationVersion: {
     modules: async ({ modules }, { name }) => {
       return name
         ? modules.filter(({ name: moduleName }) => name === moduleName)
         : modules;
-    },
+    }
   },
   Group: {
     applications: async ({ id }, { id: applicationId }, ctx) => {
@@ -301,24 +301,24 @@ const resolvers = {
         const found = await dbDriver.application_find(applicationId);
         return found ? [found] : [];
       }
-    },
-  },
+    }
+  }
 };
 
 const apolloServer = new ApolloServer({
   typeDefs,
-  resolvers,
+  resolvers
 });
 
 const handler = apolloServer.createHandler({
   path: "/api/graphql",
-  cors: true,
+  cors: true
 });
 
 export const config = {
   api: {
-    bodyParser: false,
-  },
+    bodyParser: false
+  }
 };
 
 export default handler;
