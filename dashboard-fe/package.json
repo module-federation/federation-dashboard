@@ -29,7 +29,7 @@
     }
   ],
   "resolutions": {
-    "webpack": "5.1.3"
+    "webpack": "^5.1.3"
   },
   "dependencies": {
     "@apollo/client": "^3.2.4",
