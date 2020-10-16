@@ -85,7 +85,7 @@
     "@types/jest": "26.0.10",
     "jest": "26.4.2",
     "jest-babel": "1.0.1",
-    "prettier": "2.1.1",
+    "prettier": "2.1.2",
     "regenerator-runtime": "0.13.7",
     "typescript": "3.9.7"
   }
