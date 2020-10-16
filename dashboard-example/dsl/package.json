@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "@babel/core": "7.11.4",
-    "@babel/preset-react": "7.10.4",
+    "@babel/core": "7.12.1",
+    "@babel/preset-react": "7.12.1",
     "@module-federation/dashboard-plugin": "*",
     "babel-loader": "8.1.0",
     "css-loader": "4.2.2",
