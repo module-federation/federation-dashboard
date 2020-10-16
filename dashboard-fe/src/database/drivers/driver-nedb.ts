@@ -29,8 +29,8 @@ const createDatastore = name => {
 const applications = createDatastore("application");
 const applicationVersions = createDatastore("applicationVersions");
 const metrics = createDatastore("metrics");
-const groups = createDatastore("groups.db");
-const users = createDatastore("users.db");
+const groups = createDatastore("groups");
+const users = createDatastore("users");
 
 const siteSettingsPath = path.join(dir, "/siteSettings.json");
 
@@ -136,6 +136,7 @@ export default class DriverNedb implements Driver {
       id
     });
   }
+
   async application_addMetrics(
     id: string,
     metric: MetricValue
@@ -219,6 +220,22 @@ export default class DriverNedb implements Driver {
     const id = [applicationId, environment, version].join(":");
     return this.applicationVersionsTable.delete(id);
   }
+  async group_getMetrics(id: string): Promise<Array<MetricValue> | null> {
+    return this.metricsTable.search({
+      type: "group",
+      id
+    });
+  }
+
+  // @ts-ignore
+  async group_updateMetric(
+    application: Application,
+    group: Group
+  ): Promise<Array<Group>> {
+    bus.publish("groupMetricUpdated", group);
+    // @ts-ignore
+    return this.metricsTable.update({ id: group.id }, group);
+  }
 
   async group_find(id: string): Promise<Group> {
     return this.groupsTable.find(id);
@@ -235,6 +252,7 @@ export default class DriverNedb implements Driver {
 
   async group_update(group: Group): Promise<Array<Group>> {
     Joi.assert(group, groupSchema);
+    bus.publish("groupUpdated", group);
     return this.groupsTable.update({ id: group.id }, group);
   }
 
