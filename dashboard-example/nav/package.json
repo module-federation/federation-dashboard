@@ -7,7 +7,7 @@
     "@babel/preset-react": "7.12.1",
     "@module-federation/dashboard-plugin": "*",
     "babel-loader": "8.1.0",
-    "css-loader": "4.3.0",
+    "css-loader": "5.0.0",
     "html-webpack-plugin": "git://github.com/ScriptedAlchemy/html-webpack-plugin#master",
     "less-loader": "7.0.2",
     "serve": "11.3.2",
