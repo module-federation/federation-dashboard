@@ -58,16 +58,16 @@ export default async (req, res) => {
             return result;
           });
         try {
-          JSON.parse(gotData);
+          return JSON.parse(gotData);
         } catch (o) {
           console.error(filePath, "is corroupt");
+          return null;
         }
-        return JSON.parse(gotData);
       },
       { concurrency: 3 }
     );
 
-    return globbedData;
+    return globbedData.filter((i) => i);
   };
   const safePath = req.query.report.split("/").slice(-1)[0];
 
