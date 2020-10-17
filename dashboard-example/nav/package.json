@@ -3,7 +3,7 @@
   "version": "4.0.0",
   "private": true,
   "devDependencies": {
-    "@babel/core": "7.12.1",
+    "@babel/core": "7.12.3",
     "@babel/preset-react": "7.12.1",
     "@module-federation/dashboard-plugin": "*",
     "babel-loader": "8.1.0",
