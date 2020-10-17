@@ -22,7 +22,7 @@ const { serviceName, tier } = config.get("universal.env");
  * @param {string} name - Secret name (key)
  * @returns {Promise.<string>} Secret value
  */
-module.exports = memoize(async name => {
+module.exports = memoize(async (name) => {
   const mockSecrets = config.get("server.mockSecrets");
   if (mockSecrets) {
     return config.get(`server.mockSecrets.${name}`);
@@ -31,7 +31,7 @@ module.exports = memoize(async name => {
   const secretId = `tf-${serviceName}-${tier}-secret-${name}`;
   const { SecretString } = await secrets
     .getSecretValue({
-      SecretId: secretId
+      SecretId: secretId,
     })
     .promise();
 

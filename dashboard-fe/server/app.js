@@ -22,7 +22,6 @@ module.exports = ({ nextRoutesHandler }) => {
     ips.push(ip.address());
 
     app.use((req, res, next) => {
-
       const parsedIP = ips.reduce((acc, add) => {
         if (req.clientIp.includes(add)) {
           acc.push(req.clientIp);

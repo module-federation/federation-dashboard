@@ -7,7 +7,7 @@ import {
   TableRow,
   Typography,
   Popover,
-  makeStyles
+  makeStyles,
 } from "@material-ui/core";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
@@ -20,28 +20,28 @@ import Layout from "../components/Layout";
 import withAuth from "../components/with-auth";
 import { ApplicationLink } from "../components/links";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   headerRow: {
-    background: theme.palette.primary.light
+    background: theme.palette.primary.light,
   },
   headerCell: {
-    color: theme.palette.primary.contrastText
+    color: theme.palette.primary.contrastText,
   },
   devDependency: {
-    fontStyle: "italic"
+    fontStyle: "italic",
   },
   override: {
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   warning: {
-    color: "red"
+    color: "red",
   },
   popover: {
-    pointerEvents: "none"
+    pointerEvents: "none",
   },
   paper: {
-    padding: theme.spacing(1)
-  }
+    padding: theme.spacing(1),
+  },
 }));
 
 const GET_APPS = gql`
@@ -71,15 +71,15 @@ const Dependencies = () => {
   const { data } = useQuery(GET_APPS, {
     variables: {
       group: store.group,
-      environment: store.environment
-    }
+      environment: store.environment,
+    },
   });
   const classes = useStyles();
 
   const Dependency = ({ devDependency, override, version }) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const handlePopoverOpen = event => {
+    const handlePopoverOpen = (event) => {
       setAnchorEl(event.currentTarget);
     };
 
@@ -95,7 +95,7 @@ const Dependencies = () => {
           className={clsx({
             [classes.devDependency]: devDependency,
             [classes.override]: override,
-            [classes.warning]: !devDependency && !override
+            [classes.warning]: !devDependency && !override,
           })}
           onMouseEnter={handlePopoverOpen}
           onMouseLeave={handlePopoverClose}
@@ -107,15 +107,15 @@ const Dependencies = () => {
             id="mouse-over-popover"
             className={classes.popover}
             classes={{
-              paper: classes.paper
+              paper: classes.paper,
             }}
             anchorOrigin={{
               vertical: "bottom",
-              horizontal: "left"
+              horizontal: "left",
             }}
             transformOrigin={{
               vertical: "top",
-              horizontal: "left"
+              horizontal: "left",
             }}
             open={open}
             anchorEl={anchorEl}
@@ -142,7 +142,7 @@ const Dependencies = () => {
           override:
             versions[0].overrides.find(
               ({ name: ovName }) => ovName === name
-            ) !== undefined
+            ) !== undefined,
         };
       });
     });
@@ -173,7 +173,7 @@ const Dependencies = () => {
             <TableBody>
               {Object.keys(dependencyMap)
                 .sort()
-                .map(k => (
+                .map((k) => (
                   <TableRow key={k}>
                     <TableCell>
                       <Typography>{k}</Typography>

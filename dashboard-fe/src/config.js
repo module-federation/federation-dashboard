@@ -30,7 +30,7 @@ if (typeof window === "undefined") {
         process.env.SESSION_COOKIE_SECRET,
         "base64"
       ).toString("ascii"),
-      SESSION_COOKIE_LIFETIME: 60 * 60 * 8
+      SESSION_COOKIE_LIFETIME: 60 * 60 * 8,
     });
   }
   Object.assign(envVars, {
@@ -49,7 +49,7 @@ if (typeof window === "undefined") {
       AUTH0_SCOPE: process.env.AUTH0_SCOPE,
       AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
       REDIRECT_URI: process.env.REDIRECT_URI,
-      POST_LOGOUT_REDIRECT_URI: process.env.POST_LOGOUT_REDIRECT_URI
+      POST_LOGOUT_REDIRECT_URI: process.env.POST_LOGOUT_REDIRECT_URI,
     });
   }
   module.exports = envVars;
