@@ -4,7 +4,7 @@ import glob from "glob";
 import workerpool from "workerpool";
 const pool = workerpool.pool({
   options: {
-    minWorkers: 2,
+    minWorkers: 5,
     maxQueueSize: 20,
     timeout: 6000,
     workerType: "auto",
@@ -20,7 +20,7 @@ export default async (req, res) => {
     const workerpool = __non_webpack_require__("workerpool");
     const pool = workerpool.pool({
       options: {
-        minWorkers: 3,
+        minWorkers: 6,
         maxQueueSize: 16,
         timeout: 6000,
         workerType: "auto",
