@@ -57,6 +57,11 @@ export default async (req, res) => {
             pool.terminate();
             return result;
           });
+        try {
+          JSON.parse(gotData);
+        } catch (o) {
+          console.error(filePath, "is corroupt");
+        }
         return JSON.parse(gotData);
       },
       { concurrency: 3 }
@@ -80,7 +85,9 @@ export default async (req, res) => {
     });
 
   res.statusCode = 200;
-  res.json(globbedData.filter((lhr)=>{
-    return lhr.variant === "Latest"
-  }))
+  res.json(
+    globbedData.filter((lhr) => {
+      return lhr.variant === "Latest";
+    })
+  );
 };
