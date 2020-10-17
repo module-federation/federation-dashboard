@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "node --inspect ./server/dev-server.js",
     "dev-demo": "DATA_DIR=examples/dashboard-example next dev -p 3000",
-    "build": "next build && cp -r public/* .next",
+    "build": "next build || sleep 8 && cp -r public/* .next",
     "start": "NODE_ENV=production node ./server",
     "test": "jest",
     "docker:build:ci": "rm -rf node_modules && docker build --build-arg auth0_client_key=$AUTH0_CLIENT_SECRET --build-arg auth0_cookie_secret=$SESSION_COOKIE_SECRET_B64 . -t scriptedalchemy/mf-dashboard:latest",
