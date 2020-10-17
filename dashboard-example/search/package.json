@@ -11,7 +11,7 @@
     "html-webpack-plugin": "git://github.com/ScriptedAlchemy/html-webpack-plugin#master",
     "less-loader": "7.0.2",
     "serve": "11.3.2",
-    "style-loader": "1.3.0",
+    "style-loader": "2.0.0",
     "webpack": "5.1.3",
     "webpack-cli": "3.3.12",
     "webpack-dev-server": "3.11.0"
