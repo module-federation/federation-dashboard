@@ -64,7 +64,7 @@
     "mobx-react": "^6.2.2",
     "moment": "^2.27.0",
     "nedb": "^1.8.0",
-    "next": "9.5.2",
+    "next": "9.5.5",
     "node-fetch": "^2.6.0",
     "node-ip": "^0.1.2",
     "pathfinding": "^0.4.18",
