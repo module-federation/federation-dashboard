@@ -83,7 +83,7 @@
     "@babel/plugin-proposal-decorators": "7.12.1",
     "@babel/preset-typescript": "7.12.1",
     "@types/jest": "26.0.14",
-    "jest": "26.4.2",
+    "jest": "26.5.3",
     "jest-babel": "1.0.1",
     "prettier": "2.1.2",
     "regenerator-runtime": "0.13.7",
