@@ -155,7 +155,7 @@ const Performance = ({ groupData }) => {
       acc.push(item);
       return acc;
     }, []);
-console.log(toRerun);
+    console.log(toRerun);
     setUrl({
       variables: {
         settings: {
@@ -165,7 +165,11 @@ console.log(toRerun);
     });
     setTodos(toRerun);
   };
-
+  useEffect(() => {
+    setInterval(() => {
+      reRunAllTests();
+    }, 60000 * 60);
+  }, []);
   return (
     <Fragment>
       <Form
