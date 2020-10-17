@@ -4,8 +4,8 @@ import glob from "glob";
 import workerpool from "workerpool";
 const pool = workerpool.pool({
   options: {
-    minWorkers: 4,
-    maxQueueSize: 6,
+    minWorkers: 6,
+    maxQueueSize: 5,
     timeout: 6000,
     workerType: "auto",
   },
@@ -20,8 +20,8 @@ export default async (req, res) => {
     const workerpool = __non_webpack_require__("workerpool");
     const pool = workerpool.pool({
       options: {
-        minWorkers: 4,
-        maxQueueSize: 4,
+        minWorkers: 6,
+        maxQueueSize: 5,
         timeout: 6000,
         workerType: "auto",
       },
@@ -57,10 +57,9 @@ export default async (req, res) => {
             pool.terminate();
             return result;
           });
-
         return JSON.parse(gotData);
       },
-      { concurrency: 2 }
+      { concurrency: 3 }
     );
 
     return globbedData;
