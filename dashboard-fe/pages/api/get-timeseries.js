@@ -4,8 +4,8 @@ import glob from "glob";
 import workerpool from "workerpool";
 const pool = workerpool.pool({
   options: {
-    minWorkers: 5,
-    maxQueueSize: 20,
+    minWorkers: 4,
+    maxQueueSize: 6,
     timeout: 6000,
     workerType: "auto",
   },
@@ -20,8 +20,8 @@ export default async (req, res) => {
     const workerpool = __non_webpack_require__("workerpool");
     const pool = workerpool.pool({
       options: {
-        minWorkers: 6,
-        maxQueueSize: 16,
+        minWorkers: 4,
+        maxQueueSize: 4,
         timeout: 6000,
         workerType: "auto",
       },
@@ -54,20 +54,16 @@ export default async (req, res) => {
             console.error(err);
           })
           .then(function (result) {
-            //  pool.terminate();
+            pool.terminate();
             return result;
           });
-        try {
-          return JSON.parse(gotData);
-        } catch (o) {
-          console.error(filePath, "is corroupt");
-          return null;
-        }
+
+        return JSON.parse(gotData);
       },
       { concurrency: 2 }
     );
 
-    return globbedData.filter((i) => i);
+    return globbedData;
   };
   const safePath = req.query.report.split("/").slice(-1)[0];
 
@@ -80,7 +76,7 @@ export default async (req, res) => {
       console.error(err);
     })
     .then(function (result) {
-      // pool.terminate();
+      pool.terminate();
       return result;
     });
 
