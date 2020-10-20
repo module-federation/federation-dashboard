@@ -209,6 +209,7 @@ const MultiSeriesChart = React.memo((props) => {
 const TimeSeriesChart = React.memo((props) => {
   const [data, setData] = useState(false);
   const [gotRef, setRef] = useState(false);
+  const [isRecent, setRecent] = useState(false);
   const timeSeriesScatterChartOptions = {
     height: typeof window === "object" ? window.innerHeight : null,
     theme: "dark2",
@@ -257,8 +258,6 @@ const TimeSeriesChart = React.memo((props) => {
           timeSeriesData
         );
 
-        console.log(timeSeriesData)
-
         setData(timeSeriesScatterData);
       });
   }, []);
@@ -267,13 +266,22 @@ const TimeSeriesChart = React.memo((props) => {
   }
 
   return (
-    <CanvasJSChart
-      options={timeSeriesScatterChartOptions}
-      onRef={(ref) => {
-        createRef(ref);
-        setRef(ref);
-      }}
-    />
+    <>
+      <CanvasJSChart
+        options={
+          isRecent
+            ? timeSeriesScatterChartOptions.slice(
+                Math.max(timeSeriesScatterChartOptions.length - 10, 0)
+              )
+            : timeSeriesScatterChartOptions
+        }
+        onRef={(ref) => {
+          createRef(ref);
+          setRef(ref);
+        }}
+      />
+      <Button onClick={() => setRecent(true)}>Show Last 10</Button>
+    </>
   );
 });
 
@@ -524,7 +532,6 @@ class Report extends React.Component {
   };
 
   render() {
-
     return (
       <>
         <div>
