@@ -257,6 +257,8 @@ const TimeSeriesChart = React.memo((props) => {
           timeSeriesData
         );
 
+        console.log(timeSeriesData)
+
         setData(timeSeriesScatterData);
       });
   }, []);
@@ -523,7 +525,6 @@ class Report extends React.Component {
 
   render() {
 
-    console.log(this.props.multiSeriesChartData);
     return (
       <>
         <div>
