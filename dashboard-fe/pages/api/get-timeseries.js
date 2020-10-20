@@ -4,8 +4,8 @@ import glob from "glob";
 import workerpool from "workerpool";
 const pool = workerpool.pool({
   options: {
-    minWorkers: 6,
-    maxQueueSize: 5,
+    minWorkers: 1,
+    maxQueueSize: 2,
     timeout: 6000,
     workerType: "auto",
   },
@@ -20,9 +20,9 @@ export default async (req, res) => {
     const workerpool = __non_webpack_require__("workerpool");
     const pool = workerpool.pool({
       options: {
-        minWorkers: 6,
-        maxQueueSize: 5,
-        timeout: 6000,
+        minWorkers: 1,
+        maxQueueSize: 3,
+        timeout: 3000,
         workerType: "auto",
       },
     });
@@ -54,12 +54,16 @@ export default async (req, res) => {
             console.error(err);
           })
           .then(function (result) {
-            pool.terminate();
+            // pool.terminate();
             return result;
           });
-        return JSON.parse(gotData);
+        try {
+          return JSON.parse(gotData);
+        } catch (e) {
+          return null;
+        }
       },
-      { concurrency: 3 }
+      { concurrency: 5 }
     );
 
     return globbedData;
@@ -75,13 +79,14 @@ export default async (req, res) => {
       console.error(err);
     })
     .then(function (result) {
-      pool.terminate();
+      // pool.terminate();
       return result;
     });
 
   res.statusCode = 200;
   res.json(
     globbedData.filter((lhr) => {
+      if (!lhr) return false;
       return lhr.variant === "Latest";
     })
   );

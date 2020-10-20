@@ -11,7 +11,7 @@ import {
   GET_HEAD_VERSION,
   SET_REMOTE_VERSION,
 } from "../../components/application/CurrentVersion";
-
+let prevint;
 import { makeIDfromURL, removeMeta } from "../../lighthouse/utils.js";
 const GET_TRACKED = gql`
   query($group: String!) {
@@ -142,7 +142,7 @@ const Performance = ({ groupData }) => {
     });
   };
 
-  const reRunAllTests = ({ type, index }) => {
+  const reRunAllTests = () => {
     const toRerun = todos.reduce((acc, item) => {
       const updated = item.variants.map((variant) => {
         const isFrozen = variant.name.toLowerCase().includes("frozen");
@@ -166,9 +166,12 @@ const Performance = ({ groupData }) => {
     setTodos(toRerun);
   };
   useEffect(() => {
-    setInterval(() => {
+    clearInterval(prevint);
+
+    prevint = setInterval(() => {
+      console.log("runnning uodate");
       reRunAllTests();
-    }, 60000 * 60);
+    }, 240000 * 60);
   }, []);
   return (
     <Fragment>

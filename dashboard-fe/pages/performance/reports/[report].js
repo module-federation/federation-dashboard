@@ -1,7 +1,7 @@
 import React, { useRef, createRef, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import gql from "graphql-tag";
-
+import LazyHydrate from "react-lazy-hydration";
 const queryString = require("query-string");
 
 import {
@@ -518,7 +518,7 @@ class Report extends React.Component {
         });
       })
       .then(() => {
-        // window.location.reload()
+        window.location.reload();
       });
   };
 
@@ -537,23 +537,29 @@ class Report extends React.Component {
           />
         </div>
         <div>
-          <WhiskerChart
-            whiskerChartData={this.props.whiskerChartData}
-            toggleDataSeries={this.toggleDataSeries}
-          />
-          <ScatterChart
-            scatterChartData={this.props.scatterChartData}
-            toggleDataSeries={this.toggleDataSeries}
-          />
+          <LazyHydrate whenIdle>
+            <WhiskerChart
+              whiskerChartData={this.props.whiskerChartData}
+              toggleDataSeries={this.toggleDataSeries}
+            />
+          </LazyHydrate>
+          <LazyHydrate whenIdle>
+            <ScatterChart
+              scatterChartData={this.props.scatterChartData}
+              toggleDataSeries={this.toggleDataSeries}
+            />
+          </LazyHydrate>
           <MultiSeriesChart
             multiSeriesChartData={this.props.multiSeriesChartData}
             toggleDataSeries={this.toggleDataSeries}
           />
-          <TimeSeriesChart
-            query={this.props.query}
-            multiSeriesChartData={this.props.multiSeriesChartData}
-            toggleDataSeries={this.toggleDataSeries}
-          />
+          <LazyHydrate whenIdle>
+            <TimeSeriesChart
+              query={this.props.query}
+              multiSeriesChartData={this.props.multiSeriesChartData}
+              toggleDataSeries={this.toggleDataSeries}
+            />
+          </LazyHydrate>
         </div>
       </>
     );
@@ -564,11 +570,7 @@ Report.getInitialProps = async ({ query }) => {
   const { meta, ...report } = await fetch(
     hostname + "api/get-report?report=" + query.report
   ).then((res) => res.json());
-  // const timeSeriesData = await fetch(
-  //   hostname + "api/get-timeseries?report=" + query.report
-  // ).then((res) => res.json());
-  //
-  // const scatterData = generateTimeSeriesScatterChartData(timeSeriesData);
+
   const [
     scatterChartData,
     whiskerChartData,
