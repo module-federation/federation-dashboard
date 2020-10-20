@@ -460,7 +460,6 @@ class Report extends React.Component {
                     name
                     search
                     new
-                    new
                   }
                 }
               }
@@ -586,7 +585,6 @@ Report.getInitialProps = async ({ query }) => {
     multiSeriesChartData,
     meta,
     appKeys: Object.keys(report),
-    // timeSeriesScatterData: scatterData,
     query,
   };
 };
