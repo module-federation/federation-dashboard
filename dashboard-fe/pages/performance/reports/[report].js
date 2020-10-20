@@ -254,13 +254,16 @@ const TimeSeriesChart = React.memo((props) => {
     fetch(hostname + "api/get-timeseries?report=" + query.report)
       .then((res) => res.json())
       .then((timeSeriesData) => {
+        if(isRecent) {
+          timeSeriesData = timeSeriesData.slice(Math.max(timeSeriesData.length - 5, 0))
+        }
         const timeSeriesScatterData = generateTimeSeriesScatterChartData(
           timeSeriesData
         );
 
         setData(timeSeriesScatterData);
       });
-  }, []);
+  }, [isRecent]);
   if (!data) {
     return null;
   }
@@ -268,13 +271,7 @@ const TimeSeriesChart = React.memo((props) => {
   return (
     <>
       <CanvasJSChart
-        options={
-          isRecent
-            ? timeSeriesScatterChartOptions.slice(
-                Math.max(timeSeriesScatterChartOptions.length - 10, 0)
-              )
-            : timeSeriesScatterChartOptions
-        }
+        options={timeSeriesScatterChartOptions}
         onRef={(ref) => {
           createRef(ref);
           setRef(ref);
