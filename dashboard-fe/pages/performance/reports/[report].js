@@ -404,7 +404,7 @@ class Report extends React.Component {
               updatedExistingVariants.push({
                 name: this.state.inputValue,
                 search: originalQueryString
-                  ? "?" + queryString.stringify(originalQueryString)
+                  ? "?" + queryString.stringify(originalQueryString).replace('%2C',',')
                   : "",
                 new: true,
               });
