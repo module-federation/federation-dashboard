@@ -280,7 +280,7 @@ const TimeSeriesChart = React.memo((props) => {
           setRef(ref);
         }}
       />
-      <Button onClick={() => setRecent(true)}>Show Last 10</Button>
+      <button onClick={() => setRecent(true)}>Show Last 10</button>
     </>
   );
 });
