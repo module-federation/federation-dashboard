@@ -10,6 +10,7 @@ const psi = require("psi");
 const config = require("../src/config");
 const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 import Promise from "bluebird";
+import ReadJSONStream from "read-json-stream";
 
 const RUNS = 30;
 let hasStarted = false;
@@ -167,6 +168,19 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
             return js;
           }),
         };
+        ReadJSONStream(`${dirName}/scatter.json`) // filePath is a file path string e.g. 'data/myData.json' or 'path.join('data', 'myData.json');
+          .done((err, data) => {
+            if (err) {
+              // handle error
+            } else {
+              console.log(data);
+              // var stream = fs.createWriteStream('myFile.txt', {flags: 'a'});
+              //   var data = "Hello, World!\n";
+              ////  stream.write(data, function() {
+              // Now the data has been written.
+              //  });
+            }
+          });
         fs.readFile(
           `${dirName}/scatter.json`,
           "utf8",
@@ -196,7 +210,12 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
               const json = JSON.stringify(
                 Object.assign(oldScatterData, scatterData)
               ); //convert it back to json
-              fs.writeFile(`${dirName}/scatter.json`, json, "utf8", () => {});
+              fs.writeFileSync(
+                `${dirName}/scatter.json`,
+                json,
+                "utf8",
+                () => {}
+              );
             }
           }
         );
