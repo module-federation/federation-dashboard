@@ -102,13 +102,6 @@ const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
   }
 };
 
-const getContents = (pathStr) => {
-  const output = fs.readFileSync(pathStr, "utf8", (err, results) => {
-    return results;
-  });
-  return JSON.parse(output);
-};
-
 const average = (array) =>
   toFixed(array.reduce((a, b) => a + b) / array.length, 2);
 
@@ -168,25 +161,51 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
             return js;
           }),
         };
-        ReadJSONStream(`${dirName}/scatter.json`) // filePath is a file path string e.g. 'data/myData.json' or 'path.join('data', 'myData.json');
-          .done((err, data) => {
-            if (err) {
-              // handle error
-            } else {
-              console.log(data);
-              // var stream = fs.createWriteStream('myFile.txt', {flags: 'a'});
-              //   var data = "Hello, World!\n";
-              ////  stream.write(data, function() {
-              // Now the data has been written.
-              //  });
-            }
-          });
+        if (false && fs.existsSync(`${dirName}/scatter.json`)) {
+          ReadJSONStream(`${dirName}/scatter.json`) // filePath is a file path string e.g. 'data/myData.json' or 'path.join('data', 'myData.json');
+            .done((err, oldScatterData) => {
+              if (err) {
+                // handle error
+              } else {
+                Object.keys(oldScatterData).map((key) => {
+                  if (Array.isArray(oldScatterData[key])) {
+                    oldScatterData[key] = oldScatterData[key].map((oldData) => {
+                      delete oldData.timing;
+                      delete oldData.audits["screenshot-thumbnails"];
+                      delete oldData.audits["final-screenshot"];
+                      delete oldData.audits["network-requests"];
+                      delete oldData.audits["uses-long-cache-ttl"];
+                      return oldData;
+                    });
+                  }
+                });
+
+                const json = JSON.stringify(
+                  Object.assign(oldScatterData, scatterData)
+                ); //convert it back to json
+                fs.writeFileSync(`${dirName}/scatter.json`, json, "utf8");
+                var stream = fs.createWriteStream(`${dirName}/scatter.json`, {
+                  flags: "a",
+                });
+                var data = json;
+                stream.write(data, function () {
+                  console.log("wrote scatter");
+                });
+              }
+            });
+        } else {
+          fs.writeFile(
+            `${dirName}/scatter.json`,
+            JSON.stringify({ ...scatterData, meta: { url } }),
+            "utf8"
+          );
+        }
         fs.readFile(
           `${dirName}/scatter.json`,
           "utf8",
           function readFileCallback(err, data) {
             if (err) {
-              fs.writeFileSync(
+              fs.writeFile(
                 `${dirName}/scatter.json`,
                 JSON.stringify({ ...scatterData, meta: { url } }),
                 "utf8"
@@ -210,12 +229,7 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
               const json = JSON.stringify(
                 Object.assign(oldScatterData, scatterData)
               ); //convert it back to json
-              fs.writeFileSync(
-                `${dirName}/scatter.json`,
-                json,
-                "utf8",
-                () => {}
-              );
+              fs.writeFileSync(`${dirName}/scatter.json`, json, "utf8");
             }
           }
         );
@@ -269,23 +283,6 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
           sync: true,
           ignore: `${dirName}/scatter.json`,
         });
-
-        if (prevReports.length) {
-          let dates = [];
-          for (let report in prevReports) {
-            dates.push(
-              new Date(path.parse(prevReports[report]).name.replace(/_/g, ":"))
-            );
-          }
-          const max = dates.reduce(function (a, b) {
-            return Math.max(a, b);
-          });
-          const recentReport = new Date(max).toISOString();
-
-          const recentReportContents = getContents(
-            dirName + "/" + recentReport.replace(/:/g, "_") + ".json"
-          );
-        }
 
         fs.writeFile(
           `${dirName}/${results.js["fetchTime"].replace(/:/g, "_")}.json`,
