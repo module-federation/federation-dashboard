@@ -4,6 +4,7 @@ ENV PATH $PATH:/usr/src/app/node_modules/.bin
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN yarn install
+RUN yarn list webpack
 RUN test -f .env || touch .env
 COPY . .
 

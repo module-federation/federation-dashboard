@@ -6,8 +6,6 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const ipfilter = require("express-ipfilter").IpFilter;
 const createNextRouteHandler = require("./lib/create-next-route-handler");
-const ipaddr = require("ipaddr.js");
-const isEqual = require("lodash/isEqual");
 const ip = require("ip");
 const requestIp = require("request-ip");
 module.exports = ({ nextRoutesHandler }) => {
