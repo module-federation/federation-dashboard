@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import Link from "next/link";
 import gql from "graphql-tag";
-import { useLazyQuery } from "@apollo/react-hooks";
+import { useLazyQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { observer } from "mobx-react";
 import { get } from "lodash";

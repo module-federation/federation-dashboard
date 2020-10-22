@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { Typography, Tabs, Tab, makeStyles } from "@material-ui/core";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import Link from "next/link";
 import { observer } from "mobx-react";
 import { get } from "lodash";

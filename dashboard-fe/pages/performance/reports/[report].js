@@ -14,7 +14,7 @@ import {
 } from "../../../lighthouse/utils";
 
 import Form from "../../../components/FormVarient";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/client";
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 
 if (process.browser) {

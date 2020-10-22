@@ -13,7 +13,7 @@ import Template from "webpack/lib/Template";
 import { useForm, Controller } from "react-hook-form";
 import Layout from "../../components/Layout";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { Code, CodeWrapper, GeneratedCode } from "../../components/Code";
 import { observer } from "mobx-react";
 import _ from "lodash";

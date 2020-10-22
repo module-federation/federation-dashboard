@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import Link from "next/link";
 import gql from "graphql-tag";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 import { observer } from "mobx-react";
