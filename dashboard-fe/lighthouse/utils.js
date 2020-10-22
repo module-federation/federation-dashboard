@@ -6,7 +6,7 @@ const pool = workerpool.pool({
   options: {
     minWorkers: 3,
     maxQueueSize: 8,
-    timeout: 4000,
+    timeout: 6000,
     workerType: "auto",
   },
 });
@@ -74,7 +74,6 @@ const generateScatterChartProcessor = (data) => {
       name: group,
       showInLegend: true,
       markerType: "circle",
-      // markerColor: randomColor(),
     };
     const charable = (Array.isArray(results) ? results : [results]).map(
       (result) => {
