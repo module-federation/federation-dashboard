@@ -42,7 +42,7 @@ const generateLighthouseReport = (group) => {
         variants: updatedVariants,
       };
     },
-    { concurrency: 2 }
+    { concurrency: 1 }
   ).then(async (updatedTrackedURLs) => {
     Object.assign(cache, { running: false });
     if (cache.foundNew) {
