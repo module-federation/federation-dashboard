@@ -1,6 +1,4 @@
 const lighthouse = require("lighthouse");
-const chromeLauncher = require("chrome-launcher");
-const argv = require("yargs").argv;
 const fs = require("fs");
 const glob = require("glob");
 const path = require("path");
@@ -16,6 +14,8 @@ const RUNS = 30;
 let hasStarted = false;
 
 const launchChromeAndRunLighthouse = async (url) => {
+  const chromeLauncher = require("chrome-launcher");
+
   const chrome = await chromeLauncher.launch({
     chromeFlags: [
       "--headless",
@@ -110,13 +110,11 @@ function toFixed(num, fixed) {
   return num.toString().match(re)[0];
 }
 
-export const init = (url = argv.url, title = argv.title, desktop = true) => {
-  argv.url = url;
-  argv.title = title;
+export const init = (url, title, desktop = true) => {
   const mode = desktop ? "desktop" : "mobile";
 
-  if (argv.url) {
-    const urlObj = new URL(argv.url);
+  if (url) {
+    const urlObj = new URL(url);
     let dirName = urlObj.host.replace("www.", "");
     if (urlObj.pathname !== "/") {
       dirName = dirName + urlObj.pathname.replace(/\//g, "_");
@@ -138,8 +136,8 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
         fakeArray,
         async () => {
           const taskRunResult = config.USE_CLOUD
-            ? await launchPageSpeedInsightsLighthouse(argv.url, desktop)
-            : await launchChromeAndRunLighthouse(argv.url);
+            ? await launchPageSpeedInsightsLighthouse(url, desktop)
+            : await launchChromeAndRunLighthouse(url);
           tracker.push("");
           bar1.update(tracker.length);
           delete taskRunResult.js.stackPacks;
@@ -237,7 +235,7 @@ export const init = (url = argv.url, title = argv.title, desktop = true) => {
       return testResults;
     };
 
-    return runner(argv.title)
+    return runner(title)
       .then((allResults) => {
         bar1.stop();
         console.log("\n");
