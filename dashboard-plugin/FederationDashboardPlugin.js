@@ -152,7 +152,7 @@ class FederationDashboardPlugin {
         packageJson,
         // subPackages: this.directReasons(modules),
         shareFrom: ["dependencies"],
-        ignorePatchVersion: true,
+        ignorePatchversion: false,
       });
       vendorFederation.devDependencies = AutomaticVendorFederation({
         exclude: [],
@@ -160,7 +160,7 @@ class FederationDashboardPlugin {
         packageJson,
         // subPackages: this.directReasons(modules),
         shareFrom: ["devDependencies"],
-        ignorePatchVersion: true,
+        ignorePatchversion: false,
       });
       vendorFederation.optionalDependencies = AutomaticVendorFederation({
         exclude: [],
@@ -168,7 +168,7 @@ class FederationDashboardPlugin {
         packageJson,
         // subPackages: this.directReasons(modules),
         shareFrom: ["optionalDependencies"],
-        ignorePatchVersion: true,
+        ignorePatchversion: false,
       });
     }
 

@@ -69,7 +69,7 @@ module.exports = {
       template: "./public/index.html",
     }),
     new DashboardPlugin({
-      version: true,
+      version: false,
       filename: "dashboard.json",
       dashboardURL: "http://localhost:3000/api/update",
       metadata: {

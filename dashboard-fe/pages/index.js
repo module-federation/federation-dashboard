@@ -89,27 +89,27 @@ const Home = () => {
             {applications.length > 1 && <Tab label="Node Graph" />}
             {applications.length > 1 && <Tab label="Dependency Graph" />}
           </Tabs>
-          <div style={{ display: currentTab === 0 ? "block" : "none" }}>
-            {applications.length > 0 && (
-              <ModuleUMLDiagram
-                applications={applications}
-                size={applications.length}
-              />
-            )}
-          </div>
+          {/*<div style={{ display: currentTab === 0 ? "block" : "none" }}>*/}
+          {/*  {applications.length > 0 && (*/}
+          {/*    <ModuleUMLDiagram*/}
+          {/*      applications={applications}*/}
+          {/*      size={applications.length}*/}
+          {/*    />*/}
+          {/*  )}*/}
+          {/*</div>*/}
           <div style={{ display: currentTab === 1 ? "block" : "none" }}>
             <ApplicationsTable applications={applications} />
           </div>
-          {applications.length > 1 && (
-            <div style={{ display: currentTab === 2 ? "block" : "none" }}>
-              <ModuleNodeGraph applications={applications} />
-            </div>
-          )}
-          {applications.length > 1 && (
-            <div style={{ display: currentTab === 3 ? "block" : "none" }}>
-              <ModuleChordChart applications={applications} />
-            </div>
-          )}
+          {/*{applications.length > 1 && (*/}
+          {/*  <div style={{ display: currentTab === 2 ? "block" : "none" }}>*/}
+          {/*    <ModuleNodeGraph applications={applications} />*/}
+          {/*  </div>*/}
+          {/*)}*/}
+          {/*{applications.length > 1 && (*/}
+          {/*  <div style={{ display: currentTab === 3 ? "block" : "none" }}>*/}
+          {/*    <ModuleChordChart applications={applications} />*/}
+          {/*  </div>*/}
+          {/*)}*/}
         </>
       )}
       {data && applications.length === 0 && (

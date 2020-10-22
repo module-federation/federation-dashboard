@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node --inspect ./server/dev-server.js",
-    "dev-demo": "DATA_DIR=examples/dashboard-example next dev -p 3000",
+    "dev-demo": "DATA_DIR=examples/dashboard-example node ./server/dev-server.js",
     "build": "next build && cp -r public/* .next",
     "start": "NODE_ENV=production node ./server",
     "test": "jest",
@@ -13,7 +13,7 @@
     "docker:run": "docker run -p 3000:3000 -t scriptedalchemy/mf-dashboard",
     "docker:demo": "docker run -p 3000:3000 --mount type=bind,source=\"$(pwd)\"/.fm-dashboard,target=/data -t scriptedalchemy/mf-dashboard",
     "docker:push": "PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\\\",]//g' | tr -d '[[:space:]]');echo $PACKAGE_VERSION && docker tag scriptedalchemy/mf-dashboard:latest scriptedalchemy/mf-dashboard:$PACKAGE_VERSION && docker push scriptedalchemy/mf-dashboard:latest && docker push scriptedalchemy/mf-dashboard:$PACKAGE_VERSION",
-    "dev-with-vm": "VERSION_MANAGER=true next d ev -p 3000",
+    "dev-with-vm": "VERSION_MANAGER=true next dev -p 3000",
     "start-with-vm": "VERSION_MANAGER=true next start"
   },
   "contributors": [
