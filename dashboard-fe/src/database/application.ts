@@ -1,5 +1,5 @@
 import Joi from "@hapi/joi";
-
+import config from "../config";
 import ApplicationSettings, {
   schema as applicationSettingsSchema,
 } from "./applicationSettings";
@@ -24,6 +24,6 @@ export default class Application {
   group: string;
   metadata: Metadata[];
   tags: string[];
-  overrides: ApplicationOverride[];
+  overrides?: ApplicationOverride[];
   settings?: ApplicationSettings;
 }
