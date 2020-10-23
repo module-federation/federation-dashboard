@@ -57,51 +57,8 @@ const generateLighthouseReport = (group) => {
 };
 
 const subs = async (type, payload) => {
-  if (type === "groupUpdated") {
+  if (type === "groupUpdated" && payload?.settings?.trackedURLs) {
     generateLighthouseReport(payload);
   }
 };
 bus.subscribe(subs);
-
-// export default async (req, res) => {
-//   res.statusCode = 200;
-//   if (!req.body) {
-//     res.json({ message: "All Good" });
-//     return;
-//   }
-//   let sourceData = JSON.parse(req.body);
-//
-//   let prev = JSON.parse(fs.readFileSync("public/urls.json", "utf8"));
-//   sourceData.reduce((acc, item) => {
-//     acc[`${item.url}-${item.name}`] = item;
-//     return acc;
-//   }, prev);
-//
-//   fs.writeFileSync("public/urls.json", JSON.stringify(prev || []));
-//
-//   console.log("cache", cache);
-//
-//   if (cache.running) {
-//     Object.assign(cache, { queue: true });
-//
-//     fs.writeFileSync("public/urls.json", JSON.stringify(prev || []));
-//
-//     console.log("added to cache");
-//     res.json({ message: "Queued" });
-//     return;
-//   }
-//   sourceData = Object.values(
-//     JSON.parse(fs.readFileSync("public/urls.json", "utf8"))
-//   );
-//   Object.assign(cache, { running: true });
-//   generateLighthouseReport(sourceData).then(() => {
-//     if (cache.queue) {
-//       Object.assign(cache, { queue: false });
-//       generateLighthouseReport(
-//         Object.values(JSON.parse(fs.readFileSync("public/urls.json", "utf8")))
-//       );
-//     }
-//   });
-//
-//   res.json({ message: "All Good" });
-// };

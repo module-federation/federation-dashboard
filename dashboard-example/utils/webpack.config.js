@@ -18,6 +18,12 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.m?js$/,
+        resolve: {
+          fullySpecified: false,
+        },
+      },
+      {
         test: /\.jsx?$/,
         loader: "babel-loader",
         exclude: /node_modules/,
@@ -42,7 +48,7 @@ module.exports = {
       shared: require("./package.json").dependencies,
     }),
     new DashboardPlugin({
-      version: true,
+      version: false,
       dashboardURL: "http://localhost:3000/api/update",
       filename: "dashboard.json",
       metadata: {

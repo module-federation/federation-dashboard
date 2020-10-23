@@ -18,6 +18,12 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.m?js$/,
+        resolve: {
+          fullySpecified: false,
+        },
+      },
+      {
         test: /\.less$/,
         use: [
           {
@@ -68,7 +74,7 @@ module.exports = {
       template: "./public/index.html",
     }),
     new DashboardPlugin({
-      version: true,
+      version: false,
       filename: "dashboard.json",
       dashboardURL: "http://localhost:3000/api/update",
       versionChangeWebhook: "http://cnn.com/",

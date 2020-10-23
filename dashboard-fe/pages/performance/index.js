@@ -5,7 +5,7 @@ import gql from "graphql-tag";
 
 import ListItem from "../../components/ListItem";
 import Form from "../../components/Form";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/client";
 import store from "../../src/store";
 import {
   GET_HEAD_VERSION,

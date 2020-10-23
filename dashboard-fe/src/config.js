@@ -34,6 +34,7 @@ if (typeof window === "undefined") {
     });
   }
   Object.assign(envVars, {
+    VERSION_MANAGER: process.env.VERSION_MANAGER == "true",
     PAGESPEED_KEY: process.env.PAGESPEED_KEY,
     USE_CLOUD: process.env.USE_CLOUD == "true",
   });

@@ -14,7 +14,7 @@ import {
 } from "../../../lighthouse/utils";
 
 import Form from "../../../components/FormVarient";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/client";
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 
 if (process.browser) {
@@ -254,8 +254,10 @@ const TimeSeriesChart = React.memo((props) => {
     fetch(hostname + "api/get-timeseries?report=" + query.report)
       .then((res) => res.json())
       .then((timeSeriesData) => {
-        if(isRecent) {
-          timeSeriesData = timeSeriesData.slice(Math.max(timeSeriesData.length - 5, 0))
+        if (isRecent) {
+          timeSeriesData = timeSeriesData.slice(
+            Math.max(timeSeriesData.length - 5, 0)
+          );
         }
         const timeSeriesScatterData = generateTimeSeriesScatterChartData(
           timeSeriesData
@@ -362,64 +364,75 @@ class Report extends React.Component {
         `,
       })
       .then(({ data }) => {
-        const { trackedURLs } = Object.create(data.groups[0].settings);
+        if (data.groups[0].settings?.trackedURLs) {
+          const { trackedURLs } = Object.create(data.groups[0].settings);
 
-        const updatedTrackedUrls = trackedURLs.reduce((acc, tracked) => {
-          const { url, search } = makeIDfromURL(tracked.url);
+          const updatedTrackedUrls = trackedURLs.reduce((acc, tracked) => {
+            const { url, search } = makeIDfromURL(tracked.url);
 
-          if (tracked.url !== url) {
-            acc.push(tracked);
-            return acc;
-          }
-          const updatedExistingVariants = tracked.variants.reduce(
-            (acc, variant) => {
-              if (variant.name === this.state.inputValue) {
-                acc.push(Object.assign({}, variant, { new: true }));
-                return acc;
-              }
-              acc.push(variant);
+            if (tracked.url !== url) {
+              acc.push(tracked);
               return acc;
-            },
-            []
-          );
-          const isNewVariant = !updatedExistingVariants.find((variant) => {
-            return this.state.name === variant.name;
-          });
-
-          if (isNewVariant) {
-            const { id } = makeIDfromURL(tracked.url);
-
-            const OriginalTest = tracked.variants.find(({ name }) => {
-              return name === "Latest";
-            });
-            if (id === this.props.query.report) {
-              const originalQueryString = queryString.parse(
-                OriginalTest.search || ""
-              );
-              console.log(
-                "merged Query string",
-                Object.assign(originalQueryString, this.state.newQueryObject)
-              );
-
-              updatedExistingVariants.push({
-                name: this.state.inputValue,
-                search: originalQueryString
-                  ? "?" + queryString.stringify(originalQueryString).replace('%2C',',')
-                  : "",
-                new: true,
-              });
             }
-          }
-          acc.push(
-            Object.assign({}, tracked, { variants: updatedExistingVariants })
-          );
-          return acc;
-        }, []);
-        return Object.assign({}, data.groups[0].settings, {
-          trackedURLs: updatedTrackedUrls,
-        });
+            const updatedExistingVariants = tracked.variants.reduce(
+              (acc, variant) => {
+                if (variant.name === this.state.inputValue) {
+                  acc.push(Object.assign({}, variant, { new: true }));
+                  return acc;
+                }
+                acc.push(variant);
+                return acc;
+              },
+              []
+            );
+            const isNewVariant = !updatedExistingVariants.find((variant) => {
+              return this.state.name === variant.name;
+            });
+
+            if (isNewVariant) {
+              const { id } = makeIDfromURL(tracked.url);
+
+              const OriginalTest = tracked.variants.find(({ name }) => {
+                return name === "Latest";
+              });
+              if (id === this.props.query.report) {
+                const originalQueryString = queryString.parse(
+                  OriginalTest.search || ""
+                );
+                console.log(
+                  "merged Query string",
+                  Object.assign(originalQueryString, this.state.newQueryObject)
+                );
+
+                updatedExistingVariants.push({
+                  name: this.state.inputValue,
+                  search: originalQueryString
+                    ? "?" +
+                      queryString
+                        .stringify(originalQueryString)
+                        .replace("%2C", ",")
+                    : "",
+                  new: true,
+                });
+              }
+            }
+            acc.push(
+              Object.assign({}, tracked, { variants: updatedExistingVariants })
+            );
+            return acc;
+          }, []);
+
+          return Object.assign({}, data.groups[0].settings, {
+            trackedURLs: updatedTrackedUrls,
+          });
+        } else {
+          return null;
+        }
       })
       .then((updatedTrackedUrls) => {
+        if (!updatedTrackedUrls) {
+          return;
+        }
         this.apolloClient.mutate({
           variables: { settings: updatedTrackedUrls },
           mutation: gql`
