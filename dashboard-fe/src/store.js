@@ -138,6 +138,9 @@ if (typeof window !== "undefined") {
       .then(({ data: { dashboard, groups } }) => {
         store.versionManagementEnabled = dashboard.versionManagementEnabled;
         store.groups = groups;
+        if (store.groups.indexOf(store.group) === -1) {
+          store.setGroup("default");
+        }
       });
   });
 }
