@@ -1,6 +1,6 @@
 import Joi from "@hapi/joi";
 import config from "../config";
-console.log("VMZA", config.VERSION_MANAGER);
+
 export const schema = Joi.object({
   name: Joi.string().required(),
   version: config.VERSION_MANAGER

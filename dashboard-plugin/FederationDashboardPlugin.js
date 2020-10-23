@@ -32,60 +32,77 @@ class FederationDashboardPlugin {
     const FederationPlugin = compiler.options.plugins.find((plugin) => {
       return plugin.constructor.name === "ModuleFederationPlugin";
     });
-    let FederationPluginOptions;
     if (FederationPlugin) {
-      FederationPluginOptions = FederationPlugin._options;
+      this.FederationPluginOptions = FederationPlugin._options;
+    }
+    compiler.hooks.thisCompilation.tap(PLUGIN_NAME, (compilation) => {
+      compilation.hooks.processAssets.tapPromise(
+        {
+          name: PLUGIN_NAME,
+          stage: compilation.constructor.PROCESS_ASSETS_STAGE_REPORT,
+        },
+        () => this.processWebpackGraph(compilation)
+      );
+    });
+  }
+
+  processWebpackGraph(compilation, callback) {
+    const liveStats = compilation.getStats();
+    const stats = liveStats.toJson();
+    // filter modules
+    const modules = this.getFilteredModules(stats);
+    // get RemoteEntryChunk
+    const RemoteEntryChunk = this.getRemoteEntryChunk(
+      stats,
+      this.FederationPluginOptions
+    );
+    const validChunkArray = this.buildValidChunkArray(
+      liveStats,
+      this.FederationPluginOptions
+    );
+    const chunkDependencies = this.getChunkDependencies(validChunkArray);
+    const vendorFederation = this.buildVendorFederationMap(liveStats);
+    const rawData = {
+      name: this.FederationPluginOptions.name,
+      metadata: this._options.metadata || {},
+      topLevelPackage: vendorFederation || {},
+      publicPath: stats.publicPath,
+      federationRemoteEntry: RemoteEntryChunk,
+      buildHash: stats.hash,
+      environment: this._options.environment, // 'development' if not specified
+      version: this._options.publishVersion, // '1.0.0' if not specified
+      posted: this._options.posted, // Date.now() if not specified
+      group: this._options.group, // 'default' if not specified
+      modules,
+      chunkDependencies,
+    };
+
+    let graphData = null;
+    try {
+      graphData = convertToGraph(rawData);
+    } catch (err) {
+      console.warn("Error during dashboard data processing");
+      console.warn(err);
     }
 
-    compiler.hooks.afterDone.tap(PLUGIN_NAME, (liveStats) => {
-      const stats = liveStats.toJson();
+    if (graphData) {
+      const dashData = (this._dashData = JSON.stringify(graphData));
 
-      // filter modules
-      const modules = this.getFilteredModules(stats);
-      // get RemoteEntryChunk
-      const RemoteEntryChunk = this.getRemoteEntryChunk(
-        stats,
-        FederationPluginOptions
-      );
-      const validChunkArray = this.buildValidChunkArray(
-        liveStats,
-        FederationPluginOptions
-      );
-      const chunkDependencies = this.getChunkDependencies(validChunkArray);
-      const vendorFederation = this.buildVendorFederationMap(liveStats);
-      const rawData = {
-        name: FederationPluginOptions.name,
-        metadata: this._options.metadata || {},
-        topLevelPackage: vendorFederation || {},
-        publicPath: stats.publicPath,
-        federationRemoteEntry: RemoteEntryChunk,
-        buildHash: stats.hash,
-        environment: this._options.environment, // 'development' if not specified
-        version: this._options.publishVersion, // '1.0.0' if not specified
-        posted: this._options.posted, // Date.now() if not specified
-        group: this._options.group, // 'default' if not specified
-        modules,
-        chunkDependencies,
-      };
+      this.writeStatsFiles(stats, dashData);
 
-      let graphData = null;
-      try {
-        graphData = convertToGraph(rawData);
-      } catch (err) {
-        console.warn("Error during dashboard data processing");
-        console.warn(err);
+      if (this._options.dashboardURL) {
+        return this.postDashboardData(dashData)
+          .then(() => {})
+          .catch((err) => {
+            if (err) {
+              compilation.errors.push(err);
+              // eslint-disable-next-line promise/no-callback-in-promise
+              throw err;
+            }
+          });
       }
-
-      if (graphData) {
-        const dashData = (this._dashData = JSON.stringify(graphData));
-
-        this.writeStatsFiles(stats, dashData);
-
-        if (this._options.dashboardURL) {
-          this.postDashboardData(dashData);
-        }
-      }
-    });
+      return Promise.resolve();
+    }
   }
 
   getFilteredModules(stats) {
