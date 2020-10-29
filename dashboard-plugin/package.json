@@ -2,15 +2,13 @@
   "name": "@module-federation/dashboard-plugin",
   "version": "2.0.0-beta.5",
   "main": "FederationDashboardPlugin.js",
+  "bin": "bin/federation-report.js",
   "license": "MIT",
   "scripts": {
     "test": "jest --watch"
   },
   "engines": {
     "node": ">= 10"
-  },
-  "bin": {
-    "federation-report.js": "bin/federation-report.js"
   },
   "files": [
     "bin",

@@ -20,7 +20,6 @@
   "scripts": {
     "start": "webpack-dev-server --open --mode development --liveReload",
     "build": "node ../../node_modules/webpack/bin/webpack.js --mode production",
-    "cut-version": "node node_modules/.bin/federation-report",
     "serve": "serve dist -p 3003",
     "clean": "rm -rf dist"
   },
