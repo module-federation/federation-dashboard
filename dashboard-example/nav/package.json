@@ -10,6 +10,7 @@
     "css-loader": "5.0.0",
     "html-webpack-plugin": "git://github.com/ScriptedAlchemy/html-webpack-plugin#master",
     "less-loader": "7.0.2",
+    "less": "^3.12.2",
     "serve": "11.3.2",
     "style-loader": "2.0.0",
     "webpack": "5.2.0",
@@ -19,7 +20,6 @@
   "scripts": {
     "start": "webpack-dev-server --open --mode development --liveReload",
     "build": "node ../../node_modules/webpack/bin/webpack.js --mode production",
-    "cut-version": "node node_modules/.bin/federation-report",
     "serve": "serve dist -p 3003",
     "clean": "rm -rf dist"
   },

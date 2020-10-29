@@ -1,5 +1,5 @@
 import "cross-fetch/polyfill";
-import { ApolloProvider } from "@apollo/react-hooks";
+import { ApolloProvider } from "@apollo/client";
 import Head from "next/head";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import store from "../src/store";

@@ -1,6 +1,6 @@
 import Head from "next/head";
 import gql from "graphql-tag";
-import { useLazyQuery } from "@apollo/react-hooks";
+import { useLazyQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 
 import Layout from "../../../components/Layout";
@@ -29,7 +29,7 @@ const GroupPage = () => {
   React.useEffect(() => {
     if (router.query.group) {
       getData({
-        variables: { name: router.query.group }
+        variables: { name: router.query.group },
       });
     }
   }, [router]);

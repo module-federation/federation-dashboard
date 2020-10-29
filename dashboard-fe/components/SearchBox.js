@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, TextField, fade } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { observer } from "mobx-react";
 
@@ -25,28 +25,28 @@ const GET_SIDEBAR_DATA = gql`
   }
 `;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
+      backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: 200,
     color: "white",
-    padding: 5
-  }
+    padding: 5,
+  },
 }));
 
 const SearchBox = () => {
   const { data } = useQuery(GET_SIDEBAR_DATA, {
     variables: {
       group: store.group,
-      environment: store.environment
-    }
+      environment: store.environment,
+    },
   });
   const classes = useStyles();
   const router = useRouter();
@@ -58,20 +58,20 @@ const SearchBox = () => {
       applications.push({
         type: "Application",
         url: `/applications/${store.group}/${name}`,
-        name
+        name,
       });
       if (versions && versions.length > 0) {
         versions[0].modules.forEach(({ name: moduleName }) => {
           modules.push({
             type: "Modules",
             url: `/applications/${store.group}/${name}/${moduleName}`,
-            name: moduleName
+            name: moduleName,
           });
         });
       }
     });
   }
-  const options = [...applications, ...modules].filter(d => d);
+  const options = [...applications, ...modules].filter((d) => d);
 
   const onChange = (_, opt, reason) => {
     if (reason === "select-option") {
@@ -83,10 +83,10 @@ const SearchBox = () => {
     <Autocomplete
       onChange={onChange}
       options={options}
-      groupBy={option => option.type}
-      getOptionLabel={option => option.name}
+      groupBy={(option) => option.type}
+      getOptionLabel={(option) => option.name}
       className={classes.searchBox}
-      renderInput={params => (
+      renderInput={(params) => (
         <TextField {...params} className={classes.search} />
       )}
     />
