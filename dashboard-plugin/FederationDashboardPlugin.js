@@ -38,7 +38,7 @@ class FederationDashboardPlugin {
       this.FederationPluginOptions = this._options.standalone;
     } else {
       throw new Error(
-        "Dashbonard plugin is missing Module Federaiton or standalone option"
+        "Dashboard plugin is missing Module Federation or standalone option"
       );
     }
     compiler.hooks.thisCompilation.tap(PLUGIN_NAME, (compilation) => {
