@@ -7,7 +7,7 @@ import {
   Select,
   MenuItem,
   ListItemSecondaryAction,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
 import Link from "next/link";
 import LockIcon from "@material-ui/icons/Lock";
@@ -19,7 +19,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import WidgetsIcon from "@material-ui/icons/Widgets";
 import React from "react";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { observer } from "mobx-react";
 
 import store from "../src/store";
@@ -47,8 +47,8 @@ const SideBar = ({ restricted }) => {
   const { data } = useQuery(GET_SIDEBAR_DATA, {
     variables: {
       group: store.group,
-      environment: store.environment
-    }
+      environment: store.environment,
+    },
   });
   const renderSubList = (subList, subListParent, classes) => {
     console.log(subList);
@@ -68,7 +68,7 @@ const SideBar = ({ restricted }) => {
     );
   };
 
-  const renderSubListButton = subListParent => {
+  const renderSubListButton = (subListParent) => {
     return (
       <ListItemSecondaryAction>
         <IconButton
@@ -116,7 +116,7 @@ const SideBar = ({ restricted }) => {
           <Select
             variant="outlined"
             value={store.group}
-            onChange={evt => store.setGroup(evt.target.value)}
+            onChange={(evt) => store.setGroup(evt.target.value)}
             fullWidth
           >
             {store.groups.map(({ id, name }) => (
@@ -131,10 +131,10 @@ const SideBar = ({ restricted }) => {
         <Select
           variant="outlined"
           value={store.environment}
-          onChange={evt => store.setEnvironment(evt.target.value)}
+          onChange={(evt) => store.setEnvironment(evt.target.value)}
           fullWidth
         >
-          {store.environments.map(name => (
+          {store.environments.map((name) => (
             <MenuItem key={name} value={name}>
               {name}
             </MenuItem>

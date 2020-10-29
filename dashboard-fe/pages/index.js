@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { Typography, Tabs, Tab, makeStyles } from "@material-ui/core";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import Link from "next/link";
 import { observer } from "mobx-react";
 import { get } from "lodash";
@@ -52,16 +52,16 @@ const GET_APPS = gql`
 
 const useHomeStyles = makeStyles({
   helpParagraph: {
-    marginTop: "1em"
-  }
+    marginTop: "1em",
+  },
 });
 
 const Home = () => {
   const { data } = useQuery(GET_APPS, {
     variables: {
       environment: store.environment,
-      group: store.group
-    }
+      group: store.group,
+    },
   });
   const [currentTab, currentTabSet] = React.useState(0);
   const classes = useHomeStyles();
