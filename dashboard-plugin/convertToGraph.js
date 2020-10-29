@@ -1,17 +1,23 @@
 const { validateParams } = require("./helpers");
-const convertToGraph = ({
-  name,
-  federationRemoteEntry,
-  modules,
-  topLevelPackage,
-  metadata,
-  versionData,
-  environment,
-  version,
-  posted,
-  group,
-}) => {
-  validateParams({ federationRemoteEntry, modules, topLevelPackage, metadata });
+const convertToGraph = (
+  {
+    name,
+    federationRemoteEntry,
+    modules,
+    topLevelPackage,
+    metadata,
+    versionData,
+    environment,
+    version,
+    posted,
+    group,
+  },
+  standalone
+) => {
+  validateParams(
+    { federationRemoteEntry, modules, topLevelPackage, metadata },
+    standalone
+  );
 
   const app = name;
   const overrides = {};

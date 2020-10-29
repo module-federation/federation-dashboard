@@ -34,6 +34,12 @@ class FederationDashboardPlugin {
     });
     if (FederationPlugin) {
       this.FederationPluginOptions = FederationPlugin._options;
+    } else if (this._options.standalone) {
+      this.FederationPluginOptions = this._options.standalone;
+    } else {
+      throw new Error(
+        "Dashbonard plugin is missing Module Federaiton or standalone option"
+      );
     }
     compiler.hooks.thisCompilation.tap(PLUGIN_NAME, (compilation) => {
       compilation.hooks.processAssets.tapPromise(
@@ -79,7 +85,7 @@ class FederationDashboardPlugin {
 
     let graphData = null;
     try {
-      graphData = convertToGraph(rawData);
+      graphData = convertToGraph(rawData, !!this._options.standalone);
     } catch (err) {
       console.warn("Error during dashboard data processing");
       console.warn(err);
