@@ -6,7 +6,7 @@ import {
   TableRow,
   TableBody,
   TableCell,
-  Chip
+  Chip,
 } from "@material-ui/core";
 import Link from "next/link";
 import gql from "graphql-tag";
@@ -17,25 +17,25 @@ import _ from "lodash";
 import store from "../src/store";
 import { ApplicationLink, ModuleLink } from "./links";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   title: {
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   container: {
-    padding: 10
+    padding: 10,
   },
   panel: {
-    padding: 10
+    padding: 10,
   },
   panelTitle: {
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   dependenciesTable: {
-    marginBottom: "3em"
+    marginBottom: "3em",
   },
   overridden: {
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 }));
 
 const GET_APPS = gql`
@@ -199,13 +199,13 @@ const ConsumersTable = ({ modules, name }) => {
 
 const Tags = ({ tags }) => (
   <div>
-    {tags.map(t => (
+    {tags.map((t) => (
       <Chip label={t} key={t} style={{ marginRight: "0.5em" }} />
     ))}
   </div>
 );
 
-const isLink = value => value.startsWith("http");
+const isLink = (value) => value.startsWith("http");
 
 const Metadata = ({ metadata }) => (
   <Table>
@@ -234,8 +234,8 @@ const ApplicationSidebar = ({ name }) => {
       // works with apps names like "team/home"
       name: name,
       environment: store.environment,
-      group: store.group
-    }
+      group: store.group,
+    },
   });
 
   if (!data) {
@@ -260,7 +260,7 @@ const ApplicationSidebar = ({ name }) => {
   return (
     <div
       style={{
-        padding: "1em"
+        padding: "1em",
       }}
     >
       {!module && <ConsumersTable modules={modules} name={name} />}

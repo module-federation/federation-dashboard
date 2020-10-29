@@ -6,7 +6,7 @@ import bus from "../../event-bus";
 
 import Application, { schema as applicationSchema } from "../application";
 import ApplicationVersion, {
-  schema as applicationVersionSchema
+  schema as applicationVersionSchema,
 } from "../applicationVersion";
 import MetricValue, { schema as metricValueSchema } from "../metricValue";
 import Group, { schema as groupSchema } from "../group";
@@ -17,9 +17,9 @@ import Driver from "./driver";
 
 const dir = process.env.DATA_DIR || path.join(process.cwd(), "./.fm-dashboard");
 
-const createDatastore = name => {
+const createDatastore = (name) => {
   const ds = new Datastore({
-    filename: path.join(dir, `/${name}.db`)
+    filename: path.join(dir, `/${name}.db`),
   });
   ds.loadDatabase();
   ds.persistence.setAutocompactionInterval(60 * 1000);
@@ -42,7 +42,7 @@ class TableDriver<T> {
   }
 
   async find(id: string): Promise<T | null> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.store.find({ id }, (_, docs) => {
         if (docs.length > 0) {
           delete docs[0]._id;
@@ -55,7 +55,7 @@ class TableDriver<T> {
   }
 
   async search(query: any): Promise<Array<T> | null> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.store.find(query, (_, docs) => {
         resolve(docs.map(({ _id, ...data }) => ({ ...data })) || []);
       });
@@ -63,13 +63,13 @@ class TableDriver<T> {
   }
 
   async insert(data: T): Promise<null> {
-    return new Promise(async resolve => {
+    return new Promise(async (resolve) => {
       this.store.insert(data, () => resolve());
     });
   }
 
   async update(query: any, data: T): Promise<null> {
-    return new Promise(async resolve => {
+    return new Promise(async (resolve) => {
       this.store.find(query, (_, docs) => {
         if (docs.length > 0) {
           this.store.update(query, { $set: data }, {}, () => resolve());
@@ -81,7 +81,7 @@ class TableDriver<T> {
   }
 
   async delete(id: string): Promise<null> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.store.remove({ id }, {}, () => resolve());
     });
   }
@@ -115,7 +115,7 @@ export default class DriverNedb implements Driver {
       await this.group_update({
         id: "default",
         name: "default",
-        metadata: []
+        metadata: [],
       });
     }
 
@@ -133,7 +133,7 @@ export default class DriverNedb implements Driver {
   async application_getMetrics(id: string): Promise<Array<MetricValue> | null> {
     return this.metricsTable.search({
       type: "application",
-      id
+      id,
     });
   }
 
@@ -145,7 +145,7 @@ export default class DriverNedb implements Driver {
     return this.metricsTable.insert({
       type: "application",
       id,
-      ...metric
+      ...metric,
     });
   }
   async application_update(application: Application): Promise<null> {
@@ -165,7 +165,7 @@ export default class DriverNedb implements Driver {
     const versions = await this.applicationVersionsTable.search({
       applicationId,
       environment,
-      version
+      version,
     });
     return versions.length > 0 ? versions[0] : null;
   }
@@ -176,7 +176,7 @@ export default class DriverNedb implements Driver {
     version?: string
   ): Promise<Array<ApplicationVersion>> {
     const q: any = {
-      applicationId
+      applicationId,
     };
     if (environment) {
       q.environment = environment;
@@ -195,7 +195,7 @@ export default class DriverNedb implements Driver {
     return this.applicationVersionsTable.search({
       applicationId,
       environment,
-      latest: true
+      latest: true,
     });
   }
 
@@ -205,7 +205,7 @@ export default class DriverNedb implements Driver {
       {
         applicationId: version.applicationId,
         environment: version.environment,
-        version: version.version
+        version: version.version,
       },
       version
     );
@@ -223,7 +223,7 @@ export default class DriverNedb implements Driver {
   async group_getMetrics(id: string): Promise<Array<MetricValue> | null> {
     return this.metricsTable.search({
       type: "group",
-      id
+      id,
     });
   }
 
@@ -243,7 +243,7 @@ export default class DriverNedb implements Driver {
   async group_findByName(name: string): Promise<Group> {
     return this.groupsTable
       .search({ name })
-      .then(data => (data && data.length ? data[0] : null));
+      .then((data) => (data && data.length ? data[0] : null));
   }
 
   async group_findAll(): Promise<Array<Group>> {
@@ -280,7 +280,7 @@ export default class DriverNedb implements Driver {
 
   async siteSettings_get(): Promise<SiteSettings> {
     let settings = {
-      webhooks: []
+      webhooks: [],
     };
     if (fs.existsSync(siteSettingsPath)) {
       try {

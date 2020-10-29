@@ -1,16 +1,14 @@
 {
   "name": "@module-federation/dashboard-plugin",
-  "version": "1.1.0",
+  "version": "2.0.0-beta.5",
   "main": "FederationDashboardPlugin.js",
+  "bin": "bin/federation-report.js",
   "license": "MIT",
   "scripts": {
     "test": "jest --watch"
   },
   "engines": {
     "node": ">= 10"
-  },
-  "bin": {
-    "federation-report.js": "bin/federation-report.js"
   },
   "files": [
     "bin",
@@ -24,7 +22,7 @@
     "node-fetch": "^2.6.0"
   },
   "peerDependencies": {
-    "webpack": "^5.0.0-beta.17",
+    "webpack": "5.2.0",
     "webpack-sources": "^1.4.3 || ^2.0.0"
   },
   "devDependencies": {

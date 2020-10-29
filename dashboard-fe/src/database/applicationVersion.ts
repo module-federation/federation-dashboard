@@ -5,29 +5,21 @@ import Remote, { schema as remoteSchema } from "./remote";
 import Override, { schema as overrideSchema } from "./override";
 import Consume, { schema as consumeSchema } from "./consume";
 import Dependency, { schema as dependencySchema } from "./dependency";
-
+import config from "../config";
 export const schema = Joi.object({
   applicationId: Joi.string().required(),
   environment: Joi.string().required(),
-  version: Joi.string().required(),
+  version: config.VERSION_MANAGER
+    ? Joi.string().required()
+    : Joi.string().allow("", null),
   posted: Joi.date().required(),
   latest: Joi.boolean().required(),
   remote: Joi.string().required(),
-  remotes: Joi.array()
-    .items(remoteSchema)
-    .required(),
-  overrides: Joi.array()
-    .items(overrideSchema)
-    .required(),
-  modules: Joi.array()
-    .items(moduleSchema)
-    .required(),
-  consumes: Joi.array()
-    .items(consumeSchema)
-    .required(),
-  dependencies: Joi.array()
-    .items(dependencySchema)
-    .required()
+  remotes: Joi.array().items(remoteSchema).required(),
+  overrides: Joi.array().items(overrideSchema).required(),
+  modules: Joi.array().items(moduleSchema).required(),
+  consumes: Joi.array().items(consumeSchema).required(),
+  dependencies: Joi.array().items(dependencySchema).required(),
 });
 
 export default class ApplicationVersion {

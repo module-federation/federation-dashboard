@@ -6,7 +6,7 @@ const path = require("path");
 
 const errorPagePath = "../../.next/serverless/pages/_error.js";
 
-const getPage = pageName => {
+const getPage = (pageName) => {
   if (!pageName) {
     return require(errorPagePath);
   }
