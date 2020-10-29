@@ -44,8 +44,8 @@ Add the `DashboardPlugin` to the `plugins` array.
 ```js
 plugins: [
   ...new DashboardPlugin({
-    dashboardURL: "http://localhost:3000/api/update"
-  })
+    dashboardURL: "http://localhost:3000/api/update",
+  }),
 ];
 ```
 

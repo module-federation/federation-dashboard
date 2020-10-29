@@ -8,8 +8,8 @@ if (program.interactive) {
   process.stdin.setRawMode(true);
 }
 
-export const interactiveHold = async message =>
-  new Promise(resolve => {
+export const interactiveHold = async (message) =>
+  new Promise((resolve) => {
     console.log(message);
     if (program.interactive) {
       process.stdin.setRawMode(true);
