@@ -1,6 +1,6 @@
 {
   "name": "@module-federation/dashboard",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "node --inspect ./server/dev-server.js",
@@ -8,7 +8,7 @@
     "build": "next build && cp -r public/* .next",
     "start": "NODE_ENV=production node ./server",
     "test": "jest",
-    "docker:build:ci": "rm -rf node_modules && docker build --build-arg auth0_client_key=$AUTH0_CLIENT_SECRET --build-arg auth0_cookie_secret=$SESSION_COOKIE_SECRET_B64 . -t scriptedalchemy/mf-dashboard:latest",
+    "docker:build:ci": "rm -rf node_modules && docker build . -t scriptedalchemy/mf-dashboard:latest",
     "docker:build": "rm -rf node_modules && docker build . -t scriptedalchemy/mf-dashboard:latest",
     "docker:run": "docker run -p 3000:3000 -t scriptedalchemy/mf-dashboard",
     "docker:demo": "docker run -p 3000:3000 --mount type=bind,source=\"$(pwd)\"/.fm-dashboard,target=/data -t scriptedalchemy/mf-dashboard",
