@@ -5,7 +5,6 @@ let merge = require("webpack-merge");
 module.exports = {
   webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
     if (isServer) {
-      console.log(config.output.libraryTarget);
       config.plugins.push(
         new webpack.container.ModuleFederationPlugin({
           name: "dashboard",
