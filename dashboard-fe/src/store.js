@@ -2,7 +2,7 @@ import { observable, action, autorun, computed } from "mobx";
 import "mobx-react-lite/batchingOptOut";
 import gql from "graphql-tag";
 import ApolloClient from "apollo-boost";
-
+import { publicConfig } from "./config";
 import { fetchUser } from "./user";
 
 const client = new ApolloClient({
@@ -126,7 +126,7 @@ const store = new Store();
 
 if (typeof window !== "undefined") {
   autorun(async () => {
-    if (process.env.WITH_AUTH == "true") {
+    if (publicConfig.WITH_AUTH) {
       const user = await fetchUser();
       store.setAuthUser(user);
     }

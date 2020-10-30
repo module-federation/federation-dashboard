@@ -1,10 +1,10 @@
 import Joi from "@hapi/joi";
-import config from "../config";
+import { privateConfig } from "../config";
 
 export const schema = Joi.object({
   id: Joi.string().required(),
   name: Joi.string().required(),
-  version: config.VERSION_MANAGER
+  version: privateConfig.VERSION_MANAGER
     ? Joi.string().required()
     : Joi.string().allow("", null),
   location: Joi.string().required(),

@@ -3,8 +3,11 @@ import { ApolloProvider } from "@apollo/client";
 import Head from "next/head";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import store from "../src/store";
+import { publicConfig } from "../src/config";
+import PropTypes from "prop-types";
 
-function MyApp({ Component, pageProps }) {
+function MyApp(props) {
+  const { Component, pageProps } = props;
   React.useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");
@@ -21,6 +24,13 @@ function MyApp({ Component, pageProps }) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
         <link rel="icon" href="/favicon.ico" />
+        <script
+          id="publicConfig"
+          type="application/json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(props.publicConfig),
+          }}
+        />
       </Head>
       <CssBaseline />
       <ApolloProvider client={store.client}>
@@ -29,5 +39,10 @@ function MyApp({ Component, pageProps }) {
     </React.Fragment>
   );
 }
-
+MyApp.getInitialProps = async () => {
+  return { publicConfig };
+};
+MyApp.propTypes = {
+  publicConfig: PropTypes.object.isRequired,
+};
 export default MyApp;

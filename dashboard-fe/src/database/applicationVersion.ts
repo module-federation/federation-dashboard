@@ -5,11 +5,11 @@ import Remote, { schema as remoteSchema } from "./remote";
 import Override, { schema as overrideSchema } from "./override";
 import Consume, { schema as consumeSchema } from "./consume";
 import Dependency, { schema as dependencySchema } from "./dependency";
-import config from "../config";
+import { privateConfig } from "../config";
 export const schema = Joi.object({
   applicationId: Joi.string().required(),
   environment: Joi.string().required(),
-  version: config.VERSION_MANAGER
+  version: privateConfig.VERSION_MANAGER
     ? Joi.string().required()
     : Joi.string().allow("", null),
   posted: Joi.date().required(),

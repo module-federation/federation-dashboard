@@ -1,9 +1,10 @@
+import * as React from "react";
 import Head from "next/head";
 import { makeStyles, Tabs, Tab } from "@material-ui/core";
 import { useLazyQuery } from "@apollo/react-hooks";
 import { useRouter } from "next/router";
 import { observer } from "mobx-react";
-
+import withAuth from "../../../../components/with-auth";
 import Layout from "../../../../components/Layout";
 import {
   CurrentVersion,
@@ -89,4 +90,4 @@ const Application = () => {
   );
 };
 
-export default observer(Application);
+export default withAuth(observer(Application));

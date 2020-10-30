@@ -1,5 +1,4 @@
 import Joi from "@hapi/joi";
-import config from "../config";
 import ApplicationSettings, {
   schema as applicationSettingsSchema,
 } from "./applicationSettings";

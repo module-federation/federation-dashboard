@@ -19,6 +19,7 @@ import { observer } from "mobx-react";
 import _ from "lodash";
 
 import store from "../../src/store";
+import withAuth from "../../components/with-auth";
 
 const GET_APPS = gql`
   query($group: String!, $environment: String!) {
@@ -298,4 +299,4 @@ const NewApp = () => {
   );
 };
 
-export default observer(NewApp);
+export default withAuth(observer(NewApp));

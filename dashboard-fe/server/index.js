@@ -6,7 +6,6 @@ const path = require("path");
 
 const start = async () => {
   // Provide runtime config for frontend
-
   const nextApp = next({
     dir: path.resolve(__dirname, "../"),
     dev: process.env.NODE_ENV !== "production",

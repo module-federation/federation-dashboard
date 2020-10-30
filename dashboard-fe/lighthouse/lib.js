@@ -5,7 +5,7 @@ const path = require("path");
 const merge = require("deepmerge");
 const cliProgress = require("cli-progress");
 const psi = require("psi");
-const config = require("../src/config");
+const { privateConfig } = require("../src/config");
 const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 import Promise from "bluebird";
 import ReadJSONStream from "read-json-stream";
@@ -73,7 +73,7 @@ const launchChromeAndRunLighthouse = async (url) => {
 const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
   const mode = desktop ? "desktop" : "mobile";
   const opts = {
-    key: config.PAGESPEED_KEY,
+    key: privateConfig.PAGESPEED_KEY,
     strategy: mode,
     threshold: 0,
   };
@@ -135,7 +135,7 @@ export const init = (url, title, desktop = true) => {
       const promResults = Promise.map(
         fakeArray,
         async () => {
-          const taskRunResult = config.USE_CLOUD
+          const taskRunResult = privateConfig.USE_CLOUD
             ? await launchPageSpeedInsightsLighthouse(url, desktop)
             : await launchChromeAndRunLighthouse(url);
           tracker.push("");
@@ -150,7 +150,7 @@ export const init = (url, title, desktop = true) => {
           delete taskRunResult.js.audits["final-screenshot"];
           return taskRunResult;
         },
-        { concurrency: config.USE_CLOUD ? 10 : 1 }
+        { concurrency: privateConfig.USE_CLOUD ? 10 : 1 }
       );
       const testResults = await promResults;
       if (title) {

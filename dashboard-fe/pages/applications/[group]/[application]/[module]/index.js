@@ -17,6 +17,7 @@ import { observer } from "mobx-react";
 import { get } from "lodash";
 
 import Layout from "../../../../../components/Layout";
+import withAuth from "../../../../../components/with-auth";
 import {
   Code,
   CodeWrapper,
@@ -227,4 +228,4 @@ const ModulePage = () => {
   );
 };
 
-export default observer(ModulePage);
+export default withAuth(observer(ModulePage));
