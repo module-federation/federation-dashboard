@@ -5,10 +5,9 @@ import ApolloClient from "apollo-boost";
 import { publicConfig } from "./config";
 import { fetchUser } from "./user";
 
+const clientUrl = process.browser ? window.location.origin + '/api/graphql' : `http://localhost:3000/api/graphql?token=${process.env.SESSION_COOKIE_SECRET}`
 const client = new ApolloClient({
-  uri:
-    (process.browser ? window.location.origin : "http://localhost:3000") +
-    "/api/graphql",
+  uri:clientUrl
 });
 
 const GET_USER = gql`

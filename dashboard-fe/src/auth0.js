@@ -17,4 +17,10 @@ export default privateConfig.WITH_AUTH
         storeAccessToken: false,
       },
     })
-  : () => {};
+  : {
+      handleLogin() {},
+      handleProfile() {},
+      getSession() {
+        return { noAuth: true };
+      },
+    };
