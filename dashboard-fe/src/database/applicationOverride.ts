@@ -5,7 +5,7 @@ export const schema = Joi.object({
   name: Joi.string().required(),
   version: privateConfig.VERSION_MANAGER
     ? Joi.string().required()
-    : Joi.string().allow("", null),
+    : Joi.string().allow("", null)
 });
 
 export default class ApplicationOverride {

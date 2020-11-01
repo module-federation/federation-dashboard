@@ -8,7 +8,7 @@ import { publicConfig } from "../src/config";
 
 export default function withAuth(InnerComponent) {
   if (!publicConfig.WITH_AUTH) {
-    const NoAuth = (props) => {
+    const NoAuth = props => {
       return <InnerComponent {...props} user={null} />;
     };
     return NoAuth;
@@ -22,7 +22,7 @@ export default function withAuth(InnerComponent) {
 
         if (!session || !session.user) {
           ctx.res.writeHead(302, {
-            Location: createLoginUrl(ctx.req.url),
+            Location: createLoginUrl(ctx.req.url)
           });
           ctx.res.end();
           return;

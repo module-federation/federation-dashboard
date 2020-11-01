@@ -1,4 +1,4 @@
-const cleanObject = (object) => {
+const cleanObject = object => {
   return Object.entries(object).reduce((acc, [key, value]) => {
     if (value === "true") return { ...acc, [key]: true };
     if (value === "false") return { ...acc, [key]: false };
@@ -28,7 +28,7 @@ module.exports.privateConfig = !process.browser
           WITH_AUTH: process.env.WITH_AUTH,
           VERSION_MANAGER: process.env.VERSION_MANAGER,
           PAGESPEED_KEY: process.env.PAGESPEED_KEY,
-          USE_CLOUD: process.env.USE_CLOUD,
+          USE_CLOUD: process.env.USE_CLOUD
         },
         require("dotenv").config().parsed || {}
       )
@@ -46,7 +46,7 @@ module.exports.publicConfig =
             AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
             REDIRECT_URI: process.env.REDIRECT_URI,
             WITH_AUTH: process.env.WITH_AUTH,
-            POST_LOGOUT_REDIRECT_URI: process.env.POST_LOGOUT_REDIRECT_URI,
+            POST_LOGOUT_REDIRECT_URI: process.env.POST_LOGOUT_REDIRECT_URI
           }
         )
       )

@@ -15,11 +15,21 @@ export const schema = Joi.object({
   posted: Joi.date().required(),
   latest: Joi.boolean().required(),
   remote: Joi.string().required(),
-  remotes: Joi.array().items(remoteSchema).required(),
-  overrides: Joi.array().items(overrideSchema).required(),
-  modules: Joi.array().items(moduleSchema).required(),
-  consumes: Joi.array().items(consumeSchema).required(),
-  dependencies: Joi.array().items(dependencySchema).required(),
+  remotes: Joi.array()
+    .items(remoteSchema)
+    .required(),
+  overrides: Joi.array()
+    .items(overrideSchema)
+    .required(),
+  modules: Joi.array()
+    .items(moduleSchema)
+    .required(),
+  consumes: Joi.array()
+    .items(consumeSchema)
+    .required(),
+  dependencies: Joi.array()
+    .items(dependencySchema)
+    .required()
 });
 
 export default class ApplicationVersion {

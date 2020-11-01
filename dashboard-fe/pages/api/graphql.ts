@@ -1,6 +1,6 @@
-import {ApolloServer, gql} from "apollo-server-micro";
+import { ApolloServer, gql } from "apollo-server-micro";
 
-import {versionManagementEnabled} from "./db";
+import { versionManagementEnabled } from "./db";
 
 import dbDriver from "../../src/database/drivers";
 import ModuleManager from "../../src/managers/Module";
@@ -255,198 +255,198 @@ const typeDefs = gql`
 `;
 
 const resolvers = {
-    Query: {
-        dashboard: () => {
-            return {
-                versionManagementEnabled: versionManagementEnabled(),
-            };
-        },
-        userByEmail: async (_, {email}) => {
-            await dbDriver.setup();
-            return dbDriver.user_findByEmail(email);
-        },
-        groups: async (_, {name}, ctx) => {
-            await dbDriver.setup();
-            if (name) {
-                const found = await dbDriver.group_findByName(name);
-                return found ? [found] : [];
-            } else {
-                return dbDriver.group_findAll();
-            }
-        },
-        siteSettings: () => {
-            return dbDriver.siteSettings_get();
-        },
+  Query: {
+    dashboard: () => {
+      return {
+        versionManagementEnabled: versionManagementEnabled()
+      };
     },
-    Mutation: {
-        updateApplicationSettings: async (_, {group, application, settings}) => {
-            await dbDriver.setup();
-            const app = await dbDriver.application_find(application);
-            app.settings = settings;
-            await dbDriver.application_update(app);
-            return settings;
-        },
-        updateGroupSettings: async (_, {group, settings}) => {
-            await dbDriver.setup();
-            const grp = await dbDriver.group_find(group);
-            grp.settings = settings;
-            await dbDriver.group_update(grp);
-            return settings;
-        },
-        addMetric: async (_, {group, application, date, name, value, url}) => {
-            await dbDriver.setup();
-            dbDriver.application_addMetrics(application, {
-                date: new Date(Date.parse(date)),
-                id: application ? application : group,
-                type: application ? "application" : "group",
-                name,
-                value,
-                url,
-                //TODO add extra keys
-            });
-            return true;
-        },
+    userByEmail: async (_, { email }) => {
+      await dbDriver.setup();
+      return dbDriver.user_findByEmail(email);
+    },
+    groups: async (_, { name }, ctx) => {
+      await dbDriver.setup();
+      if (name) {
+        const found = await dbDriver.group_findByName(name);
+        return found ? [found] : [];
+      } else {
+        return dbDriver.group_findAll();
+      }
+    },
+    siteSettings: () => {
+      return dbDriver.siteSettings_get();
+    }
+  },
+  Mutation: {
+    updateApplicationSettings: async (_, { group, application, settings }) => {
+      await dbDriver.setup();
+      const app = await dbDriver.application_find(application);
+      app.settings = settings;
+      await dbDriver.application_update(app);
+      return settings;
+    },
+    updateGroupSettings: async (_, { group, settings }) => {
+      await dbDriver.setup();
+      const grp = await dbDriver.group_find(group);
+      grp.settings = settings;
+      await dbDriver.group_update(grp);
+      return settings;
+    },
+    addMetric: async (_, { group, application, date, name, value, url }) => {
+      await dbDriver.setup();
+      dbDriver.application_addMetrics(application, {
+        date: new Date(Date.parse(date)),
+        id: application ? application : group,
+        type: application ? "application" : "group",
+        name,
+        value,
+        url
+        //TODO add extra keys
+      });
+      return true;
+    },
 
-        updateMetric: async (_, {group, application, date, name, value, url}) => {
-            await dbDriver.setup();
-            console.log("Mutation", group, value, name);
-            dbDriver.group_updateMetric(application, {
-                id: application ? application : group,
-                type: application ? "application" : "group",
-                name,
-                value,
-                url,
-                //TODO add extra keys
-            });
-            return true;
-        },
-        publishVersion: async (_, {group, application, version}) => {
-            const out = await VersionManager.publishVersion(
-                group,
-                application,
-                version
-            );
-            return out;
-        },
-        setRemoteVersion: async (_, {group, application, remote, version}) => {
-            return VersionManager.setRemoteVersion(
-                group,
-                application,
-                remote,
-                version
-            );
-        },
-        updateUser: async (_, {user}) => {
-            await dbDriver.setup();
-            await dbDriver.user_update({
-                id: user.email,
-                ...user,
-            });
-            return dbDriver.user_find(user.email);
-        },
-        updateSiteSettings: async (_, {settings}) => {
-            await dbDriver.setup();
-            await dbDriver.siteSettings_update(settings);
-            return dbDriver.siteSettings_get();
-        },
+    updateMetric: async (_, { group, application, date, name, value, url }) => {
+      await dbDriver.setup();
+      console.log("Mutation", group, value, name);
+      dbDriver.group_updateMetric(application, {
+        id: application ? application : group,
+        type: application ? "application" : "group",
+        name,
+        value,
+        url
+        //TODO add extra keys
+      });
+      return true;
     },
-    Application: {
-        versions: async ({id}, {environment, latest}, ctx) => {
-            ctx.environment = environment;
-            await dbDriver.setup();
-            let found = await dbDriver.applicationVersion_findAll(id, environment);
-            if (latest !== undefined) {
-                found = found.filter(({latest}) => latest);
-            }
-            return found;
-        },
-        metrics: async ({id}, {names}, ctx) => {
-            await dbDriver.setup();
-            const metrics = await dbDriver.application_getMetrics(id);
-            if (names) {
-            } else {
-            }
-            return names
-                ? metrics.filter(({name}) => names.includes(name))
-                : metrics;
-        },
+    publishVersion: async (_, { group, application, version }) => {
+      const out = await VersionManager.publishVersion(
+        group,
+        application,
+        version
+      );
+      return out;
     },
-    Consume: {
-        consumingApplication: async (parent, args, ctx) => {
-            await dbDriver.setup();
-            return dbDriver.application_find(parent.consumingApplicationID);
-        },
-        application: async (parent, args, ctx) => {
-            await dbDriver.setup();
-            return dbDriver.application_find(parent.applicationID);
-        },
+    setRemoteVersion: async (_, { group, application, remote, version }) => {
+      return VersionManager.setRemoteVersion(
+        group,
+        application,
+        remote,
+        version
+      );
     },
-    Module: {
-        consumedBy: async (parent, args, ctx) => {
-            await dbDriver.setup();
-            return ModuleManager.getConsumedBy(
-                ctx.group,
-                ctx.environment,
-                parent.applicationID,
-                parent.name
-            );
-        },
+    updateUser: async (_, { user }) => {
+      await dbDriver.setup();
+      await dbDriver.user_update({
+        id: user.email,
+        ...user
+      });
+      return dbDriver.user_find(user.email);
     },
-    ApplicationVersion: {
-        modules: async ({modules}, {name}) => {
-            return name
-                ? modules.filter(({name: moduleName}) => name === moduleName)
-                : modules;
-        },
+    updateSiteSettings: async (_, { settings }) => {
+      await dbDriver.setup();
+      await dbDriver.siteSettings_update(settings);
+      return dbDriver.siteSettings_get();
+    }
+  },
+  Application: {
+    versions: async ({ id }, { environment, latest }, ctx) => {
+      ctx.environment = environment;
+      await dbDriver.setup();
+      let found = await dbDriver.applicationVersion_findAll(id, environment);
+      if (latest !== undefined) {
+        found = found.filter(({ latest }) => latest);
+      }
+      return found;
     },
-    Group: {
-        metrics: async ({id}, {names}, ctx) => {
-            await dbDriver.setup();
-            const metrics = await dbDriver.group_getMetrics(id);
-            if (names) {
-            } else {
-            }
-            return names
-                ? metrics.filter(({name}) => names.includes(name))
-                : metrics;
-        },
-        applications: async ({id}, {id: applicationId}, ctx) => {
-            ctx.group = id;
-            await dbDriver.setup();
-            if (!applicationId) {
-                return dbDriver.application_findInGroups([id]);
-            } else {
-                const found = await dbDriver.application_find(applicationId);
-                return found ? [found] : [];
-            }
-        },
+    metrics: async ({ id }, { names }, ctx) => {
+      await dbDriver.setup();
+      const metrics = await dbDriver.application_getMetrics(id);
+      if (names) {
+      } else {
+      }
+      return names
+        ? metrics.filter(({ name }) => names.includes(name))
+        : metrics;
+    }
+  },
+  Consume: {
+    consumingApplication: async (parent, args, ctx) => {
+      await dbDriver.setup();
+      return dbDriver.application_find(parent.consumingApplicationID);
     },
+    application: async (parent, args, ctx) => {
+      await dbDriver.setup();
+      return dbDriver.application_find(parent.applicationID);
+    }
+  },
+  Module: {
+    consumedBy: async (parent, args, ctx) => {
+      await dbDriver.setup();
+      return ModuleManager.getConsumedBy(
+        ctx.group,
+        ctx.environment,
+        parent.applicationID,
+        parent.name
+      );
+    }
+  },
+  ApplicationVersion: {
+    modules: async ({ modules }, { name }) => {
+      return name
+        ? modules.filter(({ name: moduleName }) => name === moduleName)
+        : modules;
+    }
+  },
+  Group: {
+    metrics: async ({ id }, { names }, ctx) => {
+      await dbDriver.setup();
+      const metrics = await dbDriver.group_getMetrics(id);
+      if (names) {
+      } else {
+      }
+      return names
+        ? metrics.filter(({ name }) => names.includes(name))
+        : metrics;
+    },
+    applications: async ({ id }, { id: applicationId }, ctx) => {
+      ctx.group = id;
+      await dbDriver.setup();
+      if (!applicationId) {
+        return dbDriver.application_findInGroups([id]);
+      } else {
+        const found = await dbDriver.application_find(applicationId);
+        return found ? [found] : [];
+      }
+    }
+  }
 };
 
 const apolloServer = new ApolloServer({
-    typeDefs,
-    resolvers,
+  typeDefs,
+  resolvers
 });
-
+const apiHandler = apolloServer.createHandler({
+  path: "/api/graphql"
+});
 const handler = async (req, res) => {
-    const apiHandler = apolloServer.createHandler({
-        path: "/api/graphql",
-    });
-    const session = auth0.getSession(req);
-    if(req?.query?.token !== process.env.SESSION_COOKIE_SECRET) {
-        console.log(!session || !session.user || !session.noAuth);
-        if (!session || !session.user || !session.noAuth) {
-            res.status(401).json({error: "Unauthorized"});
-        }
-    }
+  const session = await auth0.getSession(req);
+  if (session.noAuth) return apiHandler(req, res);
 
-    return apiHandler(req, res);
+  if (req?.query?.token !== global.INTERNAL_TOKEN) {
+    if (!session || !session.user) {
+      res.status(401).json({ error: "Unauthorized" });
+    }
+  }
+
+  return apiHandler(req, res);
 };
 
 export const config = {
-    api: {
-        bodyParser: false,
-    },
+  api: {
+    bodyParser: false
+  }
 };
 
 export default handler;

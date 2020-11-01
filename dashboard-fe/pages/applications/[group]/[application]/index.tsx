@@ -9,15 +9,15 @@ import Layout from "../../../../components/Layout";
 import {
   CurrentVersion,
   GET_APPS,
-  GET_HEAD_VERSION,
+  GET_HEAD_VERSION
 } from "../../../../components/application/CurrentVersion";
 import { VersionComparison } from "../../../../components/application/VersionComparison";
 import store from "../../../../src/store";
 
 const useStyles = makeStyles({
   container: {
-    padding: 10,
-  },
+    padding: 10
+  }
 });
 
 const Application = () => {
@@ -33,15 +33,15 @@ const Application = () => {
         variables: {
           name: router.query.application,
           environment: store.environment,
-          group: store.group,
-        },
+          group: store.group
+        }
       });
       getVersioningData({
         variables: {
           name: router.query.application,
           environment: store.environment,
-          group: store.group,
-        },
+          group: store.group
+        }
       });
     }
   }, [router]);

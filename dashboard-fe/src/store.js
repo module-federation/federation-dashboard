@@ -5,9 +5,12 @@ import ApolloClient from "apollo-boost";
 import { publicConfig } from "./config";
 import { fetchUser } from "./user";
 
-const clientUrl = process.browser ? window.location.origin + '/api/graphql' : `http://localhost:3000/api/graphql?token=${process.env.SESSION_COOKIE_SECRET}`
+const clientUrl = process.browser
+  ? window.location.origin + "/api/graphql"
+  : `${global.internalAddress}/api/graphql?token=${global.INTERNAL_TOKEN}`;
+
 const client = new ApolloClient({
-  uri:clientUrl
+  uri: clientUrl
 });
 
 const GET_USER = gql`
@@ -48,7 +51,7 @@ const GET_INITIAL_DATA = gql`
 const getLocalStorage =
   typeof window === "undefined"
     ? () => undefined
-    : (key) => global.localStorage.getItem(key);
+    : key => global.localStorage.getItem(key);
 
 class Store {
   client = client;
@@ -91,10 +94,10 @@ class Store {
         .query({
           query: GET_USER,
           variables: {
-            email: this.authUser.email,
-          },
+            email: this.authUser.email
+          }
         })
-        .then((data) => {
+        .then(data => {
           if (data.data.userByEmail) {
             this.user = data.data.userByEmail;
           } else {
@@ -106,11 +109,11 @@ class Store {
                     email: this.authUser.email,
                     name: this.authUser.name,
                     groups: ["default"],
-                    defaultGroup: "default",
-                  },
-                },
+                    defaultGroup: "default"
+                  }
+                }
               })
-              .then((updateData) => {
+              .then(updateData => {
                 this.user = updateData.data.updateUser;
               });
           }
@@ -132,7 +135,7 @@ if (typeof window !== "undefined") {
 
     client
       .query({
-        query: GET_INITIAL_DATA,
+        query: GET_INITIAL_DATA
       })
       .then(({ data: { dashboard, groups } }) => {
         store.versionManagementEnabled = dashboard.versionManagementEnabled;

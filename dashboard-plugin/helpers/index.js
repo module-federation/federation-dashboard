@@ -16,7 +16,7 @@ function validateParams(
   const hasDependencies = objHasKeys(topLevelPackage, ["dependencies"]);
   const hasDevDependencies = objHasKeys(topLevelPackage, ["devDependencies"]);
   const hasOptionalDependencies = objHasKeys(topLevelPackage, [
-    "optionalDependencies",
+    "optionalDependencies"
   ]);
   if (federationRemoteEntry) {
     if (

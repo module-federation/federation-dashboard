@@ -3,6 +3,7 @@
 const next = require("next");
 const path = require("path");
 const http = require("http");
+const ip6addr = require("ip6addr");
 const createApp = require("./app");
 
 const start = async () => {
@@ -10,7 +11,7 @@ const start = async () => {
 
   const nextApp = next({
     dir: path.resolve(__dirname, "../"),
-    dev: process.env.NODE_ENV !== "production",
+    dev: process.env.NODE_ENV !== "production"
   });
   await nextApp.prepare();
   const nextRoutesHandler = nextApp.getRequestHandler();
@@ -19,7 +20,7 @@ const start = async () => {
 
   const server = http.createServer(app).listen(
     {
-      port: 3000,
+      port: 3000
     },
     () => {
       const { port } = server.address();
@@ -27,10 +28,15 @@ const start = async () => {
       console.log(`Server started at http://localhost:${port}`);
     }
   );
+
+  var port = server.address().port;
+  const ip = require("ip");
+
+  global.internalAddress = "http://" + ip.address() + ":" + port;
 };
 
 if (require.main === module) {
-  start().catch((err) => {
+  start().catch(err => {
     // eslint-disable-next-line no-console
     console.error(err);
     process.exit(1);
