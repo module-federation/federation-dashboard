@@ -14,7 +14,6 @@ const ModuleUMLDiagram =
     ? () => <div />
     : require("../components/ModuleUMLDiagram.tsx").default;
 import Layout from "../components/Layout";
-import withAuth from "../components/with-auth";
 import store from "../src/store";
 
 const GET_APPS = gql`
@@ -144,4 +143,4 @@ const Home = () => {
   );
 };
 
-export default withAuth(observer(Home));
+export default observer(Home)

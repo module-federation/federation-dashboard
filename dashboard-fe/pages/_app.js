@@ -5,6 +5,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import store from "../src/store";
 import { publicConfig } from "../src/config";
 import PropTypes from "prop-types";
+import withAuth from "../components/with-auth";
 
 function MyApp(props) {
   const { Component, pageProps } = props;
@@ -39,10 +40,11 @@ function MyApp(props) {
     </React.Fragment>
   );
 }
-MyApp.getInitialProps = async () => {
-  return { publicConfig };
+MyApp.getInitialProps = async (ctx) => {
+  const props = await ctx.Component?.getInitialProps?.(ctx)
+  return {...props, publicConfig };
 };
 MyApp.propTypes = {
   publicConfig: PropTypes.object.isRequired,
 };
-export default MyApp;
+export default withAuth(MyApp)
