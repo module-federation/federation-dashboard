@@ -143,4 +143,4 @@ const Home = () => {
   );
 };
 
-export default observer(Home)
+export default observer(Home);

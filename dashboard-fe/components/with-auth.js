@@ -1,22 +1,22 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 
 import auth0 from "../src/auth0";
-import {fetchUser} from "../src/user";
+import { fetchUser } from "../src/user";
 import createLoginUrl from "../src/url-helper";
 import RedirectToLogin from "./login-redirect";
-import {publicConfig} from "../src/config";
+import { publicConfig } from "../src/config";
 
 export default function withAuth(InnerComponent) {
   if (!publicConfig.WITH_AUTH) {
     const NoAuth = (props) => {
-      return <div>{<InnerComponent {...props} user={null}/>}</div>;
+      return <InnerComponent {...props} user={null} />;
     };
     return NoAuth;
   }
   return class Authenticated extends Component {
     static async getInitialProps(nextCtx) {
-      const {ctx} = nextCtx
-      const pageProps = await InnerComponent?.getInitialProps?.(ctx)
+      const { ctx } = nextCtx;
+      const pageProps = await InnerComponent?.getInitialProps?.(ctx);
       if (!process.browser) {
         const session = await auth0.getSession(ctx.req);
 
@@ -27,12 +27,11 @@ export default function withAuth(InnerComponent) {
           ctx.res.end();
           return;
         }
-        return {...pageProps, user: session.user};
-
+        return { ...pageProps, user: session.user };
       }
       const user = await fetchUser();
 
-      return {...pageProps, user: user};
+      return { ...pageProps, user: user };
     }
 
     constructor(props) {
@@ -40,13 +39,10 @@ export default function withAuth(InnerComponent) {
     }
 
     render() {
-
       if (!this.props.user) {
         return <RedirectToLogin />;
       }
-      return (
-        <InnerComponent {...this.props} user={this.props.user}/>
-      );
+      return <InnerComponent {...this.props} user={this.props.user} />;
     }
   };
 }

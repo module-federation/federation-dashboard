@@ -41,10 +41,10 @@ function MyApp(props) {
   );
 }
 MyApp.getInitialProps = async (ctx) => {
-  const props = await ctx.Component?.getInitialProps?.(ctx)
-  return {...props, publicConfig };
+  const props = await ctx.Component?.getInitialProps?.(ctx);
+  return { ...props, publicConfig };
 };
 MyApp.propTypes = {
   publicConfig: PropTypes.object.isRequired,
 };
-export default withAuth(MyApp)
+export default withAuth(MyApp);
