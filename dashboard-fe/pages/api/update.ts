@@ -1,4 +1,5 @@
 import ApplicationManager from "../../src/managers/Application";
+import auth0 from "../../src/auth0";
 
 export const config = {
   api: {
@@ -19,6 +20,11 @@ const dataIsValid = (data) =>
   data.modules !== undefined;
 
 export default async (req, res) => {
+  try {
+    await auth0.handleProfile(req, res);
+  } catch (error) {
+    res.status(error.status || 500).end(error.message);
+  }
   if (dataIsValid(req.body)) {
     console.log(`Updating ${req.body.name}#${req.body.version}`);
     await ApplicationManager.update(req.body);

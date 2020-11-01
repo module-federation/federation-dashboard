@@ -3,6 +3,7 @@ const path = require("path");
 const fetch = require("node-fetch");
 const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
 const convertToGraph = require("./convertToGraph");
+const DefinePlugin = require("webpack/lib/DefinePlugin");
 
 /** @typedef {import('webpack/lib/Compilation')} Compilation */
 /** @typedef {import('webpack/lib/Compiler')} Compiler */
@@ -50,6 +51,10 @@ class FederationDashboardPlugin {
         () => this.processWebpackGraph(compilation)
       );
     });
+
+    new DefinePlugin({
+      CURRENT_HOST: this.FederationPluginOptions.name,
+    }).apply(compiler);
   }
 
   processWebpackGraph(compilation, callback) {

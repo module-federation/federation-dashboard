@@ -1,4 +1,5 @@
 import { ApolloServer, gql } from "apollo-server-micro";
+import auth0 from "../../src/auth0";
 
 import { versionManagementEnabled } from "./db";
 
@@ -437,5 +438,13 @@ export const config = {
     bodyParser: false,
   },
 };
+export default async (req, res, next) => {
+  try {
+    await auth0.handleProfile(req, res);
+  } catch (error) {
+    console.error(error);
+    return res.status(error.status || 500).end(error.message);
+  }
 
-export default handler;
+  return handler(req, res, next);
+};
