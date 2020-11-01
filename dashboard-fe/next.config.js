@@ -4,7 +4,7 @@ let merge = require("webpack-merge");
 
 module.exports = {
   webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
-    config.cache = false;
+    config.cache = process.env.NODE_ENV !== "production";
     if (isServer) {
       config.plugins.push(
         new webpack.container.ModuleFederationPlugin({

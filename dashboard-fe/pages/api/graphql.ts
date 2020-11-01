@@ -80,16 +80,30 @@ const typeDefs = gql`
     event: WebhookEventType!
     url: String!
   }
+
+  type Token {
+    key: String!
+    value: String!
+  }
+
   type SiteSettings {
-    webhooks: [Webhook]!
+    webhooks: [Webhook]
+    tokens: [Token]
   }
 
   input WebhookInput {
     event: WebhookEventType!
     url: String!
   }
+
+  input TokenInput {
+    key: String!
+    value: String!
+  }
+  
   input SiteSettingsInput {
-    webhooks: [WebhookInput]!
+    webhooks: [WebhookInput]
+    tokens: [TokenInput]
   }
 
   input MetadataInput {
@@ -427,12 +441,14 @@ const apolloServer = new ApolloServer({
   typeDefs,
   resolvers
 });
+
 const apiHandler = apolloServer.createHandler({
   path: "/api/graphql"
 });
+
 const handler = async (req, res) => {
   const session = await auth0.getSession(req);
-  if (session.noAuth) return apiHandler(req, res);
+  if (session && session.noAuth) return apiHandler(req, res);
 
   if (req?.query?.token !== global.INTERNAL_TOKEN) {
     if (!session || !session.user) {

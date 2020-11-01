@@ -41,7 +41,7 @@ class TableDriver<T> {
     this.store = store;
   }
 
-  async find(id: string): Promise<T | null> {
+  async find(id: string): Promise<unknown> {
     return new Promise(resolve => {
       this.store.find({ id }, (_, docs) => {
         if (docs.length > 0) {
@@ -54,7 +54,7 @@ class TableDriver<T> {
     });
   }
 
-  async search(query: any): Promise<Array<T> | null> {
+  async search(query: any): Promise<unknown> {
     return new Promise(resolve => {
       this.store.find(query, (_, docs) => {
         resolve(docs.map(({ _id, ...data }) => ({ ...data })) || []);
@@ -62,13 +62,13 @@ class TableDriver<T> {
     });
   }
 
-  async insert(data: T): Promise<null> {
+  async insert(data: T): Promise<unknown> {
     return new Promise(async resolve => {
       this.store.insert(data, () => resolve());
     });
   }
 
-  async update(query: any, data: T): Promise<null> {
+  async update(query: any, data: T): Promise<unknown> {
     return new Promise(async resolve => {
       this.store.find(query, (_, docs) => {
         if (docs.length > 0) {
@@ -80,7 +80,7 @@ class TableDriver<T> {
     });
   }
 
-  async delete(id: string): Promise<null> {
+  async delete(id: string): Promise<unknown> {
     return new Promise(resolve => {
       this.store.remove({ id }, {}, () => resolve());
     });
@@ -280,8 +280,10 @@ export default class DriverNedb implements Driver {
 
   async siteSettings_get(): Promise<SiteSettings> {
     let settings = {
+      tokens: [],
       webhooks: []
     };
+    console.log("getting site settings");
     if (fs.existsSync(siteSettingsPath)) {
       try {
         settings = JSON.parse(fs.readFileSync(siteSettingsPath).toString());
@@ -294,8 +296,11 @@ export default class DriverNedb implements Driver {
     return Promise.resolve(settings);
   }
   async siteSettings_update(settings: SiteSettings): Promise<SiteSettings> {
-    Joi.assert(settings, siteSettingsSchema);
-    fs.writeFileSync(siteSettingsPath, JSON.stringify(settings));
-    return Promise.resolve(settings);
+    const prevSettings = await this.siteSettings_get();
+    const mergedSettings = {...prevSettings,...settings}
+    Joi.assert(mergedSettings, siteSettingsSchema);
+
+    fs.writeFileSync(siteSettingsPath, JSON.stringify(mergedSettings));
+    return Promise.resolve(mergedSettings);
   }
 }
