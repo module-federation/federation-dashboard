@@ -29,7 +29,7 @@ function MyApp(props) {
           id="publicConfig"
           type="application/json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(props.publicConfig)
+            __html: JSON.stringify(publicConfig)
           }}
         />
       </Head>
@@ -40,11 +40,5 @@ function MyApp(props) {
     </React.Fragment>
   );
 }
-MyApp.getInitialProps = async ctx => {
-  const props = await ctx.Component?.getInitialProps?.(ctx);
-  return { ...props, publicConfig };
-};
-MyApp.propTypes = {
-  publicConfig: PropTypes.object.isRequired
-};
+
 export default withAuth(MyApp);
