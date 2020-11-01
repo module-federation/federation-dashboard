@@ -2,8 +2,6 @@ import fs from "fs";
 import path from "path";
 import glob from "glob";
 import workerpool from "workerpool";
-import auth0 from "../../src/auth0";
-
 const pool = workerpool.pool({
   options: {
     minWorkers: 1,
@@ -14,13 +12,6 @@ const pool = workerpool.pool({
 });
 
 export default async (req, res) => {
-  try {
-    await auth0.handleProfile(req, res);
-  } catch (error) {
-    res.status(error.status || 500).end(error.message);
-    return;
-  }
-
   const getGlobbedFiles = async (safePath) => {
     const glob = __non_webpack_require__("glob");
     const path = __non_webpack_require__("path");

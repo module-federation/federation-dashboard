@@ -1,6 +1,7 @@
-const { initAuth0 } = require("@auth0/nextjs-auth0");
-const { privateConfig } = require("./config");
-module.exports = privateConfig.WITH_AUTH
+import { initAuth0 } from "@auth0/nextjs-auth0";
+import { privateConfig } from "./config";
+
+export default privateConfig.WITH_AUTH
   ? initAuth0({
       clientId: privateConfig.AUTH0_CLIENT_ID,
       clientSecret: privateConfig.AUTH0_CLIENT_SECRET,
@@ -16,7 +17,4 @@ module.exports = privateConfig.WITH_AUTH
         storeAccessToken: false,
       },
     })
-  : {
-      handleProfile: () => {},
-      handleLogin: () => {},
-    };
+  : () => {};

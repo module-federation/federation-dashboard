@@ -1,3 +1,4 @@
+import * as React from "react";
 import Head from "next/head";
 import { makeStyles, Tabs, Tab } from "@material-ui/core";
 import { useLazyQuery } from "@apollo/react-hooks";
