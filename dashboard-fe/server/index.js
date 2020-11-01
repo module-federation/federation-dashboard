@@ -24,9 +24,10 @@ const start = async () => {
       console.log(`Server started at http://localhost:${port}`);
     }
   );
-  var host = server.address().address;
   var port = server.address().port;
-  global.internalAddress = "http://" + host + ":" + port;
+  const ip = require("ip");
+
+  global.internalAddress = "http://" + ip.address() + ":" + port;
 };
 
 if (require.main === module) {

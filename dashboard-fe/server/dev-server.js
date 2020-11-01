@@ -3,12 +3,10 @@
 const next = require("next");
 const path = require("path");
 const http = require("http");
-const ip6addr = require("ip6addr");
 const createApp = require("./app");
 
 const start = async () => {
   // Provide runtime config for frontend
-
   const nextApp = next({
     dir: path.resolve(__dirname, "../"),
     dev: process.env.NODE_ENV !== "production"
