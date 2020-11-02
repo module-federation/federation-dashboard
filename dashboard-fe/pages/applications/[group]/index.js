@@ -2,8 +2,9 @@ import Head from "next/head";
 import gql from "graphql-tag";
 import { useLazyQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-
+import withAuth from "../../../components/with-auth";
 import Layout from "../../../components/Layout";
+
 import { ApplicationLink } from "../../../components/links";
 
 const GET_APPS = gql`
@@ -29,7 +30,7 @@ const GroupPage = () => {
   React.useEffect(() => {
     if (router.query.group) {
       getData({
-        variables: { name: router.query.group },
+        variables: { name: router.query.group }
       });
     }
   }, [router]);
@@ -51,4 +52,4 @@ const GroupPage = () => {
   );
 };
 
-export default GroupPage;
+export default withAuth(GroupPage);

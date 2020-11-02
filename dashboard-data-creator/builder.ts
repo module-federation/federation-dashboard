@@ -27,7 +27,7 @@ const RANDOM_FILE_NAMES = [
   "carousel.jsx",
   "heroCarousel.jsx",
   "buyButton.jsx",
-  "components.jsx",
+  "components.jsx"
 ];
 
 const templateData = {
@@ -37,7 +37,7 @@ const templateData = {
     { name: "antd", version: "4.3" },
     { name: "lodash", version: "4.17" },
     { name: "react", version: "16.13" },
-    { name: "react-dom", version: "16.13" },
+    { name: "react-dom", version: "16.13" }
   ],
   devDependencies: [
     { name: "@babel/core", version: "7.9" },
@@ -49,7 +49,7 @@ const templateData = {
     { name: "style-loader", version: "1.2" },
     { name: "webpack", version: "5.0.0-beta" },
     { name: "webpack-cli", version: "3.3" },
-    { name: "webpack-dev-server", version: "3.11" },
+    { name: "webpack-dev-server", version: "3.11" }
   ],
   optionalDependencies: [],
   posted: moment(),
@@ -62,7 +62,7 @@ const templateData = {
       "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav/dist",
     dashboardFileName: "dashboard.json",
     context: "/Volumes/zack_dev/OSS/federation-dashboard/dashboard-example/nav",
-    name: "nav",
+    name: "nav"
   },
   overrides: [
     {
@@ -70,29 +70,29 @@ const templateData = {
       name: "react",
       version: "16.13",
       location: "react",
-      applicationID: "nav",
+      applicationID: "nav"
     },
     {
       id: "react-dom",
       name: "react-dom",
       version: "16.13",
       location: "react-dom",
-      applicationID: "nav",
+      applicationID: "nav"
     },
     {
       id: "antd",
       name: "antd",
       version: "4.3",
       location: "antd",
-      applicationID: "nav",
+      applicationID: "nav"
     },
     {
       id: "@emotion/core",
       name: "@emotion/core",
       version: "10.0",
       location: "@emotion/core",
-      applicationID: "nav",
-    },
+      applicationID: "nav"
+    }
   ],
   consumes: [
     {
@@ -103,9 +103,9 @@ const templateData = {
         {
           file: "src/Header.js",
           url:
-            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/src/Header.js",
-        },
-      ],
+            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/src/Header.js"
+        }
+      ]
     },
     {
       consumingApplicationID: "nav",
@@ -115,9 +115,9 @@ const templateData = {
         {
           file: "src/Header.js",
           url:
-            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/src/Header.js",
-        },
-      ],
+            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/src/Header.js"
+        }
+      ]
     },
     {
       consumingApplicationID: "nav",
@@ -127,10 +127,10 @@ const templateData = {
         {
           file: "src/analytics.js",
           url:
-            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/src/analytics.js",
-        },
-      ],
-    },
+            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/src/analytics.js"
+        }
+      ]
+    }
   ],
   modules: [
     {
@@ -138,16 +138,16 @@ const templateData = {
       name: "Header",
       applicationID: "nav",
       requires: ["react", "antd", "@emotion/core"],
-      file: "./src/Header",
+      file: "./src/Header"
     },
     {
       id: "nav:Footer",
       name: "Footer",
       applicationID: "nav",
       requires: ["react", "antd"],
-      file: "./src/Footer",
-    },
-  ],
+      file: "./src/Footer"
+    }
+  ]
 };
 
 export default class Builder {
@@ -164,7 +164,7 @@ export default class Builder {
     remote: "",
     version: "1.0.0",
     metadata: {},
-    tags: [],
+    tags: []
   };
 
   constructor(name, group, port = 8080, metadata = {}, tags = []) {
@@ -190,7 +190,7 @@ export default class Builder {
       requires,
       file,
       metadata,
-      tags,
+      tags
     });
   }
 
@@ -201,37 +201,37 @@ export default class Builder {
         RANDOM_FILE_NAMES[Math.floor(Math.random() * RANDOM_FILE_NAMES.length)];
       usedIn.push({
         file: `src/${file}`,
-        url: `https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/${this.payload.name}/src/${file}.js`,
+        url: `https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/${this.payload.name}/src/${file}.js`
       });
     }
     this.payload.consumes.push({
       consumingApplicationID: this.payload.name,
       applicationID: app,
       name: module,
-      usedIn,
+      usedIn
     });
   }
 
   setOverrideVersion(name, version) {
-    this.payload.overrides = this.payload.overrides.map((d) => ({
+    this.payload.overrides = this.payload.overrides.map(d => ({
       ...d,
-      version: d.name === name ? version : d.version,
+      version: d.name === name ? version : d.version
     }));
   }
 
   setDependencyVersion(name, version) {
-    this.payload.dependencies = this.payload.dependencies.map((d) => ({
+    this.payload.dependencies = this.payload.dependencies.map(d => ({
       ...d,
-      version: d.name === name ? version : d.version,
+      version: d.name === name ? version : d.version
     }));
-    this.payload.devDependencies = this.payload.devDependencies.map((d) => ({
+    this.payload.devDependencies = this.payload.devDependencies.map(d => ({
       ...d,
-      version: d.name === name ? version : d.version,
+      version: d.name === name ? version : d.version
     }));
     this.payload.optionalDependencies = this.payload.optionalDependencies.map(
-      (d) => ({
+      d => ({
         ...d,
-        version: d.name === name ? version : d.version,
+        version: d.name === name ? version : d.version
       })
     );
   }
@@ -263,15 +263,15 @@ export default class Builder {
           application: this.payload.id,
           name,
           date,
-          value,
+          value
         },
         query: `mutation ($group: String!, $application: String!, $name: String!, $date: String!, $value: Float!) {
             addMetric(group: $group, application: $application, name: $name, date: $date, value: $value)
-          }`,
+          }`
       }),
       headers: {
-        "Content-type": "application/json",
-      },
+        "Content-type": "application/json"
+      }
     });
   }
 
@@ -280,8 +280,8 @@ export default class Builder {
       method: "POST",
       body: JSON.stringify(this.payload),
       headers: {
-        "Content-type": "application/json",
-      },
+        "Content-type": "application/json"
+      }
     });
   }
 }
