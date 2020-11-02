@@ -7,7 +7,7 @@ import {
   FormControlLabel,
   Typography,
   Grid,
-  Paper,
+  Paper
 } from "@material-ui/core";
 import Template from "webpack/lib/Template";
 import { useForm, Controller } from "react-hook-form";
@@ -19,6 +19,7 @@ import { observer } from "mobx-react";
 import _ from "lodash";
 
 import store from "../../src/store";
+import withAuth from "../../components/with-auth";
 
 const GET_APPS = gql`
   query($group: String!, $environment: String!) {
@@ -38,17 +39,17 @@ const useStyles = makeStyles({
   container: {},
   configSection: {
     padding: 10,
-    marginTop: 20,
+    marginTop: 20
   },
   title: {
-    marginBottom: 10,
+    marginBottom: 10
   },
   explanation: {
-    marginBottom: 10,
+    marginBottom: 10
   },
   textField: {
-    marginTop: 20,
-  },
+    marginTop: 20
+  }
 });
 
 const NewApp = () => {
@@ -59,15 +60,15 @@ const NewApp = () => {
       shared: "react,react-dom",
       singleton: "react,react-dom",
       exclude: "express",
-      automaticFederation: true,
-    },
+      automaticFederation: true
+    }
   });
   const [applications, applicationsSet] = React.useState([]);
   const { data } = useQuery(GET_APPS, {
     variables: {
       group: store.group,
-      environment: store.environment,
-    },
+      environment: store.environment
+    }
   });
   const classes = useStyles();
 
@@ -75,7 +76,7 @@ const NewApp = () => {
 
   const scriptTags = applications
     .map(
-      (n) =>
+      n =>
         `<script src="${
           externalApplications.find(({ name }) => name === n).versions[0].remote
         }"></script>`
@@ -84,13 +85,13 @@ const NewApp = () => {
 
   const remotesCode =
     applications.length > 0
-      ? Template.asString([applications.map((name) => `"${name}": "${name}"`)])
+      ? Template.asString([applications.map(name => `"${name}": "${name}"`)])
       : undefined;
 
   const exposesCode = Template.asString(
     watch("files")
       .split(",")
-      .map((file) => {
+      .map(file => {
         const fname = file.trim();
         const mod = fname.replace(/.*\//, "");
         return `"./${mod}": "${fname}"`;
@@ -104,16 +105,16 @@ const NewApp = () => {
         Template.indent(
           watch("exclude")
             .split(",")
-            .map((n) => `"${n.trim()}"`)
+            .map(n => `"${n.trim()}"`)
         ),
-        "].forEach((i)=>{delete deps.i})",
+        "].forEach((i)=>{delete deps.i})"
       ])
     : null;
 
   const singleton = Template.asString(
     watch("singleton")
       .split(",")
-      .map((mod) => `{ "${mod.trim()}": { singleton:true } }`)
+      .map(mod => `{ "${mod.trim()}": { singleton:true } }`)
   );
 
   const sharedCode = Template.asString(
@@ -142,16 +143,16 @@ const NewApp = () => {
             'filename: "remoteEntry.js",',
             remotesTemplate,
             exposesTemplate,
-            sharedTemplate,
+            sharedTemplate
           ].filter(Boolean)
         )
       ),
-      "})",
+      "})"
     ])
   );
   const boilerplate = Template.asString([
     'const { ModuleFederationPlugin } = require("webpack").container;',
-    automaticPreamble,
+    automaticPreamble
   ]).replace(/^\t/gm, "  ");
 
   const codeSample = Template.asString([pluginTemplate]).replace(/\t/g, "  ");
@@ -264,9 +265,7 @@ const NewApp = () => {
                         if (val) {
                           applicationsSet([...applications, name]);
                         } else {
-                          applicationsSet(
-                            applications.filter((n) => n !== name)
-                          );
+                          applicationsSet(applications.filter(n => n !== name));
                         }
                       }}
                     />
@@ -298,4 +297,4 @@ const NewApp = () => {
   );
 };
 
-export default observer(NewApp);
+export default withAuth(observer(NewApp));

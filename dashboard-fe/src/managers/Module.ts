@@ -20,7 +20,7 @@ export default class ModuleManager {
               ({ applicationID: conApp, name: conName }) =>
                 conApp === applicationID && conName === name
             )
-            .forEach((consume) => found.push(consume));
+            .forEach(consume => found.push(consume));
         }
       })
     );

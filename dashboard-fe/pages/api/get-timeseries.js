@@ -7,12 +7,12 @@ const pool = workerpool.pool({
     minWorkers: 1,
     maxQueueSize: 5,
     timeout: 10000,
-    workerType: "auto",
-  },
+    workerType: "auto"
+  }
 });
 
 export default async (req, res) => {
-  const getGlobbedFiles = async (safePath) => {
+  const getGlobbedFiles = async safePath => {
     const glob = __non_webpack_require__("glob");
     const path = __non_webpack_require__("path");
     const fs = __non_webpack_require__("fs");
@@ -23,8 +23,8 @@ export default async (req, res) => {
         minWorkers: 2,
         maxQueueSize: 10,
         timeout: 10000,
-        workerType: "auto",
-      },
+        workerType: "auto"
+      }
     });
     function getData(fileName, type = "utf8") {
       const fs = __non_webpack_require__("fs");
@@ -38,22 +38,22 @@ export default async (req, res) => {
           if (er) {
             reject(er);
           }
-          resolve(files.filter((file) => !file.includes("scatter.json")));
+          resolve(files.filter(file => !file.includes("scatter.json")));
         }
       );
     });
     const globbedData = await BPromise.map(
       globbedFiles,
-      async (filePath) => {
+      async filePath => {
         const gotData = await pool
           .exec(getData, [filePath])
-          .then(function (result) {
+          .then(function(result) {
             return result;
           })
-          .catch(function (err) {
+          .catch(function(err) {
             console.error(err);
           })
-          .then(function (result) {
+          .then(function(result) {
             // pool.terminate();
             return result;
           });
@@ -72,20 +72,20 @@ export default async (req, res) => {
 
   const globbedData = await pool
     .exec(getGlobbedFiles, [safePath])
-    .then(function (result) {
+    .then(function(result) {
       return result;
     })
-    .catch(function (err) {
+    .catch(function(err) {
       console.error(err);
     })
-    .then(function (result) {
+    .then(function(result) {
       // pool.terminate();
       return result;
     });
 
   res.statusCode = 200;
   res.json(
-    globbedData.filter((lhr) => {
+    globbedData.filter(lhr => {
       if (!lhr) return false;
       return lhr.variant === "Latest";
     })
