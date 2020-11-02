@@ -1,5 +1,11 @@
 import DriverNedb from "./driver-nedb";
+import DriverMongoDB from "./driver-mongodb";
 
-const driver = new DriverNedb();
+let driver = null;
+if (process.env.MONGO_URL) {
+  driver = new DriverMongoDB();
+} else {
+  driver = new DriverNedb();
+}
 
 export default driver;
