@@ -5,7 +5,7 @@ import { cache } from "./utils";
 import bus from "../src/event-bus";
 import dbDriver from "../src/database/drivers";
 
-const generateLighthouseReport = (group) => {
+const generateLighthouseReport = group => {
   const { trackedURLs } = group.settings;
   // const updatedTracedURLs = trackedURLs.reduce((acc,trackedURL)=>{
   //   const clonedTracedUrl = Object.assign({},trackedURL)
@@ -21,7 +21,7 @@ const generateLighthouseReport = (group) => {
     async ({ url, variants }) => {
       const updatedVariants = await Promise.map(
         variants,
-        async (variant) => {
+        async variant => {
           const { name, search, new: isNew } = variant;
           if (!isNew) {
             return variant;
@@ -39,11 +39,11 @@ const generateLighthouseReport = (group) => {
       );
       return {
         url,
-        variants: updatedVariants,
+        variants: updatedVariants
       };
     },
     { concurrency: 1 }
-  ).then(async (updatedTrackedURLs) => {
+  ).then(async updatedTrackedURLs => {
     Object.assign(cache, { running: false });
     if (cache.foundNew) {
       const grp = await dbDriver.group_find(group.id);

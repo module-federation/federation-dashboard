@@ -4,7 +4,7 @@ describe("NEDB Driver Tests", () => {
   });
 
   describe("AppVersion", () => {
-    it("should find", (cb) => {
+    it("should find", cb => {
       let query = null;
       class MockDatastore {
         constructor() {}
@@ -13,8 +13,8 @@ describe("NEDB Driver Tests", () => {
           query = q;
           cb(null, [
             {
-              foo: "bar",
-            },
+              foo: "bar"
+            }
           ]);
         }
       }
@@ -28,14 +28,14 @@ describe("NEDB Driver Tests", () => {
       const driver = new DriverNedb();
       driver
         .applicationVersion_find("home", "development", "1.0.0")
-        .then((data) => {
+        .then(data => {
           expect(query).toEqual({ id: "home:development:1.0.0" });
           expect(data.foo).toEqual("bar");
           cb();
         });
     });
 
-    it("should update", (cb) => {
+    it("should update", cb => {
       let updateData = null;
       class MockDatastore {
         constructor() {}
@@ -49,8 +49,8 @@ describe("NEDB Driver Tests", () => {
                 type: "development",
                 latest: true,
                 remotes: [],
-                modules: [],
-              },
+                modules: []
+              }
             ]);
           } else if (q.version === "1.1.0") {
             fcb(null, [
@@ -60,8 +60,8 @@ describe("NEDB Driver Tests", () => {
                 type: "development",
                 latest: true,
                 remotes: [],
-                modules: [],
-              },
+                modules: []
+              }
             ]);
           } else if (!q.version) {
             fcb(null, [
@@ -71,7 +71,7 @@ describe("NEDB Driver Tests", () => {
                 type: "development",
                 latest: false,
                 remotes: [],
-                modules: [],
+                modules: []
               },
               {
                 applicationId: "app1",
@@ -79,8 +79,8 @@ describe("NEDB Driver Tests", () => {
                 type: "development",
                 latest: true,
                 remotes: [],
-                modules: [],
-              },
+                modules: []
+              }
             ]);
           } else {
             fcb(null, []);
@@ -109,7 +109,7 @@ describe("NEDB Driver Tests", () => {
           type: "development",
           latest: true,
           remotes: [],
-          modules: [],
+          modules: []
         })
         .then(() => {
           expect(updateData.version).toEqual("1.1.0");

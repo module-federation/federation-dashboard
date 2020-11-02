@@ -5,5 +5,8 @@
     "build": "lerna run --scope @dashboard/* --concurrency=2 build",
     "serve": "lerna run --scope @dashboard/* --parallel serve",
     "clean": "lerna run --scope @dashboard/* --parallel clean"
+  },
+  "resolutions": {
+    "@module-federation/dashboard-plugin": "../dashboard-plugin"
   }
 }
