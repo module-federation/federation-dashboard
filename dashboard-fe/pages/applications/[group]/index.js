@@ -30,7 +30,7 @@ const GroupPage = () => {
   React.useEffect(() => {
     if (router.query.group) {
       getData({
-        variables: { name: router.query.group },
+        variables: { name: router.query.group }
       });
     }
   }, [router]);
@@ -52,4 +52,4 @@ const GroupPage = () => {
   );
 };
 
-export default GroupPage;
+export default withAuth(GroupPage);

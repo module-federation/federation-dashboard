@@ -8,10 +8,10 @@ export const schema = Joi.object({
     .items(
       Joi.object({
         file: Joi.string().required(),
-        url: Joi.string().required(),
+        url: Joi.string().required()
       })
     )
-    .required(),
+    .required()
 });
 
 export class ConsumeUsedIn {

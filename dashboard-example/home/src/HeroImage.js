@@ -1,7 +1,7 @@
 import React from "react";
 import { sendMessage } from "./analytics";
 
-const HeroImage = (props) => {
+const HeroImage = props => {
   sendMessage("loaded");
   return <img {...props} />;
 };
