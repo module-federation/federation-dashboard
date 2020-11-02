@@ -338,18 +338,18 @@ const resolvers = {
     },
     publishVersion: async (_, { group, application, version }) => {
       const out = await VersionManager.publishVersion(
-        group,
-        application,
-        version
+          group,
+          application,
+          version
       );
       return out;
     },
     setRemoteVersion: async (_, { group, application, remote, version }) => {
       return VersionManager.setRemoteVersion(
-        group,
-        application,
-        remote,
-        version
+          group,
+          application,
+          remote,
+          version
       );
     },
     updateUser: async (_, { user }) => {
@@ -383,8 +383,8 @@ const resolvers = {
       } else {
       }
       return names
-        ? metrics.filter(({ name }) => names.includes(name))
-        : metrics;
+          ? metrics.filter(({ name }) => names.includes(name))
+          : metrics;
     }
   },
   Consume: {
@@ -401,18 +401,18 @@ const resolvers = {
     consumedBy: async (parent, args, ctx) => {
       await dbDriver.setup();
       return ModuleManager.getConsumedBy(
-        ctx.group,
-        ctx.environment,
-        parent.applicationID,
-        parent.name
+          ctx.group,
+          ctx.environment,
+          parent.applicationID,
+          parent.name
       );
     }
   },
   ApplicationVersion: {
     modules: async ({ modules }, { name }) => {
       return name
-        ? modules.filter(({ name: moduleName }) => name === moduleName)
-        : modules;
+          ? modules.filter(({ name: moduleName }) => name === moduleName)
+          : modules;
     }
   },
   Group: {
@@ -423,8 +423,8 @@ const resolvers = {
       } else {
       }
       return names
-        ? metrics.filter(({ name }) => names.includes(name))
-        : metrics;
+          ? metrics.filter(({ name }) => names.includes(name))
+          : metrics;
     },
     applications: async ({ id }, { id: applicationId }, ctx) => {
       ctx.group = id;
@@ -461,6 +461,16 @@ function runMiddleware(req, res, fn) {
 
 async function handler(req, res) {
   await runMiddleware(req, res, corsHandler);
+
+  const session = await auth0.getSession();
+  if (req?.query?.token !== global.INTERNAL_TOKEN) {
+    if (!session || !session.user) {
+      if(!session.noAuth) {
+        res.status(401).json({error: "Unauthorized"})
+      }
+    }
+  }
+
   await runMiddleware(req, res, apolloHandler);
 }
 
