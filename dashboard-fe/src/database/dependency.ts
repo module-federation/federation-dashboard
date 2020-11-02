@@ -4,7 +4,7 @@ export enum DependencyType {
   "dependency",
   "devDependency",
   "optionalDependency",
-  "peerDependency",
+  "peerDependency"
 }
 
 export const schema = Joi.object({
@@ -17,7 +17,7 @@ export const schema = Joi.object({
       "optionalDependency",
       "peerDependency"
     )
-    .required(),
+    .required()
 });
 
 export default class Dependency {

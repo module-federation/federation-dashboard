@@ -17,8 +17,8 @@ const DashboardPlugin = require("@module-federation/dashboard-plugin");
 ```js
 plugins: [
   ...new DashboardPlugin({
-    dashboardURL: "http://localhost:3000/api/update",
-  }),
+    dashboardURL: "http://localhost:3000/api/update"
+  })
 ];
 ```
 
@@ -31,6 +31,7 @@ There are also other options:
 | dashboardURL | The URL of the dashboard endpoint.                                                      |
 | metadata     | Any additional metadata you want to apply to this application for use in the dashboard. |
 | filename     | The file path where the dashboard data.                                                 |
+| standalone   | For use without ModuleFederationPlugin                                                  |
 
 ## Metadata
 
@@ -42,11 +43,11 @@ plugins: [
     dashboardURL: "http://localhost:3000/api/update",
     metadata: {
       source: {
-        url: "http://github.com/myorg/myproject/tree/master",
+        url: "http://github.com/myorg/myproject/tree/master"
       },
-      remote: "http://localhost:8081/remoteEntry.js",
-    },
-  }),
+      remote: "http://localhost:8081/remoteEntry.js"
+    }
+  })
 ];
 ```
 
@@ -56,3 +57,9 @@ You can add whatever keys you want to `metadata`, but there are some keys that t
 | ---------- | ------------------------------------------------------------ |
 | source.url | The base URL of your source in a source code control system. |
 | remote     | The URL for the remote entry.                                |
+
+## Standalone Mode
+
+This is useful when Module Federation is not used, options can be passed that are usually inferred from Module Federation Options
+
+- `name`: the name of the app, must be unique

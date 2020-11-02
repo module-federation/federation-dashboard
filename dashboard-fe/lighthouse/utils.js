@@ -7,8 +7,8 @@ const pool = workerpool.pool({
     minWorkers: 3,
     maxQueueSize: 8,
     timeout: 6000,
-    workerType: "auto",
-  },
+    workerType: "auto"
+  }
 });
 const cache = {};
 
@@ -17,22 +17,22 @@ const toFixed = (num, fixed) => {
 
   return num.toString().match(re)[0];
 };
-const getReport = async (safePath) => {
+const getReport = async safePath => {
   if (!process.browser) {
     return pool
       .exec(createWorker, [safePath, "./utils", "getReportWorker"])
-      .then(function (result) {
+      .then(function(result) {
         return result;
       })
-      .catch(function (err) {
+      .catch(function(err) {
         console.error(err);
       })
-      .then(function (result) {
+      .then(function(result) {
         return result;
       });
   }
 };
-const getReportWorker = async (safePath) => {
+const getReportWorker = async safePath => {
   if (!process.browser) {
     const fs = __non_webpack_require__("fs");
     const path = __non_webpack_require__("path");
@@ -67,16 +67,16 @@ const hexToRgbA = (hex, tr) => {
   throw new Error("Bad Hex");
 };
 
-const generateScatterChartProcessor = (data) => {
+const generateScatterChartProcessor = data => {
   return Object.entries(data).map(([group, results]) => {
     const obj = {
       type: "scatter",
       name: group,
       showInLegend: true,
-      markerType: "circle",
+      markerType: "circle"
     };
     const charable = (Array.isArray(results) ? results : [results]).map(
-      (result) => {
+      result => {
         return [
           "first-contentful-paint",
           "first-meaningful-paint",
@@ -89,14 +89,14 @@ const generateScatterChartProcessor = (data) => {
           "interactive",
           "accessibility",
           "seo",
-          "largest-contentful-paint",
+          "largest-contentful-paint"
         ]
-          .filter((key) => result.audits[key])
+          .filter(key => result.audits[key])
           .map((key, index) => {
             return {
               y: parseInt(toFixed(result.audits[key].numericValue)),
               x: index,
-              label: key,
+              label: key
             };
           });
       }
@@ -126,7 +126,7 @@ const createWorker = async (data, request, moduleExport) => {
       path.join(process.cwd(), ".next/server/static/runtime/remoteEntry.js"),
       () => ({
         initSharing: __webpack_init_sharing__,
-        shareScopes: __webpack_share_scopes__,
+        shareScopes: __webpack_share_scopes__
       })
     );
     // the getter, but abstracted. This async gets the module via the low-level api.
@@ -137,17 +137,17 @@ const createWorker = async (data, request, moduleExport) => {
   }
 };
 
-const generateScatterChartData = async (data) => {
+const generateScatterChartData = async data => {
   if (!process.browser) {
     return pool
       .exec(createWorker, [data, "./utils", "generateScatterChartProcessor"])
-      .then(function (result) {
+      .then(function(result) {
         return result;
       })
-      .catch(function (err) {
+      .catch(function(err) {
         console.error(err);
       })
-      .then(function (result) {
+      .then(function(result) {
         return result;
       });
   }
@@ -155,7 +155,7 @@ const generateScatterChartData = async (data) => {
   return {};
 };
 
-const generateTimeSeriesScatterChartData = (data) => {
+const generateTimeSeriesScatterChartData = data => {
   const scatterObject = [
     "first-contentful-paint",
     "first-meaningful-paint",
@@ -168,7 +168,7 @@ const generateTimeSeriesScatterChartData = (data) => {
     "interactive",
     "accessibility",
     "seo",
-    "largest-contentful-paint",
+    "largest-contentful-paint"
   ].reduce((acc, item) => {
     const obj = {
       type: "spline",
@@ -176,7 +176,7 @@ const generateTimeSeriesScatterChartData = (data) => {
       showInLegend: true,
       // markerType: "dot",
       dataPoints: [],
-      xValueType: "dateTime",
+      xValueType: "dateTime"
     };
     acc[item] = obj;
     return acc;
@@ -194,13 +194,13 @@ const generateTimeSeriesScatterChartData = (data) => {
       "interactive",
       "accessibility",
       "seo",
-      "largest-contentful-paint",
+      "largest-contentful-paint"
     ]
-      .filter((key) => result.audits[key])
+      .filter(key => result.audits[key])
       .forEach((key, index) => {
         scatterObject[key].dataPoints.push({
           y: parseInt(toFixed(result.audits[key].numericValue)),
-          x: new Date(result.fetchTime).getTime(),
+          x: new Date(result.fetchTime).getTime()
           // label: key,
         });
       });
@@ -208,7 +208,7 @@ const generateTimeSeriesScatterChartData = (data) => {
   return Object.values(scatterObject);
 };
 
-const generateWhiskerChartDataProcessor = (data) => {
+const generateWhiskerChartDataProcessor = data => {
   return Object.entries(data).map(([group, results]) => {
     // const generateColor = randomColor();
     const obj = {
@@ -216,12 +216,12 @@ const generateWhiskerChartDataProcessor = (data) => {
       name: group,
       // upperBoxColor: hexToRgbA(generateColor, "0.3"),
       // lowerBoxColor: hexToRgbA(generateColor, "0.3"),
-      showInLegend: true,
+      showInLegend: true
       // markerColor: generateColor,
       // color: generateColor,
     };
     const chartStore = { [group]: {} };
-    results.map((result) => {
+    results.map(result => {
       return [
         "first-contentful-paint",
         "first-meaningful-paint",
@@ -234,9 +234,9 @@ const generateWhiskerChartDataProcessor = (data) => {
         "interactive",
         "accessibility",
         "seo",
-        "largest-contentful-paint",
+        "largest-contentful-paint"
       ]
-        .filter((key) => result.audits[key])
+        .filter(key => result.audits[key])
         .map((key, index) => {
           if (!chartStore[group][key]) {
             chartStore[group][key] = [];
@@ -259,28 +259,28 @@ const generateWhiskerChartDataProcessor = (data) => {
   });
 };
 
-const generateWhiskerChartData = (data) => {
+const generateWhiskerChartData = data => {
   if (!process.browser) {
     return pool
       .exec(createWorker, [
         data,
         "./utils",
-        "generateWhiskerChartDataProcessor",
+        "generateWhiskerChartDataProcessor"
       ])
-      .then(function (result) {
+      .then(function(result) {
         return result;
       })
-      .catch(function (err) {
+      .catch(function(err) {
         console.error(err);
       })
-      .then(function (result) {
+      .then(function(result) {
         return result;
       });
   }
   return {};
 };
 
-const generateMultiSeriesChartProcessor = (data) => {
+const generateMultiSeriesChartProcessor = data => {
   const metricGroups = [
     "first-contentful-paint",
     "first-meaningful-paint",
@@ -293,14 +293,14 @@ const generateMultiSeriesChartProcessor = (data) => {
     "interactive",
     "accessibility",
     "seo",
-    "largest-contentful-paint",
+    "largest-contentful-paint"
   ].reduce((acc, item) => {
     acc[item] = {
       // color: randomColor(),
       name: item,
       type: "bar",
       showInLegend: true,
-      dataPoints: [],
+      dataPoints: []
     };
     return acc;
   }, {});
@@ -309,7 +309,7 @@ const generateMultiSeriesChartProcessor = (data) => {
     // const generateColor = randomColor();
 
     const chartStore = { [group]: {} };
-    results.map((result) => {
+    results.map(result => {
       return [
         "first-contentful-paint",
         "first-meaningful-paint",
@@ -322,9 +322,9 @@ const generateMultiSeriesChartProcessor = (data) => {
         "interactive",
         "accessibility",
         "seo",
-        "largest-contentful-paint",
+        "largest-contentful-paint"
       ]
-        .filter((key) => result.audits[key])
+        .filter(key => result.audits[key])
         .map((key, index) => {
           if (!chartStore[group][key]) {
             chartStore[group][key] = [];
@@ -342,7 +342,7 @@ const generateMultiSeriesChartProcessor = (data) => {
           group: group,
           label: key,
           y: [min, q1, q3, max, median],
-          x: index,
+          x: index
         };
         metricGroups[key].dataPoints.push({ label: group, y: median });
       });
@@ -351,28 +351,28 @@ const generateMultiSeriesChartProcessor = (data) => {
 
   return Object.values(metricGroups);
 };
-const generateMultiSeriesChartData = (data) => {
+const generateMultiSeriesChartData = data => {
   if (!process.browser) {
     return pool
       .exec(createWorker, [
         data,
         "./utils",
-        "generateMultiSeriesChartProcessor",
+        "generateMultiSeriesChartProcessor"
       ])
-      .then(function (result) {
+      .then(function(result) {
         return result;
       })
-      .catch(function (err) {
+      .catch(function(err) {
         console.error(err);
       })
-      .then(function (result) {
+      .then(function(result) {
         return result;
       });
   }
   return {};
 };
 
-const makeIDfromURL = (url) => {
+const makeIDfromURL = url => {
   const urlObj = new URL(url);
   let id = urlObj.host.replace("www.", "");
   if (urlObj.pathname !== "/") {
@@ -381,7 +381,7 @@ const makeIDfromURL = (url) => {
   return { id, url: urlObj.origin + urlObj.pathname, search: urlObj.search };
 };
 
-const removeMeta = (obj) => {
+const removeMeta = obj => {
   for (let prop in obj) {
     if (prop === "__typename") delete obj[prop];
     else if (typeof obj[prop] === "object") removeMeta(obj[prop]);
@@ -403,5 +403,5 @@ module.exports = {
   generateWhiskerChartDataProcessor,
   generateMultiSeriesChartProcessor,
   getReport,
-  getReportWorker,
+  getReportWorker
 };

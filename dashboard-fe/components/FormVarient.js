@@ -9,13 +9,13 @@ export default function Form(props) {
       <input
         type="text"
         value={values.inputValue}
-        onChange={(e) => props.onChange({ inputValue: e.target.value })}
+        onChange={e => props.onChange({ inputValue: e.target.value })}
         placeholder="Variation Name"
       />
       <input
         type="text"
         value={values.queryValue}
-        onChange={(e) => props.onChange({ queryValue: e.target.value })}
+        onChange={e => props.onChange({ queryValue: e.target.value })}
         placeholder="query"
       />
       <Button variant="contained" type="submit">
@@ -23,7 +23,7 @@ export default function Form(props) {
       </Button>
       <List>
         {props.appKeys &&
-          props.appKeys.map((i) => {
+          props.appKeys.map(i => {
             return (
               <ListItem>
                 {i}

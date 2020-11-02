@@ -5,7 +5,7 @@ import { versionManagementEnabled } from "./db";
 import dbDriver from "../../src/database/drivers";
 import ModuleManager from "../../src/managers/Module";
 import VersionManager from "../../src/managers/Version";
-
+import auth0 from "../../src/auth0";
 import "../../src/webhooks";
 
 const typeDefs = gql`
@@ -80,16 +80,30 @@ const typeDefs = gql`
     event: WebhookEventType!
     url: String!
   }
+
+  type Token {
+    key: String!
+    value: String!
+  }
+
   type SiteSettings {
-    webhooks: [Webhook]!
+    webhooks: [Webhook]
+    tokens: [Token]
   }
 
   input WebhookInput {
     event: WebhookEventType!
     url: String!
   }
+
+  input TokenInput {
+    key: String!
+    value: String!
+  }
+  
   input SiteSettingsInput {
-    webhooks: [WebhookInput]!
+    webhooks: [WebhookInput]
+    tokens: [TokenInput]
   }
 
   input MetadataInput {
@@ -258,7 +272,7 @@ const resolvers = {
   Query: {
     dashboard: () => {
       return {
-        versionManagementEnabled: versionManagementEnabled(),
+        versionManagementEnabled: versionManagementEnabled()
       };
     },
     userByEmail: async (_, { email }) => {
@@ -276,7 +290,7 @@ const resolvers = {
     },
     siteSettings: () => {
       return dbDriver.siteSettings_get();
-    },
+    }
   },
   Mutation: {
     updateApplicationSettings: async (_, { group, application, settings }) => {
@@ -301,7 +315,7 @@ const resolvers = {
         type: application ? "application" : "group",
         name,
         value,
-        url,
+        url
         //TODO add extra keys
       });
       return true;
@@ -315,7 +329,7 @@ const resolvers = {
         type: application ? "application" : "group",
         name,
         value,
-        url,
+        url
         //TODO add extra keys
       });
       return true;
@@ -340,7 +354,7 @@ const resolvers = {
       await dbDriver.setup();
       await dbDriver.user_update({
         id: user.email,
-        ...user,
+        ...user
       });
       return dbDriver.user_find(user.email);
     },
@@ -348,7 +362,7 @@ const resolvers = {
       await dbDriver.setup();
       await dbDriver.siteSettings_update(settings);
       return dbDriver.siteSettings_get();
-    },
+    }
   },
   Application: {
     versions: async ({ id }, { environment, latest }, ctx) => {
@@ -369,7 +383,7 @@ const resolvers = {
       return names
         ? metrics.filter(({ name }) => names.includes(name))
         : metrics;
-    },
+    }
   },
   Consume: {
     consumingApplication: async (parent, args, ctx) => {
@@ -379,7 +393,7 @@ const resolvers = {
     application: async (parent, args, ctx) => {
       await dbDriver.setup();
       return dbDriver.application_find(parent.applicationID);
-    },
+    }
   },
   Module: {
     consumedBy: async (parent, args, ctx) => {
@@ -390,14 +404,14 @@ const resolvers = {
         parent.applicationID,
         parent.name
       );
-    },
+    }
   },
   ApplicationVersion: {
     modules: async ({ modules }, { name }) => {
       return name
         ? modules.filter(({ name: moduleName }) => name === moduleName)
         : modules;
-    },
+    }
   },
   Group: {
     metrics: async ({ id }, { names }, ctx) => {
@@ -419,23 +433,36 @@ const resolvers = {
         const found = await dbDriver.application_find(applicationId);
         return found ? [found] : [];
       }
-    },
-  },
+    }
+  }
 };
 
 const apolloServer = new ApolloServer({
   typeDefs,
-  resolvers,
+  resolvers
 });
 
-const handler = apolloServer.createHandler({
-  path: "/api/graphql",
+const apiHandler = apolloServer.createHandler({
+  path: "/api/graphql"
 });
+
+const handler = async (req, res) => {
+  const session = await auth0.getSession(req);
+  if (session && session.noAuth) return apiHandler(req, res);
+
+  if (req?.query?.token !== global.INTERNAL_TOKEN) {
+    if (!session || !session.user) {
+      res.status(401).json({ error: "Unauthorized" });
+    }
+  }
+
+  return apiHandler(req, res);
+};
 
 export const config = {
   api: {
-    bodyParser: false,
-  },
+    bodyParser: false
+  }
 };
 
 export default handler;

@@ -3,6 +3,7 @@ const path = require("path");
 const fetch = require("node-fetch");
 const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
 const convertToGraph = require("./convertToGraph");
+const DefinePlugin = require("webpack/lib/DefinePlugin");
 
 /** @typedef {import('webpack/lib/Compilation')} Compilation */
 /** @typedef {import('webpack/lib/Compiler')} Compiler */
@@ -29,21 +30,34 @@ class FederationDashboardPlugin {
    * @param {Compiler} compiler
    */
   apply(compiler) {
-    const FederationPlugin = compiler.options.plugins.find((plugin) => {
+    const FederationPlugin = compiler.options.plugins.find(plugin => {
       return plugin.constructor.name === "ModuleFederationPlugin";
     });
     if (FederationPlugin) {
       this.FederationPluginOptions = FederationPlugin._options;
+    } else if (this._options.standalone) {
+      this.FederationPluginOptions = this._options.standalone;
+    } else {
+      throw new Error(
+        "Dashboard plugin is missing Module Federation or standalone option"
+      );
     }
-    compiler.hooks.thisCompilation.tap(PLUGIN_NAME, (compilation) => {
+    compiler.hooks.thisCompilation.tap(PLUGIN_NAME, compilation => {
       compilation.hooks.processAssets.tapPromise(
         {
           name: PLUGIN_NAME,
-          stage: compilation.constructor.PROCESS_ASSETS_STAGE_REPORT,
+          stage: compilation.constructor.PROCESS_ASSETS_STAGE_REPORT
         },
         () => this.processWebpackGraph(compilation)
       );
     });
+    console.log({"process.CURRENT_HOST": JSON.stringify(this.FederationPluginOptions.name)})
+
+    if(this.FederationPluginOptions.name) {
+      new DefinePlugin({
+        "process.CURRENT_HOST": JSON.stringify(this.FederationPluginOptions.name)
+      }).apply(compiler);
+    }
   }
 
   processWebpackGraph(compilation, callback) {
@@ -74,12 +88,12 @@ class FederationDashboardPlugin {
       posted: this._options.posted, // Date.now() if not specified
       group: this._options.group, // 'default' if not specified
       modules,
-      chunkDependencies,
+      chunkDependencies
     };
 
     let graphData = null;
     try {
-      graphData = convertToGraph(rawData);
+      graphData = convertToGraph(rawData, !!this._options.standalone);
     } catch (err) {
       console.warn("Error during dashboard data processing");
       console.warn(err);
@@ -93,7 +107,7 @@ class FederationDashboardPlugin {
       if (this._options.dashboardURL) {
         return this.postDashboardData(dashData)
           .then(() => {})
-          .catch((err) => {
+          .catch(err => {
             if (err) {
               compilation.errors.push(err);
               // eslint-disable-next-line promise/no-callback-in-promise
@@ -106,22 +120,22 @@ class FederationDashboardPlugin {
   }
 
   getFilteredModules(stats) {
-    const filteredModules = stats.modules.filter((module) => {
+    const filteredModules = stats.modules.filter(module => {
       const array = [
         module.name.includes("container entry"),
         module.name.includes("remote "),
         module.name.includes("shared module "),
-        module.name.includes("provide module "),
+        module.name.includes("provide module ")
       ];
-      return array.some((item) => item);
+      return array.some(item => item);
     });
 
     return filteredModules;
   }
 
   getRemoteEntryChunk(stats, FederationPluginOptions) {
-    const remoteEntryChunk = stats.chunks.find((chunk) => {
-      const specificChunk = chunk.names.find((name) => {
+    const remoteEntryChunk = stats.chunks.find(chunk => {
+      const specificChunk = chunk.names.find(name => {
         return name === FederationPluginOptions.name;
       });
       return specificChunk;
@@ -133,7 +147,7 @@ class FederationDashboardPlugin {
   getChunkDependencies(validChunkArray) {
     const chunkDependencies = validChunkArray.reduce((acc, chunk) => {
       const subset = chunk.getAllReferencedChunks();
-      const stringifiableChunk = Array.from(subset).map((sub) => {
+      const stringifiableChunk = Array.from(subset).map(sub => {
         const cleanSet = Object.getOwnPropertyNames(sub).reduce((acc, key) => {
           if (key === "_groups") return acc;
           return Object.assign(acc, { [key]: sub[key] });
@@ -143,7 +157,7 @@ class FederationDashboardPlugin {
       });
 
       return Object.assign(acc, {
-        [chunk.id]: stringifiableChunk,
+        [chunk.id]: stringifiableChunk
       });
     }, {});
 
@@ -169,7 +183,7 @@ class FederationDashboardPlugin {
         packageJson,
         // subPackages: this.directReasons(modules),
         shareFrom: ["dependencies"],
-        ignorePatchversion: false,
+        ignorePatchversion: false
       });
       vendorFederation.devDependencies = AutomaticVendorFederation({
         exclude: [],
@@ -177,7 +191,7 @@ class FederationDashboardPlugin {
         packageJson,
         // subPackages: this.directReasons(modules),
         shareFrom: ["devDependencies"],
-        ignorePatchversion: false,
+        ignorePatchversion: false
       });
       vendorFederation.optionalDependencies = AutomaticVendorFederation({
         exclude: [],
@@ -185,7 +199,7 @@ class FederationDashboardPlugin {
         packageJson,
         // subPackages: this.directReasons(modules),
         shareFrom: ["optionalDependencies"],
-        ignorePatchversion: false,
+        ignorePatchversion: false
       });
     }
 
@@ -215,7 +229,7 @@ class FederationDashboardPlugin {
       ? namedChunkRefs.getAllReferencedChunks()
       : [];
 
-    AllReferencedChunksByRemote.forEach((chunk) => {
+    AllReferencedChunksByRemote.forEach(chunk => {
       if (chunk.id !== FederationPluginOptions.name) {
         validChunkArray.push(chunk);
       }
@@ -227,9 +241,9 @@ class FederationDashboardPlugin {
   directReasons(modules) {
     const directReasons = new Set();
 
-    modules.forEach((module) => {
+    modules.forEach(module => {
       if (module.reasons) {
-        module.reasons.forEach((reason) => {
+        module.reasons.forEach(reason => {
           if (reason.userRequest) {
             try {
               // grab user required package.json
@@ -262,16 +276,16 @@ class FederationDashboardPlugin {
   }
 
   postDashboardData(dashData) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       fetch(this._options.dashboardURL, {
         method: "POST",
         body: dashData,
         headers: {
           Accept: "application/json",
-          "Content-type": "application/json",
-        },
+          "Content-type": "application/json"
+        }
       })
-        .then((resp) => resp.json())
+        .then(resp => resp.json())
         .then(resolve)
         .catch(() => {
           console.warn(

@@ -14,7 +14,7 @@
     ]
   },
   "resolutions": {
-    "webpack": "5.2.0"
+    "webpack": "5.3.2"
   },
   "devDependencies": {
     "@changesets/cli": "2.11.1",
@@ -32,7 +32,7 @@
     "prettier:check": "prettier --list-different \"**/*.{js,json,md,ts,tsx}\""
   },
   "volta": {
-    "node": "14.14.0",
+    "node": "14.15.0",
     "yarn": "1.22.10"
   },
   "contributors": [
