@@ -368,12 +368,6 @@ class Report extends React.Component {
           const { trackedURLs } = Object.create(data.groups[0].settings);
 
           const updatedTrackedUrls = trackedURLs.reduce((acc, tracked) => {
-            const { url, search } = makeIDfromURL(tracked.url);
-
-            if (tracked.url !== url) {
-              acc.push(tracked);
-              return acc;
-            }
             const updatedExistingVariants = tracked.variants.reduce(
               (acc, variant) => {
                 if (variant.name === this.state.inputValue) {
