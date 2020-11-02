@@ -9,12 +9,12 @@ const createNextRouteHandler = require("./lib/create-next-route-handler");
 const ip = require("ip");
 const requestIp = require("request-ip");
 var randtoken = require("rand-token");
-
 module.exports = ({ nextRoutesHandler }) => {
   const app = express();
   const routesHandler = nextRoutesHandler || createNextRouteHandler({ log });
   app.use(cookieParser());
   app.use(requestIp.mw());
+
   global.INTERNAL_TOKEN = randtoken.generate(16);
 
   if (process.env.IP_WHITELIST) {

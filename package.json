@@ -9,12 +9,13 @@
   "workspaces": {
     "packages": [
       "dashboard-example/*",
-      "dashboard-plugin/*",
+      "dashboard-plugin",
       "dashboard-fe"
     ]
   },
   "resolutions": {
-    "webpack": "5.3.2"
+    "webpack": "5.3.2",
+    "@module-federation/dashboard-plugin": "./dashboard-plugin"
   },
   "devDependencies": {
     "@changesets/cli": "2.11.1",

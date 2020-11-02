@@ -1,3 +1,4 @@
+const cors = require("micro-cors")(); // highlight-line
 import { ApolloServer, gql } from "apollo-server-micro";
 
 import { versionManagementEnabled } from "./db";
@@ -100,7 +101,7 @@ const typeDefs = gql`
     key: String!
     value: String!
   }
-  
+
   input SiteSettingsInput {
     webhooks: [WebhookInput]
     tokens: [TokenInput]
@@ -437,27 +438,15 @@ const resolvers = {
   }
 };
 
-const apolloServer = new ApolloServer({
-  typeDefs,
-  resolvers
+const apolloServer = new ApolloServer({ typeDefs, resolvers });
+
+const handler = apolloServer.createHandler({
+  path: "/api/graphql",
+  cors: {
+    origin: '*',
+    credentials: false,
+  },
 });
-
-const apiHandler = apolloServer.createHandler({
-  path: "/api/graphql"
-});
-
-const handler = async (req, res) => {
-  const session = await auth0.getSession(req);
-  if (session && session.noAuth) return apiHandler(req, res);
-
-  if (req?.query?.token !== global.INTERNAL_TOKEN) {
-    if (!session || !session.user) {
-      res.status(401).json({ error: "Unauthorized" });
-    }
-  }
-
-  return apiHandler(req, res);
-};
 
 export const config = {
   api: {
@@ -465,4 +454,6 @@ export const config = {
   }
 };
 
-export default handler;
+export default cors((req, res) =>
+  req.method === "OPTIONS" ? res.end() : handler(req, res)
+);

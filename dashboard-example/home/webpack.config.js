@@ -1,6 +1,9 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
-const { container:{ModuleFederationPlugin }, DefinePlugin} = require("webpack");
+const {
+  container: { ModuleFederationPlugin },
+  DefinePlugin
+} = require("webpack");
 const path = require("path");
 
 module.exports = {

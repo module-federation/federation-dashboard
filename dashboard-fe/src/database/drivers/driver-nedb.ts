@@ -297,7 +297,7 @@ export default class DriverNedb implements Driver {
   }
   async siteSettings_update(settings: SiteSettings): Promise<SiteSettings> {
     const prevSettings = await this.siteSettings_get();
-    const mergedSettings = {...prevSettings,...settings}
+    const mergedSettings = { ...prevSettings, ...settings };
     Joi.assert(mergedSettings, siteSettingsSchema);
 
     fs.writeFileSync(siteSettingsPath, JSON.stringify(mergedSettings));
