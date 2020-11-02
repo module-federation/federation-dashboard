@@ -8,6 +8,10 @@ import {
   MenuItem,
   Grid,
   Button,
+  InputLabel,
+  Input,
+  FormHelperText,
+  FormControl
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CreateIcon from "@material-ui/icons/Create";
@@ -21,6 +25,10 @@ import store from "../src/store";
 const GET_SETTINGS = gql`
   {
     siteSettings {
+      tokens {
+        key
+        value
+      }
       webhooks {
         event
         url
@@ -32,6 +40,10 @@ const GET_SETTINGS = gql`
 const SET_SETTINGS = gql`
   mutation($settings: SiteSettingsInput!) {
     updateSiteSettings(settings: $settings) {
+      tokens {
+        key
+        value
+      }
       webhooks {
         event
         url
@@ -44,48 +56,48 @@ const EVENTS = [
   "updateApplication",
   "deleteApplication",
   "updateApplicationVersion",
-  "deleteApplicationVersion",
+  "deleteApplicationVersion"
 ];
 
 const useStyles = makeStyles({
   textField: {
-    marginTop: "1em",
+    marginTop: "1em"
   },
   pizzaImage: {
-    width: "100%",
-  },
+    width: "100%"
+  }
 });
 
 export function SettingsForm({ siteSettings }) {
   const { register, errors, handleSubmit, control } = useForm({
     mode: "all",
     reValidateMode: "all",
-    defaultValues: siteSettings,
+    defaultValues: siteSettings
   });
   const [setSettings] = useMutation(SET_SETTINGS);
   const [webhookIndexes, setWebhookIndexes] = React.useState<Array<number>>(
-    Object.keys(siteSettings.webhooks).map((i) => parseInt(i))
+    Object.keys(siteSettings.webhooks).map(i => parseInt(i))
   );
   const classes = useStyles();
 
-  const deleteWebhook = (ind) => {
-    setWebhookIndexes(webhookIndexes.filter((i) => i !== ind));
+  const deleteWebhook = ind => {
+    setWebhookIndexes(webhookIndexes.filter(i => i !== ind));
   };
   const addWebhook = () => {
     setWebhookIndexes([...webhookIndexes, Math.max(...webhookIndexes) + 1]);
   };
 
-  const onSubmit = (settings) => {
+  const onSubmit = settings => {
     setSettings({
       variables: {
-        settings,
-      },
+        settings
+      }
     });
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {webhookIndexes.map((ind) => (
+      {webhookIndexes.map(ind => (
         <Grid
           container
           className={classes.textField}
@@ -101,7 +113,7 @@ export function SettingsForm({ siteSettings }) {
                   variant="outlined"
                   fullWidth
                 >
-                  {EVENTS.map((evt) => (
+                  {EVENTS.map(evt => (
                     <MenuItem value={evt} key={evt}>
                       {evt}
                     </MenuItem>
@@ -122,7 +134,7 @@ export function SettingsForm({ siteSettings }) {
               error={!!errors.webhooks?.[ind]?.url}
               name={`webhooks[${ind}].url`}
               inputRef={register({
-                required: true,
+                required: true
               })}
             />
           </Grid>
@@ -152,18 +164,69 @@ export function SettingsForm({ siteSettings }) {
   );
 }
 
-export function Settings() {
-  const { data } = useQuery(GET_SETTINGS);
-  const classes = useStyles();
+const TokenForm = ({ siteSettings }) => {
+  const { register, handleSubmit, watch, errors } = useForm();
+  const [setSettings] = useMutation(SET_SETTINGS);
+  const onSubmit = siteTokens => {
+    const tokens = Object.keys(siteTokens).map(key => {
+      return {
+        key: key,
+        value: siteTokens[key]
+      };
+    });
+    setSettings({
+      variables: {
+        settings: { tokens }
+      }
+    });
+  };
+
+  console.log(watch("example")); // watch input value by passing the name of it
 
   return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Grid container spacing={1}>
+        <Grid item xs={12}>
+          <FormControl>
+            <InputLabel htmlFor="pluginToken">Dashboard Token</InputLabel>
+            <Input
+              name="pluginToken"
+              id="pluginToken"
+              aria-describedby="my-helper-text"
+              inputRef={register({ required: true })}
+            />
+            <FormHelperText id="my-helper-text">
+              We need this so DashboardPlugin can communicate
+              <br />
+              <small>This is not stored in clear text!</small>
+            </FormHelperText>
+            {errors.pluginToken && <span>This field is required</span>}
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <Button variant="contained" color="primary" type="submit">
+            Save
+          </Button>
+        </Grid>
+      </Grid>
+    </form>
+  );
+};
+export function Settings() {
+  const { data } = useQuery(GET_SETTINGS);
+  if (!store.isAuthorized) return null;
+  return (
     <Layout>
-      <h1>Webhooks</h1>
       {store.isAuthorized && data && (
-        <SettingsForm siteSettings={data.siteSettings} />
+        <>
+          <h1>Webhooks</h1>
+          <SettingsForm siteSettings={data.siteSettings} />
+          <h1>Plugin Token</h1>
+          <TokenForm siteSettings={data.siteSettings} />
+        </>
       )}
     </Layout>
   );
 }
 
-export default withAuth(observer(Settings));
+export default observer(Settings);

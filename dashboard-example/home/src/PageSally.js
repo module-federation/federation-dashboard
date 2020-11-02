@@ -14,7 +14,7 @@ const PageSally = () => {
       style={{
         display: "grid",
         gridTemplateColumns: "25% 50% 20%",
-        gridGap: "1em",
+        gridGap: "1em"
       }}
     >
       <HeroImage

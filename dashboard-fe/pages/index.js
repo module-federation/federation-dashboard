@@ -14,7 +14,6 @@ const ModuleUMLDiagram =
     ? () => <div />
     : require("../components/ModuleUMLDiagram.tsx").default;
 import Layout from "../components/Layout";
-import withAuth from "../components/with-auth";
 import store from "../src/store";
 
 const GET_APPS = gql`
@@ -52,16 +51,16 @@ const GET_APPS = gql`
 
 const useHomeStyles = makeStyles({
   helpParagraph: {
-    marginTop: "1em",
-  },
+    marginTop: "1em"
+  }
 });
 
 const Home = () => {
   const { data } = useQuery(GET_APPS, {
     variables: {
       environment: store.environment,
-      group: store.group,
-    },
+      group: store.group
+    }
   });
   const [currentTab, currentTabSet] = React.useState(0);
   const classes = useHomeStyles();
@@ -144,4 +143,4 @@ const Home = () => {
   );
 };
 
-export default withAuth(observer(Home));
+export default observer(Home);
