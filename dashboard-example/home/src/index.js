@@ -27,16 +27,22 @@ const injectScript = function(d, s, id, override) {
 
 fetch("http://localhost:3000/api/graphql", {
   method: "POST",
-  body: `query {
-    applications(name:"home") {
-      versions {
-        override {
-          name
-          version
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+  body: JSON.stringify({
+    query: `query { # TODO: this query cannot be executed on current schema
+      applications(name:"home") {
+        versions {
+          override {
+            name
+            version
+          }
         }
       }
-    }
-  }`
+    }`,
+  }),
 })
   .then(res => res.json())
   .then(({ applications }) => {
