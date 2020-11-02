@@ -60,8 +60,8 @@ const Performance = ({ groupData }) => {
 
   React.useEffect(() => {
     if (data && data.groups[0]) {
-      removeMeta(data.groups[0].settings.trackedURLs);
-      setTodos(data.groups[0].settings.trackedURLs);
+      removeMeta(data.groups[0].settings?.trackedURLs || []);
+      setTodos(data.groups[0].settings?.trackedURLs || []);
     }
   }, [data]);
 
@@ -184,7 +184,7 @@ const Performance = ({ groupData }) => {
         onChangeName={e => setInputNameValue(e.target.value)}
       />
       <List>
-        {todos &&
+        {todos?.[0] &&
           todos.map((todo, index) => (
             <ListItem
               key={index}

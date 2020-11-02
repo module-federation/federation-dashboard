@@ -13,63 +13,6 @@ import ReadJSONStream from "read-json-stream";
 const RUNS = 30;
 let hasStarted = false;
 
-const launchChromeAndRunLighthouse = async url => {
-  const chromeLauncher = require("chrome-launcher");
-
-  const chrome = await chromeLauncher.launch({
-    chromeFlags: [
-      "--headless",
-      "--disable-gpu",
-      "--disable-cache",
-      "--disable-extensions"
-    ]
-  });
-  const opts = {
-    port: chrome.port
-  };
-
-  if (!hasStarted) {
-    hasStarted = true;
-    console.log("using Local Lighthouse for Perf Test\n");
-    console.log("url:", url, "\n");
-    console.log("Warming CDN Cache...\n");
-    await Promise.all([
-      lighthouse(url, opts),
-      lighthouse(url, opts),
-      lighthouse(url, opts)
-    ]);
-    bar1.start(RUNS, 0);
-  }
-  console.log("starting test");
-  return lighthouse(url, opts)
-    .then(results => {
-      try {
-        results.lhr.audits.metrics.details.items[0];
-        return chrome.kill().then(() => {
-          return {
-            js: results.lhr,
-            json: results.report
-          };
-        });
-      } catch (e) {
-        return chrome.kill().then(() => {
-          return launchChromeAndRunLighthouse(url);
-        });
-      }
-    })
-    .catch(error => {
-      if (chrome.kill) {
-        return chrome.kill().then(() => {
-          return launchChromeAndRunLighthouse(url);
-        });
-      }
-      return launchChromeAndRunLighthouse(url);
-    })
-    .catch(error => {
-      console.error(error);
-      return launchChromeAndRunLighthouse(url);
-    });
-};
 const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
   const mode = desktop ? "desktop" : "mobile";
   const opts = {
@@ -135,9 +78,7 @@ export const init = (url, title, desktop = true) => {
       const promResults = Promise.map(
         fakeArray,
         async () => {
-          const taskRunResult = privateConfig.USE_CLOUD
-            ? await launchPageSpeedInsightsLighthouse(url, desktop)
-            : await launchChromeAndRunLighthouse(url);
+          const taskRunResult =  await launchPageSpeedInsightsLighthouse(url, desktop)
           tracker.push("");
           bar1.update(tracker.length);
           delete taskRunResult.js.stackPacks;
@@ -150,7 +91,7 @@ export const init = (url, title, desktop = true) => {
           delete taskRunResult.js.audits["final-screenshot"];
           return taskRunResult;
         },
-        { concurrency: privateConfig.USE_CLOUD ? 10 : 1 }
+        { concurrency: 10 }
       );
       const testResults = await promResults;
       if (title) {
@@ -159,45 +100,7 @@ export const init = (url, title, desktop = true) => {
             return js;
           })
         };
-        // if (false && fs.existsSync(`${dirName}/scatter.json`)) {
-        //   ReadJSONStream(`${dirName}/scatter.json`) // filePath is a file path string e.g. 'data/myData.json' or 'path.join('data', 'myData.json');
-        //     .done((err, oldScatterData) => {
-        //       if (err) {
-        //         // handle error
-        //       } else {
-        //         Object.keys(oldScatterData).map((key) => {
-        //           if (Array.isArray(oldScatterData[key])) {
-        //             oldScatterData[key] = oldScatterData[key].map((oldData) => {
-        //               delete oldData.timing;
-        //               delete oldData.audits["screenshot-thumbnails"];
-        //               delete oldData.audits["final-screenshot"];
-        //               delete oldData.audits["network-requests"];
-        //               delete oldData.audits["uses-long-cache-ttl"];
-        //               return oldData;
-        //             });
-        //           }
-        //         });
-        //
-        //         const json = JSON.stringify(
-        //           Object.assign(oldScatterData, scatterData)
-        //         ); //convert it back to json
-        //         fs.writeFileSync(`${dirName}/scatter.json`, json, "utf8");
-        //         var stream = fs.createWriteStream(`${dirName}/scatter.json`, {
-        //           flags: "a",
-        //         });
-        //         var data = json;
-        //         stream.write(data, function () {
-        //           console.log("wrote scatter");
-        //         });
-        //       }
-        //     });
-        // } else {
-        //   fs.writeFile(
-        //     `${dirName}/scatter.json`,
-        //     JSON.stringify({ ...scatterData, meta: { url } }),
-        //     "utf8"
-        //   );
-        // }
+
         fs.readFile(
           `${dirName}/scatter.json`,
           "utf8",
@@ -227,7 +130,7 @@ export const init = (url, title, desktop = true) => {
               const json = JSON.stringify(
                 Object.assign(oldScatterData, scatterData)
               ); //convert it back to json
-              fs.writeFile(`${dirName}/scatter.json`, json, "utf8", () => {});
+              fs.writeFileSync(`${dirName}/scatter.json`, json, "utf8");
             }
           }
         );
@@ -277,11 +180,6 @@ export const init = (url, title, desktop = true) => {
         return averageAudit;
       })
       .then(results => {
-        const prevReports = glob(`${dirName}/*.json`, {
-          sync: true,
-          ignore: `${dirName}/scatter.json`
-        });
-
         fs.writeFile(
           `${dirName}/${results.js["fetchTime"].replace(/:/g, "_")}.json`,
           results.json,
@@ -294,30 +192,3 @@ export const init = (url, title, desktop = true) => {
     throw "You haven't passed a URL to Lighthouse";
   }
 };
-
-// (async () => {
-//   await init("https://stage.lululemon.com", "Stage Home AsyncLaunchPreload")
-//   await init("https://stage.lululemon.com/c/womens-leggings/_/N-8s6", "Stage CDP AsyncLaunchPreload")
-//   await init("https://stage.lululemon.com/p/women-pants/Align-Pant-2/_/prod2020012?color=0001&sz=2", "Stage PDP AsyncLaunchPreload")
-// })()
-// init("https://stage.lululemon.com/c/womens-leggings/_/N-8s6","Baseline")
-/*
-
-
-
-node lib.js --url "https://stage.lululemon.com/shop/mybag"
-
-node lib.js --url "https://stage.lululemon.com/checkout/spk/index.jsp"
-
-node lib.js --url "https://shop.lululemon.com/p/women-pants/Align-Pant-2/_/prod2020012?color=0002"
-
-node lib.js --url "https://stage.lululemon.com/c/womens-leggings/_/N-8s6" && node lib.js --url "https://stage.lululemon.com" && node lib.js --url "https://stage.lululemon.com/p/women-pants/Align-Pant-2/_/prod2020012?color=0001&sz=2"
-
-
-
-
-
-
-
-
-*/
