@@ -28,6 +28,6 @@
   "devDependencies": {
     "jest": "26.6.0",
     "webpack": "5.2.0",
-    "webpack-sources": "2.0.1"
+    "webpack-sources": "2.2.0"
   }
 }
