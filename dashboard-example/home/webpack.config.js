@@ -1,6 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
-const { ModuleFederationPlugin } = require("webpack").container;
+const { container:{ModuleFederationPlugin }, DefinePlugin} = require("webpack");
 const path = require("path");
 
 module.exports = {
@@ -74,7 +74,7 @@ module.exports = {
       template: "./public/index.html"
     }),
     new DashboardPlugin({
-      version: false,
+      version: true,
       filename: "dashboard.json",
       dashboardURL: "http://localhost:3000/api/update",
       versionChangeWebhook: "http://cnn.com/",

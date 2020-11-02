@@ -1,4 +1,4 @@
-console.log(`${CURRENT_HOST}`);
+console.log(process.CURRENT_HOST);
 const injectScript = function(d, s, id, override) {
   const promise = new Promise(resolve => {
     var js,
@@ -28,7 +28,7 @@ const injectScript = function(d, s, id, override) {
 fetch("http://localhost:3000/api/graphql", {
   method: "POST",
   body: `query {
-    applications(name: ${CURRENT_HOST}) {
+    applications(name:"home") {
       versions {
         override {
           name

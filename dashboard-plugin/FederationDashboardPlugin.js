@@ -51,10 +51,13 @@ class FederationDashboardPlugin {
         () => this.processWebpackGraph(compilation)
       );
     });
+    console.log({"process.CURRENT_HOST": JSON.stringify(this.FederationPluginOptions.name)})
 
-    new DefinePlugin({
-      CURRENT_HOST: this.FederationPluginOptions.name
-    }).apply(compiler);
+    if(this.FederationPluginOptions.name) {
+      new DefinePlugin({
+        "process.CURRENT_HOST": JSON.stringify(this.FederationPluginOptions.name)
+      }).apply(compiler);
+    }
   }
 
   processWebpackGraph(compilation, callback) {

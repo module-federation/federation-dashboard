@@ -34,7 +34,7 @@ const apiAuthGate = async (req, res, callback) => {
 };
 
 export default async (req, res) => {
-  apiAuthGate(req, res, async () => {
+  return apiAuthGate(req, res, async () => {
     if (dataIsValid(req.body)) {
       console.log(`Updating ${req.body.name}#${req.body.version}`);
       await ApplicationManager.update(req.body);
