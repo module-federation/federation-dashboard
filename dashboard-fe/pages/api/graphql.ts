@@ -1,4 +1,5 @@
-const cors = require("micro-cors")(); // highlight-line
+// const cors = require("micro-cors")(); // highlight-line
+import corsMiddleware from "cors";
 import { ApolloServer, gql } from "apollo-server-micro";
 
 import { versionManagementEnabled } from "./db";
@@ -440,13 +441,28 @@ const resolvers = {
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers });
 
-const handler = apolloServer.createHandler({
+const apolloHandler = apolloServer.createHandler({
   path: "/api/graphql",
-  cors: {
-    origin: '*',
-    credentials: false,
-  },
 });
+
+const corsHandler = corsMiddleware();
+
+function runMiddleware(req, res, fn) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+
+      return resolve(result);
+    });
+  });
+}
+
+async function handler(req, res) {
+  await runMiddleware(req, res, corsHandler);
+  await runMiddleware(req, res, apolloHandler);
+}
 
 export const config = {
   api: {
@@ -454,6 +470,4 @@ export const config = {
   }
 };
 
-export default cors((req, res) =>
-  req.method === "OPTIONS" ? res.end() : handler(req, res)
-);
+export default handler;
