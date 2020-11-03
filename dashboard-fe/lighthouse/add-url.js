@@ -7,14 +7,6 @@ import dbDriver from "../src/database/drivers";
 
 const generateLighthouseReport = (group) => {
   const { trackedURLs } = group.settings;
-  // const updatedTracedURLs = trackedURLs.reduce((acc,trackedURL)=>{
-  //   const clonedTracedUrl = Object.assign({},trackedURL)
-  //   const updatedVariants = clonedTracedUrl.variants.map((variant)=>{
-  //     return Object.assign({},variant,{new:false})
-  //   })
-  //   acc.push(Object.assign(clonedTracedUrl,{variants:updatedVariants}))
-  //   return acc
-  // },[])
 
   Promise.map(
     trackedURLs,
@@ -35,7 +27,7 @@ const generateLighthouseReport = (group) => {
           await init(testLink, name || "Latest", true);
           return variant;
         },
-        { concurrency: 1 }
+        { concurrency: 2 }
       );
       return {
         url,
