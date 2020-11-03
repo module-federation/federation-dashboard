@@ -6,11 +6,11 @@ import Override, { schema as overrideSchema } from "./override";
 import Consume, { schema as consumeSchema } from "./consume";
 import Dependency, { schema as dependencySchema } from "./dependency";
 import { privateConfig } from "../config";
+import { IPrivateConfig } from "../private-config";
 export const schema = Joi.object({
   applicationId: Joi.string().required(),
   environment: Joi.string().required(),
-  // @ts-ignore
-  version: privateConfig.VERSION_MANAGER
+  version: (privateConfig as IPrivateConfig).VERSION_MANAGER
     ? Joi.string().required()
     : Joi.string().allow("", null),
   posted: Joi.date().required(),

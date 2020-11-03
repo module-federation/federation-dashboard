@@ -1,5 +1,3 @@
-// id rather drag my dick through 10,000 miles of broken whisky bottles then see TS again in my life
-
 import path from "path";
 import Joi from "@hapi/joi";
 import fs from "fs";
@@ -28,7 +26,7 @@ const siteSettingsPath = path.join(dir, "/siteSettings.json");
 class MongoDriver<T> {
   constructor(private collection: Collection) {}
 
-  async find(id: string): Promise<unknown> {
+  async find(id: string): Promise<T | null> {
     return new Promise((resolve) => {
       this.collection.find({ id }).toArray((_, docs) => {
         if (docs.length > 0) {
@@ -41,7 +39,7 @@ class MongoDriver<T> {
     });
   }
 
-  async search(query: any): Promise<unknown> {
+  async search(query: any): Promise<Array<T> | null> {
     return new Promise((resolve) => {
       this.collection.find(query).toArray((_, docs) => {
         resolve(docs.map(({ _id, ...data }) => ({ ...data })) || []);
@@ -49,13 +47,13 @@ class MongoDriver<T> {
     });
   }
 
-  async insert(data: T): Promise<unknown> {
+  async insert(data: T): Promise<null> {
     return new Promise(async (resolve) => {
       this.collection.insertOne(data, () => resolve());
     });
   }
 
-  async update(query: any, data: T): Promise<unknown> {
+  async update<TA>(query: any, data: TA): Promise<null> {
     return new Promise(async (resolve) => {
       this.collection.find(query).toArray((_, docs) => {
         if (docs.length > 0) {
@@ -67,7 +65,7 @@ class MongoDriver<T> {
     });
   }
 
-  async delete(id: string): Promise<unknown> {
+  async delete(id: string): Promise<null> {
     return new Promise((resolve) => {
       this.collection.deleteOne({ id }, {}, () => resolve());
     });
@@ -129,15 +127,15 @@ export default class DriverMongoDB implements Driver {
     });
   }
 
-  async application_find(id: string): Promise<Application | any> {
+  async application_find(id: string): Promise<Application | null> {
     return this.applicationTable.find(id);
   }
   async application_findInGroups(
     groups: string[]
-  ): Promise<Array<Application> | any> {
+  ): Promise<Array<Application> | null> {
     return this.applicationTable.search({ group: { $in: groups } });
   }
-  async application_getMetrics(id: string): Promise<Array<MetricValue> | any> {
+  async application_getMetrics(id: string): Promise<Array<MetricValue> | null> {
     return this.metricsTable.search({
       type: "application",
       id,
@@ -147,7 +145,7 @@ export default class DriverMongoDB implements Driver {
   async application_addMetrics(
     id: string,
     metric: MetricValue
-  ): Promise<Array<MetricValue> | any> {
+  ): Promise<Array<MetricValue> | null> {
     Joi.assert(metric, metricValueSchema);
     return this.metricsTable.insert({
       type: "application",
@@ -155,12 +153,12 @@ export default class DriverMongoDB implements Driver {
       ...metric,
     });
   }
-  async application_update(application: Application): Promise<any> {
+  async application_update(application: Application): Promise<null> {
     Joi.assert(application, applicationSchema);
     bus.publish("updateApplication", application);
     return this.applicationTable.update({ id: application.id }, application);
   }
-  async application_delete(id: string): Promise<any> {
+  async application_delete(id: string): Promise<null> {
     return this.applicationTable.delete(id);
   }
 
@@ -168,22 +166,20 @@ export default class DriverMongoDB implements Driver {
     applicationId: string,
     environment: string,
     version: string
-    // @ts-ignore
-  ): Promise<ApplicationVersion | null> {// @ts-ignore
+  ): Promise<ApplicationVersion | null> {
     const versions = await this.applicationVersionsTable.search({
       applicationId,
       environment,
       version,
     });
-    // @ts-ignore
-    return versions.length > 0 ? versions[0] : null;// @ts-ignore
+    return versions.length > 0 ? versions[0] : null;
   }
 
   async applicationVersion_findAll(
     applicationId: string,
     environment: string,
     version?: string
-  ): Promise<Array<ApplicationVersion> | any> {
+  ): Promise<Array<ApplicationVersion>> {
     const q: any = {
       applicationId,
     };
@@ -194,16 +190,13 @@ export default class DriverMongoDB implements Driver {
       q.version = version;
     }
     const versions = await this.applicationVersionsTable.search(q);
-    // @ts-ignore
     return versions.length > 0 ? versions : [];
   }
 
   async applicationVersion_findLatest(
     applicationId: string,
     environment: string
-    // @ts-ignore
   ): Promise<Array<ApplicationVersion>> {
-    // @ts-ignore
     return this.applicationVersionsTable.search({
       applicationId,
       environment,
@@ -230,83 +223,65 @@ export default class DriverMongoDB implements Driver {
     version: string
   ): Promise<null> {
     const id = [applicationId, environment, version].join(":");
-    // @ts-ignore
     return this.applicationVersionsTable.delete(id);
   }
   async group_getMetrics(id: string): Promise<Array<MetricValue> | null> {
-    // @ts-ignore
     return this.metricsTable.search({
       type: "group",
       id,
     });
   }
 
-  // @ts-ignore
-  async group_updateMetric(
-    application: Application,
-    group: Group
-  ): Promise<Array<Group>> {
+  async group_updateMetric(group: Group): Promise<Array<Group>> {
     bus.publish("groupMetricUpdated", group);
-    // @ts-ignore
     return this.metricsTable.update({ id: group.id }, group);
   }
 
   async group_find(id: string): Promise<Group> {
-    // @ts-ignore
     return this.groupsTable.find(id);
   }
   async group_findByName(name: string): Promise<Group> {
-    // @ts-ignore
     return this.groupsTable
       .search({ name })
-        // @ts-ignore
       .then((data) => (data && data.length ? data[0] : null));
   }
 
   async group_findAll(): Promise<Array<Group>> {
-    // @ts-ignore
     return this.groupsTable.search({});
   }
 
   async group_update(group: Group): Promise<Array<Group>> {
     Joi.assert(group, groupSchema);
     bus.publish("groupUpdated", group);
-    // @ts-ignore
     return this.groupsTable.update({ id: group.id }, group);
   }
 
   async group_delete(id: string): Promise<Array<Group>> {
-    // @ts-ignore
     return this.groupsTable.delete(id);
   }
 
   async user_find(id: string): Promise<User> {
-    // @ts-ignore
     return this.usersTable.find(id);
   }
   async user_findByEmail(email: string): Promise<User> {
     const found = await this.usersTable.search({ email });
-    // @ts-ignore
     return Promise.resolve(found.length > 0 ? found[0] : null);
   }
   async user_findAll(): Promise<Array<User>> {
-    // @ts-ignore
     return this.usersTable.search({});
   }
   async user_update(user: User): Promise<Array<User>> {
     Joi.assert(user, userSchema);
-    // @ts-ignore
     return this.usersTable.update({ id: user.id }, user);
   }
   async user_delete(id: string): Promise<Array<User>> {
-    // @ts-ignore
     return this.usersTable.delete(id);
   }
 
   async siteSettings_get(): Promise<SiteSettings> {
     let settings = {
       webhooks: [],
-      tokens: []
+      tokens: [],
     };
     if (fs.existsSync(siteSettingsPath)) {
       try {
@@ -317,13 +292,11 @@ export default class DriverMongoDB implements Driver {
     } else {
       fs.writeFileSync(siteSettingsPath, JSON.stringify(settings));
     }
-    // @ts-ignore
     return Promise.resolve(settings);
   }
   async siteSettings_update(settings: SiteSettings): Promise<SiteSettings> {
     Joi.assert(settings, siteSettingsSchema);
     fs.writeFileSync(siteSettingsPath, JSON.stringify(settings));
-    // @ts-ignore
     return Promise.resolve(settings);
   }
 }
