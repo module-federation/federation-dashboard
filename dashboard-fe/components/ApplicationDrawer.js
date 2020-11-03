@@ -4,19 +4,19 @@ import { observer } from "mobx-react";
 import store from "../src/store";
 
 import ApplicationSidebar, {
-  ApplicationSidebarHeader
+  ApplicationSidebarHeader,
 } from "./ApplicationSidebar";
 
 const rightDrawerWidth = 480;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   toolbarIcon: {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
     padding: "0 8px",
-    ...theme.mixins.toolbar
-  }
+    ...theme.mixins.toolbar,
+  },
 }));
 
 function ApplicationSidebarDrawer() {
@@ -29,7 +29,7 @@ function ApplicationSidebarDrawer() {
     >
       <div
         style={{
-          display: "flex"
+          display: "flex",
         }}
       >
         <div className={classes.toolbarIcon}>
@@ -42,7 +42,7 @@ function ApplicationSidebarDrawer() {
       <Divider />
       <div
         style={{
-          width: rightDrawerWidth
+          width: rightDrawerWidth,
         }}
       >
         {store.selectedApplication && (

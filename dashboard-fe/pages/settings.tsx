@@ -11,7 +11,7 @@ import {
   InputLabel,
   Input,
   FormHelperText,
-  FormControl
+  FormControl,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CreateIcon from "@material-ui/icons/Create";
@@ -56,48 +56,48 @@ const EVENTS = [
   "updateApplication",
   "deleteApplication",
   "updateApplicationVersion",
-  "deleteApplicationVersion"
+  "deleteApplicationVersion",
 ];
 
 const useStyles = makeStyles({
   textField: {
-    marginTop: "1em"
+    marginTop: "1em",
   },
   pizzaImage: {
-    width: "100%"
-  }
+    width: "100%",
+  },
 });
 
 export function SettingsForm({ siteSettings }) {
   const { register, errors, handleSubmit, control } = useForm({
     mode: "all",
     reValidateMode: "all",
-    defaultValues: siteSettings
+    defaultValues: siteSettings,
   });
   const [setSettings] = useMutation(SET_SETTINGS);
   const [webhookIndexes, setWebhookIndexes] = React.useState<Array<number>>(
-    Object.keys(siteSettings.webhooks).map(i => parseInt(i))
+    Object.keys(siteSettings.webhooks).map((i) => parseInt(i))
   );
   const classes = useStyles();
 
-  const deleteWebhook = ind => {
-    setWebhookIndexes(webhookIndexes.filter(i => i !== ind));
+  const deleteWebhook = (ind) => {
+    setWebhookIndexes(webhookIndexes.filter((i) => i !== ind));
   };
   const addWebhook = () => {
     setWebhookIndexes([...webhookIndexes, Math.max(...webhookIndexes) + 1]);
   };
 
-  const onSubmit = settings => {
+  const onSubmit = (settings) => {
     setSettings({
       variables: {
-        settings
-      }
+        settings,
+      },
     });
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {webhookIndexes.map(ind => (
+      {webhookIndexes.map((ind) => (
         <Grid
           container
           className={classes.textField}
@@ -113,7 +113,7 @@ export function SettingsForm({ siteSettings }) {
                   variant="outlined"
                   fullWidth
                 >
-                  {EVENTS.map(evt => (
+                  {EVENTS.map((evt) => (
                     <MenuItem value={evt} key={evt}>
                       {evt}
                     </MenuItem>
@@ -134,7 +134,7 @@ export function SettingsForm({ siteSettings }) {
               error={!!errors.webhooks?.[ind]?.url}
               name={`webhooks[${ind}].url`}
               inputRef={register({
-                required: true
+                required: true,
               })}
             />
           </Grid>
@@ -167,17 +167,17 @@ export function SettingsForm({ siteSettings }) {
 const TokenForm = ({ siteSettings }) => {
   const { register, handleSubmit, watch, errors } = useForm();
   const [setSettings] = useMutation(SET_SETTINGS);
-  const onSubmit = siteTokens => {
-    const tokens = Object.keys(siteTokens).map(key => {
+  const onSubmit = (siteTokens) => {
+    const tokens = Object.keys(siteTokens).map((key) => {
       return {
         key: key,
-        value: siteTokens[key]
+        value: siteTokens[key],
       };
     });
     setSettings({
       variables: {
-        settings: { tokens }
-      }
+        settings: { tokens },
+      },
     });
   };
 
