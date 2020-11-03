@@ -274,7 +274,7 @@ const resolvers = {
   Query: {
     dashboard: () => {
       return {
-        versionManagementEnabled: versionManagementEnabled()
+        versionManagementEnabled: versionManagementEnabled(),
       };
     },
     userByEmail: async (_, { email }) => {
@@ -292,7 +292,7 @@ const resolvers = {
     },
     siteSettings: () => {
       return dbDriver.siteSettings_get();
-    }
+    },
   },
   Mutation: {
     updateApplicationSettings: async (_, { group, application, settings }) => {
@@ -317,7 +317,7 @@ const resolvers = {
         type: application ? "application" : "group",
         name,
         value,
-        url
+        url,
         //TODO add extra keys
       });
       return true;
@@ -331,32 +331,32 @@ const resolvers = {
         type: application ? "application" : "group",
         name,
         value,
-        url
+        url,
         //TODO add extra keys
       });
       return true;
     },
     publishVersion: async (_, { group, application, version }) => {
       const out = await VersionManager.publishVersion(
-          group,
-          application,
-          version
+        group,
+        application,
+        version
       );
       return out;
     },
     setRemoteVersion: async (_, { group, application, remote, version }) => {
       return VersionManager.setRemoteVersion(
-          group,
-          application,
-          remote,
-          version
+        group,
+        application,
+        remote,
+        version
       );
     },
     updateUser: async (_, { user }) => {
       await dbDriver.setup();
       await dbDriver.user_update({
         id: user.email,
-        ...user
+        ...user,
       });
       return dbDriver.user_find(user.email);
     },
@@ -364,7 +364,7 @@ const resolvers = {
       await dbDriver.setup();
       await dbDriver.siteSettings_update(settings);
       return dbDriver.siteSettings_get();
-    }
+    },
   },
   Application: {
     versions: async ({ id }, { environment, latest }, ctx) => {
@@ -383,9 +383,9 @@ const resolvers = {
       } else {
       }
       return names
-          ? metrics.filter(({ name }) => names.includes(name))
-          : metrics;
-    }
+        ? metrics.filter(({ name }) => names.includes(name))
+        : metrics;
+    },
   },
   Consume: {
     consumingApplication: async (parent, args, ctx) => {
@@ -395,25 +395,25 @@ const resolvers = {
     application: async (parent, args, ctx) => {
       await dbDriver.setup();
       return dbDriver.application_find(parent.applicationID);
-    }
+    },
   },
   Module: {
     consumedBy: async (parent, args, ctx) => {
       await dbDriver.setup();
       return ModuleManager.getConsumedBy(
-          ctx.group,
-          ctx.environment,
-          parent.applicationID,
-          parent.name
+        ctx.group,
+        ctx.environment,
+        parent.applicationID,
+        parent.name
       );
-    }
+    },
   },
   ApplicationVersion: {
     modules: async ({ modules }, { name }) => {
       return name
-          ? modules.filter(({ name: moduleName }) => name === moduleName)
-          : modules;
-    }
+        ? modules.filter(({ name: moduleName }) => name === moduleName)
+        : modules;
+    },
   },
   Group: {
     metrics: async ({ id }, { names }, ctx) => {
@@ -423,8 +423,8 @@ const resolvers = {
       } else {
       }
       return names
-          ? metrics.filter(({ name }) => names.includes(name))
-          : metrics;
+        ? metrics.filter(({ name }) => names.includes(name))
+        : metrics;
     },
     applications: async ({ id }, { id: applicationId }, ctx) => {
       ctx.group = id;
@@ -435,8 +435,8 @@ const resolvers = {
         const found = await dbDriver.application_find(applicationId);
         return found ? [found] : [];
       }
-    }
-  }
+    },
+  },
 };
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers });
@@ -466,7 +466,7 @@ async function handler(req, res) {
   if (req?.query?.token !== global.INTERNAL_TOKEN) {
     if (!session || !session.user) {
       if(!session.noAuth) {
-        res.status(401).json({ errors: [{ message: "Unauthorized", extensions: { code: 'UNAUTHENTICATED' } }] })
+        res.status(401).json({ errors: [{ message: "Unauthorized" , extensions: { code: 'UNAUTHENTICATED' } }] });
       }
     }
   }
@@ -476,8 +476,8 @@ async function handler(req, res) {
 
 export const config = {
   api: {
-    bodyParser: false
-  }
+    bodyParser: false,
+  },
 };
 
 export default handler;
