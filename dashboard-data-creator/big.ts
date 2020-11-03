@@ -7,15 +7,15 @@ import { interactiveHold } from "./runner";
 import moment from "moment";
 
 const home = new Application("team/home", "frontend", 8080, { team: "earth" }, [
-  "react-app"
+  "react-app",
 ]);
 
 const search = new Application("search", "frontend", 8080, { team: "venus" }, [
-  "react-app"
+  "react-app",
 ]);
 const cart = new Application("cart", "frontend", 8080, { team: "saturn" }, [
   "react-app",
-  "buy-flow"
+  "buy-flow",
 ]);
 const checkout = new Application(
   "checkout",
@@ -25,11 +25,11 @@ const checkout = new Application(
   ["react-app", "buy-flow"]
 );
 const pdp = new Application("pdp", "frontend", 8080, { team: "pluto" }, [
-  "react-app"
+  "react-app",
 ]);
 
 const cms = new Application("cms", "admin", 8080, { team: "green" }, [
-  "react-app"
+  "react-app",
 ]);
 cms.addConsumes("admin-shared", "Header");
 cms.addConsumes("admin-shared", "Footer");
@@ -53,7 +53,7 @@ collections.addConsumes("admin-shared", "Header");
 collections.addConsumes("admin-shared", "Footer");
 collections.addConsumes("assets", "Image");
 const assets = new Application("assets", "admin", 8080, { team: "blue" }, [
-  "react-app"
+  "react-app",
 ]);
 collections.addConsumes("admin-shared", "Header");
 collections.addConsumes("admin-shared", "Footer");
@@ -64,25 +64,18 @@ const productionApplications = [home, search, cart, checkout, pdp];
 const applications = [...adminApplications, ...productionApplications];
 
 async function buildProjects() {
-  applications.forEach(app =>
-    app.setPosted(
-      moment()
-        .subtract(21, "days")
-        .toDate()
-    )
+  applications.forEach((app) =>
+    app.setPosted(moment().subtract(21, "days").toDate())
   );
 
   await Promise.all(
     new Array(21)
       .fill(0)
       .map((_, i) => i)
-      .map(day =>
+      .map((day) =>
         home.addMetric(
           "on-load",
-          moment()
-            .subtract(day, "days")
-            .toDate()
-            .toString(),
+          moment().subtract(day, "days").toDate().toString(),
           200 + day
         )
       )
@@ -92,13 +85,10 @@ async function buildProjects() {
     new Array(21)
       .fill(0)
       .map((_, i) => i)
-      .map(day =>
+      .map((day) =>
         home.addMetric(
           "fmp",
-          moment()
-            .subtract(day, "days")
-            .toDate()
-            .toString(),
+          moment().subtract(day, "days").toDate().toString(),
           130 + day / 3.0
         )
       )
@@ -108,12 +98,8 @@ async function buildProjects() {
   home.bumpVersion("1.0.0");
   await home.pushDevelopmentVersion();
   await home.pushProductionVersion();
-  applications.forEach(app =>
-    app.setPosted(
-      moment()
-        .subtract(14, "days")
-        .toDate()
-    )
+  applications.forEach((app) =>
+    app.setPosted(moment().subtract(14, "days").toDate())
   );
 
   await interactiveHold("Update home project");
@@ -123,7 +109,7 @@ async function buildProjects() {
     {
       type: "component",
       framework: "react",
-      storybook: "http://our.storybook.com"
+      storybook: "http://our.storybook.com",
     },
     ["react", "shell"]
   );
@@ -133,19 +119,15 @@ async function buildProjects() {
     {
       type: "component",
       framework: "react",
-      storybook: "http://our.storybook.com"
+      storybook: "http://our.storybook.com",
     },
     ["react", "shell"]
   );
   home.bumpVersion("1.1.0");
   await home.pushDevelopmentVersion();
   await home.pushProductionVersion();
-  applications.forEach(app =>
-    app.setPosted(
-      moment()
-        .subtract(10, "days")
-        .toDate()
-    )
+  applications.forEach((app) =>
+    app.setPosted(moment().subtract(10, "days").toDate())
   );
 
   await interactiveHold("Update home project");
@@ -156,29 +138,21 @@ async function buildProjects() {
     {
       type: "component",
       framework: "react",
-      storybook: "http://our.storybook.com"
+      storybook: "http://our.storybook.com",
     },
     ["react", "shell", "external"]
   );
   await home.pushProductionVersion();
   await home.pushDevelopmentVersion();
-  applications.forEach(app =>
-    app.setPosted(
-      moment()
-        .subtract(8, "days")
-        .toDate()
-    )
+  applications.forEach((app) =>
+    app.setPosted(moment().subtract(8, "days").toDate())
   );
 
   await interactiveHold("Upload search project");
   search.addConsumes("team/home", "Header");
   await search.pushDevelopmentVersion();
-  applications.forEach(app =>
-    app.setPosted(
-      moment()
-        .subtract(6, "days")
-        .toDate()
-    )
+  applications.forEach((app) =>
+    app.setPosted(moment().subtract(6, "days").toDate())
   );
 
   await interactiveHold("Adding AutoCompleteSearch to search project");
@@ -190,12 +164,8 @@ async function buildProjects() {
   home.bumpVersion("1.2.1");
   await home.pushDevelopmentVersion();
   await home.pushProductionVersion();
-  applications.forEach(app =>
-    app.setPosted(
-      moment()
-        .subtract(4, "days")
-        .toDate()
-    )
+  applications.forEach((app) =>
+    app.setPosted(moment().subtract(4, "days").toDate())
   );
 
   await interactiveHold("Pushing production versions");
@@ -222,12 +192,8 @@ async function buildProjects() {
   await admin_shared.pushDevelopmentVersion();
   await collections.pushDevelopmentVersion();
   await assets.pushDevelopmentVersion();
-  applications.forEach(app =>
-    app.setPosted(
-      moment()
-        .subtract(2, "days")
-        .toDate()
-    )
+  applications.forEach((app) =>
+    app.setPosted(moment().subtract(2, "days").toDate())
   );
 
   await interactiveHold("Add more production versions");
@@ -236,12 +202,8 @@ async function buildProjects() {
   home.addModule("LogoutButton", "src/LogoutButton.jsx");
   await home.pushProductionVersion();
 
-  applications.forEach(app =>
-    app.setPosted(
-      moment()
-        .subtract(1, "days")
-        .toDate()
-    )
+  applications.forEach((app) =>
+    app.setPosted(moment().subtract(1, "days").toDate())
   );
 
   home.bumpVersion("1.3.1");

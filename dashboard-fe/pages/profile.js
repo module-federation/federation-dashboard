@@ -4,7 +4,7 @@ import {
   FormControl,
   InputLabel,
   Input,
-  FormHelperText
+  FormHelperText,
 } from "@material-ui/core";
 import Layout from "../components/Layout";
 import store from "../src/store";

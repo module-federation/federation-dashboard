@@ -9,7 +9,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import store from "../../src/store";
 import {
   GET_HEAD_VERSION,
-  SET_REMOTE_VERSION
+  SET_REMOTE_VERSION,
 } from "../../components/application/CurrentVersion";
 let prevint;
 import { makeIDfromURL, removeMeta } from "../../lighthouse/utils.js";
@@ -54,8 +54,8 @@ const Performance = ({ groupData }) => {
 
   const { data } = useQuery(GET_TRACKED, {
     variables: {
-      group: "default"
-    }
+      group: "default",
+    },
   });
 
   React.useEffect(() => {
@@ -67,13 +67,13 @@ const Performance = ({ groupData }) => {
 
   const [setUrl] = useMutation(ADD_URL);
 
-  const _handleSubmit = e => {
+  const _handleSubmit = (e) => {
     if (e) e.preventDefault();
     if (inputValue === "") return alert("URL is required");
     const { url, search } = makeIDfromURL(inputValue);
 
     const newArr = todos.slice();
-    const valueExists = todos.find(item => {
+    const valueExists = todos.find((item) => {
       return item.url === url;
     });
     if (!valueExists) {
@@ -83,9 +83,9 @@ const Performance = ({ groupData }) => {
           {
             name: inputName,
             new: true,
-            search
-          }
-        ]
+            search,
+          },
+        ],
       });
       setTodos(newArr);
       setInputValue("");
@@ -94,9 +94,9 @@ const Performance = ({ groupData }) => {
       setUrl({
         variables: {
           settings: {
-            trackedURLs: newArr
-          }
-        }
+            trackedURLs: newArr,
+          },
+        },
       });
     } else {
       alert("URL already exists, add variants on the page");
@@ -112,15 +112,15 @@ const Performance = ({ groupData }) => {
     setUrl({
       variables: {
         settings: {
-          trackedURLs: newArr
-        }
-      }
+          trackedURLs: newArr,
+        },
+      },
     });
   };
 
   const _handleBntReRun = ({ index, type }) => {
     const newArr = todos.slice();
-    const updated = newArr[index].variants.map(variant => {
+    const updated = newArr[index].variants.map((variant) => {
       if (
         type === "variants" &&
         !variant.name.toLowerCase().includes("FROZEN")
@@ -136,15 +136,15 @@ const Performance = ({ groupData }) => {
     setUrl({
       variables: {
         settings: {
-          trackedURLs: newArr
-        }
-      }
+          trackedURLs: newArr,
+        },
+      },
     });
   };
 
   const reRunAllTests = () => {
     const toRerun = todos.reduce((acc, item) => {
-      const updated = item.variants.map(variant => {
+      const updated = item.variants.map((variant) => {
         const isFrozen = variant.name.toLowerCase().includes("frozen");
         if (!isFrozen) {
           variant.new = true;
@@ -159,9 +159,9 @@ const Performance = ({ groupData }) => {
     setUrl({
       variables: {
         settings: {
-          trackedURLs: toRerun
-        }
-      }
+          trackedURLs: toRerun,
+        },
+      },
     });
     setTodos(toRerun);
   };
@@ -180,8 +180,8 @@ const Performance = ({ groupData }) => {
         reRunAllTests={reRunAllTests}
         value={inputValue}
         name={inputName}
-        onChange={e => setInputValue(e.target.value)}
-        onChangeName={e => setInputNameValue(e.target.value)}
+        onChange={(e) => setInputValue(e.target.value)}
+        onChangeName={(e) => setInputNameValue(e.target.value)}
       />
       <List>
         {todos?.[0] &&
@@ -207,18 +207,18 @@ Performance.getInitialProps = async ({ req, res }) => {
     : "http://localhost:3000/";
 
   if (!process.browser) {
-    const runQuery = async url => {
+    const runQuery = async (url) => {
       const fetch = __non_webpack_require__("node-fetch");
       const gql = __non_webpack_require__("graphql-tag");
       const {
         ApolloClient,
         createHttpLink,
-        InMemoryCache
+        InMemoryCache,
       } = __non_webpack_require__("@apollo/client");
       const cache = new InMemoryCache({ addTypename: false });
       const link = createHttpLink({
         uri: url + "api/graphql",
-        fetch
+        fetch,
       });
       const apolloClient = new ApolloClient({
         // Provide required constructor fields
@@ -228,9 +228,9 @@ Performance.getInitialProps = async ({ req, res }) => {
         queryDeduplication: false,
         defaultOptions: {
           watchQuery: {
-            fetchPolicy: "cache-and-network"
-          }
-        }
+            fetchPolicy: "cache-and-network",
+          },
+        },
       });
 
       const { data } = await apolloClient.query({
@@ -249,7 +249,7 @@ Performance.getInitialProps = async ({ req, res }) => {
               }
             }
           }
-        `
+        `,
       });
 
       return data;

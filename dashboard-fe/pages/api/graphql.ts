@@ -466,7 +466,7 @@ async function handler(req, res) {
   if (req?.query?.token !== global.INTERNAL_TOKEN) {
     if (!session || !session.user) {
       if(!session.noAuth) {
-        res.status(401).json({error: "Unauthorized"})
+        res.status(401).json({ errors: [{ message: "Unauthorized", extensions: { code: 'UNAUTHENTICATED' } }] })
       }
     }
   }
