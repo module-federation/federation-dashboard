@@ -10,7 +10,7 @@ if (
 }
 
 const theme = createMuiTheme({
-  palette
+  palette,
 });
 
 export default theme;
