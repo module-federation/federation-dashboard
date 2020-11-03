@@ -53,7 +53,7 @@ class MongoDriver<T> {
     });
   }
 
-  async update(query: any, data: T): Promise<null> {
+  async update<TA>(query: any, data: TA): Promise<null> {
     return new Promise(async (resolve) => {
       this.collection.find(query).toArray((_, docs) => {
         if (docs.length > 0) {
@@ -232,13 +232,8 @@ export default class DriverMongoDB implements Driver {
     });
   }
 
-  // @ts-ignore
-  async group_updateMetric(
-    application: Application,
-    group: Group
-  ): Promise<Array<Group>> {
+  async group_updateMetric(group: Group): Promise<Array<Group>> {
     bus.publish("groupMetricUpdated", group);
-    // @ts-ignore
     return this.metricsTable.update({ id: group.id }, group);
   }
 
@@ -286,6 +281,7 @@ export default class DriverMongoDB implements Driver {
   async siteSettings_get(): Promise<SiteSettings> {
     let settings = {
       webhooks: [],
+      tokens: [],
     };
     if (fs.existsSync(siteSettingsPath)) {
       try {
