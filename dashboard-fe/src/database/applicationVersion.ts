@@ -9,6 +9,7 @@ import { privateConfig } from "../config";
 export const schema = Joi.object({
   applicationId: Joi.string().required(),
   environment: Joi.string().required(),
+  // @ts-ignore
   version: privateConfig.VERSION_MANAGER
     ? Joi.string().required()
     : Joi.string().allow("", null),
