@@ -12,16 +12,16 @@ module.exports = {
           library: { type: config.output.libraryTarget, name: "dashboard" },
           filename: "static/runtime/remoteEntry.js",
           exposes: {
-            "./utils": "./lighthouse/utils"
-          }
+            "./utils": "./lighthouse/utils",
+          },
         })
       );
     } else {
       return merge.merge(config, {
         entry() {
-          return config.entry().then(entry => {
+          return config.entry().then((entry) => {
             const newEntry = Object.assign({}, entry, {
-              dashboard: "./workers/init.js"
+              dashboard: "./workers/init.js",
             });
             return newEntry;
           });
@@ -31,16 +31,16 @@ module.exports = {
             name: "dashboard",
             filename: "static/runtime/remoteEntry.js",
             exposes: {
-              "./utils": "./lighthouse/utils"
+              "./utils": "./lighthouse/utils",
             },
             remotes: {
               dashboard:
-                "dashboard@http://localhost:3000/_next/static/runtime/remoteEntry.js"
-            }
-          })
-        ]
+                "dashboard@http://localhost:3000/_next/static/runtime/remoteEntry.js",
+            },
+          }),
+        ],
       });
     }
     return config;
-  }
+  },
 };

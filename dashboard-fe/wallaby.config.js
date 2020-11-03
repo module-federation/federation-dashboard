@@ -1,4 +1,4 @@
-module.exports = wallaby => ({
+module.exports = (wallaby) => ({
   autoDetect: true,
 
   files: [
@@ -18,7 +18,7 @@ module.exports = wallaby => ({
     "src/**/*.webp",
     "src/**/*.svg",
     "src/**/*.css",
-    "src/**/*.scss"
+    "src/**/*.scss",
   ],
 
   compilers: {
@@ -27,17 +27,17 @@ module.exports = wallaby => ({
     "**/*.ts?(x)": wallaby.compilers.typeScript({
       module: "commonjs",
       jsx: "React",
-      target: "esnext"
-    })
+      target: "esnext",
+    }),
   },
 
   tests: [
     { pattern: "node_modules/*", ignore: true, instrument: false },
-    "__tests__/**/*.spec.ts*"
+    "__tests__/**/*.spec.ts*",
   ],
 
   env: {
     type: "node",
-    runner: "node"
-  }
+    runner: "node",
+  },
 });

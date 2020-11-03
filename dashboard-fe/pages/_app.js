@@ -29,7 +29,7 @@ function MyApp(props) {
           id="publicConfig"
           type="application/json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(publicConfig)
+            __html: JSON.stringify(publicConfig),
           }}
         />
       </Head>
