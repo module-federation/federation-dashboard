@@ -41,7 +41,7 @@ class TableDriver<T> {
     this.store = store;
   }
 
-  async find(id: string): Promise<unknown> {
+  async find<TA>(id: string): Promise<TA> {
     return new Promise((resolve) => {
       this.store.find({ id }, (_, docs) => {
         if (docs.length > 0) {
@@ -54,7 +54,7 @@ class TableDriver<T> {
     });
   }
 
-  async search(query: any): Promise<unknown> {
+  async search<TA>(query: any): Promise<TA> {
     return new Promise((resolve) => {
       this.store.find(query, (_, docs) => {
         resolve(docs.map(({ _id, ...data }) => ({ ...data })) || []);
@@ -62,13 +62,13 @@ class TableDriver<T> {
     });
   }
 
-  async insert(data: T): Promise<unknown> {
+  async insert<TA>(data: T): Promise<TA> {
     return new Promise(async (resolve) => {
       this.store.insert(data, () => resolve());
     });
   }
 
-  async update(query: any, data: T): Promise<unknown> {
+  async update<TA>(query: any, data: TA): Promise<Array<TA> | null> {
     return new Promise(async (resolve) => {
       this.store.find(query, (_, docs) => {
         if (docs.length > 0) {
@@ -80,7 +80,7 @@ class TableDriver<T> {
     });
   }
 
-  async delete(id: string): Promise<unknown> {
+  async delete<TA>(id: string): Promise<TA> {
     return new Promise((resolve) => {
       this.store.remove({ id }, {}, () => resolve());
     });
@@ -123,7 +123,7 @@ export default class DriverNedb implements Driver {
   }
 
   async application_find(id: string): Promise<Application | null> {
-    return this.applicationTable.find(id);
+    return this.applicationTable.find<Application>(id);
   }
   async application_findInGroups(
     groups: string[]
@@ -142,7 +142,7 @@ export default class DriverNedb implements Driver {
     metric: MetricValue
   ): Promise<Array<MetricValue> | null> {
     Joi.assert(metric, metricValueSchema);
-    return this.metricsTable.insert({
+    return this.metricsTable.insert<Array<MetricValue>>({
       type: "application",
       id,
       ...metric,
@@ -151,7 +151,12 @@ export default class DriverNedb implements Driver {
   async application_update(application: Application): Promise<null> {
     Joi.assert(application, applicationSchema);
     bus.publish("updateApplication", application);
-    return this.applicationTable.update({ id: application.id }, application);
+
+    await this.applicationTable.update<Application>(
+      { id: application.id },
+      application
+    );
+    return null;
   }
   async application_delete(id: string): Promise<null> {
     return this.applicationTable.delete(id);
@@ -162,7 +167,9 @@ export default class DriverNedb implements Driver {
     environment: string,
     version: string
   ): Promise<ApplicationVersion | null> {
-    const versions = await this.applicationVersionsTable.search({
+    const versions = await this.applicationVersionsTable.search<
+      Array<ApplicationVersion>
+    >({
       applicationId,
       environment,
       version,
@@ -184,7 +191,9 @@ export default class DriverNedb implements Driver {
     if (version) {
       q.version = version;
     }
-    const versions = await this.applicationVersionsTable.search(q);
+    const versions = await this.applicationVersionsTable.search<
+      Array<ApplicationVersion>
+    >(q);
     return versions.length > 0 ? versions : [];
   }
 
@@ -227,14 +236,9 @@ export default class DriverNedb implements Driver {
     });
   }
 
-  // @ts-ignore
-  async group_updateMetric(
-    application: Application,
-    group: Group
-  ): Promise<Array<Group>> {
+  async group_updateMetric(group: Group): Promise<Array<Group>> {
     bus.publish("groupMetricUpdated", group);
-    // @ts-ignore
-    return this.metricsTable.update({ id: group.id }, group);
+    return this.metricsTable.update<Group>({ id: group.id }, group);
   }
 
   async group_find(id: string): Promise<Group> {
@@ -242,7 +246,7 @@ export default class DriverNedb implements Driver {
   }
   async group_findByName(name: string): Promise<Group> {
     return this.groupsTable
-      .search({ name })
+      .search<Array<Group>>({ name })
       .then((data) => (data && data.length ? data[0] : null));
   }
 
@@ -264,7 +268,7 @@ export default class DriverNedb implements Driver {
     return this.usersTable.find(id);
   }
   async user_findByEmail(email: string): Promise<User> {
-    const found = await this.usersTable.search({ email });
+    const found = await this.usersTable.search<Array<User>>({ email });
     return Promise.resolve(found.length > 0 ? found[0] : null);
   }
   async user_findAll(): Promise<Array<User>> {

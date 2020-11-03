@@ -55,9 +55,7 @@ export default abstract class Driver {
     id: string
   ): Promise<Array<MetricValue> | null>;
 
-  abstract async group_updateMetric(
-    id: string
-  ): Promise<Array<MetricValue> | null>;
+  abstract async group_updateMetric(group: Group): Promise<Array<Group> | null>;
 
   abstract async user_find(id: string): Promise<User>;
   abstract async user_findByEmail(email: string): Promise<User>;
