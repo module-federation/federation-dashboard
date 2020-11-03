@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const {
   container: { ModuleFederationPlugin },
-  DefinePlugin
+  DefinePlugin,
 } = require("webpack");
 const path = require("path");
 
@@ -11,49 +11,49 @@ module.exports = {
   mode: "development",
   devServer: {
     contentBase: path.join(__dirname, "dist"),
-    port: 3001
+    port: 3001,
   },
   output: {
     filename: "[name].[contenthash].js",
     chunkFilename: "[name].[contenthash].js",
-    publicPath: `http://localhost:3001/`
+    publicPath: `http://localhost:3001/`,
   },
   module: {
     rules: [
       {
         test: /\.m?js$/,
         resolve: {
-          fullySpecified: false
-        }
+          fullySpecified: false,
+        },
       },
       {
         test: /\.less$/,
         use: [
           {
-            loader: "style-loader"
+            loader: "style-loader",
           },
           {
-            loader: "css-loader"
+            loader: "css-loader",
           },
           {
             loader: "less-loader",
             options: {
               lessOptions: {
-                javascriptEnabled: true
-              }
-            }
-          }
-        ]
+                javascriptEnabled: true,
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.jsx?$/,
         loader: "babel-loader",
         exclude: /node_modules/,
         options: {
-          presets: ["@babel/preset-react"]
-        }
-      }
-    ]
+          presets: ["@babel/preset-react"],
+        },
+      },
+    ],
   },
   plugins: [
     new ModuleFederationPlugin({
@@ -64,17 +64,17 @@ module.exports = {
         search: "search",
         dsl: "dsl",
         nav: "nav",
-        utils: "utils"
+        utils: "utils",
       },
       exposes: {
         "./ProductCarousel": "./src/ProductCarousel",
-        "./HeroImage": "./src/HeroImage"
+        "./HeroImage": "./src/HeroImage",
       },
       // sharing code based on the installed version, to allow for multiple vendors with different versions
-      shared: require("./package.json").dependencies
+      shared: require("./package.json").dependencies,
     }),
     new HtmlWebpackPlugin({
-      template: "./public/index.html"
+      template: "./public/index.html",
     }),
     new DashboardPlugin({
       version: true,
@@ -85,10 +85,10 @@ module.exports = {
         clientUrl: "http://localhost:3000",
         source: {
           url:
-            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home"
+            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home",
         },
-        remote: "http://localhost:3001/remoteEntry.js"
-      }
-    })
-  ]
+        remote: "http://localhost:3001/remoteEntry.js",
+      },
+    }),
+  ],
 };

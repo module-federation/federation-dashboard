@@ -7,7 +7,7 @@ import {
   Table,
   TableRow,
   TableCell,
-  TableBody
+  TableBody,
 } from "@material-ui/core";
 import Link from "next/link";
 import gql from "graphql-tag";
@@ -21,28 +21,28 @@ import withAuth from "../../../../../components/with-auth";
 import {
   Code,
   CodeWrapper,
-  GeneratedCode
+  GeneratedCode,
 } from "../../../../../components/Code";
 import store from "../../../../../src/store";
 import { ModuleLink, ApplicationLink } from "../../../../../components/links";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
-    padding: 10
+    padding: 10,
   },
   panel: {
-    padding: 10
+    padding: 10,
   },
   usageTitle: {
-    marginTop: 20
+    marginTop: 20,
   },
   usageSection: {
     marginTop: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   moduleHeader: {
-    marginBottom: 20
-  }
+    marginBottom: 20,
+  },
 }));
 
 const GET_MODULES = gql`
@@ -125,8 +125,8 @@ const ModulePage = () => {
           group: router.query.group,
           environment: store.environment,
           name: router.query.module,
-          app: router.query.application
-        }
+          app: router.query.application,
+        },
       });
     }
   }, [router]);
@@ -170,7 +170,7 @@ const ModulePage = () => {
                       Requires
                     </Typography>
                     <Typography>
-                      {mod.requires.map(name => name).join()}
+                      {mod.requires.map((name) => name).join()}
                     </Typography>
                   </Paper>
                 </Grid>
