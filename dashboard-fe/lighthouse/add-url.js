@@ -27,14 +27,14 @@ const generateLighthouseReport = (group) => {
           await init(testLink, name || "Latest", true);
           return variant;
         },
-        { concurrency: 4 }
+        { concurrency: 3 }
       );
       return {
         url,
         variants: updatedVariants,
       };
     },
-    { concurrency: 2 }
+    { concurrency: 1 }
   ).then(async (updatedTrackedURLs) => {
     if (cache.foundNew) {
       const grp = await dbDriver.group_find(group.id);
