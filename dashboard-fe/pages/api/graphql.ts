@@ -465,8 +465,15 @@ async function handler(req, res) {
   const session = await auth0.getSession();
   if (req?.query?.token !== global.INTERNAL_TOKEN) {
     if (!session || !session.user) {
-      if(!session.noAuth) {
-        res.status(401).json({ errors: [{ message: "Unauthorized" , extensions: { code: 'UNAUTHENTICATED' } }] });
+      if (!session.noAuth) {
+        res.status(401).json({
+          errors: [
+            {
+              message: "Unauthorized",
+              extensions: { code: "UNAUTHENTICATED" },
+            },
+          ],
+        });
       }
     }
   }

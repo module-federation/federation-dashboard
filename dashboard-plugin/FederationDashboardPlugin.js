@@ -269,6 +269,52 @@ class FederationDashboardPlugin {
       const hashPath = path.join(stats.outputPath, this._options.filename);
       fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, () => {});
     }
+    console.log("zack");
+    console.log(
+      path.join(stats.outputPath, this.FederationPluginOptions.filename)
+    );
+
+    const file = fs.readFileSync(
+      path.join(stats.outputPath, this.FederationPluginOptions.filename)
+    );
+    const { version } = JSON.parse(dashData);
+    if (!version) {
+      throw new Error("no version provided, cannot version remote");
+    }
+    console.log(
+      path.join(
+        stats.outputPath,
+        version,
+        this.FederationPluginOptions.filename
+      )
+    );
+
+    fs.mkdir(
+      path.join(stats.outputPath, version),
+      { recursive: true },
+      (err) => {
+        if (err) throw err;
+        fs.writeFile(
+          path.join(
+            stats.outputPath,
+            version,
+            this.FederationPluginOptions.filename
+          ),
+          file,
+          (err) => {
+            console.log(err);
+            console.log(
+              "wrote versioned remote",
+              path.join(
+                stats.outputPath,
+                version,
+                this.FederationPluginOptions.filename
+              )
+            );
+          }
+        );
+      }
+    );
 
     const statsPath = path.join(stats.outputPath, "stats.json");
     fs.writeFile(

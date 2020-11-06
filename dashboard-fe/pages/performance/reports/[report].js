@@ -546,7 +546,7 @@ class Report extends React.Component {
             values={this.state}
             onChange={(formObj) => {
               this.setState(Object.assign({}, this.state, formObj));
-            }}  
+            }}
           />
         </div>
         <div>
