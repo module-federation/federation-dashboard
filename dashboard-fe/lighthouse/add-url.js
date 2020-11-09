@@ -1,4 +1,3 @@
-import fs from "fs";
 import { init } from "./lib";
 import Promise from "bluebird";
 import { cache } from "./utils";
@@ -24,17 +23,21 @@ const generateLighthouseReport = (group) => {
           }
           variant.new = false;
           Object.assign(cache, { foundNew: true });
-          await init(testLink, name || "Latest", true);
-          return variant;
+          try {
+            await init(testLink, name || "Latest", true);
+            return variant;
+          } catch (e) {
+            return variant;
+          }
         },
-        { concurrency: 3 }
+        { concurrency: 1 }
       );
       return {
         url,
         variants: updatedVariants,
       };
     },
-    { concurrency: 1 }
+    { concurrency: 2 }
   ).then(async (updatedTrackedURLs) => {
     if (cache.foundNew) {
       const grp = await dbDriver.group_find(group.id);
