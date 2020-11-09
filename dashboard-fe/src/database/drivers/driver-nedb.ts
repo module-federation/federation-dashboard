@@ -22,7 +22,7 @@ const createDatastore = (name) => {
     filename: path.join(dir, `/${name}.db`),
   });
   ds.loadDatabase();
-  ds.persistence.setAutocompactionInterval(60 * 1000);
+  // ds.persistence.setAutocompactionInterval(60 * 1000);
   return ds;
 };
 
