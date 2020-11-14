@@ -29,6 +29,8 @@ module.exports.privateConfig = !process.browser
           VERSION_MANAGER: process.env.VERSION_MANAGER,
           PAGESPEED_KEY: process.env.PAGESPEED_KEY,
           USE_CLOUD: process.env.USE_CLOUD,
+          EXTERNAL_URL:
+            process.env.EXTERNAL_URL || "http://mf-dash.ddns.net:3000/",
         },
         require("dotenv").config().parsed || {}
       )
@@ -47,6 +49,8 @@ module.exports.publicConfig =
             REDIRECT_URI: process.env.REDIRECT_URI,
             WITH_AUTH: process.env.WITH_AUTH,
             POST_LOGOUT_REDIRECT_URI: process.env.POST_LOGOUT_REDIRECT_URI,
+            EXTERNAL_URL:
+              process.env.EXTERNAL_URL || "http://mf-dash.ddns.net:3000/",
           }
         )
       )

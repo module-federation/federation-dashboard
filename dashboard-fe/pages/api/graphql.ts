@@ -461,8 +461,8 @@ function runMiddleware(req, res, fn) {
 
 async function handler(req, res) {
   await runMiddleware(req, res, corsHandler);
-
   const session = await auth0.getSession();
+
   if (req?.query?.token !== global.INTERNAL_TOKEN) {
     if (!session || !session.user) {
       if (!session.noAuth) {
