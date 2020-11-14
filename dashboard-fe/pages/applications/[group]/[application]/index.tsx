@@ -90,4 +90,4 @@ const Application = () => {
   );
 };
 
-export default withAuth(observer(Application));
+export default observer(Application);

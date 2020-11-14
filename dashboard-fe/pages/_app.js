@@ -40,5 +40,7 @@ function MyApp(props) {
     </React.Fragment>
   );
 }
-
+MyApp.getInitialProps = async (props) => {
+  return props;
+};
 export default withAuth(MyApp);
