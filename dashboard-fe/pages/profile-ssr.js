@@ -14,4 +14,4 @@ const Profile = ({ user }) => (
   </Layout>
 );
 
-export default withAuth(Profile);
+export default Profile;

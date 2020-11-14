@@ -14,4 +14,4 @@ export function ProtectedPage() {
   );
 }
 
-export default withAuth(observer(ProtectedPage));
+export default observer(ProtectedPage);
