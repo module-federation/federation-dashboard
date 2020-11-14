@@ -14,7 +14,7 @@
     ]
   },
   "resolutions": {
-    "webpack": "5.3.2",
+    "webpack": "5.4.0",
     "@module-federation/dashboard-plugin": "./dashboard-plugin"
   },
   "devDependencies": {
