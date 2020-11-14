@@ -1,4 +1,4 @@
-console.log(process.CURRENT_HOST);
+console.log(CURRENT_HOST);
 const injectScript = function (d, s, id, override) {
   const promise = new Promise((resolve) => {
     var js,
