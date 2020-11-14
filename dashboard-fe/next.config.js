@@ -6,8 +6,6 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
 
 module.exports = {
   webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
-    // config.cache = false;
-    Object.assign(config.externals, { nedb: true });
     if (isServer) {
       config.plugins.push(
         // new BundleAnalyzerPlugin(),
