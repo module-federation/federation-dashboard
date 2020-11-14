@@ -1,7 +1,6 @@
 import React from "react";
 
 import Layout from "../components/Layout";
-import withAuth from "../components/with-auth";
 
 const Profile = ({ user }) => (
   <Layout user={user}>
