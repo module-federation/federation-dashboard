@@ -18,7 +18,7 @@
     "@module-federation/dashboard-plugin": "./dashboard-plugin"
   },
   "devDependencies": {
-    "@changesets/cli": "2.11.1",
+    "@changesets/cli": "2.11.2",
     "concurrently": "5.3.0",
     "husky": "4.3.0",
     "lerna": "3.22.1",
