@@ -51,9 +51,6 @@ class FederationDashboardPlugin {
         () => this.processWebpackGraph(compilation)
       );
     });
-    console.log({
-      "process.CURRENT_HOST": JSON.stringify(this.FederationPluginOptions.name),
-    });
 
     if (this.FederationPluginOptions.name) {
       new DefinePlugin({
@@ -64,8 +61,8 @@ class FederationDashboardPlugin {
     }
   }
 
-  processWebpackGraph(compilation, callback) {
-    const liveStats = compilation.getStats();
+  processWebpackGraph(curCompiler, callback) {
+    const liveStats = curCompiler.getStats();
     const stats = liveStats.toJson();
     // filter modules
     const modules = this.getFilteredModules(stats);
@@ -106,20 +103,60 @@ class FederationDashboardPlugin {
     if (graphData) {
       const dashData = (this._dashData = JSON.stringify(graphData));
 
-      this.writeStatsFiles(stats, dashData);
+      // this.writeStatsFiles(stats, dashData);
 
       if (this._options.dashboardURL) {
-        return this.postDashboardData(dashData)
+        this.postDashboardData(dashData)
           .then(() => {})
           .catch((err) => {
             if (err) {
-              compilation.errors.push(err);
+              curCompiler.errors.push(err);
               // eslint-disable-next-line promise/no-callback-in-promise
               throw err;
             }
           });
       }
-      return Promise.resolve();
+      return Promise.resolve().then(() => {
+        const statsBuf = Buffer.from(dashData || "{}", "utf-8");
+
+        const source = {
+          source() {
+            return statsBuf;
+          },
+          size() {
+            return statsBuf.length;
+          },
+        };
+        // for dashboard.json
+        if (curCompiler.emitAsset && this._options.filename) {
+          const asset = curCompiler.getAsset(this._options.filename);
+
+          if (asset) {
+            curCompiler.updateAsset(this._options.filename, source);
+          } else {
+            curCompiler.emitAsset(this._options.filename, source);
+          }
+        }
+        // for versioned remote
+        if (curCompiler.emitAsset && this.FederationPluginOptions.filename) {
+          const remoteEntry = curCompiler.getAsset(
+            this.FederationPluginOptions.filename
+          );
+
+          if (remoteEntry && graphData.version) {
+            curCompiler.emitAsset(
+              path.join(
+                graphData.version,
+                this.FederationPluginOptions.filename
+              ),
+              source
+            );
+          }
+        }
+        if (callback) {
+          return void callback();
+        }
+      });
     }
   }
 
@@ -264,12 +301,15 @@ class FederationDashboardPlugin {
     return Array.from(directReasons);
   }
 
+  // This is no longer needed - can be deleted or used for refactoring the asset emitter
   writeStatsFiles(stats, dashData) {
     if (this._options.filename) {
       const hashPath = path.join(stats.outputPath, this._options.filename);
+      if (fs.existsSync(stats.outputPath)) {
+        fs.mkdirSync(stats.outputPath);
+      }
       fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, () => {});
     }
-    console.log("zack");
     console.log(
       path.join(stats.outputPath, this.FederationPluginOptions.filename)
     );
