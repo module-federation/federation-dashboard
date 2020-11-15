@@ -9,7 +9,7 @@ import Group from "../database/group";
 
 import "../webhooks";
 
-const convertMetadata = (metadataObj) =>
+const convertMetadata = (metadataObj: any) =>
   Object.entries(metadataObj || {}).map(([name, value]) => ({
     name: name.toString(),
     value: value.toString(),
@@ -43,25 +43,25 @@ export default class ApplicationManager {
     }
 
     const dependencies = [
-      ...(application.dependencies || []).map((dep) => ({
+      ...(application.dependencies || []).map((dep: any) => ({
         ...dep,
         type: "dependency",
       })),
-      ...(application.devDependencies || []).map((dep) => ({
+      ...(application.devDependencies || []).map((dep: any) => ({
         ...dep,
         type: "devDependency",
       })),
-      ...(application.optionalDependencies || []).map((dep) => ({
+      ...(application.optionalDependencies || []).map((dep: any) => ({
         ...dep,
         type: "optionalDependency",
       })),
-      ...(application.peerDependencies || []).map((dep) => ({
+      ...(application.peerDependencies || []).map((dep: any) => ({
         ...dep,
         type: "peerDependency",
       })),
     ].map((d) => d);
 
-    const modules = application.modules.map((module) => ({
+    const modules = application.modules.map((module: any) => ({
       ...module,
       metadata: convertMetadata(module.metadata),
       tags: module.tags || [],
@@ -112,7 +112,7 @@ export default class ApplicationManager {
           ({ version: v, environment: t }) =>
             v !== version.version && t == version.environment
         )
-        .map((appVersion) =>
+        .map((appVersion: any) =>
           driver.applicationVersion_update({
             ...appVersion,
             latest: false,

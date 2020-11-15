@@ -20,8 +20,9 @@ const dir = process.env.DATA_DIR || path.join(process.cwd(), "./.fm-dashboard");
 const createDatastore = (name) => {
   const ds = new Datastore({
     filename: path.join(dir, `/${name}.db`),
+    autoload: true,
   });
-  ds.loadDatabase();
+  // ds.loadDatabase();
   // ds.persistence.setAutocompactionInterval(60 * 1000);
   return ds;
 };

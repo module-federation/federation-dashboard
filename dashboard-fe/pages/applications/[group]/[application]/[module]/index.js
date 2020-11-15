@@ -228,4 +228,4 @@ const ModulePage = () => {
   );
 };
 
-export default withAuth(observer(ModulePage));
+export default observer(ModulePage);

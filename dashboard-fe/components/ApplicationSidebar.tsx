@@ -231,8 +231,7 @@ const Metadata = ({ metadata }) => (
 const ApplicationSidebar = ({ name }) => {
   const { data } = useQuery(GET_APPS, {
     variables: {
-      // works with apps names like "team/home"
-      name: name,
+      name: name.split("/")[0],
       environment: store.environment,
       group: store.group,
     },

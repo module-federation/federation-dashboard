@@ -3,12 +3,12 @@ import dbDriver from "./database/drivers";
 import fetch from "node-fetch";
 import "../lighthouse/add-url";
 
-const hookSusbscriber = async (type, payload) => {
+const hookSusbscriber = async (type: any, payload: any) => {
   const settings = await dbDriver.siteSettings_get();
   return Promise.all(
     settings.webhooks
-      .filter(({ event }) => event === type)
-      .map(({ url }) =>
+      .filter(({ event }: any) => event === type)
+      .map(({ url }: any) =>
         fetch(url, {
           method: "GET",
           headers: {

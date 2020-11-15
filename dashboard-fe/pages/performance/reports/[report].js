@@ -16,6 +16,7 @@ import {
 import Form from "../../../components/FormVarient";
 import { useMutation, useQuery } from "@apollo/client";
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
+import { publicConfig } from "../../../src/config";
 
 if (process.browser) {
   // try {import("dashboard/utils") } catch (e) {}
@@ -24,7 +25,9 @@ const isProd = process.env.NODE_ENV !== "development";
 
 const hostname = isProd
   ? process.browser
-    ? "http://mf-dash.ddns.net:3000/"
+    ? publicConfig.EXTERNAL_URL.endsWith("/")
+      ? publicConfig.EXTERNAL_URL
+      : publicConfig.EXTERNAL_URL + "/"
     : "http://localhost:3000/"
   : "http://localhost:3000/";
 

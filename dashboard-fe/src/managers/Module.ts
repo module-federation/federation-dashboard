@@ -2,11 +2,16 @@ import _ from "lodash";
 import driver from "../database/drivers";
 
 export default class ModuleManager {
-  static async getConsumedBy(group, type, applicationID, name) {
+  static async getConsumedBy(
+    group: any,
+    type: any,
+    applicationID: any,
+    name: any
+  ) {
     await driver.setup();
 
     const applications = await driver.application_findInGroups([group]);
-    const found = [];
+    const found: any = [];
     await Promise.all(
       applications.map(async ({ id: consumerId }) => {
         const versions = await driver.applicationVersion_findAll(
@@ -20,7 +25,7 @@ export default class ModuleManager {
               ({ applicationID: conApp, name: conName }) =>
                 conApp === applicationID && conName === name
             )
-            .forEach((consume) => found.push(consume));
+            .forEach((consume: any) => found.push(consume));
         }
       })
     );

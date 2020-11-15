@@ -1,12 +1,14 @@
 const webpack = require("webpack");
 const path = require("path");
 let merge = require("webpack-merge");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
 module.exports = {
   webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
-    config.cache = process.env.NODE_ENV !== "production";
     if (isServer) {
       config.plugins.push(
+        // new BundleAnalyzerPlugin(),
         new webpack.container.ModuleFederationPlugin({
           name: "dashboard",
           library: { type: config.output.libraryTarget, name: "dashboard" },
