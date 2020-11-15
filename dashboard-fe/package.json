@@ -89,7 +89,7 @@
     "react-hook-form": "^6.0.3",
     "react-lazy-hydration": "^0.0.11",
     "read-json-stream": "^1.1.0",
-    "recoil": "^0.0.13",
+    "recoil": "^0.1.0",
     "request-ip": "^2.1.3",
     "workerpool": "^6.0.0"
   },
