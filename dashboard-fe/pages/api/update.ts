@@ -9,7 +9,7 @@ export const config = {
   },
 };
 
-const dataIsValid = (data) =>
+const dataIsValid = (data: any) =>
   data &&
   data.id !== undefined &&
   data.id.length > 0 &&
@@ -19,11 +19,14 @@ const dataIsValid = (data) =>
   data.consumes !== undefined &&
   data.modules !== undefined;
 
-const apiAuthGate = async (req, res, callback) => {
+const apiAuthGate = async (req: any, res: any, callback: any) => {
   const session = await auth0.getSession(req);
+  // @ts-expect-error ts-migrate(2339) FIXME: Property 'noAuth' does not exist on type '{ noAuth... Remove this comment to see the full error message
   if (session && session.noAuth) return callback(req, res);
 
+  // @ts-expect-error ts-migrate(2339) FIXME: Property 'INTERNAL_TOKEN' does not exist on type '... Remove this comment to see the full error message
   if (req?.query?.token !== global.INTERNAL_TOKEN) {
+    // @ts-expect-error ts-migrate(2339) FIXME: Property 'user' does not exist on type '{ noAuth: ... Remove this comment to see the full error message
     if (!session || !session.user) {
       res.status(401).json({ error: "Unauthorized" });
       return;
@@ -33,7 +36,7 @@ const apiAuthGate = async (req, res, callback) => {
   return callback(req, res);
 };
 
-export default async (req, res) => {
+export default async (req: any, res: any) => {
   return apiAuthGate(req, res, async () => {
     if (dataIsValid(req.body)) {
       console.log(`Updating ${req.body.name}#${req.body.version}`);

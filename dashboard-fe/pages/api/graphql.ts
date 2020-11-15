@@ -1,5 +1,3 @@
-// const cors = require("micro-cors")(); // highlight-line
-import corsMiddleware from "cors";
 import { ApolloServer, gql } from "apollo-server-micro";
 
 import { versionManagementEnabled } from "./db";
@@ -277,11 +275,11 @@ const resolvers = {
         versionManagementEnabled: versionManagementEnabled(),
       };
     },
-    userByEmail: async (_, { email }) => {
+    userByEmail: async (_: any, { email }: any) => {
       await dbDriver.setup();
       return dbDriver.user_findByEmail(email);
     },
-    groups: async (_, { name }, ctx) => {
+    groups: async (_: any, { name }: any, ctx: any) => {
       await dbDriver.setup();
       if (name) {
         const found = await dbDriver.group_findByName(name);
@@ -295,21 +293,27 @@ const resolvers = {
     },
   },
   Mutation: {
-    updateApplicationSettings: async (_, { group, application, settings }) => {
+    updateApplicationSettings: async (
+      _: any,
+      { group, application, settings }: any
+    ) => {
       await dbDriver.setup();
       const app = await dbDriver.application_find(application);
       app.settings = settings;
       await dbDriver.application_update(app);
       return settings;
     },
-    updateGroupSettings: async (_, { group, settings }) => {
+    updateGroupSettings: async (_: any, { group, settings }: any) => {
       await dbDriver.setup();
       const grp = await dbDriver.group_find(group);
       grp.settings = settings;
       await dbDriver.group_update(grp);
       return settings;
     },
-    addMetric: async (_, { group, application, date, name, value, url }) => {
+    addMetric: async (
+      _: any,
+      { group, application, date, name, value, url }: any
+    ) => {
       await dbDriver.setup();
       dbDriver.application_addMetrics(application, {
         date: new Date(Date.parse(date)),
@@ -323,7 +327,10 @@ const resolvers = {
       return true;
     },
 
-    updateMetric: async (_, { group, application, date, name, value, url }) => {
+    updateMetric: async (
+      _: any,
+      { group, application, date, name, value, url }: any
+    ) => {
       await dbDriver.setup();
       console.log("Mutation", group, value, name);
       dbDriver.group_updateMetric(application, {
@@ -336,7 +343,7 @@ const resolvers = {
       });
       return true;
     },
-    publishVersion: async (_, { group, application, version }) => {
+    publishVersion: async (_: any, { group, application, version }: any) => {
       const out = await VersionManager.publishVersion(
         group,
         application,
@@ -344,7 +351,10 @@ const resolvers = {
       );
       return out;
     },
-    setRemoteVersion: async (_, { group, application, remote, version }) => {
+    setRemoteVersion: async (
+      _: any,
+      { group, application, remote, version }: any
+    ) => {
       return VersionManager.setRemoteVersion(
         group,
         application,
@@ -352,7 +362,7 @@ const resolvers = {
         version
       );
     },
-    updateUser: async (_, { user }) => {
+    updateUser: async (_: any, { user }: any) => {
       await dbDriver.setup();
       await dbDriver.user_update({
         id: user.email,
@@ -360,45 +370,45 @@ const resolvers = {
       });
       return dbDriver.user_find(user.email);
     },
-    updateSiteSettings: async (_, { settings }) => {
+    updateSiteSettings: async (_: any, { settings }: any) => {
       await dbDriver.setup();
       await dbDriver.siteSettings_update(settings);
       return dbDriver.siteSettings_get();
     },
   },
   Application: {
-    versions: async ({ id }, { environment, latest }, ctx) => {
+    versions: async ({ id }: any, { environment, latest }: any, ctx: any) => {
       ctx.environment = environment;
       await dbDriver.setup();
       let found = await dbDriver.applicationVersion_findAll(id, environment);
       if (latest !== undefined) {
-        found = found.filter(({ latest }) => latest);
+        found = found.filter(({ latest }: any) => latest);
       }
       return found;
     },
-    metrics: async ({ id }, { names }, ctx) => {
+    metrics: async ({ id }: any, { names }: any, ctx: any) => {
       await dbDriver.setup();
       const metrics = await dbDriver.application_getMetrics(id);
       if (names) {
       } else {
       }
       return names
-        ? metrics.filter(({ name }) => names.includes(name))
+        ? metrics.filter(({ name }: any) => names.includes(name))
         : metrics;
     },
   },
   Consume: {
-    consumingApplication: async (parent, args, ctx) => {
+    consumingApplication: async (parent: any, args: any, ctx: any) => {
       await dbDriver.setup();
       return dbDriver.application_find(parent.consumingApplicationID);
     },
-    application: async (parent, args, ctx) => {
+    application: async (parent: any, args: any, ctx: any) => {
       await dbDriver.setup();
       return dbDriver.application_find(parent.applicationID);
     },
   },
   Module: {
-    consumedBy: async (parent, args, ctx) => {
+    consumedBy: async (parent: any, args: any, ctx: any) => {
       await dbDriver.setup();
       return ModuleManager.getConsumedBy(
         ctx.group,
@@ -409,24 +419,24 @@ const resolvers = {
     },
   },
   ApplicationVersion: {
-    modules: async ({ modules }, { name }) => {
+    modules: async ({ modules }: any, { name }: any) => {
       return name
         ? modules.filter(({ name: moduleName }) => name === moduleName)
         : modules;
     },
   },
   Group: {
-    metrics: async ({ id }, { names }, ctx) => {
+    metrics: async ({ id }: any, { names }: any, ctx: any) => {
       await dbDriver.setup();
       const metrics = await dbDriver.group_getMetrics(id);
       if (names) {
       } else {
       }
       return names
-        ? metrics.filter(({ name }) => names.includes(name))
+        ? metrics.filter(({ name }: any) => names.includes(name))
         : metrics;
     },
-    applications: async ({ id }, { id: applicationId }, ctx) => {
+    applications: async ({ id }: any, { id: applicationId }, ctx: any) => {
       ctx.group = id;
       await dbDriver.setup();
       if (!applicationId) {
@@ -445,11 +455,9 @@ const apolloHandler = apolloServer.createHandler({
   path: "/api/graphql",
 });
 
-const corsHandler = corsMiddleware();
-
-function runMiddleware(req, res, fn) {
+function runMiddleware(req: any, res: any, fn: any) {
   return new Promise((resolve, reject) => {
-    fn(req, res, (result) => {
+    fn(req, res, (result: any) => {
       if (result instanceof Error) {
         return reject(result);
       }
@@ -459,12 +467,37 @@ function runMiddleware(req, res, fn) {
   });
 }
 
-async function handler(req, res) {
-  await runMiddleware(req, res, corsHandler);
-  const session = await auth0.getSession();
+const allowCors = async (req: any, res: any, next: any) => {
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // another common pattern
+  // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+  );
 
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
+  return next(req, res);
+};
+
+async function handler(req: any, res: any) {
+  await runMiddleware(req, res, allowCors);
+
+  // @ts-expect-error ts-migrate(2554) FIXME: Expected 1 arguments, but got 0.
+  const session = await auth0.getSession();
+  // @ts-expect-error ts-migrate(2339) FIXME: Property 'INTERNAL_TOKEN' does not exist on type '... Remove this comment to see the full error message
   if (req?.query?.token !== global.INTERNAL_TOKEN) {
+    // @ts-expect-error ts-migrate(2339) FIXME: Property 'user' does not exist on type '{ noAuth: ... Remove this comment to see the full error message
     if (!session || !session.user) {
+      // @ts-expect-error ts-migrate(2339) FIXME: Property 'noAuth' does not exist on type '{ noAuth... Remove this comment to see the full error message
       if (!session.noAuth) {
         res.status(401).json({
           errors: [

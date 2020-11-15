@@ -1,4 +1,3 @@
-console.log(CURRENT_HOST);
 const injectScript = function (d, s, id, override) {
   const promise = new Promise((resolve) => {
     var js,
@@ -32,27 +31,40 @@ fetch("http://localhost:3000/api/graphql", {
     Accept: "application/json",
   },
   body: JSON.stringify({
-    query: `query { # TODO: this query cannot be executed on current schema
-      applications(name:"home") {
+    query: `query {
+    groups {
+      name
+      applications(id: "${process.CURRENT_HOST}") {
+        name
         versions {
-          override {
-            name
-            version
-          }
+          version
+        }
+        overrides {
+          name
+          version
         }
       }
-    }`,
+    }
+  }`,
   }),
 })
-  .then((res) => res.json())
-  .then(({ applications }) => {
-    if (!applications.versions.override.length) {
+  .then((res) => {
+    return res.json();
+  })
+  .then(({ data }) => {
+    const currentApp = data?.groups?.[0]?.applications?.[0];
+    console.log(currentApp.overrides);
+    // TODO: address versioning the host
+    if (!currentApp?.overrides?.length) {
+      console.log("no overrides, booting host");
       injectScript(document, "script", "federation-dynamic-remote").then(() => {
         import("./bootstrap");
       });
       return;
     }
-    const allOverrides = applications.versions.override.map((override) => {
+
+    const allOverrides = currentApp.overrides.map((override) => {
+      console.log(override);
       return injectScript(
         document,
         "script",
