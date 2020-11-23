@@ -145,9 +145,8 @@ class FederationDashboardPlugin {
 
           if (remoteEntry && graphData.version) {
             curCompiler.emitAsset(
-              path.join(
-                graphData.version,
-                this.FederationPluginOptions.filename
+              [graphData.version, this.FederationPluginOptions.filename].join(
+                "."
               ),
               source
             );
