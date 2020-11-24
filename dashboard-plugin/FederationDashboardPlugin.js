@@ -142,13 +142,39 @@ class FederationDashboardPlugin {
           const remoteEntry = curCompiler.getAsset(
             this.FederationPluginOptions.filename
           );
+          const cleanVersion =
+            this.FederationPluginOptions.name +
+            "_" +
+            graphData.version.split(".").join("_");
+          let codeSource;
+          if (!remoteEntry.source._value && remoteEntry.source.source) {
+            codeSource = remoteEntry.source.source();
+          } else if (remoteEntry.source._value) {
+            codeSource = remoteEntry.source._value;
+          }
+          //string replace "dsl" with version_dsl to make another global.
+          const newSource = codeSource.replace(
+            new RegExp(`${this.FederationPluginOptions.name}`, "g"),
+            cleanVersion
+          );
+
+          const remoteEntryBuffer = Buffer.from(newSource, "utf-8");
+
+          const remoteEntrySource = {
+            source() {
+              return remoteEntryBuffer;
+            },
+            size() {
+              return remoteEntryBuffer.length;
+            },
+          };
 
           if (remoteEntry && graphData.version) {
             curCompiler.emitAsset(
               [graphData.version, this.FederationPluginOptions.filename].join(
                 "."
               ),
-              source
+              remoteEntrySource
             );
           }
         }

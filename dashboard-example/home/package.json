@@ -21,7 +21,7 @@
   "scripts": {
     "start": "webpack-cli serve --open --liveReload",
     "build": "node ../../node_modules/webpack/bin/webpack.js --mode production",
-    "serve": "echo 'test'",
+    "serve": "serve dist -p 3001",
     "clean": "rm -rf dist"
   },
   "dependencies": {
