@@ -248,9 +248,8 @@ export const RemoteVersionSelector = observer(
     if (!versions.length) {
       return null;
     }
-
-    const currentVersion =
-      version || versions.find(({ latest }) => latest).version;
+    const latestVersion = versions.find(({ latest }) => latest).version;
+    const currentVersion = version || latestVersion;
 
     const handleVersionChange = (newVersion) => {
       setRemoteVersion({
@@ -258,7 +257,7 @@ export const RemoteVersionSelector = observer(
           group: store.group,
           application,
           remote,
-          version: newVersion === currentVersion ? null : newVersion,
+          version: newVersion === latestVersion ? null : newVersion,
         },
         refetchQueries: [
           {

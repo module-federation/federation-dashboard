@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
+const clientVersion = require("@module-federation/dashboard-plugin/client-version");
 
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
@@ -14,7 +15,7 @@ module.exports = {
   output: {
     filename: "[name].[contenthash].js",
     chunkFilename: "[name].[contenthash].js",
-    publicPath: "http://localhost:3004/",
+    publicPath: `auto`,
   },
   module: {
     rules: [
@@ -60,7 +61,11 @@ module.exports = {
       filename: "remoteEntry.js",
       remotes: {
         nav: "nav",
-        dsl: "dsl",
+        dsl: clientVersion({
+          currentHost: "search",
+          remoteName: "dsl",
+          dashboardURL: "http://localhost:3000/api/graphql",
+        }),
         home: "home",
         utils: "utils",
       },
@@ -74,7 +79,7 @@ module.exports = {
       template: "./public/index.html",
     }),
     new DashboardPlugin({
-      version: true,
+      publishVersion: require("./package.json").version,
       filename: "dashboard.json",
       dashboardURL: "http://localhost:3000/api/update",
       metadata: {

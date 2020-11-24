@@ -13,7 +13,7 @@ module.exports = {
   output: {
     filename: "[name].[contenthash].js",
     chunkFilename: "[name].[contenthash].js",
-    publicPath: "http://localhost:3005/",
+    publicPath: `auto`,
   },
   module: {
     rules: [
@@ -48,7 +48,7 @@ module.exports = {
       shared: require("./package.json").dependencies,
     }),
     new DashboardPlugin({
-      version: true,
+      publishVersion: require("./package.json").version,
       dashboardURL: "http://localhost:3000/api/update",
       filename: "dashboard.json",
       metadata: {

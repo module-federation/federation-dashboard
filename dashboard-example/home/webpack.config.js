@@ -1,8 +1,8 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
+const clientVersion = require("@module-federation/dashboard-plugin/client-version");
 const {
   container: { ModuleFederationPlugin },
-  DefinePlugin,
 } = require("webpack");
 const path = require("path");
 
@@ -16,7 +16,7 @@ module.exports = {
   output: {
     filename: "[name].[contenthash].js",
     chunkFilename: "[name].[contenthash].js",
-    publicPath: `http://localhost:3001/`,
+    publicPath: `auto`,
   },
   module: {
     rules: [
@@ -62,7 +62,11 @@ module.exports = {
       filename: "remoteEntry.js",
       remotes: {
         search: "search",
-        dsl: "dsl",
+        dsl: clientVersion({
+          currentHost: "home",
+          remoteName: "dsl",
+          dashboardURL: "http://localhost:3000/api/graphql",
+        }),
         nav: "nav",
         utils: "utils",
       },
@@ -77,7 +81,7 @@ module.exports = {
       template: "./public/index.html",
     }),
     new DashboardPlugin({
-      version: true,
+      publishVersion: require("./package.json").version,
       filename: "dashboard.json",
       dashboardURL: "http://localhost:3000/api/update",
       versionChangeWebhook: "http://cnn.com/",

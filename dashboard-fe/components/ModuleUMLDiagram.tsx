@@ -12,7 +12,8 @@ import { Button } from "@material-ui/core";
 import { CanvasWidget } from "@projectstorm/react-canvas-core";
 import styled from "@emotion/styled";
 import { observer } from "mobx-react";
-
+import React from "react";
+// @ts-expect-error ts-migrate(7016) FIXME: Could not find a declaration file for module '../s... Remove this comment to see the full error message
 import store from "../src/store";
 
 namespace S {
@@ -75,7 +76,7 @@ export interface DefaultNodeProps {
 }
 
 export class NicerNodeWidget extends React.Component<DefaultNodeProps> {
-  generateInPort = (port) => {
+  generateInPort = (port: any) => {
     return (
       <S.InPortItem key={port.getID()}>
         <DefaultPortLabel engine={this.props.engine} port={port} />
@@ -83,7 +84,7 @@ export class NicerNodeWidget extends React.Component<DefaultNodeProps> {
     );
   };
 
-  generateOutPort = (port) => {
+  generateOutPort = (port: any) => {
     return (
       <S.OutPortItem key={port.getID()}>
         <DefaultPortLabel engine={this.props.engine} port={port} />
@@ -96,6 +97,7 @@ export class NicerNodeWidget extends React.Component<DefaultNodeProps> {
       <S.Node
         data-default-node-name={this.props.node.getOptions().name}
         selected={this.props.node.isSelected()}
+        // @ts-expect-error ts-migrate(2322) FIXME: Type 'string | undefined' is not assignable to typ... Remove this comment to see the full error message
         background={this.props.node.getOptions().color}
       >
         <S.Title>
@@ -115,7 +117,7 @@ export class NicerNodeWidget extends React.Component<DefaultNodeProps> {
 }
 
 export class NicerNodeFactory extends DefaultNodeFactory {
-  generateReactWidget(event): JSX.Element {
+  generateReactWidget(event: any): JSX.Element {
     return <NicerNodeWidget engine={this.engine} node={event.model} />;
   }
 }
@@ -144,7 +146,8 @@ class LayoutWidget extends React.Component<
   { model: DiagramModel; engine: DiagramEngine },
   any
 > {
-  constructor(props) {
+  isDiagramMounted: any;
+  constructor(props: { model: DiagramModel; engine: DiagramEngine }) {
     super(props);
   }
 
@@ -198,13 +201,14 @@ const LINK_COLOR_SELECTED = "gray";
 const LINK_COLOR_UNSELECTED = "rgba(0,192,255,0)";
 const LINK_SIZE_DEFAULT = 3;
 
-const ModuleUMLDiagram = observer(({ applications }) => {
+const ModuleUMLDiagram = observer(({ applications }: any) => {
   const diagramRef = React.useRef(null);
 
   React.useEffect(() => {
     console.log("Changing state");
     if (diagramRef) {
       window.setTimeout(() => {
+        // @ts-expect-error ts-migrate(2531) FIXME: Object is possibly 'null'.
         diagramRef.current.autoDistribute();
       }, 0);
     }
@@ -216,13 +220,14 @@ const ModuleUMLDiagram = observer(({ applications }) => {
   const model = new DiagramModel();
 
   const nodes: NodeModel[] = [];
-  const links = [];
+  const links: any = [];
   const ports = {};
 
-  applications.forEach(({ name, versions }) => {
+  applications.forEach(({ name, versions }: any) => {
     const { modules } = versions[0];
     const node = new DefaultNodeModel(name, NODE_COLOR_DEFAULT);
 
+    // @ts-expect-error ts-migrate(2345) FIXME: Argument of type '{ eventDidFire: (evt: BaseEvent ... Remove this comment to see the full error message
     node.registerListener({
       eventDidFire: (evt) => {
         if (evt.function === "selectionChanged") {
@@ -233,12 +238,13 @@ const ModuleUMLDiagram = observer(({ applications }) => {
 
             nodes.forEach((n) => {
               if (node === n) {
-                // @ts-ignore
+                // @ts-expect-error ts-migrate(2339) FIXME: Property 'color' does not exist on type 'BasePosit... Remove this comment to see the full error message
                 n.getOptions().color =
                   node === n ? NODE_COLOR_SELECTED : NODE_COLOR_UNSELECTED;
               }
             });
 
+            // @ts-expect-error ts-migrate(7006) FIXME: Parameter 'l' implicitly has an 'any' type.
             links.forEach((l) => {
               const sourceName = l.sourcePort.getOptions().id;
               const targetName = l.targetPort.getOptions().id;
@@ -254,9 +260,10 @@ const ModuleUMLDiagram = observer(({ applications }) => {
             store.detailDrawerOpen = false;
 
             nodes.forEach((n) => {
-              // @ts-ignore
+              // @ts-expect-error ts-migrate(2339) FIXME: Property 'color' does not exist on type 'BasePosit... Remove this comment to see the full error message
               n.getOptions().color = NODE_COLOR_DEFAULT;
             });
+            // @ts-expect-error ts-migrate(7006) FIXME: Parameter 'l' implicitly has an 'any' type.
             links.forEach((l) => {
               l.getOptions().color = LINK_COLOR_DEFAULT;
               l.getOptions().width = LINK_SIZE_DEFAULT;
@@ -266,25 +273,34 @@ const ModuleUMLDiagram = observer(({ applications }) => {
       },
     });
 
+    // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     ports[name] = node.addOutPort("");
+    // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     ports[name].getOptions().id = name;
 
+    // @ts-expect-error ts-migrate(7031) FIXME: Binding element 'moduleName' implicitly has an 'an... Remove this comment to see the full error message
     modules.forEach(({ name: moduleName }) => {
       const id = `${name}:${moduleName}`;
+      // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       ports[id] = node.addInPort(moduleName);
+      // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       ports[id].getOptions().id = id;
     });
     nodes.push(node);
   });
 
-  applications.forEach(({ name: fromApp, versions }) => {
+  applications.forEach(({ name: fromApp, versions }: any) => {
     versions[0].consumes
-      .filter(({ application }) => application)
+      .filter(({ application }: any) => application)
+      // @ts-expect-error ts-migrate(7031) FIXME: Binding element 'appName' implicitly has an 'any' ... Remove this comment to see the full error message
       .forEach(({ application: { name: appName }, name: moduleName }) => {
+        // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         if (ports[fromApp]) {
           let link = null;
           try {
+            // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
             link = ports[fromApp].link(
+              // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
               ports[`${appName}:${moduleName}`]
               // engine.getLinkFactories().getFactory(PathFindingLinkFactory.NAME)
             );
@@ -301,6 +317,7 @@ const ModuleUMLDiagram = observer(({ applications }) => {
     model.addNode(node);
   });
 
+  // @ts-expect-error ts-migrate(7006) FIXME: Parameter 'link' implicitly has an 'any' type.
   links.forEach((link) => {
     model.addLink(link);
   });

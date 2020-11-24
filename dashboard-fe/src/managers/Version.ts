@@ -1,7 +1,7 @@
 import dbDriver from "../database/drivers";
 
 export default class VersionManager {
-  static async publishVersion(group, application, version) {
+  static async publishVersion(group: any, application: any, version: any) {
     await dbDriver.setup();
 
     // TODO: Pass in the environment
@@ -25,7 +25,7 @@ export default class VersionManager {
           ({ version: v, environment: t }) =>
             v !== app.version && t == app.environment
         )
-        .map((appVersion) =>
+        .map((appVersion: any) =>
           dbDriver.applicationVersion_update({
             ...appVersion,
             latest: false,
@@ -36,10 +36,15 @@ export default class VersionManager {
     return app;
   }
 
-  static async setRemoteVersion(group, application, remote, version) {
+  static async setRemoteVersion(
+    group: any,
+    application: any,
+    remote: any,
+    version: any
+  ) {
     const app = await dbDriver.application_find(application);
     const overridesWithoutRemote = app.overrides.filter(
-      ({ name }) => name !== remote
+      ({ name }: any) => name !== remote
     );
     if (version) {
       app.overrides = overridesWithoutRemote;

@@ -243,18 +243,18 @@ const ApplicationSidebar = ({ name }) => {
 
   const [applicationName, moduleName] = name.split("/");
   const consumes =
-    data?.groups?.[0].applications?.[0].versions?.[0].consumes || [];
+    data?.groups?.[0].applications?.[0]?.versions?.[0]?.consumes || [];
   const modules =
-    data?.groups?.[0].applications?.[0].versions?.[0].modules || [];
+    data?.groups?.[0].applications?.[0]?.versions?.[0]?.modules || [];
   const module = moduleName
     ? modules.filter(({ name }) => name === moduleName)[0]
     : null;
   const tags = module
     ? module.tags || []
-    : data?.groups?.[0].applications?.[0].tags || [];
+    : data?.groups?.[0].applications?.[0]?.tags || [];
   const metadata = module
     ? module.metadata || []
-    : data?.groups?.[0].applications?.[0].metadata || [];
+    : data?.groups?.[0].applications?.[0]?.metadata || [];
 
   return (
     <div

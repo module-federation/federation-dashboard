@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import List from "@material-ui/core/List";
 import Button from "@material-ui/core/Button";
 import gql from "graphql-tag";
-
+import { publicConfig } from "../../src/config";
 import ListItem from "../../components/ListItem";
 import Form from "../../components/Form";
 import { useMutation, useQuery } from "@apollo/client";
@@ -60,8 +60,8 @@ const Performance = ({ groupData }) => {
 
   React.useEffect(() => {
     if (data && data.groups[0]) {
-      removeMeta(data.groups[0].settings.trackedURLs);
-      setTodos(data.groups[0].settings.trackedURLs);
+      removeMeta(data.groups[0].settings?.trackedURLs || []);
+      setTodos(data.groups[0].settings?.trackedURLs || []);
     }
   }, [data]);
 
@@ -184,7 +184,7 @@ const Performance = ({ groupData }) => {
         onChangeName={(e) => setInputNameValue(e.target.value)}
       />
       <List>
-        {todos &&
+        {todos?.[0] &&
           todos.map((todo, index) => (
             <ListItem
               key={index}
@@ -202,7 +202,9 @@ Performance.getInitialProps = async ({ req, res }) => {
   const isProd = process.env.NODE_ENV !== "development";
   const url = isProd
     ? process.browser
-      ? "http://mf-dash.ddns.net:3000/"
+      ? publicConfig.EXTERNAL_URL.endsWith("/")
+        ? publicConfig.EXTERNAL_URL
+        : publicConfig.EXTERNAL_URL + "/"
       : "http://localhost:3000/"
     : "http://localhost:3000/";
 

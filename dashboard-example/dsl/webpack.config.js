@@ -12,7 +12,8 @@ module.exports = {
   output: {
     filename: "[name].[contenthash].js",
     chunkFilename: "[name].[contenthash].js",
-    publicPath: `http://localhost:3002/`,
+    publicPath: `auto`,
+    uniqueName: `dsl.${require("./package.json").version}`,
   },
   module: {
     rules: [
@@ -53,8 +54,8 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "dsl",
-      library: { type: "var", name: "dsl" },
+      name: "dsl__REMOTE_VERSION__",
+      library: { type: "var", name: "dsl__REMOTE_VERSION__" },
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
@@ -69,7 +70,7 @@ module.exports = {
       template: "./public/index.html",
     }),
     new DashboardPlugin({
-      version: true,
+      publishVersion: require("./package.json").version,
       filename: "dashboard.json",
       dashboardURL: "http://localhost:3000/api/update",
       metadata: {

@@ -299,4 +299,4 @@ const NewApp = () => {
   );
 };
 
-export default withAuth(observer(NewApp));
+export default observer(NewApp);
