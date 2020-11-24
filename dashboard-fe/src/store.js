@@ -8,7 +8,16 @@ import { fetchUser } from "./user";
 const clientUrl = process.browser
   ? window.location.origin + "/api/graphql"
   : `${global.internalAddress}/api/graphql?token=${global.INTERNAL_TOKEN}`;
-
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: "no-cache",
+    errorPolicy: "ignore",
+  },
+  query: {
+    fetchPolicy: "no-cache",
+    errorPolicy: "all",
+  },
+};
 const client = new ApolloClient({
   uri: clientUrl,
 });

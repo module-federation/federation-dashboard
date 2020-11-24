@@ -1,6 +1,6 @@
 {
   "name": "@dashboard/dsl",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "devDependencies": {
     "@babel/core": "7.12.3",
@@ -19,7 +19,7 @@
     "webpack-dev-server": "3.11.0"
   },
   "scripts": {
-    "start": "webpack-cli serve --open --liveReload",
+    "start": "node  ../../node_modules/webpack-cli/bin/cli.js serve --open --liveReload",
     "build": "node ../../node_modules/webpack/bin/webpack.js --mode production",
     "serve": "serve dist -p 3002",
     "clean": "rm -rf dist"

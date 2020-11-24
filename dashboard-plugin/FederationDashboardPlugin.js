@@ -34,7 +34,10 @@ class FederationDashboardPlugin {
       return plugin.constructor.name === "ModuleFederationPlugin";
     });
     if (FederationPlugin) {
-      this.FederationPluginOptions = FederationPlugin._options;
+      this.FederationPluginOptions = Object.assign(
+        {},
+        FederationPlugin._options
+      );
     } else if (this._options.standalone) {
       this.FederationPluginOptions = this._options.standalone;
     } else {
@@ -42,6 +45,10 @@ class FederationDashboardPlugin {
         "Dashboard plugin is missing Module Federation or standalone option"
       );
     }
+    this.FederationPluginOptions.name = this.FederationPluginOptions.name.replace(
+      "__REMOTE_VERSION__",
+      ""
+    );
     compiler.hooks.thisCompilation.tap(PLUGIN_NAME, (compilation) => {
       compilation.hooks.processAssets.tapPromise(
         {
@@ -142,14 +149,58 @@ class FederationDashboardPlugin {
           const remoteEntry = curCompiler.getAsset(
             this.FederationPluginOptions.filename
           );
+          const cleanVersion = "_" + graphData.version.split(".").join("_");
+          let codeSource;
+          if (!remoteEntry.source._value && remoteEntry.source.source) {
+            codeSource = remoteEntry.source.source();
+          } else if (remoteEntry.source._value) {
+            codeSource = remoteEntry.source._value;
+          }
+          //string replace "dsl" with version_dsl to make another global.
+          const newSource = codeSource.replace(
+            new RegExp(`__REMOTE_VERSION__`, "g"),
+            cleanVersion
+          );
+
+          const rewriteTempalteFromMain = codeSource.replace(
+            new RegExp(`__REMOTE_VERSION__`, "g"),
+            ""
+          );
+
+          const remoteEntryBuffer = Buffer.from(newSource, "utf-8");
+          const originalRemoteEntryBuffer = Buffer.from(
+            rewriteTempalteFromMain,
+            "utf-8"
+          );
+
+          const remoteEntrySource = {
+            source() {
+              return remoteEntryBuffer;
+            },
+            size() {
+              return remoteEntryBuffer.length;
+            },
+          };
+          const originalRemoteEntrySource = {
+            source() {
+              return originalRemoteEntryBuffer;
+            },
+            size() {
+              return originalRemoteEntryBuffer.length;
+            },
+          };
 
           if (remoteEntry && graphData.version) {
+            curCompiler.updateAsset(
+              this.FederationPluginOptions.filename,
+              originalRemoteEntrySource
+            );
+
             curCompiler.emitAsset(
-              path.join(
-                graphData.version,
-                this.FederationPluginOptions.filename
+              [graphData.version, this.FederationPluginOptions.filename].join(
+                "."
               ),
-              source
+              remoteEntrySource
             );
           }
         }
