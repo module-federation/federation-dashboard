@@ -87,11 +87,13 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
       if(data && data.groups && data.groups[0] && data.groups[0].applications && data.groups[0].applications[0]) {
         const currentApp = data.groups[0].applications[0];
         if (!currentApp.overrides.length) {
+        console.log('${currentHost}','has no overrides')
           injectScript(document, "script", "federation-dynamic-remote-${remoteName}").then(function() {
             resolve(window.${remoteName})
           });
           return;
         }
+        console.log(currentApp);
         const allOverrides = currentApp.overrides.map((override) => {
           var objVersion = override && override.version ? override.version.split('.').join('_') : "";
           return injectScript(

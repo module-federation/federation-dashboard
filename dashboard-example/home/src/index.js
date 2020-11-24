@@ -57,9 +57,11 @@ const noRun = () =>
       // TODO: address versioning the host
       if (!currentApp?.overrides?.length) {
         // console.log("no overrides, booting host");
-        // injectScript(document, "script", "federation-dynamic-remote").then(() => {
-        import("./bootstrap");
-        // });
+        injectScript(document, "script", "federation-dynamic-remote").then(
+          () => {
+            import("./bootstrap");
+          }
+        );
         return;
       }
 
