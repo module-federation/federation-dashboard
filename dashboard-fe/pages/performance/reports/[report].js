@@ -16,6 +16,7 @@ import {
 import Form from "../../../components/FormVarient";
 import { useMutation, useQuery } from "@apollo/client";
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
+import { publicConfig } from "../../../src/config";
 
 if (process.browser) {
   // try {import("dashboard/utils") } catch (e) {}
@@ -24,7 +25,9 @@ const isProd = process.env.NODE_ENV !== "development";
 
 const hostname = isProd
   ? process.browser
-    ? "http://mf-dash.ddns.net:3000/"
+    ? publicConfig.EXTERNAL_URL.endsWith("/")
+      ? publicConfig.EXTERNAL_URL
+      : publicConfig.EXTERNAL_URL + "/"
     : "http://localhost:3000/"
   : "http://localhost:3000/";
 
@@ -368,12 +371,6 @@ class Report extends React.Component {
           const { trackedURLs } = Object.create(data.groups[0].settings);
 
           const updatedTrackedUrls = trackedURLs.reduce((acc, tracked) => {
-            const { url, search } = makeIDfromURL(tracked.url);
-
-            if (tracked.url !== url) {
-              acc.push(tracked);
-              return acc;
-            }
             const updatedExistingVariants = tracked.variants.reduce(
               (acc, variant) => {
                 if (variant.name === this.state.inputValue) {

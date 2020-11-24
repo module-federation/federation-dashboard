@@ -2,7 +2,6 @@ import React from "react";
 import { observer } from "mobx-react";
 
 import Layout from "../components/Layout";
-import withAuth from "../components/with-auth";
 import store from "../src/store";
 
 export function ProtectedPage() {
@@ -14,4 +13,4 @@ export function ProtectedPage() {
   );
 }
 
-export default withAuth(observer(ProtectedPage));
+export default observer(ProtectedPage);

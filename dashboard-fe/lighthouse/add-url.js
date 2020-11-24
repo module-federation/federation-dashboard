@@ -1,4 +1,3 @@
-import fs from "fs";
 import { init } from "./lib";
 import Promise from "bluebird";
 import { cache } from "./utils";
@@ -7,14 +6,6 @@ import dbDriver from "../src/database/drivers";
 
 const generateLighthouseReport = (group) => {
   const { trackedURLs } = group.settings;
-  // const updatedTracedURLs = trackedURLs.reduce((acc,trackedURL)=>{
-  //   const clonedTracedUrl = Object.assign({},trackedURL)
-  //   const updatedVariants = clonedTracedUrl.variants.map((variant)=>{
-  //     return Object.assign({},variant,{new:false})
-  //   })
-  //   acc.push(Object.assign(clonedTracedUrl,{variants:updatedVariants}))
-  //   return acc
-  // },[])
 
   Promise.map(
     trackedURLs,
@@ -32,21 +23,25 @@ const generateLighthouseReport = (group) => {
           }
           variant.new = false;
           Object.assign(cache, { foundNew: true });
-          await init(testLink, name || "Latest", true);
-          return variant;
+          try {
+            await init(testLink, name || "Latest", true);
+            return variant;
+          } catch (e) {
+            return variant;
+          }
         },
-        { concurrency: 2 }
+        { concurrency: 1 }
       );
       return {
         url,
         variants: updatedVariants,
       };
     },
-    { concurrency: 1 }
+    { concurrency: 2 }
   ).then(async (updatedTrackedURLs) => {
-    Object.assign(cache, { running: false });
     if (cache.foundNew) {
       const grp = await dbDriver.group_find(group.id);
+      Object.assign(cache, { foundNew: false });
       group.settings.trackedURLs = updatedTrackedURLs;
       grp.settings = group.settings;
       return dbDriver.group_update(grp);
