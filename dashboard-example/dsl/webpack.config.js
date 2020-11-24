@@ -13,7 +13,7 @@ module.exports = {
     filename: "[name].[contenthash].js",
     chunkFilename: "[name].[contenthash].js",
     publicPath: `auto`,
-    chunkLoadingGlobal: `dsl.${require("./package.json").version}`,
+    uniqueName: `dsl.${require("./package.json").version}`,
   },
   module: {
     rules: [
