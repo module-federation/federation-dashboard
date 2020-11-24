@@ -52,4 +52,4 @@ const GroupPage = () => {
   );
 };
 
-export default withAuth(GroupPage);
+export default GroupPage;
