@@ -4,6 +4,7 @@ const next = require("next");
 const path = require("path");
 const http = require("http");
 const createApp = require("./app");
+const ip = require("ip");
 
 const start = async () => {
   // Provide runtime config for frontend
@@ -22,15 +23,12 @@ const start = async () => {
     },
     () => {
       const { port } = server.address();
+      global.internalAddress = "http://" + ip.address() + ":" + port;
+
       // eslint-disable-next-line no-console
       console.log(`Server started at http://localhost:${port}`);
     }
   );
-
-  var port = server.address().port;
-  const ip = require("ip");
-
-  global.internalAddress = "http://" + ip.address() + ":" + port;
 };
 
 if (require.main === module) {

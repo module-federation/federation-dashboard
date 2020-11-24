@@ -195,4 +195,4 @@ const Dependencies = () => {
   );
 };
 
-export default withAuth(observer(Dependencies));
+export default observer(Dependencies);

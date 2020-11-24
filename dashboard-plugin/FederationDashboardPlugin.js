@@ -34,7 +34,10 @@ class FederationDashboardPlugin {
       return plugin.constructor.name === "ModuleFederationPlugin";
     });
     if (FederationPlugin) {
-      this.FederationPluginOptions = FederationPlugin._options;
+      this.FederationPluginOptions = Object.assign(
+        {},
+        FederationPlugin._options
+      );
     } else if (this._options.standalone) {
       this.FederationPluginOptions = this._options.standalone;
     } else {
@@ -42,6 +45,10 @@ class FederationDashboardPlugin {
         "Dashboard plugin is missing Module Federation or standalone option"
       );
     }
+    this.FederationPluginOptions.name = this.FederationPluginOptions.name.replace(
+      "__REMOTE_VERSION__",
+      ""
+    );
     compiler.hooks.thisCompilation.tap(PLUGIN_NAME, (compilation) => {
       compilation.hooks.processAssets.tapPromise(
         {
@@ -50,9 +57,6 @@ class FederationDashboardPlugin {
         },
         () => this.processWebpackGraph(compilation)
       );
-    });
-    console.log({
-      "process.CURRENT_HOST": JSON.stringify(this.FederationPluginOptions.name),
     });
 
     if (this.FederationPluginOptions.name) {
@@ -64,8 +68,8 @@ class FederationDashboardPlugin {
     }
   }
 
-  processWebpackGraph(compilation, callback) {
-    const liveStats = compilation.getStats();
+  processWebpackGraph(curCompiler, callback) {
+    const liveStats = curCompiler.getStats();
     const stats = liveStats.toJson();
     // filter modules
     const modules = this.getFilteredModules(stats);
@@ -106,20 +110,104 @@ class FederationDashboardPlugin {
     if (graphData) {
       const dashData = (this._dashData = JSON.stringify(graphData));
 
-      this.writeStatsFiles(stats, dashData);
+      // this.writeStatsFiles(stats, dashData);
 
       if (this._options.dashboardURL) {
-        return this.postDashboardData(dashData)
+        this.postDashboardData(dashData)
           .then(() => {})
           .catch((err) => {
             if (err) {
-              compilation.errors.push(err);
+              curCompiler.errors.push(err);
               // eslint-disable-next-line promise/no-callback-in-promise
               throw err;
             }
           });
       }
-      return Promise.resolve();
+      return Promise.resolve().then(() => {
+        const statsBuf = Buffer.from(dashData || "{}", "utf-8");
+
+        const source = {
+          source() {
+            return statsBuf;
+          },
+          size() {
+            return statsBuf.length;
+          },
+        };
+        // for dashboard.json
+        if (curCompiler.emitAsset && this._options.filename) {
+          const asset = curCompiler.getAsset(this._options.filename);
+
+          if (asset) {
+            curCompiler.updateAsset(this._options.filename, source);
+          } else {
+            curCompiler.emitAsset(this._options.filename, source);
+          }
+        }
+        // for versioned remote
+        if (curCompiler.emitAsset && this.FederationPluginOptions.filename) {
+          const remoteEntry = curCompiler.getAsset(
+            this.FederationPluginOptions.filename
+          );
+          const cleanVersion = "_" + graphData.version.split(".").join("_");
+          let codeSource;
+          if (!remoteEntry.source._value && remoteEntry.source.source) {
+            codeSource = remoteEntry.source.source();
+          } else if (remoteEntry.source._value) {
+            codeSource = remoteEntry.source._value;
+          }
+          //string replace "dsl" with version_dsl to make another global.
+          const newSource = codeSource.replace(
+            new RegExp(`__REMOTE_VERSION__`, "g"),
+            cleanVersion
+          );
+
+          const rewriteTempalteFromMain = codeSource.replace(
+            new RegExp(`__REMOTE_VERSION__`, "g"),
+            ""
+          );
+
+          const remoteEntryBuffer = Buffer.from(newSource, "utf-8");
+          const originalRemoteEntryBuffer = Buffer.from(
+            rewriteTempalteFromMain,
+            "utf-8"
+          );
+
+          const remoteEntrySource = {
+            source() {
+              return remoteEntryBuffer;
+            },
+            size() {
+              return remoteEntryBuffer.length;
+            },
+          };
+          const originalRemoteEntrySource = {
+            source() {
+              return originalRemoteEntryBuffer;
+            },
+            size() {
+              return originalRemoteEntryBuffer.length;
+            },
+          };
+
+          if (remoteEntry && graphData.version) {
+            curCompiler.updateAsset(
+              this.FederationPluginOptions.filename,
+              originalRemoteEntrySource
+            );
+
+            curCompiler.emitAsset(
+              [graphData.version, this.FederationPluginOptions.filename].join(
+                "."
+              ),
+              remoteEntrySource
+            );
+          }
+        }
+        if (callback) {
+          return void callback();
+        }
+      });
     }
   }
 
@@ -264,11 +352,60 @@ class FederationDashboardPlugin {
     return Array.from(directReasons);
   }
 
+  // This is no longer needed - can be deleted or used for refactoring the asset emitter
   writeStatsFiles(stats, dashData) {
     if (this._options.filename) {
       const hashPath = path.join(stats.outputPath, this._options.filename);
+      if (fs.existsSync(stats.outputPath)) {
+        fs.mkdirSync(stats.outputPath);
+      }
       fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, () => {});
     }
+    console.log(
+      path.join(stats.outputPath, this.FederationPluginOptions.filename)
+    );
+
+    const file = fs.readFileSync(
+      path.join(stats.outputPath, this.FederationPluginOptions.filename)
+    );
+    const { version } = JSON.parse(dashData);
+    if (!version) {
+      throw new Error("no version provided, cannot version remote");
+    }
+    console.log(
+      path.join(
+        stats.outputPath,
+        version,
+        this.FederationPluginOptions.filename
+      )
+    );
+
+    fs.mkdir(
+      path.join(stats.outputPath, version),
+      { recursive: true },
+      (err) => {
+        if (err) throw err;
+        fs.writeFile(
+          path.join(
+            stats.outputPath,
+            version,
+            this.FederationPluginOptions.filename
+          ),
+          file,
+          (err) => {
+            console.log(err);
+            console.log(
+              "wrote versioned remote",
+              path.join(
+                stats.outputPath,
+                version,
+                this.FederationPluginOptions.filename
+              )
+            );
+          }
+        );
+      }
+    );
 
     const statsPath = path.join(stats.outputPath, "stats.json");
     fs.writeFile(
