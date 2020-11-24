@@ -81,7 +81,6 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
   }\`,
     }),
   }).then(function(res){
-  if(!self.managedModules) self.managedModules = {}
   return res.json().then(function(data){return data.data})
   }).then(function(data){
       var injectScript = ${injectScript.toString()}
