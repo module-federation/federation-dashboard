@@ -6,10 +6,6 @@ const injectScript = function (d, s, id, override) {
     if (d.getElementById(id)) {
       if (override) {
         var remoteAndVersion = remoteName.split("-");
-        console.log(
-          "looking for remote",
-          window[remoteAndVersion[0] + "_" + remoteAndVersion[1]]
-        );
 
         return resolve(
           window[remoteAndVersion[0] + "_" + remoteAndVersion[1]] ||
@@ -25,9 +21,6 @@ const injectScript = function (d, s, id, override) {
     }
     js = d.createElement(s);
     js.id = id;
-    if (override && override.version) {
-      //window[`remote_${override.name}`] = override.version;
-    }
     js.onload = function () {
       resolve();
     };
@@ -44,7 +37,6 @@ const injectScript = function (d, s, id, override) {
     window.pendingRemote = {};
   }
   if (override && override.version) {
-    console.log("using overrides");
     var remoteAndVersion = remoteName.split("-");
     window.pendingRemote[
       remoteAndVersion[0] + "_" + remoteAndVersion[1]
@@ -87,13 +79,11 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
       if(data && data.groups && data.groups[0] && data.groups[0].applications && data.groups[0].applications[0]) {
         const currentApp = data.groups[0].applications[0];
         if (!currentApp.overrides.length) {
-        console.log('${currentHost}','has no overrides')
           injectScript(document, "script", "federation-dynamic-remote-${remoteName}").then(function() {
             resolve(window.${remoteName})
           });
           return;
         }
-        console.log(currentApp);
         const allOverrides = currentApp.overrides.map((override) => {
           var objVersion = override && override.version ? override.version.split('.').join('_') : "";
           return injectScript(
@@ -103,16 +93,12 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
             override
           ).then(function(){
            var versionedModule =  "${remoteName}_" + objVersion;
-           console.log('versionedModule',versionedModule)
-      
-           console.log('resolving',versionedModule,window[versionedModule])
            resolve(window[versionedModule])
           })
         });
       }
     })
   }).then((res)=>{
-  console.log('final resolve',res);
   return res;
-  })`;
+  }).catch(console.error)`;
 };
