@@ -104,6 +104,7 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
           ).then(function(){
            var versionedModule =  "${remoteName}_" + objVersion;
            console.log('versionedModule',versionedModule)
+      
            console.log('resolving',versionedModule,window[versionedModule])
            resolve(window[versionedModule])
           })
