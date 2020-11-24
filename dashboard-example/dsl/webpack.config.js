@@ -13,6 +13,7 @@ module.exports = {
     filename: "[name].[contenthash].js",
     chunkFilename: "[name].[contenthash].js",
     publicPath: `auto`,
+    chunkLoadingGlobal: `dsl.${require("./package.json").version}`,
   },
   module: {
     rules: [
@@ -53,8 +54,8 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "dsl",
-      library: { type: "var", name: "dsl" },
+      name: "dsl__REMOTE_VERSION__",
+      library: { type: "var", name: "dsl__REMOTE_VERSION__" },
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {

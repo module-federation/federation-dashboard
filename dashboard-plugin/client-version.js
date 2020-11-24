@@ -81,6 +81,7 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
   }\`,
     }),
   }).then(function(res){
+  if(!self.managedModules) self.managedModules = {}
   return res.json().then(function(data){return data.data})
   }).then(function(data){
       var injectScript = ${injectScript.toString()}
@@ -104,6 +105,7 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
           ).then(function(){
            var versionedModule =  "${remoteName}_" + objVersion;
            console.log('versionedModule',versionedModule)
+      
            console.log('resolving',versionedModule,window[versionedModule])
            resolve(window[versionedModule])
           })
