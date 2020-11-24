@@ -490,7 +490,6 @@ const allowCors = async (req: any, res: any, next: any) => {
 
 async function handler(req: any, res: any) {
   await runMiddleware(req, res, allowCors);
-
   // @ts-expect-error ts-migrate(2554) FIXME: Expected 1 arguments, but got 0.
   const session = await auth0.getSession();
   // @ts-expect-error ts-migrate(2339) FIXME: Property 'INTERNAL_TOKEN' does not exist on type '... Remove this comment to see the full error message
