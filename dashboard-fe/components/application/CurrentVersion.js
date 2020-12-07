@@ -292,10 +292,14 @@ export const RemoteVersionManager = observer(
   ({ appName, application, applicationOverrides }) => {
     const classes = useStyles();
     const apps = Array.from(
-      application.consumes.reduce(
-        (s, { application: { name } }) => s.add(name),
-        new Set()
-      )
+      application.consumes
+        .filter((consumes) => consumes.application)
+        .reduce((s, consumed) => {
+          if (consumed?.application?.name) {
+            s.add(consumed.application.name);
+          }
+          return s;
+        }, new Set())
     );
     const overrides = {};
     applicationOverrides.forEach(({ name, version }) => {

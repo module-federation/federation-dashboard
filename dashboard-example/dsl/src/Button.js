@@ -4,6 +4,10 @@ console.log(
   "REMOTE FEDERATION MANAGEMENT: using remote version: " +
     require("../package.json").version
 );
-const MyButton = ({ children }) => <Button primary>{children}</Button>;
+const MyButton = ({ children }) => (
+  <Button primary style={{ background: "blue" }}>
+    {children}
+  </Button>
+);
 
 export default MyButton;
