@@ -298,6 +298,7 @@ export const RemoteVersionManager = observer(
           if (consumed?.application?.name) {
             s.add(consumed.application.name);
           }
+          return s;
         }, new Set())
     );
     const overrides = {};

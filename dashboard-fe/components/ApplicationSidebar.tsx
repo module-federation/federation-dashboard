@@ -160,37 +160,40 @@ const ConsumersTable = ({ modules, name }) => {
         <TableBody>
           {modules
             .filter(({ consumedBy }) => consumedBy.length)
-            .map(({ name: moduleName, consumedBy }) => (
-              <TableRow key={moduleName}>
-                <TableCell>
-                  <Typography>
-                    <ModuleLink
-                      group={store.group}
-                      application={name}
-                      module={module}
-                    >
-                      <a>{moduleName}</a>
-                    </ModuleLink>
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography>
-                    {consumedBy.map(
-                      ({ consumingApplication: { name: consumer } }) => (
-                        <span key={[name, moduleName, consumer].join(":")}>
-                          <ApplicationLink
-                            group={store.group}
-                            application={consumer}
-                          >
-                            <a>{consumer}</a>
-                          </ApplicationLink>{" "}
-                        </span>
-                      )
-                    )}
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            ))}
+            .map(({ name: moduleName, consumedBy }) => {
+              console.log(store.group, name, module);
+              return (
+                <TableRow key={moduleName}>
+                  <TableCell>
+                    <Typography>
+                      <ModuleLink
+                        group={store.group}
+                        application={name}
+                        module={moduleName}
+                      >
+                        <a>{moduleName}</a>
+                      </ModuleLink>
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography>
+                      {consumedBy.map(
+                        ({ consumingApplication: { name: consumer } }) => (
+                          <span key={[name, moduleName, consumer].join(":")}>
+                            <ApplicationLink
+                              group={store.group}
+                              application={consumer}
+                            >
+                              <a>{consumer}</a>
+                            </ApplicationLink>{" "}
+                          </span>
+                        )
+                      )}
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
         </TableBody>
       </Table>
     </>

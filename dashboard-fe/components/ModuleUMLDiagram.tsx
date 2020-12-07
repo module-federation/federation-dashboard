@@ -167,6 +167,7 @@ class LayoutWidget extends React.Component<
     engine.redistribute(this.props.model);
     this.reroute();
     this.props.engine.repaintCanvas();
+
     this.forceUpdate();
   }
 
@@ -241,7 +242,6 @@ const ModuleUMLDiagram = observer(({ applications }: any) => {
 
             nodes.forEach((n) => {
               if (node === n) {
-                // @ts-expect-error ts-migrate(2339) FIXME: Property 'color' does not exist on type 'BasePosit... Remove this comment to see the full error message
                 n.getOptions().color =
                   node === n ? NODE_COLOR_SELECTED : NODE_COLOR_UNSELECTED;
               }
