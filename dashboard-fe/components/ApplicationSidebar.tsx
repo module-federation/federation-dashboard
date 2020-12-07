@@ -8,11 +8,9 @@ import {
   TableCell,
   Chip,
 } from "@material-ui/core";
-import Link from "next/link";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { observer } from "mobx-react";
-import _ from "lodash";
 
 import store from "../src/store";
 import { ApplicationLink, ModuleLink } from "./links";
