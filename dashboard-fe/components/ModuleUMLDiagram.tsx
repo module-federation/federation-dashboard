@@ -315,6 +315,7 @@ const ModuleUMLDiagram = observer(({ applications }: any) => {
   engine.setModel(model);
   model.setLocked(true);
 
+  // @ts-ignore
   return <LayoutWidget model={model} engine={engine} ref={diagramRef} />;
 });
 
