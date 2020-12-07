@@ -91,13 +91,13 @@ export class NicerNodeWidget extends React.Component<DefaultNodeProps> {
       </S.OutPortItem>
     );
   };
+  props: any;
 
   render() {
     return (
       <S.Node
         data-default-node-name={this.props.node.getOptions().name}
         selected={this.props.node.isSelected()}
-        // @ts-expect-error ts-migrate(2322) FIXME: Type 'string | undefined' is not assignable to typ... Remove this comment to see the full error message
         background={this.props.node.getOptions().color}
       >
         <S.Title>
@@ -118,6 +118,7 @@ export class NicerNodeWidget extends React.Component<DefaultNodeProps> {
 
 export class NicerNodeFactory extends DefaultNodeFactory {
   generateReactWidget(event: any): JSX.Element {
+    // @ts-ignore
     return <NicerNodeWidget engine={this.engine} node={event.model} />;
   }
 }
@@ -137,6 +138,7 @@ namespace S {
 }
 
 export class CanvasContainer extends React.Component<CanvasContainerProps> {
+  props: any;
   render() {
     return <S.Container>{this.props.children}</S.Container>;
   }
@@ -147,6 +149,7 @@ class LayoutWidget extends React.Component<
   any
 > {
   isDiagramMounted: any;
+  props: any;
   constructor(props: { model: DiagramModel; engine: DiagramEngine }) {
     super(props);
   }
@@ -175,6 +178,7 @@ class LayoutWidget extends React.Component<
   }
 
   reroute() {
+    // @ts-ignore
     this.props.engine
       .getLinkFactories()
       .getFactory<PathFindingLinkFactory>(PathFindingLinkFactory.NAME)
@@ -185,6 +189,7 @@ class LayoutWidget extends React.Component<
     return (
       <div>
         <Button onClick={() => this.autoDistribute()}>Layout</Button>
+        {/* @ts-ignore*/}
         <CanvasContainer>
           <CanvasWidget engine={this.props.engine} />
         </CanvasContainer>
@@ -208,7 +213,6 @@ const ModuleUMLDiagram = observer(({ applications }: any) => {
     console.log("Changing state");
     if (diagramRef) {
       window.setTimeout(() => {
-        // @ts-expect-error ts-migrate(2531) FIXME: Object is possibly 'null'.
         diagramRef.current.autoDistribute();
       }, 0);
     }
@@ -227,7 +231,6 @@ const ModuleUMLDiagram = observer(({ applications }: any) => {
     const { modules } = versions[0];
     const node = new DefaultNodeModel(name, NODE_COLOR_DEFAULT);
 
-    // @ts-expect-error ts-migrate(2345) FIXME: Argument of type '{ eventDidFire: (evt: BaseEvent ... Remove this comment to see the full error message
     node.registerListener({
       eventDidFire: (evt) => {
         if (evt.function === "selectionChanged") {
@@ -244,7 +247,6 @@ const ModuleUMLDiagram = observer(({ applications }: any) => {
               }
             });
 
-            // @ts-expect-error ts-migrate(7006) FIXME: Parameter 'l' implicitly has an 'any' type.
             links.forEach((l) => {
               const sourceName = l.sourcePort.getOptions().id;
               const targetName = l.targetPort.getOptions().id;
@@ -260,10 +262,8 @@ const ModuleUMLDiagram = observer(({ applications }: any) => {
             store.detailDrawerOpen = false;
 
             nodes.forEach((n) => {
-              // @ts-expect-error ts-migrate(2339) FIXME: Property 'color' does not exist on type 'BasePosit... Remove this comment to see the full error message
               n.getOptions().color = NODE_COLOR_DEFAULT;
             });
-            // @ts-expect-error ts-migrate(7006) FIXME: Parameter 'l' implicitly has an 'any' type.
             links.forEach((l) => {
               l.getOptions().color = LINK_COLOR_DEFAULT;
               l.getOptions().width = LINK_SIZE_DEFAULT;
@@ -273,17 +273,12 @@ const ModuleUMLDiagram = observer(({ applications }: any) => {
       },
     });
 
-    // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     ports[name] = node.addOutPort("");
-    // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     ports[name].getOptions().id = name;
 
-    // @ts-expect-error ts-migrate(7031) FIXME: Binding element 'moduleName' implicitly has an 'an... Remove this comment to see the full error message
     modules.forEach(({ name: moduleName }) => {
       const id = `${name}:${moduleName}`;
-      // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       ports[id] = node.addInPort(moduleName);
-      // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       ports[id].getOptions().id = id;
     });
     nodes.push(node);
@@ -292,15 +287,11 @@ const ModuleUMLDiagram = observer(({ applications }: any) => {
   applications.forEach(({ name: fromApp, versions }: any) => {
     versions[0].consumes
       .filter(({ application }: any) => application)
-      // @ts-expect-error ts-migrate(7031) FIXME: Binding element 'appName' implicitly has an 'any' ... Remove this comment to see the full error message
       .forEach(({ application: { name: appName }, name: moduleName }) => {
-        // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         if (ports[fromApp]) {
           let link = null;
           try {
-            // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
             link = ports[fromApp].link(
-              // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
               ports[`${appName}:${moduleName}`]
               // engine.getLinkFactories().getFactory(PathFindingLinkFactory.NAME)
             );
@@ -317,7 +308,6 @@ const ModuleUMLDiagram = observer(({ applications }: any) => {
     model.addNode(node);
   });
 
-  // @ts-expect-error ts-migrate(7006) FIXME: Parameter 'link' implicitly has an 'any' type.
   links.forEach((link) => {
     model.addLink(link);
   });
