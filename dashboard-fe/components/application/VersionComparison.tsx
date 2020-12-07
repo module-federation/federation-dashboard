@@ -146,7 +146,6 @@ export const VersionComparison = ({ group, environment, name }: any) => {
       .map(([k]) => k.split(":")[0])
   );
   uniqueDependencies.forEach((name: any) => {
-    // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (overrideNames[name]) {
       uniqueOverrides.push(name);
     }
@@ -154,11 +153,8 @@ export const VersionComparison = ({ group, environment, name }: any) => {
   uniqueOverrides = uniq(uniqueOverrides);
 
   return (
-    // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <Table>
-      {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <TableHead>
-        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <TableRow>
           <TableCell></TableCell>
           {versions.map(({ version, posted }: any) => (
@@ -177,9 +173,7 @@ export const VersionComparison = ({ group, environment, name }: any) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <TableRow>
-          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <TableCell
             colSpan={versions.length + 1}
             className={classes.sectionHeading}
@@ -189,9 +183,7 @@ export const VersionComparison = ({ group, environment, name }: any) => {
         </TableRow>
         {uniqueModules.map((module) => (
           <TableRow>
-            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <TableCell key={["module", module].join("")}>
-              {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <ModuleLink group={group} application={name} module={module}>
                 {module}
               </ModuleLink>
@@ -209,9 +201,7 @@ export const VersionComparison = ({ group, environment, name }: any) => {
           </TableRow>
         ))}
 
-        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <TableRow>
-          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <TableCell
             colSpan={versions.length + 1}
             className={classes.sectionHeading}
@@ -221,16 +211,12 @@ export const VersionComparison = ({ group, environment, name }: any) => {
         </TableRow>
         {uniqueConsumes.map((module) => (
           <TableRow>
-            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <TableCell key={["consumes", module].join("")}>
-              {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <ModuleLink
                 group={group}
-                // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
                 application={consumeApp[module]}
                 module={module}
               >
-                {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                 <a>{module}</a>
               </ModuleLink>
             </TableCell>
@@ -246,10 +232,7 @@ export const VersionComparison = ({ group, environment, name }: any) => {
             ))}
           </TableRow>
         ))}
-
-        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <TableRow>
-          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <TableCell
             colSpan={versions.length + 1}
             className={classes.sectionHeading}
@@ -259,7 +242,6 @@ export const VersionComparison = ({ group, environment, name }: any) => {
         </TableRow>
         {uniqueOverrides.map((module: any) => (
           <TableRow>
-            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <TableCell key={["override", module].join("")}>{module}</TableCell>
             {versions.map(({ version, dependencies }: any) => (
               <TableCell
@@ -279,9 +261,7 @@ export const VersionComparison = ({ group, environment, name }: any) => {
           </TableRow>
         ))}
 
-        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <TableRow>
-          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <TableCell
             colSpan={versions.length + 1}
             className={classes.sectionHeading}
@@ -291,7 +271,6 @@ export const VersionComparison = ({ group, environment, name }: any) => {
         </TableRow>
         {uniqueDependencies.map((module: any) => (
           <TableRow>
-            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <TableCell key={["dependency", module].join("")}>
               {module}
             </TableCell>
