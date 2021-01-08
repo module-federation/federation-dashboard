@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { useForm, Controller } from "react-hook-form";
 import {
@@ -11,13 +11,14 @@ import {
   InputLabel,
   Input,
   FormHelperText,
-  FormControl,
+  FormControl
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CreateIcon from "@material-ui/icons/Create";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-
+import { v4 as uuidv4 } from "uuid";
+import TokenGenerator from "token-generator";
 import Layout from "../components/Layout";
 import withAuth from "../components/with-auth";
 import store from "../src/store";
@@ -195,12 +196,17 @@ const TokenForm = ({ siteSettings }) => {
               aria-describedby="my-helper-text"
               inputRef={register({ required: true })}
             />
+
             <FormHelperText id="my-helper-text">
               We need this so DashboardPlugin can communicate
               <br />
-              <small>This is not stored in clear text!</small>
             </FormHelperText>
             {errors.pluginToken && <span>This field is required</span>}
+          </FormControl>
+          <FormControl>
+            <Button variant="contained" color="primary" >
+              Generate Token
+            </Button>
           </FormControl>
         </Grid>
         <Grid item xs={12}>

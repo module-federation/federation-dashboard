@@ -5,35 +5,35 @@ import {
   TableHead,
   TableRow,
   Typography,
-  makeStyles,
+  makeStyles
 } from "@material-ui/core";
 import ArrowIcon from "@material-ui/icons/Forward";
 import { UpArrow, DownArrow } from "./icons";
 import { ApplicationLink, ModuleLink } from "./links";
 import store from "../src/store";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   headerRow: {
-    background: theme.palette.grey[200],
-  },
+    background: theme.palette.grey[200]
+  }
 }));
 
 const ApplicationsTable = ({ applications }) => {
   const classes = useStyles();
   const modules = applications
     .map(({ id, name, versions }) =>
-      versions[0].modules.map((mod) => ({
+      versions[0].modules.map(mod => ({
         ...mod,
         absoluteId: `${id}:${mod.name}`,
         applicationId: id,
-        applicationName: name,
+        applicationName: name
       }))
     )
     .flat();
   const modulesById = Object.fromEntries(
     modules.map(({ name, applicationId }) => [
       `${applicationId}:${name}`,
-      { name, applicationId, applications: {} },
+      { name, applicationId, applications: {} }
     ])
   );
 
@@ -112,7 +112,7 @@ const ApplicationsTable = ({ applications }) => {
                       flex: 1,
                       display: "flex",
                       flexDirection: "row",
-                      justifyContent: "center",
+                      justifyContent: "center"
                     }}
                   >
                     {modulesById[absoluteId].applicationId === appId && (
@@ -133,7 +133,7 @@ const ApplicationsTable = ({ applications }) => {
               <TableCell align="left" width="5%">
                 <Typography variant="body1" noWrap>
                   {requires
-                    .map((name) => `${name}${findVersion(applicationId, name)}`)
+                    .map(name => `${name}${findVersion(applicationId, name)}`)
                     .join(", ")}
                 </Typography>
               </TableCell>

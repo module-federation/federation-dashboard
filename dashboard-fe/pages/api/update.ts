@@ -4,9 +4,9 @@ import auth0 from "../../src/auth0";
 export const config = {
   api: {
     bodyParser: {
-      sizeLimit: "10mb",
-    },
-  },
+      sizeLimit: "10mb"
+    }
+  }
 };
 
 const dataIsValid = (data: any) =>

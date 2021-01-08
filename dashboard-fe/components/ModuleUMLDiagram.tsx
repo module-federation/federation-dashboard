@@ -6,7 +6,7 @@ import createEngine, {
   DiagramEngine,
   PathFindingLinkFactory,
   DefaultNodeFactory,
-  DefaultPortLabel,
+  DefaultPortLabel
 } from "@projectstorm/react-diagrams";
 import { Button } from "@material-ui/core";
 import { CanvasWidget } from "@projectstorm/react-canvas-core";
@@ -18,14 +18,14 @@ import store from "../src/store";
 
 namespace S {
   export const Node = styled.div<{ background: string; selected: boolean }>`
-    background-color: ${(p) => p.background};
+    background-color: ${p => p.background};
     border-radius: 5px;
     font-family: sans-serif;
     color: white;
     border: solid 2px black;
     overflow: visible;
     font-size: 14px;
-    border: solid 2px ${(p) => (p.selected ? "rgb(0,192,255)" : "black")};
+    border: solid 2px ${p => (p.selected ? "rgb(0,192,255)" : "black")};
   `;
 
   export const Title = styled.div`
@@ -160,9 +160,9 @@ class LayoutWidget extends React.Component<
         rankdir: "RL",
         ranker: "network-simplex",
         marginx: 25,
-        marginy: 25,
+        marginy: 25
       },
-      includeLinks: true,
+      includeLinks: true
     });
     engine.redistribute(this.props.model);
     this.reroute();
@@ -233,21 +233,21 @@ const ModuleUMLDiagram = observer(({ applications }: any) => {
     const node = new DefaultNodeModel(name, NODE_COLOR_DEFAULT);
 
     node.registerListener({
-      eventDidFire: (evt) => {
+      eventDidFire: evt => {
         if (evt.function === "selectionChanged") {
           const selected = node.getOptions().selected;
           if (selected) {
             store.selectedApplication = name;
             store.detailDrawerOpen = true;
 
-            nodes.forEach((n) => {
+            nodes.forEach(n => {
               if (node === n) {
                 n.getOptions().color =
                   node === n ? NODE_COLOR_SELECTED : NODE_COLOR_UNSELECTED;
               }
             });
 
-            links.forEach((l) => {
+            links.forEach(l => {
               const sourceName = l.sourcePort.getOptions().id;
               const targetName = l.targetPort.getOptions().id;
               l.getOptions().color =
@@ -261,16 +261,16 @@ const ModuleUMLDiagram = observer(({ applications }: any) => {
             store.selectedApplication = null;
             store.detailDrawerOpen = false;
 
-            nodes.forEach((n) => {
+            nodes.forEach(n => {
               n.getOptions().color = NODE_COLOR_DEFAULT;
             });
-            links.forEach((l) => {
+            links.forEach(l => {
               l.getOptions().color = LINK_COLOR_DEFAULT;
               l.getOptions().width = LINK_SIZE_DEFAULT;
             });
           }
         }
-      },
+      }
     });
 
     ports[name] = node.addOutPort("");
@@ -308,7 +308,7 @@ const ModuleUMLDiagram = observer(({ applications }: any) => {
     model.addNode(node);
   });
 
-  links.forEach((link) => {
+  links.forEach(link => {
     model.addLink(link);
   });
 
