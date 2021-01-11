@@ -51,16 +51,16 @@ const GET_APPS = gql`
 
 const useHomeStyles = makeStyles({
   helpParagraph: {
-    marginTop: "1em"
-  }
+    marginTop: "1em",
+  },
 });
 
 const Home = () => {
   const { data } = useQuery(GET_APPS, {
     variables: {
       environment: store.environment,
-      group: store.group
-    }
+      group: store.group,
+    },
   });
   const [currentTab, currentTabSet] = React.useState(0);
   const classes = useHomeStyles();

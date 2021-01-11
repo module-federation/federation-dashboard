@@ -28,7 +28,7 @@ export default class VersionManager {
         .map((appVersion: any) =>
           dbDriver.applicationVersion_update({
             ...appVersion,
-            latest: false
+            latest: false,
           })
         )
     );
@@ -50,7 +50,7 @@ export default class VersionManager {
       app.overrides = overridesWithoutRemote;
       app.overrides.push({
         name: remote,
-        version
+        version,
       });
     } else {
       app.overrides = overridesWithoutRemote;
