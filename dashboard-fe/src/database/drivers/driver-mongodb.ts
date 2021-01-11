@@ -6,7 +6,7 @@ import { Collection, MongoClient } from "mongodb";
 
 import Application, { schema as applicationSchema } from "../application";
 import ApplicationVersion, {
-  schema as applicationVersionSchema
+  schema as applicationVersionSchema,
 } from "../applicationVersion";
 import MetricValue, { schema as metricValueSchema } from "../metricValue";
 import Group, { schema as groupSchema } from "../group";
@@ -27,7 +27,7 @@ class MongoDriver<T> {
   constructor(private collection: Collection) {}
 
   async find(id: string): Promise<T | null> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.collection.find({ id }).toArray((_, docs) => {
         if (docs.length > 0) {
           delete docs[0]._id;
@@ -40,7 +40,7 @@ class MongoDriver<T> {
   }
 
   async search(query: any): Promise<Array<T> | null> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.collection.find(query).toArray((_, docs) => {
         resolve(docs.map(({ _id, ...data }) => ({ ...data })) || []);
       });
@@ -48,13 +48,13 @@ class MongoDriver<T> {
   }
 
   async insert(data: T): Promise<null> {
-    return new Promise(async resolve => {
+    return new Promise(async (resolve) => {
       this.collection.insertOne(data, () => resolve());
     });
   }
 
   async update<TA>(query: any, data: TA): Promise<null> {
-    return new Promise(async resolve => {
+    return new Promise(async (resolve) => {
       this.collection.find(query).toArray((_, docs) => {
         if (docs.length > 0) {
           this.collection.updateOne(query, { $set: data }, {}, () => resolve());
@@ -66,7 +66,7 @@ class MongoDriver<T> {
   }
 
   async delete(id: string): Promise<null> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.collection.deleteOne({ id }, {}, () => resolve());
     });
   }
@@ -92,7 +92,7 @@ export default class DriverMongoDB implements Driver {
     }
     DriverMongoDB.isInSetup = true;
 
-    this.client.connect(async err => {
+    this.client.connect(async (err) => {
       if (err) {
         console.error("Error during MongoDB database startup");
         console.error(err.toString());
@@ -119,7 +119,7 @@ export default class DriverMongoDB implements Driver {
         await this.group_update({
           id: "default",
           name: "default",
-          metadata: []
+          metadata: [],
         });
       }
 
@@ -138,7 +138,7 @@ export default class DriverMongoDB implements Driver {
   async application_getMetrics(id: string): Promise<Array<MetricValue> | null> {
     return this.metricsTable.search({
       type: "application",
-      id
+      id,
     });
   }
 
@@ -150,7 +150,7 @@ export default class DriverMongoDB implements Driver {
     return this.metricsTable.insert({
       type: "application",
       id,
-      ...metric
+      ...metric,
     });
   }
   async application_update(application: Application): Promise<null> {
@@ -170,7 +170,7 @@ export default class DriverMongoDB implements Driver {
     const versions = await this.applicationVersionsTable.search({
       applicationId,
       environment,
-      version
+      version,
     });
     return versions.length > 0 ? versions[0] : null;
   }
@@ -181,7 +181,7 @@ export default class DriverMongoDB implements Driver {
     version?: string
   ): Promise<Array<ApplicationVersion>> {
     const q: any = {
-      applicationId
+      applicationId,
     };
     if (environment) {
       q.environment = environment;
@@ -200,7 +200,7 @@ export default class DriverMongoDB implements Driver {
     return this.applicationVersionsTable.search({
       applicationId,
       environment,
-      latest: true
+      latest: true,
     });
   }
 
@@ -210,7 +210,7 @@ export default class DriverMongoDB implements Driver {
       {
         applicationId: version.applicationId,
         environment: version.environment,
-        version: version.version
+        version: version.version,
       },
       version
     );
@@ -228,7 +228,7 @@ export default class DriverMongoDB implements Driver {
   async group_getMetrics(id: string): Promise<Array<MetricValue> | null> {
     return this.metricsTable.search({
       type: "group",
-      id
+      id,
     });
   }
 
@@ -243,7 +243,7 @@ export default class DriverMongoDB implements Driver {
   async group_findByName(name: string): Promise<Group> {
     return this.groupsTable
       .search({ name })
-      .then(data => (data && data.length ? data[0] : null));
+      .then((data) => (data && data.length ? data[0] : null));
   }
 
   async group_findAll(): Promise<Array<Group>> {
@@ -281,7 +281,7 @@ export default class DriverMongoDB implements Driver {
   async siteSettings_get(): Promise<SiteSettings> {
     let settings = {
       webhooks: [],
-      tokens: []
+      tokens: [],
     };
     if (fs.existsSync(siteSettingsPath)) {
       try {

@@ -10,7 +10,7 @@ import {
   generateMultiSeriesChartData,
   generateTimeSeriesScatterChartData,
   removeMeta,
-  makeIDfromURL
+  makeIDfromURL,
 } from "../../../lighthouse/utils";
 
 import Form from "../../../components/FormVarient";
@@ -51,7 +51,7 @@ const ADD_VARIENT = gql`
   }
 `;
 
-const WhiskerChart = React.memo(props => {
+const WhiskerChart = React.memo((props) => {
   const [ready, setReady] = useState(false);
   const [gotRef, setRef] = useState(false);
   // const [setUrl] = useMutation(ADD_VARIENT);
@@ -83,42 +83,42 @@ const WhiskerChart = React.memo(props => {
     zoomEnabled: true,
     zoomType: "y",
     title: {
-      text: "Performance chart"
+      text: "Performance chart",
     },
     axisX: {
-      title: "Metric Type"
+      title: "Metric Type",
     },
     axisY: {
       scaleBreaks: {
-        autoCalculate: true // change to false
+        autoCalculate: true, // change to false
       },
       includeZero: false,
       title: "Timing",
       suffix: "ms",
-      logarithmic: false
+      logarithmic: false,
     },
     legend: {
       cursor: "pointer",
-      itemclick: e => {
+      itemclick: (e) => {
         props.toggleDataSeries(e);
         gotRef.render();
-      }
+      },
     },
 
-    data: props.whiskerChartData
+    data: props.whiskerChartData,
   };
 
   return (
     <CanvasJSChart
       options={whiskerChartOptions}
-      onRef={ref => {
+      onRef={(ref) => {
         setRef(ref);
         createRef(ref);
       }}
     />
   );
 });
-const ScatterChart = React.memo(props => {
+const ScatterChart = React.memo((props) => {
   const [ready, setReady] = useState(false);
   const [gotRef, setRef] = useState(false);
 
@@ -134,38 +134,38 @@ const ScatterChart = React.memo(props => {
     zoomEnabled: true,
     zoomType: "x",
     title: {
-      text: "Scatter Chart"
+      text: "Scatter Chart",
     },
     axisX: {
-      title: "Metric Type"
+      title: "Metric Type",
     },
     axisY: {
       title: "Timing",
       suffix: "ms",
       includeZero: false,
-      logarithmic: true
+      logarithmic: true,
     },
     legend: {
       cursor: "pointer",
-      itemclick: e => {
+      itemclick: (e) => {
         props.toggleDataSeries(e);
         gotRef.render();
-      }
+      },
     },
 
-    data: props.scatterChartData
+    data: props.scatterChartData,
   };
   return (
     <CanvasJSChart
       options={scatterChartOptions}
-      onRef={ref => {
+      onRef={(ref) => {
         setRef(ref);
         createRef(ref);
       }}
     />
   );
 });
-const MultiSeriesChart = React.memo(props => {
+const MultiSeriesChart = React.memo((props) => {
   const [ready, setReady] = useState(false);
   const [gotRef, setRef] = useState(false);
 
@@ -179,37 +179,37 @@ const MultiSeriesChart = React.memo(props => {
     theme: "dark2",
     animationEnabled: true,
     title: {
-      text: "Multi Series Chart - Medians"
+      text: "Multi Series Chart - Medians",
     },
     axisY: {
       title: "Metric Type",
-      includeZero: true
+      includeZero: true,
     },
     legend: {
       cursor: "pointer",
-      itemclick: e => {
+      itemclick: (e) => {
         props.toggleDataSeries(e);
         gotRef.render();
-      }
+      },
     },
     toolTip: {
-      shared: true
+      shared: true,
       // content: toolTipFormatter
     },
-    data: props.multiSeriesChartData
+    data: props.multiSeriesChartData,
   };
 
   return (
     <CanvasJSChart
       options={multiSeriesChartOptions}
-      onRef={ref => {
+      onRef={(ref) => {
         setRef(ref);
         createRef(ref);
       }}
     />
   );
 });
-const TimeSeriesChart = React.memo(props => {
+const TimeSeriesChart = React.memo((props) => {
   const [data, setData] = useState(false);
   const [gotRef, setRef] = useState(false);
   const [isRecent, setRecent] = useState(false);
@@ -217,15 +217,15 @@ const TimeSeriesChart = React.memo(props => {
     height: typeof window === "object" ? window.innerHeight : null,
     theme: "dark2",
     title: {
-      text: "Scatter Chart"
+      text: "Scatter Chart",
     },
     axisX: {
       title: "Date",
-      labelFormatter: function(e) {
+      labelFormatter: function (e) {
         const { CanvasJS } = require("canvasjs-react-charts");
 
         return CanvasJS.formatDate(e.value, "DD MMM");
-      }
+      },
     },
     axisY: {
       title: "Timing",
@@ -233,17 +233,17 @@ const TimeSeriesChart = React.memo(props => {
       includeZero: false,
       // logarithmic: true,
       // interval: 0.2,
-      minimum: 500
+      minimum: 500,
     },
     legend: {
       cursor: "pointer",
-      itemclick: e => {
+      itemclick: (e) => {
         props.toggleDataSeries(e);
         gotRef.render();
-      }
+      },
     },
 
-    data: data
+    data: data,
   };
 
   useEffect(() => {
@@ -255,8 +255,8 @@ const TimeSeriesChart = React.memo(props => {
     //   }
     // }
     fetch(hostname + "api/get-timeseries?report=" + query.report)
-      .then(res => res.json())
-      .then(timeSeriesData => {
+      .then((res) => res.json())
+      .then((timeSeriesData) => {
         if (isRecent) {
           timeSeriesData = timeSeriesData.slice(
             Math.max(timeSeriesData.length - 5, 0)
@@ -277,7 +277,7 @@ const TimeSeriesChart = React.memo(props => {
     <>
       <CanvasJSChart
         options={timeSeriesScatterChartOptions}
-        onRef={ref => {
+        onRef={(ref) => {
           createRef(ref);
           setRef(ref);
         }}
@@ -288,7 +288,7 @@ const TimeSeriesChart = React.memo(props => {
 });
 
 const link = createHttpLink({
-  uri: "/api/graphql"
+  uri: "/api/graphql",
 });
 
 class Report extends React.Component {
@@ -297,7 +297,7 @@ class Report extends React.Component {
     this.state = {
       inputValue: "",
       queryValue: "",
-      newQueryObject: {}
+      newQueryObject: {},
     };
     this.toggleDataSeries = this.toggleDataSeries.bind(this);
     this.cache = new InMemoryCache({ addTypename: false });
@@ -308,9 +308,9 @@ class Report extends React.Component {
       queryDeduplication: false,
       defaultOptions: {
         watchQuery: {
-          fetchPolicy: "cache-and-network"
-        }
-      }
+          fetchPolicy: "cache-and-network",
+        },
+      },
     });
   }
 
@@ -338,7 +338,7 @@ class Report extends React.Component {
     this.setState(Object.assign({}, this.state, { newQueryObject }));
   };
 
-  _handleSubmit = e => {
+  _handleSubmit = (e) => {
     let newQueryObject;
     if (this.state.queryValue) {
       this.updateExistingQuery();
@@ -364,7 +364,7 @@ class Report extends React.Component {
               }
             }
           }
-        `
+        `,
       })
       .then(({ data }) => {
         if (data.groups[0].settings?.trackedURLs) {
@@ -382,7 +382,7 @@ class Report extends React.Component {
               },
               []
             );
-            const isNewVariant = !updatedExistingVariants.find(variant => {
+            const isNewVariant = !updatedExistingVariants.find((variant) => {
               return this.state.name === variant.name;
             });
 
@@ -409,7 +409,7 @@ class Report extends React.Component {
                         .stringify(originalQueryString)
                         .replace("%2C", ",")
                     : "",
-                  new: true
+                  new: true,
                 });
               }
             }
@@ -420,13 +420,13 @@ class Report extends React.Component {
           }, []);
 
           return Object.assign({}, data.groups[0].settings, {
-            trackedURLs: updatedTrackedUrls
+            trackedURLs: updatedTrackedUrls,
           });
         } else {
           return null;
         }
       })
-      .then(updatedTrackedUrls => {
+      .then((updatedTrackedUrls) => {
         if (!updatedTrackedUrls) {
           return;
         }
@@ -445,7 +445,7 @@ class Report extends React.Component {
                 }
               }
             }
-          `
+          `,
         });
       })
       .then((...args) => {
@@ -464,7 +464,7 @@ class Report extends React.Component {
     // });
   };
 
-  onDelete = name => {
+  onDelete = (name) => {
     this.apolloClient
       .query({
         query: gql`
@@ -482,7 +482,7 @@ class Report extends React.Component {
               }
             }
           }
-        `
+        `,
       })
       .then(({ data }) => {
         const { trackedURLs } = Object.create(data.groups[0].settings);
@@ -494,15 +494,15 @@ class Report extends React.Component {
               body: JSON.stringify([
                 {
                   name,
-                  url: report
-                }
-              ])
+                  url: report,
+                },
+              ]),
             });
-            const freshVariants = group.variants.filter(variant => {
+            const freshVariants = group.variants.filter((variant) => {
               return variant.name !== name;
             });
             const updatedGroup = Object.assign({}, group, {
-              variants: freshVariants
+              variants: freshVariants,
             });
             acc.push(updatedGroup);
             return acc;
@@ -511,10 +511,10 @@ class Report extends React.Component {
           return acc;
         }, []);
         return Object.assign({}, data.groups[0].settings, {
-          trackedURLs: groupToDeleteFrom
+          trackedURLs: groupToDeleteFrom,
         });
       })
-      .then(updatedTrackedUrls => {
+      .then((updatedTrackedUrls) => {
         this.apolloClient.mutate({
           variables: { settings: updatedTrackedUrls },
           mutation: gql`
@@ -530,7 +530,7 @@ class Report extends React.Component {
                 }
               }
             }
-          `
+          `,
         });
       })
       .then(() => {
@@ -547,7 +547,7 @@ class Report extends React.Component {
             onSubmit={this._handleSubmit}
             onDelete={this.onDelete}
             values={this.state}
-            onChange={formObj => {
+            onChange={(formObj) => {
               this.setState(Object.assign({}, this.state, formObj));
             }}
           />
@@ -585,16 +585,16 @@ class Report extends React.Component {
 Report.getInitialProps = async ({ query }) => {
   const { meta, ...report } = await fetch(
     hostname + "api/get-report?report=" + query.report
-  ).then(res => res.json());
+  ).then((res) => res.json());
 
   const [
     scatterChartData,
     whiskerChartData,
-    multiSeriesChartData
+    multiSeriesChartData,
   ] = await Promise.all([
     generateScatterChartData(report),
     generateWhiskerChartData(report),
-    generateMultiSeriesChartData(report)
+    generateMultiSeriesChartData(report),
   ]);
   return {
     scatterChartData,
@@ -602,7 +602,7 @@ Report.getInitialProps = async ({ query }) => {
     multiSeriesChartData,
     meta,
     appKeys: Object.keys(report),
-    query
+    query,
   };
 };
 export default Report;

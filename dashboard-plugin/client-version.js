@@ -1,6 +1,6 @@
-const injectScript = function(d, s, id, override) {
+const injectScript = function (d, s, id, override) {
   var remoteName = id.replace("federation-dynamic-remote-", "");
-  const promise = new Promise(resolve => {
+  const promise = new Promise((resolve) => {
     var js,
       fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) {
@@ -21,7 +21,7 @@ const injectScript = function(d, s, id, override) {
     }
     js = d.createElement(s);
     js.id = id;
-    js.onload = function() {
+    js.onload = function () {
       resolve();
     };
     const src =

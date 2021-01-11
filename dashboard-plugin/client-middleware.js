@@ -1,10 +1,10 @@
 const fetch = require("node-fetch");
-const getManagedModules = currentHost => {
+const getManagedModules = (currentHost) => {
   fetch("http://localhost:3000/api/graph", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Accept: "application/json"
+      Accept: "application/json",
     },
     body: JSON.stringify({
       query: `query {
@@ -21,15 +21,15 @@ const getManagedModules = currentHost => {
         }
       }
     }
-  }`
-    })
+  }`,
+    }),
   })
-    .then(function(res) {
-      return res.json().then(function(data) {
+    .then(function (res) {
+      return res.json().then(function (data) {
         return data.data;
       });
     })
-    .then(function(data) {
+    .then(function (data) {
       if (
         data &&
         data.groups &&
@@ -42,9 +42,9 @@ const getManagedModules = currentHost => {
           return {};
         }
         const managedModules = {
-          [currentApp]: new Set([])
+          [currentApp]: new Set([]),
         };
-        const allOverrides = currentApp.overrides.map(override => {
+        const allOverrides = currentApp.overrides.map((override) => {
           var objVersion =
             override && override.version
               ? override.version.split(".").join("_")
@@ -58,7 +58,7 @@ const getManagedModules = currentHost => {
             "script",
             "federation-dynamic-remote-${remoteName}-" + objVersion,
             override
-          ).then(function() {
+          ).then(function () {
             var versionedModule = "${remoteName}_" + objVersion;
             resolve(window[versionedModule]);
           });

@@ -14,13 +14,13 @@ export default privateConfig.WITH_AUTH
         cookieLifetime: privateConfig.SESSION_COOKIE_LIFETIME,
         storeIdToken: false,
         storeRefreshToken: false,
-        storeAccessToken: false
-      }
+        storeAccessToken: false,
+      },
     })
   : {
       handleLogin() {},
       handleProfile() {},
       getSession() {
         return { noAuth: true };
-      }
+      },
     };
