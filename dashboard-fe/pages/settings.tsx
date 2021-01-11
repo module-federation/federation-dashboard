@@ -180,17 +180,14 @@ const TokenForm = ({ siteSettings }) => {
     const variables = {
       settings: { tokens, webhooks: siteSettings.webhooks },
     };
-    console.log(variables);
 
     setSettings({
       variables,
     });
   };
 
-  const [token, setToken] = useState("");
-
   const generateToken = () => {
-    setToken(uuidv4());
+    // setToken(uuidv4());
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -203,6 +200,7 @@ const TokenForm = ({ siteSettings }) => {
               id="pluginToken"
               aria-describedby="my-helper-text"
               inputRef={register({ required: true })}
+              value={token}
             />
 
             <FormHelperText id="my-helper-text">
