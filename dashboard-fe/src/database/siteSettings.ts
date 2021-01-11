@@ -17,7 +17,7 @@ export const webhookSchema = Joi.object({
       "deleteApplicationVersion",
       "updateTrackedURLS"
     )
-    .required()
+    .required(),
   url: Joi.string().required()
 });
 
@@ -27,7 +27,7 @@ export const tokenSchema = Joi.object({
 });
 
 export const schema = Joi.object({
-  webhooks: Joi.array().items(webhookSchema.required())
+  webhooks: Joi.array().items(webhookSchema.required()),
   tokens: Joi.array().items(tokenSchema.required())
 });
 

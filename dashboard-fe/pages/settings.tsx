@@ -168,7 +168,7 @@ export function SettingsForm({ siteSettings }) {
 const TokenForm = ({ siteSettings }) => {
   const { register, handleSubmit, watch, errors } = useForm();
   const [setSettings] = useMutation(SET_SETTINGS);
-  const [token,setToken] = useState('')
+  const [token, setToken] = useState("");
   const onSubmit = siteTokens => {
     const tokens = Object.keys(siteTokens).map(key => {
       return {
@@ -183,9 +183,9 @@ const TokenForm = ({ siteSettings }) => {
     });
   };
 
-  const generateToken = ()=>{
-    setToken(uuidv4())
-  }
+  const generateToken = () => {
+    setToken(uuidv4());
+  };
   console.log(watch("example")); // watch input value by passing the name of it
 
   return (
