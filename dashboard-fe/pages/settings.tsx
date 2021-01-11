@@ -185,9 +185,9 @@ const TokenForm = ({ siteSettings }) => {
       variables,
     });
   };
-
+  const [token, setToken] = useState(siteSettings.tokens?.[0].value);
   const generateToken = () => {
-    // setToken(uuidv4());
+    setToken(uuidv4());
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
