@@ -20,7 +20,6 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 import { v4 as uuidv4 } from "uuid";
 import TokenGenerator from "token-generator";
 import Layout from "../components/Layout";
-import withAuth from "../components/with-auth";
 import store from "../src/store";
 
 const GET_SETTINGS = gql`
@@ -72,7 +71,7 @@ const useStyles = makeStyles({
 export function SettingsForm({ siteSettings }) {
   const { register, errors, handleSubmit, control } = useForm({
     mode: "all",
-    reValidateMode: "all",
+    reValidateMode: "onChange",
     defaultValues: siteSettings,
   });
   const [setSettings] = useMutation(SET_SETTINGS);
@@ -166,28 +165,25 @@ export function SettingsForm({ siteSettings }) {
 }
 
 const TokenForm = ({ siteSettings }) => {
-  const { register, errors, handleSubmit, control } = useForm({
+  const { register, errors, handleSubmit } = useForm({
     mode: "all",
     defaultValues: siteSettings,
   });
-  Object.keys(siteSettings.webhooks).map((i) => parseInt(i));
 
   const [setSettings] = useMutation(SET_SETTINGS);
 
-  console.log(siteSettings);
   const onSubmit = (siteTokens) => {
-    const tokens = Object.keys(siteTokens).map((key) => {
-      return {
-        key: key,
-        value: siteTokens[key],
-      };
-    });
-    console.log({ tokens, webhooks: siteSettings.webhooks });
+    const tokens = Object.keys(siteTokens).map((key) => ({
+      key: key,
+      value: siteTokens[key],
+    }));
+    const variables = {
+      settings: { tokens, webhooks: siteSettings.webhooks },
+    };
+    console.log(variables);
 
     setSettings({
-      variables: {
-        settings: { tokens, webhooks: siteSettings.webhooks },
-      },
+      variables,
     });
   };
 
