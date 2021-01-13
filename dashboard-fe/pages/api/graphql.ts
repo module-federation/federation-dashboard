@@ -5,7 +5,7 @@ import { versionManagementEnabled } from "./db";
 import dbDriver from "../../src/database/drivers";
 import ModuleManager from "../../src/managers/Module";
 import VersionManager from "../../src/managers/Version";
-import {privateConfig} from "../../src/config";
+import { privateConfig } from "../../src/config";
 import auth0 from "../../src/auth0";
 import "../../src/webhooks";
 import url from "native-url";
@@ -489,31 +489,15 @@ const allowCors = async (req: any, res: any, next: any) => {
   }
   return next(req, res);
 };
-const fetchToken = () => {
-  console.log(apolloServer.executeOperation({body: JSON.stringify({
-      query: `query {
-    {
-      siteSettings {
-        tokens {
-          key
-          value
-        }
-        webhooks {
-          event
-          url
-        }
-      }
-    }
-    }
-  }`
-    })}))
-  // x`return fetch(url.resolve(privateConfig.EXTERNAL_URL, "api/graphql"), {
-  //   method: "POST",
-  //   redirect: "follow",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     Accept: "application/json"
-  //   },
+
+const fetchToken = headers => {
+  return fetch(url.resolve(privateConfig.EXTERNAL_URL, "api/graphql"), {
+    method: "POST",
+    headers: {
+      ...headers,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
     body: JSON.stringify({
       query: `query {
     {
@@ -522,25 +506,28 @@ const fetchToken = () => {
           key
           value
         }
-        webhooks {
-          event
-          url
-        }
       }
-    }
     }
   }`
     })
-  // });
+  });
 };
+
 async function handler(req: any, res: any) {
   await runMiddleware(req, res, allowCors);
- // fetchToken()
+  // fetchToken()
   // @ts-expect-error ts-migrate(2554) FIXME: Expected 1 arguments, but got 0.
-  let session = false
-  if(process.env.NODE_ENV === 'production') {
-     session = await auth0.getSession();
+  let session = false;
+  if (process.env.NODE_ENV === "production") {
+    session = await auth0.getSession();
   }
+  console.log(session);
+
+  console.log(req.headers);
+
+  fetchToken(req.headers)
+    .then(res => res.json())
+    .then(console.log);
 
   // // @ts-expect-error ts-migrate(2339) FIXME: Property 'INTERNAL_TOKEN' does not exist on type '... Remove this comment to see the full error message
   // if (req?.query?.token !== global.INTERNAL_TOKEN) {
