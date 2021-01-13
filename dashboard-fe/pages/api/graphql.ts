@@ -5,8 +5,10 @@ import { versionManagementEnabled } from "./db";
 import dbDriver from "../../src/database/drivers";
 import ModuleManager from "../../src/managers/Module";
 import VersionManager from "../../src/managers/Version";
+import {privateConfig} from "../../src/config";
 import auth0 from "../../src/auth0";
 import "../../src/webhooks";
+import url from "native-url";
 
 const typeDefs = gql`
   scalar Date
@@ -272,7 +274,7 @@ const resolvers = {
   Query: {
     dashboard: () => {
       return {
-        versionManagementEnabled: versionManagementEnabled(),
+        versionManagementEnabled: versionManagementEnabled()
       };
     },
     userByEmail: async (_: any, { email }: any) => {
@@ -290,7 +292,7 @@ const resolvers = {
     },
     siteSettings: () => {
       return dbDriver.siteSettings_get();
-    },
+    }
   },
   Mutation: {
     updateApplicationSettings: async (
@@ -321,7 +323,7 @@ const resolvers = {
         type: application ? "application" : "group",
         name,
         value,
-        url,
+        url
         //TODO add extra keys
       });
       return true;
@@ -338,7 +340,7 @@ const resolvers = {
         type: application ? "application" : "group",
         name,
         value,
-        url,
+        url
         //TODO add extra keys
       });
       return true;
@@ -366,7 +368,7 @@ const resolvers = {
       await dbDriver.setup();
       await dbDriver.user_update({
         id: user.email,
-        ...user,
+        ...user
       });
       return dbDriver.user_find(user.email);
     },
@@ -374,7 +376,7 @@ const resolvers = {
       await dbDriver.setup();
       await dbDriver.siteSettings_update(settings);
       return dbDriver.siteSettings_get();
-    },
+    }
   },
   Application: {
     versions: async ({ id }: any, { environment, latest }: any, ctx: any) => {
@@ -395,7 +397,7 @@ const resolvers = {
       return names
         ? metrics.filter(({ name }: any) => names.includes(name))
         : metrics;
-    },
+    }
   },
   Consume: {
     consumingApplication: async (parent: any, args: any, ctx: any) => {
@@ -405,7 +407,7 @@ const resolvers = {
     application: async (parent: any, args: any, ctx: any) => {
       await dbDriver.setup();
       return dbDriver.application_find(parent.applicationID);
-    },
+    }
   },
   Module: {
     consumedBy: async (parent: any, args: any, ctx: any) => {
@@ -416,14 +418,14 @@ const resolvers = {
         parent.applicationID,
         parent.name
       );
-    },
+    }
   },
   ApplicationVersion: {
     modules: async ({ modules }: any, { name }: any) => {
       return name
         ? modules.filter(({ name: moduleName }) => name === moduleName)
         : modules;
-    },
+    }
   },
   Group: {
     metrics: async ({ id }: any, { names }: any, ctx: any) => {
@@ -445,14 +447,14 @@ const resolvers = {
         const found = await dbDriver.application_find(applicationId);
         return found ? [found] : [];
       }
-    },
-  },
+    }
+  }
 };
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers });
 
 const apolloHandler = apolloServer.createHandler({
-  path: "/api/graphql",
+  path: "/api/graphql"
 });
 
 function runMiddleware(req: any, res: any, fn: any) {
@@ -487,11 +489,59 @@ const allowCors = async (req: any, res: any, next: any) => {
   }
   return next(req, res);
 };
-
+const fetchToken = () => {
+  console.log(apolloServer.executeOperation({body: JSON.stringify({
+      query: `query {
+    {
+      siteSettings {
+        tokens {
+          key
+          value
+        }
+        webhooks {
+          event
+          url
+        }
+      }
+    }
+    }
+  }`
+    })}))
+  // x`return fetch(url.resolve(privateConfig.EXTERNAL_URL, "api/graphql"), {
+  //   method: "POST",
+  //   redirect: "follow",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Accept: "application/json"
+  //   },
+    body: JSON.stringify({
+      query: `query {
+    {
+      siteSettings {
+        tokens {
+          key
+          value
+        }
+        webhooks {
+          event
+          url
+        }
+      }
+    }
+    }
+  }`
+    })
+  // });
+};
 async function handler(req: any, res: any) {
   await runMiddleware(req, res, allowCors);
+ // fetchToken()
   // @ts-expect-error ts-migrate(2554) FIXME: Expected 1 arguments, but got 0.
-  // const session = await auth0.getSession();
+  let session = false
+  if(process.env.NODE_ENV === 'production') {
+     session = await auth0.getSession();
+  }
+
   // // @ts-expect-error ts-migrate(2339) FIXME: Property 'INTERNAL_TOKEN' does not exist on type '... Remove this comment to see the full error message
   // if (req?.query?.token !== global.INTERNAL_TOKEN) {
   //   // @ts-expect-error ts-migrate(2339) FIXME: Property 'user' does not exist on type '{ noAuth: ... Remove this comment to see the full error message
@@ -515,8 +565,8 @@ async function handler(req: any, res: any) {
 
 export const config = {
   api: {
-    bodyParser: false,
-  },
+    bodyParser: false
+  }
 };
 
 export default handler;

@@ -18,7 +18,7 @@ const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
   const opts = {
     key: privateConfig.PAGESPEED_KEY,
     strategy: mode,
-    threshold: 0,
+    threshold: 0
   };
   if (!hasStarted) {
     console.log("MODE:", mode);
@@ -29,7 +29,7 @@ const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
     await Promise.all([
       await psi(url, opts),
       await psi(url, opts),
-      await psi(url, opts),
+      await psi(url, opts)
     ]);
     bar1.start(RUNS, 0);
   }
@@ -38,14 +38,14 @@ const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
 
     return {
       js: data2.data.lighthouseResult,
-      json: JSON.stringify(data2.data.lighthouseResult),
+      json: JSON.stringify(data2.data.lighthouseResult)
     };
   } catch (e) {
     return launchPageSpeedInsightsLighthouse(url);
   }
 };
 
-const average = (array) =>
+const average = array =>
   toFixed(array.reduce((a, b) => a + b) / array.length, 2);
 
 function toFixed(num, fixed) {
@@ -69,7 +69,7 @@ export const init = (url, title, desktop = true) => {
       fs.mkdirSync(dirName, { recursive: true });
     }
 
-    const runner = async (title) => {
+    const runner = async title => {
       let fakeArray = [];
       let tracker = [];
       for (let i = 1; i <= RUNS; i++) {
@@ -101,7 +101,7 @@ export const init = (url, title, desktop = true) => {
         const scatterData = {
           [title]: testResults.map(({ js }) => {
             return js;
-          }),
+          })
         };
 
         fs.readFile(
@@ -117,9 +117,9 @@ export const init = (url, title, desktop = true) => {
             } else {
               const oldScatterData = JSON.parse(data); //now it an object
 
-              Object.keys(oldScatterData).map((key) => {
+              Object.keys(oldScatterData).map(key => {
                 if (Array.isArray(oldScatterData[key])) {
-                  oldScatterData[key] = oldScatterData[key].map((oldData) => {
+                  oldScatterData[key] = oldScatterData[key].map(oldData => {
                     delete oldData.timing;
                     delete oldData.audits["screenshot-thumbnails"];
                     delete oldData.audits["final-screenshot"];
@@ -142,7 +142,7 @@ export const init = (url, title, desktop = true) => {
     };
 
     return runner(title)
-      .then((allResults) => {
+      .then(allResults => {
         bar1.stop();
         console.log("\n");
         hasStarted = false;
@@ -151,7 +151,7 @@ export const init = (url, title, desktop = true) => {
         const auditKeys = Object.keys(allResults[0].js.audits);
         const avg = {};
         allResults.forEach(({ js: { audits } }) => {
-          auditKeys.forEach((key) => {
+          auditKeys.forEach(key => {
             if (!audits[key]) {
               return;
             }
@@ -171,22 +171,22 @@ export const init = (url, title, desktop = true) => {
         Object.assign(averageAudit.js, {
           audits: averagedJson,
           variant: title,
-          mode,
+          mode
         });
         averageAudit.json = JSON.stringify(
           Object.assign(JSON.parse(averageAudit.json), {
             audits: averagedJson,
             variant: title,
-            mode,
+            mode
           })
         );
         return averageAudit;
       })
-      .then((results) => {
+      .then(results => {
         fs.writeFile(
           `${dirName}/${results.js["fetchTime"].replace(/:/g, "_")}.json`,
           results.json,
-          (err) => {
+          err => {
             if (err) throw err;
           }
         );

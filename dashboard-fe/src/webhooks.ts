@@ -12,12 +12,12 @@ const hookSusbscriber = async (type: any, payload: any) => {
         fetch(url, {
           method: "GET",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
             type,
-            payload,
-          }),
+            payload
+          })
         })
       )
   );
