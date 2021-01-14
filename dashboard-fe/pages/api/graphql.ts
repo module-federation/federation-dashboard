@@ -524,10 +524,10 @@ async function handler(req: any, res: any) {
   console.log(session);
 
   console.log(req.headers);
-
-  fetchToken(req.headers)
-    .then(res => res.json())
-    .then(console.log);
+  //
+  // fetchToken(req.headers)
+  //   .then(res => res.json())
+  //   .then(console.log);
 
   // // @ts-expect-error ts-migrate(2339) FIXME: Property 'INTERNAL_TOKEN' does not exist on type '... Remove this comment to see the full error message
   // if (req?.query?.token !== global.INTERNAL_TOKEN) {
