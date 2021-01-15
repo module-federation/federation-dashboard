@@ -12,7 +12,7 @@ import "../webhooks";
 const convertMetadata = (metadataObj: any) =>
   Object.entries(metadataObj || {}).map(([name, value]) => ({
     name: name.toString(),
-    value: value.toString()
+    value: value.toString(),
   }));
 
 export default class ApplicationManager {
@@ -29,7 +29,7 @@ export default class ApplicationManager {
         group: groupName,
         overrides: [],
         metadata: convertMetadata(application.metadata),
-        tags: application.tags || []
+        tags: application.tags || [],
       });
     }
 
@@ -45,26 +45,26 @@ export default class ApplicationManager {
     const dependencies = [
       ...(application.dependencies || []).map((dep: any) => ({
         ...dep,
-        type: "dependency"
+        type: "dependency",
       })),
       ...(application.devDependencies || []).map((dep: any) => ({
         ...dep,
-        type: "devDependency"
+        type: "devDependency",
       })),
       ...(application.optionalDependencies || []).map((dep: any) => ({
         ...dep,
-        type: "optionalDependency"
+        type: "optionalDependency",
       })),
       ...(application.peerDependencies || []).map((dep: any) => ({
         ...dep,
-        type: "peerDependency"
-      }))
-    ].map(d => d);
+        type: "peerDependency",
+      })),
+    ].map((d) => d);
 
     const modules = application.modules.map((module: any) => ({
       ...module,
       metadata: convertMetadata(module.metadata),
-      tags: module.tags || []
+      tags: module.tags || [],
     }));
 
     application.version = application.version || "1.0.0";
@@ -82,7 +82,7 @@ export default class ApplicationManager {
       overrides: application.overrides as Override[],
       dependencies: dependencies as Dependency[],
       remotes: [],
-      remote: application.remote
+      remote: application.remote,
     };
     const appVer = await driver.applicationVersion_find(
       version.applicationId,
@@ -115,7 +115,7 @@ export default class ApplicationManager {
         .map((appVersion: any) =>
           driver.applicationVersion_update({
             ...appVersion,
-            latest: false
+            latest: false,
           })
         )
     );

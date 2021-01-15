@@ -274,7 +274,7 @@ const resolvers = {
   Query: {
     dashboard: () => {
       return {
-        versionManagementEnabled: versionManagementEnabled()
+        versionManagementEnabled: versionManagementEnabled(),
       };
     },
     userByEmail: async (_: any, { email }: any) => {
@@ -292,7 +292,7 @@ const resolvers = {
     },
     siteSettings: () => {
       return dbDriver.siteSettings_get();
-    }
+    },
   },
   Mutation: {
     updateApplicationSettings: async (
@@ -323,7 +323,7 @@ const resolvers = {
         type: application ? "application" : "group",
         name,
         value,
-        url
+        url,
         //TODO add extra keys
       });
       return true;
@@ -340,7 +340,7 @@ const resolvers = {
         type: application ? "application" : "group",
         name,
         value,
-        url
+        url,
         //TODO add extra keys
       });
       return true;
@@ -368,7 +368,7 @@ const resolvers = {
       await dbDriver.setup();
       await dbDriver.user_update({
         id: user.email,
-        ...user
+        ...user,
       });
       return dbDriver.user_find(user.email);
     },
@@ -376,7 +376,7 @@ const resolvers = {
       await dbDriver.setup();
       await dbDriver.siteSettings_update(settings);
       return dbDriver.siteSettings_get();
-    }
+    },
   },
   Application: {
     versions: async ({ id }: any, { environment, latest }: any, ctx: any) => {
@@ -397,7 +397,7 @@ const resolvers = {
       return names
         ? metrics.filter(({ name }: any) => names.includes(name))
         : metrics;
-    }
+    },
   },
   Consume: {
     consumingApplication: async (parent: any, args: any, ctx: any) => {
@@ -407,7 +407,7 @@ const resolvers = {
     application: async (parent: any, args: any, ctx: any) => {
       await dbDriver.setup();
       return dbDriver.application_find(parent.applicationID);
-    }
+    },
   },
   Module: {
     consumedBy: async (parent: any, args: any, ctx: any) => {
@@ -418,14 +418,14 @@ const resolvers = {
         parent.applicationID,
         parent.name
       );
-    }
+    },
   },
   ApplicationVersion: {
     modules: async ({ modules }: any, { name }: any) => {
       return name
         ? modules.filter(({ name: moduleName }) => name === moduleName)
         : modules;
-    }
+    },
   },
   Group: {
     metrics: async ({ id }: any, { names }: any, ctx: any) => {
@@ -447,14 +447,14 @@ const resolvers = {
         const found = await dbDriver.application_find(applicationId);
         return found ? [found] : [];
       }
-    }
-  }
+    },
+  },
 };
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers });
 
 const apolloHandler = apolloServer.createHandler({
-  path: "/api/graphql"
+  path: "/api/graphql",
 });
 
 function runMiddleware(req: any, res: any, fn: any) {
@@ -490,7 +490,7 @@ const allowCors = async (req: any, res: any, next: any) => {
   return next(req, res);
 };
 
-const fetchToken = headers => {
+const fetchToken = (headers) => {
   return fetch(url.resolve(privateConfig.EXTERNAL_URL, "api/graphql"), {
     method: "POST",
     headers: {
@@ -508,52 +508,51 @@ const fetchToken = headers => {
         }
       }
     }
-  }`
-    })
+  }`,
+    }),
   });
 };
 
 async function handler(req: any, res: any) {
   await runMiddleware(req, res, allowCors);
-  // fetchToken()
   // @ts-expect-error ts-migrate(2554) FIXME: Expected 1 arguments, but got 0.
   let session = false;
   if (process.env.NODE_ENV === "production") {
     session = await auth0.getSession();
   }
-  console.log(session);
-
-  console.log(req.headers);
-  //
-  // fetchToken(req.headers)
-  //   .then(res => res.json())
-  //   .then(console.log);
-
-  // // @ts-expect-error ts-migrate(2339) FIXME: Property 'INTERNAL_TOKEN' does not exist on type '... Remove this comment to see the full error message
-  // if (req?.query?.token !== global.INTERNAL_TOKEN) {
-  //   // @ts-expect-error ts-migrate(2339) FIXME: Property 'user' does not exist on type '{ noAuth: ... Remove this comment to see the full error message
-  //   if (!session || !session.user) {
-  //     // @ts-expect-error ts-migrate(2339) FIXME: Property 'noAuth' does not exist on type '{ noAuth... Remove this comment to see the full error message
-  //     if (!session.noAuth) {
-  //       res.status(401).json({
-  //         errors: [
-  //           {
-  //             message: "Unauthorized",
-  //             extensions: { code: "UNAUTHENTICATED" },
-  //           },
-  //         ],
-  //       });
-  //     }
-  //   }
-  // }
-
+  const tokens = (await dbDriver.siteSettings_get()).tokens;
+  if (tokens.length > 0) {
+    if (req.headers.Authorization.includes(tokens[0])) {
+      session = {
+        user: {},
+        noAuth: false,
+      };
+    }
+  }
+  // @ts-expect-error ts-migrate(2339) FIXME: Property 'INTERNAL_TOKEN' does not exist on type '... Remove this comment to see the full error message
+  if (req?.query?.token !== global.INTERNAL_TOKEN) {
+    // @ts-expect-error ts-migrate(2339) FIXME: Property 'user' does not exist on type '{ noAuth: ... Remove this comment to see the full error message
+    if (!session || !session.user) {
+      // @ts-expect-error ts-migrate(2339) FIXME: Property 'noAuth' does not exist on type '{ noAuth... Remove this comment to see the full error message
+      if (!session.noAuth) {
+        res.status(401).json({
+          errors: [
+            {
+              message: "Unauthorized",
+              extensions: { code: "UNAUTHENTICATED" },
+            },
+          ],
+        });
+      }
+    }
+  }
   await runMiddleware(req, res, apolloHandler);
 }
 
 export const config = {
   api: {
-    bodyParser: false
-  }
+    bodyParser: false,
+  },
 };
 
 export default handler;

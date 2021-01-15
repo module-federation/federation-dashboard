@@ -7,7 +7,7 @@ const fetchToken = () => {
     redirect: "follow",
     headers: {
       "Content-Type": "application/json",
-      Accept: "application/json"
+      Accept: "application/json",
     },
     body: JSON.stringify({
       query: `query {
@@ -24,8 +24,8 @@ const fetchToken = () => {
       }
     }
     }
-  }`
-    })
+  }`,
+    }),
   });
 };
 

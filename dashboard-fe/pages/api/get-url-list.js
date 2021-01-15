@@ -11,8 +11,8 @@ export default async (req, res) => {
       : "http://localhost:3000/"
     : "http://localhost:3000/";
 
-  const json = await fetch(url + "urls.json").then(res => {
-    return res.json().then(json => {
+  const json = await fetch(url + "urls.json").then((res) => {
+    return res.json().then((json) => {
       return Object.values(json);
     });
   });
