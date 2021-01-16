@@ -513,24 +513,35 @@ const fetchToken = (headers) => {
   });
 };
 
+const checkForTokens = async () => {
+  const {tokens} = await dbDriver.siteSettings_get();
+  if (Array.isArray(tokens) && tokens.length === 0) {
+    return false;
+  } else {
+    return tokens;
+  }
+};
 async function handler(req: any, res: any) {
   await runMiddleware(req, res, allowCors);
   // @ts-expect-error ts-migrate(2554) FIXME: Expected 1 arguments, but got 0.
   let session = false;
   if (process.env.NODE_ENV === "production") {
-    session = await auth0.getSession();
+    session = await auth0.getSession(req);
   }
-  const tokens = (await dbDriver.siteSettings_get()).tokens;
-  if (tokens.length > 0) {
-    if (req.headers.Authorization.includes(tokens[0])) {
+
+  const tokens = await checkForTokens();
+
+    if (!tokens || req.headers.Authorization.includes(tokens[0])) {
       session = {
         user: {},
-        noAuth: false,
+        noAuth: false
       };
     }
-  }
+  const hasValidToken = tokens && tokens.some((token) => {
+    return req.query.token === token;
+  });
   // @ts-expect-error ts-migrate(2339) FIXME: Property 'INTERNAL_TOKEN' does not exist on type '... Remove this comment to see the full error message
-  if (req?.query?.token !== global.INTERNAL_TOKEN) {
+  if (!hasValidToken) {
     // @ts-expect-error ts-migrate(2339) FIXME: Property 'user' does not exist on type '{ noAuth: ... Remove this comment to see the full error message
     if (!session || !session.user) {
       // @ts-expect-error ts-migrate(2339) FIXME: Property 'noAuth' does not exist on type '{ noAuth... Remove this comment to see the full error message
@@ -546,6 +557,8 @@ async function handler(req: any, res: any) {
       }
     }
   }
+
+  console.log('runMiddleware')
   await runMiddleware(req, res, apolloHandler);
 }
 
