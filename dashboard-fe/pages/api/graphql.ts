@@ -5,8 +5,10 @@ import { versionManagementEnabled } from "./db";
 import dbDriver from "../../src/database/drivers";
 import ModuleManager from "../../src/managers/Module";
 import VersionManager from "../../src/managers/Version";
+import { privateConfig } from "../../src/config";
 import auth0 from "../../src/auth0";
 import "../../src/webhooks";
+import url from "native-url";
 
 const typeDefs = gql`
   scalar Date
@@ -488,28 +490,80 @@ const allowCors = async (req: any, res: any, next: any) => {
   return next(req, res);
 };
 
+const fetchToken = (headers) => {
+  return fetch(url.resolve(privateConfig.EXTERNAL_URL, "api/graphql"), {
+    method: "POST",
+    headers: {
+      ...headers,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      query: `query {
+    {
+      siteSettings {
+        tokens {
+          key
+          value
+        }
+      }
+    }
+  }`,
+    }),
+  });
+};
+
+const checkForTokens = async () => {
+  const { tokens } = await dbDriver.siteSettings_get();
+  if (Array.isArray(tokens) && tokens.length === 0) {
+    return false;
+  } else {
+    return tokens;
+  }
+};
 async function handler(req: any, res: any) {
   await runMiddleware(req, res, allowCors);
   // @ts-expect-error ts-migrate(2554) FIXME: Expected 1 arguments, but got 0.
-  const session = await auth0.getSession();
+  let session: { noAuth: boolean; user: {} } = false;
+  if (process.env.NODE_ENV === "production") {
+    session = await auth0.getSession(req);
+  }
+  const tokens = await checkForTokens();
+
+  if (
+    !tokens ||
+    req?.headers?.Authorization?.find((token) => tokens.includes(token))
+  ) {
+    session = {
+      user: {},
+      noAuth: false,
+    };
+  }
+  const hasValidToken =
+    tokens &&
+    tokens.some((token) => {
+      return req.query.token === token;
+    });
+  console.log("has valid token", hasValidToken);
   // @ts-expect-error ts-migrate(2339) FIXME: Property 'INTERNAL_TOKEN' does not exist on type '... Remove this comment to see the full error message
-  if (req?.query?.token !== global.INTERNAL_TOKEN) {
-    // @ts-expect-error ts-migrate(2339) FIXME: Property 'user' does not exist on type '{ noAuth: ... Remove this comment to see the full error message
-    if (!session || !session.user) {
-      // @ts-expect-error ts-migrate(2339) FIXME: Property 'noAuth' does not exist on type '{ noAuth... Remove this comment to see the full error message
-      if (!session.noAuth) {
-        res.status(401).json({
-          errors: [
-            {
-              message: "Unauthorized",
-              extensions: { code: "UNAUTHENTICATED" },
-            },
-          ],
-        });
-      }
-    }
+  if (!hasValidToken) {
+    //   // @ts-expect-error ts-migrate(2339) FIXME: Property 'user' does not exist on type '{ noAuth: ... Remove this comment to see the full error message
+    //   if (!session || !session.user) {
+    //     // @ts-expect-error ts-migrate(2339) FIXME: Property 'noAuth' does not exist on type '{ noAuth... Remove this comment to see the full error message
+    //     if (!session.noAuth) {
+    //       res.status(401).json({
+    //         errors: [
+    //           {
+    //             message: "Unauthorized",
+    //             extensions: { code: "UNAUTHENTICATED" },
+    //           },
+    //         ],
+    //       });
+    //     }
+    //   }
   }
 
+  console.log("runMiddleware");
   await runMiddleware(req, res, apolloHandler);
 }
 
