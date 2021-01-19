@@ -18,7 +18,6 @@ import CreateIcon from "@material-ui/icons/Create";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { v4 as uuidv4 } from "uuid";
-import TokenGenerator from "token-generator";
 import Layout from "../components/Layout";
 import store from "../src/store";
 
@@ -167,7 +166,10 @@ export function SettingsForm({ siteSettings }) {
 const TokenForm = ({ siteSettings }) => {
   const { register, errors, handleSubmit } = useForm({
     mode: "all",
-    defaultValues: siteSettings,
+    defaultValues: Object.assign({
+      tokens: [{ value: null }],
+      ...siteSettings,
+    }),
   });
 
   const [setSettings] = useMutation(SET_SETTINGS);
@@ -185,7 +187,8 @@ const TokenForm = ({ siteSettings }) => {
       variables,
     });
   };
-  const [token, setToken] = useState(siteSettings.tokens?.[0].value);
+
+  const [token, setToken] = useState(siteSettings.tokens?.[0]?.value || "");
   const generateToken = () => {
     setToken(uuidv4());
   };

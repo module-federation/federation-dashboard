@@ -1,5 +1,6 @@
 import ApplicationManager from "../../src/managers/Application";
 import auth0 from "../../src/auth0";
+import dbDriver from "../../src/database/drivers";
 
 export const config = {
   api: {
@@ -35,10 +36,39 @@ const apiAuthGate = async (req: any, res: any, callback: any) => {
 
   return callback(req, res);
 };
+const checkForTokens = async () => {
+  const { tokens } = await dbDriver.siteSettings_get();
+  if (Array.isArray(tokens) && tokens.length === 0) {
+    return false;
+  } else {
+    return tokens;
+  }
+};
 
 export default async (req: any, res: any) => {
+  let tokens = await checkForTokens();
+  tokens = tokens.map((token) => {
+    return token.value;
+  });
+  if (
+    !tokens ||
+    req?.headers?.Authorization?.find((token) => tokens.includes(token))
+  ) {
+    session = {
+      user: {},
+      noAuth: false,
+    };
+  }
+  const hasValidToken =
+    tokens &&
+    tokens.some((token) => {
+      console.log(req.query.token, token);
+      return req.query.token === token;
+    });
+  console.log(hasValidToken);
+  console.log("#####");
   return apiAuthGate(req, res, async () => {
-    if (dataIsValid(req.body)) {
+    if (dataIsValid(req.body) || tokens) {
       console.log(`Updating ${req.body.name}#${req.body.version}`);
       await ApplicationManager.update(req.body);
       res.send(true);
