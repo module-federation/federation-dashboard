@@ -59,16 +59,15 @@ export default async (req: any, res: any) => {
       noAuth: false,
     };
   }
+
   const hasValidToken =
     tokens &&
     tokens.some((token) => {
-      console.log(req.query.token, token);
       return req.query.token === token;
     });
-  console.log(hasValidToken);
-  console.log("#####");
+
   return apiAuthGate(req, res, async () => {
-    if (dataIsValid(req.body) || tokens) {
+    if (dataIsValid(req.body) || hasValidToken) {
       console.log(`Updating ${req.body.name}#${req.body.version}`);
       await ApplicationManager.update(req.body);
       res.send(true);
