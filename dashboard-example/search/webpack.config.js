@@ -82,7 +82,8 @@ module.exports = {
       publishVersion: require("./package.json").version,
       filename: "dashboard.json",
       dashboardURL:
-        "http://localhost:3000/api/update?token=29f387e1-a00d-46ea-9fd6-02ca5e97449c",      metadata: {
+        "http://localhost:3000/api/update?token=29f387e1-a00d-46ea-9fd6-02ca5e97449c",
+      metadata: {
         source: {
           url:
             "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search",

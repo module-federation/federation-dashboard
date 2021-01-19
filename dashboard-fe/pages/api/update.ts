@@ -21,12 +21,14 @@ const dataIsValid = (data: any) =>
   data.modules !== undefined;
 
 const apiAuthGate = async (req: any, res: any, callback: any) => {
+  console.log(req)
+  console.log(apiAuthGate);
   const session = await auth0.getSession(req);
   // @ts-expect-error ts-migrate(2339) FIXME: Property 'noAuth' does not exist on type '{ noAuth... Remove this comment to see the full error message
   if (session && session.noAuth) return callback(req, res);
 
   // @ts-expect-error ts-migrate(2339) FIXME: Property 'INTERNAL_TOKEN' does not exist on type '... Remove this comment to see the full error message
-  if (req?.query?.token !== global.INTERNAL_TOKEN) {
+  if (res.hasValidTokenn) {
     // @ts-expect-error ts-migrate(2339) FIXME: Property 'user' does not exist on type '{ noAuth: ... Remove this comment to see the full error message
     if (!session || !session.user) {
       res.status(401).json({ error: "Unauthorized" });
@@ -46,10 +48,20 @@ const checkForTokens = async () => {
 };
 
 export default async (req: any, res: any) => {
+  let session: { noAuth: boolean; user: {} } = false;
+
   let tokens = await checkForTokens();
   tokens = tokens.map((token) => {
     return token.value;
   });
+
+  const hasValidToken =
+      tokens &&
+      tokens.some((token) => {
+        return req.query.token === token;
+      });
+
+  Object.assign(res,{ hasValidToken: hasValidToken })
   if (
     !tokens ||
     req?.headers?.Authorization?.find((token) => tokens.includes(token))
@@ -60,14 +72,12 @@ export default async (req: any, res: any) => {
     };
   }
 
-  const hasValidToken =
-    tokens &&
-    tokens.some((token) => {
-      return req.query.token === token;
-    });
-
+apiAuthGate.hasValidToken = hasValidToken
   return apiAuthGate(req, res, async () => {
+
+    console.log("passed auth gate");
     if (dataIsValid(req.body) || hasValidToken) {
+      console.log("failed data falidation");
       console.log(`Updating ${req.body.name}#${req.body.version}`);
       await ApplicationManager.update(req.body);
       res.send(true);
