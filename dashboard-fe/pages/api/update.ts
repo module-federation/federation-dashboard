@@ -21,8 +21,6 @@ const dataIsValid = (data: any) =>
   data.modules !== undefined;
 
 const apiAuthGate = async (req: any, res: any, callback: any) => {
-  console.log(req)
-  console.log(apiAuthGate);
   const session = await auth0.getSession(req);
   // @ts-expect-error ts-migrate(2339) FIXME: Property 'noAuth' does not exist on type '{ noAuth... Remove this comment to see the full error message
   if (session && session.noAuth) return callback(req, res);
@@ -56,12 +54,12 @@ export default async (req: any, res: any) => {
   });
 
   const hasValidToken =
-      tokens &&
-      tokens.some((token) => {
-        return req.query.token === token;
-      });
+    tokens &&
+    tokens.some((token) => {
+      return req.query.token === token;
+    });
 
-  Object.assign(res,{ hasValidToken: hasValidToken })
+  Object.assign(res, { hasValidToken: hasValidToken });
   if (
     !tokens ||
     req?.headers?.Authorization?.find((token) => tokens.includes(token))
@@ -72,12 +70,9 @@ export default async (req: any, res: any) => {
     };
   }
 
-apiAuthGate.hasValidToken = hasValidToken
+  apiAuthGate.hasValidToken = hasValidToken;
   return apiAuthGate(req, res, async () => {
-
-    console.log("passed auth gate");
     if (dataIsValid(req.body) || hasValidToken) {
-      console.log("failed data falidation");
       console.log(`Updating ${req.body.name}#${req.body.version}`);
       await ApplicationManager.update(req.body);
       res.send(true);
