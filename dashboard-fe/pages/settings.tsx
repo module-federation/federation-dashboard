@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { useForm, Controller } from "react-hook-form";
 import {
@@ -17,9 +17,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import CreateIcon from "@material-ui/icons/Create";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-
+import { v4 as uuidv4 } from "uuid";
 import Layout from "../components/Layout";
-import withAuth from "../components/with-auth";
 import store from "../src/store";
 
 const GET_SETTINGS = gql`
@@ -71,7 +70,7 @@ const useStyles = makeStyles({
 export function SettingsForm({ siteSettings }) {
   const { register, errors, handleSubmit, control } = useForm({
     mode: "all",
-    reValidateMode: "all",
+    reValidateMode: "onChange",
     defaultValues: siteSettings,
   });
   const [setSettings] = useMutation(SET_SETTINGS);
@@ -165,24 +164,34 @@ export function SettingsForm({ siteSettings }) {
 }
 
 const TokenForm = ({ siteSettings }) => {
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, errors, handleSubmit } = useForm({
+    mode: "all",
+    defaultValues: Object.assign({
+      tokens: [{ value: null }],
+      ...siteSettings,
+    }),
+  });
+
   const [setSettings] = useMutation(SET_SETTINGS);
+
   const onSubmit = (siteTokens) => {
-    const tokens = Object.keys(siteTokens).map((key) => {
-      return {
-        key: key,
-        value: siteTokens[key],
-      };
-    });
+    const tokens = Object.keys(siteTokens).map((key) => ({
+      key: key,
+      value: siteTokens[key],
+    }));
+    const variables = {
+      settings: { tokens, webhooks: siteSettings.webhooks },
+    };
+
     setSettings({
-      variables: {
-        settings: { tokens },
-      },
+      variables,
     });
   };
 
-  console.log(watch("example")); // watch input value by passing the name of it
-
+  const [token, setToken] = useState(siteSettings.tokens?.[0]?.value || "");
+  const generateToken = () => {
+    setToken(uuidv4());
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={1}>
@@ -194,13 +203,19 @@ const TokenForm = ({ siteSettings }) => {
               id="pluginToken"
               aria-describedby="my-helper-text"
               inputRef={register({ required: true })}
+              value={token}
             />
+
             <FormHelperText id="my-helper-text">
               We need this so DashboardPlugin can communicate
               <br />
-              <small>This is not stored in clear text!</small>
             </FormHelperText>
             {errors.pluginToken && <span>This field is required</span>}
+          </FormControl>
+          <FormControl>
+            <Button variant="contained" color="primary" onClick={generateToken}>
+              Generate Token
+            </Button>
           </FormControl>
         </Grid>
         <Grid item xs={12}>
