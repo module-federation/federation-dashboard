@@ -22,7 +22,10 @@ class FederationDashboardPlugin {
    * @param {FederationDashboardPluginOptions} options
    */
   constructor(options) {
-    this._options = Object.assign({ filename: "dashboard.json" }, options);
+    this._options = Object.assign(
+      { debug: false, filename: "dashboard.json" },
+      options
+    );
     this._dashData = null;
   }
 
@@ -361,10 +364,11 @@ class FederationDashboardPlugin {
       }
       fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, () => {});
     }
-    console.log(
-      path.join(stats.outputPath, this.FederationPluginOptions.filename)
-    );
-
+    if (this._options.debug) {
+      console.log(
+        path.join(stats.outputPath, this.FederationPluginOptions.filename)
+      );
+    }
     const file = fs.readFileSync(
       path.join(stats.outputPath, this.FederationPluginOptions.filename)
     );
@@ -372,14 +376,15 @@ class FederationDashboardPlugin {
     if (!version) {
       throw new Error("no version provided, cannot version remote");
     }
-    console.log(
-      path.join(
-        stats.outputPath,
-        version,
-        this.FederationPluginOptions.filename
-      )
-    );
-
+    if (this._options.debug) {
+      console.log(
+        path.join(
+          stats.outputPath,
+          version,
+          this.FederationPluginOptions.filename
+        )
+      );
+    }
     fs.mkdir(
       path.join(stats.outputPath, version),
       { recursive: true },
@@ -393,15 +398,17 @@ class FederationDashboardPlugin {
           ),
           file,
           (err) => {
-            console.log(err);
-            console.log(
-              "wrote versioned remote",
-              path.join(
-                stats.outputPath,
-                version,
-                this.FederationPluginOptions.filename
-              )
-            );
+            if (this._options.debug) {
+              console.log(err);
+              console.log(
+                "wrote versioned remote",
+                path.join(
+                  stats.outputPath,
+                  version,
+                  this.FederationPluginOptions.filename
+                )
+              );
+            }
           }
         );
       }
