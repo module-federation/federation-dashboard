@@ -5,7 +5,7 @@ console.log(
     require("../package.json").version
 );
 const MyButton = ({ children }) => (
-  <Button primary style={{background: 'blue'}}>
+  <Button primary style={{ background: "red" }}>
     {children}
   </Button>
 );
