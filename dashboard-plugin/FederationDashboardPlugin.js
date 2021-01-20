@@ -176,7 +176,7 @@ class FederationDashboardPlugin {
             "utf-8"
           );
 
-          const remoteEntrySource = webpack.sources.RawSource(
+          const remoteEntrySource = new webpack.sources.RawSource(
             remoteEntryBuffer
           );
 
