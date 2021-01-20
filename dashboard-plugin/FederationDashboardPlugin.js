@@ -176,22 +176,10 @@ class FederationDashboardPlugin {
             "utf-8"
           );
 
-          const remoteEntrySource = {
-            source() {
-              return remoteEntryBuffer;
-            },
-            size() {
-              return remoteEntryBuffer.length;
-            },
-          };
-          const originalRemoteEntrySource = {
-            source() {
-              return originalRemoteEntryBuffer;
-            },
-            size() {
-              return originalRemoteEntryBuffer.length;
-            },
-          };
+         const remoteEntrySource = webpack.sources.RawSource(remoteEntryBuffer)
+
+
+          const originalRemoteEntrySource = new webpack.sources.RawSource(originalRemoteEntryBuffer)
 
           if (remoteEntry && graphData.version) {
             curCompiler.updateAsset(
