@@ -398,15 +398,17 @@ class FederationDashboardPlugin {
           ),
           file,
           (err) => {
-            console.trace(err)
-            console.log(
-              "wrote versioned remote",
-              path.join(
-                stats.outputPath,
-                version,
-                this.FederationPluginOptions.filename
-              )
-            );
+            if (this._options.debug) {
+              console.trace(err)
+              console.log(
+                "wrote versioned remote",
+                path.join(
+                  stats.outputPath,
+                  version,
+                  this.FederationPluginOptions.filename
+                )
+              );
+            }
           }
         );
       }
