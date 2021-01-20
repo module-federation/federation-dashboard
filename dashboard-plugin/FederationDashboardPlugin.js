@@ -399,7 +399,7 @@ class FederationDashboardPlugin {
           file,
           (err) => {
             if (this._options.debug) {
-              console.trace(err)
+              console.trace(err);
               console.log(
                 "wrote versioned remote",
                 path.join(
