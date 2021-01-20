@@ -22,7 +22,7 @@
   "devDependencies": {
     "@changesets/cli": "2.13.0",
     "concurrently": "5.3.0",
-    "husky": "4.3.5",
+    "husky": "4.3.8",
     "lerna": "3.22.1",
     "prettier": "2.2.1",
     "pretty-quick": "3.1.0",
