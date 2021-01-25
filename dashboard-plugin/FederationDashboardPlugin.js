@@ -4,7 +4,7 @@ const fetch = require("node-fetch");
 const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
 const convertToGraph = require("./convertToGraph");
 const DefinePlugin = require("webpack/lib/DefinePlugin");
-
+const webpack = require("webpack");
 /** @typedef {import('webpack/lib/Compilation')} Compilation */
 /** @typedef {import('webpack/lib/Compiler')} Compiler */
 
@@ -176,22 +176,13 @@ class FederationDashboardPlugin {
             "utf-8"
           );
 
-          const remoteEntrySource = {
-            source() {
-              return remoteEntryBuffer;
-            },
-            size() {
-              return remoteEntryBuffer.length;
-            },
-          };
-          const originalRemoteEntrySource = {
-            source() {
-              return originalRemoteEntryBuffer;
-            },
-            size() {
-              return originalRemoteEntryBuffer.length;
-            },
-          };
+          const remoteEntrySource = new webpack.sources.RawSource(
+            remoteEntryBuffer
+          );
+
+          const originalRemoteEntrySource = new webpack.sources.RawSource(
+            originalRemoteEntryBuffer
+          );
 
           if (remoteEntry && graphData.version) {
             curCompiler.updateAsset(
