@@ -49,9 +49,13 @@ export default async (req: any, res: any) => {
   let session: { noAuth: boolean; user: {} } = false;
 
   let tokens = await checkForTokens();
-  tokens = tokens.map((token) => {
-    return token.value;
-  });
+  if(tokens) {
+    tokens = tokens.map((token) => {
+      return token.value;
+    });
+  } else {
+    tokens = false
+  }
 
   const hasValidToken =
     tokens &&
