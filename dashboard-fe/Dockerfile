@@ -3,6 +3,7 @@ ENV NODE_ENV=test
 ENV PATH $PATH:/usr/src/app/node_modules/.bin
 WORKDIR /usr/src/app
 COPY package*.json ./
+RUN npx browserslist@latest --update-db
 RUN yarn install
 RUN test -f .env || touch .env
 COPY . .
