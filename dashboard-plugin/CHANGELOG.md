@@ -1,5 +1,21 @@
 # @module-federation/dashboard-plugin
 
+## 2.1.0
+
+### Minor Changes
+
+- a8f94ae: Write mode and Active module management
+- b96e5ee: Adding server middleware and fixing partial graph uploads causing dashboard to crash
+- 6806ecf: Adding debugger flag for extra logging
+- a8f94ae: Plugin writes versioned remotes on its own. Fixed dashboard db delays on versioned modules reflecting in BE
+
+### Patch Changes
+
+- bf3d23e: Fix: build issues with webpack 5.12
+- bf3d23e: Fixing raw source output of files
+- a9de475: Cleanup dashboard plugin add small optimization on recursive calls
+- 6806ecf: Token based auth
+
 ## 1.1.0
 
 ### Minor Changes
