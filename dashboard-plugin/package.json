@@ -14,7 +14,9 @@
     "bin",
     "helpers",
     "FederationDashboardPlugin.js",
-    "convertToGraph.js"
+    "convertToGraph.js",
+    "client-middleware.js",
+    "client-version.js"
   ],
   "dependencies": {
     "@module-federation/automatic-vendor-federation": "^1.2.1",
