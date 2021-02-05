@@ -40,6 +40,7 @@ module.exports = {
             options: {
               lessOptions: {
                 javascriptEnabled: true,
+                math: "always",
               },
             },
           },
