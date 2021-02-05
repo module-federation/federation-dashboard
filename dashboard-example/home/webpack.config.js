@@ -63,11 +63,7 @@ module.exports = {
       filename: "remoteEntry.js",
       remotes: {
         search: "search",
-        dsl: clientVersion({
-          currentHost: "home",
-          remoteName: "dsl",
-          dashboardURL: "http://localhost:3000/api/graphql",
-        }),
+        dsl: "dsl",
         nav: "nav",
         utils: "utils",
       },
