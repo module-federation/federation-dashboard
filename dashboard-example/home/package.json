@@ -9,7 +9,7 @@
     "@webpack-cli/serve": "1.2.2",
     "babel-loader": "8.2.2",
     "css-loader": "5.0.1",
-    "html-webpack-plugin": "4.5.1",
+    "html-webpack-plugin": "4.5.2",
     "less-loader": "8.0.0",
     "less": "4.1.1",
     "serve": "11.3.2",
