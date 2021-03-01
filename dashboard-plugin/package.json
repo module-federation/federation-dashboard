@@ -3,7 +3,7 @@
   "version": "2.1.0",
   "main": "FederationDashboardPlugin.js",
   "bin": "bin/federation-report.js",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "test": "jest --watch"
   },
@@ -15,8 +15,8 @@
     "helpers",
     "FederationDashboardPlugin.js",
     "convertToGraph.js",
-    "client-middleware.js",
-    "client-version.js"
+    "../../propriatery-tools/packages/managed-modules/client-middleware.js",
+    "../../propriatery-tools/packages/managed-modules/client-version.js"
   ],
   "dependencies": {
     "@module-federation/automatic-vendor-federation": "^1.2.1",
