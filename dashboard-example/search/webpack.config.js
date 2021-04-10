@@ -1,6 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
-const clientVersion = require("@module-federation/dashboard-plugin/client-version");
+const clientVersion = require("@module-federation/proprietary-tools/packages/managed-modules/client-version");
 
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
@@ -62,7 +62,11 @@ module.exports = {
       filename: "remoteEntry.js",
       remotes: {
         nav: "nav",
-        dsl: "dsl",
+        dsl: clientVersion({
+          currentHost: "search",
+          remoteName: "dsl",
+          dashboardURL: "http://localhost:3000/api/graphql",
+        }),
         home: "home",
         utils: "utils",
       },
