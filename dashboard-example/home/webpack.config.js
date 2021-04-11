@@ -67,11 +67,13 @@ module.exports = {
           currentHost: "home",
           remoteName: "dsl",
           dashboardURL: "http://localhost:3000/api/graphql",
+          baseUrl: "http://localhost:3002",
         }),
         nav: clientVersion({
           currentHost: "home",
           remoteName: "nav",
           dashboardURL: "http://localhost:3000/api/graphql",
+          baseUrl: "http://localhost:3003",
         }),
         utils: "utils",
       },
