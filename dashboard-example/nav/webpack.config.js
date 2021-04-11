@@ -57,7 +57,6 @@ module.exports = {
   plugins: [
     new ModuleFederationPlugin({
       name: "nav",
-      library: { type: "var", name: "nav" },
       filename: "remoteEntry.js",
       remotes: {
         dsl: clientVersion({
@@ -66,8 +65,8 @@ module.exports = {
           dashboardURL: "http://localhost:3000/api/graphql",
           baseUrl: "http://localhost:3002",
         }),
-        search: "search",
-        utils: "utils",
+        search: "search@http://localhost:3004/remoteEntry.js",
+        utils: "utils@http://localhost:3005/remoteEntry.js",
       },
       exposes: {
         "./Header": "./src/Header",

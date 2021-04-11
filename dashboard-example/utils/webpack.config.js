@@ -39,7 +39,6 @@ module.exports = {
     }),
     new ModuleFederationPlugin({
       name: "utils",
-      library: { type: "var", name: "utils" },
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
