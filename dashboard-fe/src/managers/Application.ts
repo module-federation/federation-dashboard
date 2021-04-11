@@ -12,9 +12,11 @@ import "../webhooks";
 const convertMetadata = (metadataObj: any) =>
   Object.entries(metadataObj || {}).map(([name, value]) => {
     return {
-    name: name.toString(),
-    value: value.toString(),
-  }});
+      name: name.toString(),
+      value:
+        typeof value === "object" ? JSON.stringify(value) : value.toString(),
+    };
+  });
 
 export default class ApplicationManager {
   static async update(application: any) {
