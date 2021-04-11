@@ -9,15 +9,13 @@ import Group from "../database/group";
 
 import "../webhooks";
 
-const convertMetadata = (metadataObj: any) => {
-  console.log(metadataObj)
- const toArray= Object.entries(metadataObj || {}).map(([name, value]) => ({
+const convertMetadata = (metadataObj: any) =>
+  Object.entries(metadataObj || {}).map(([name, value]) => {
+    return {
     name: name.toString(),
     value: value.toString(),
-  }));
-  console.log(toArray);
-  return toArray
-}
+  }});
+
 export default class ApplicationManager {
   static async update(application: any) {
     await driver.setup();
@@ -82,7 +80,7 @@ export default class ApplicationManager {
       environment: application.environment,
       latest: true,
       modules,
-      metadata: convertMetadata(application.metadata),
+      metadata: convertMetadata(application.metadata) as any,
       consumes: application.consumes as Consume[],
       overrides: application.overrides as Override[],
       dependencies: dependencies as Dependency[],
