@@ -9,7 +9,7 @@
     "@webpack-cli/serve": "1.2.2",
     "babel-loader": "8.2.2",
     "serve": "11.3.2",
-    "webpack": "5.17.0",
+    "webpack": "5.31.2",
     "webpack-cli": "4.4.0",
     "webpack-dev-server": "3.11.2"
   },
