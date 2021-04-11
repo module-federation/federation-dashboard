@@ -64,6 +64,7 @@ module.exports = {
           currentHost: "search",
           remoteName: "dsl",
           dashboardURL: "http://localhost:3000/api/graphql",
+          baseUrl: "http://localhost:3002"
         }),
         home: "home@http://localhost:3001/remoteEntry.js",
         utils: "utils@http://localhost:3005/remoteEntry.js",
