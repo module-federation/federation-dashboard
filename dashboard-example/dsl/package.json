@@ -1,6 +1,6 @@
 {
   "name": "@dashboard/dsl",
-  "version": "0.3.0",
+  "version": "0.2.0",
   "private": true,
   "devDependencies": {
     "@babel/core": "7.12.13",
@@ -13,7 +13,7 @@
     "less": "4.1.1",
     "serve": "11.3.2",
     "style-loader": "2.0.0",
-    "webpack": "5.17.0",
+    "webpack": "5.31.2",
     "webpack-cli": "4.4.0",
     "@webpack-cli/serve": "1.2.2",
     "webpack-dev-server": "3.11.2"

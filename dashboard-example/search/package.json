@@ -13,7 +13,7 @@
     "less": "4.1.1",
     "serve": "11.3.2",
     "style-loader": "2.0.0",
-    "webpack": "5.17.0",
+    "webpack": "5.31.2",
     "webpack-cli": "4.4.0",
     "webpack-dev-server": "3.11.2",
     "@webpack-cli/serve": "1.2.2"
@@ -27,6 +27,8 @@
   "dependencies": {
     "@ant-design/icons": "^4.1.0",
     "@emotion/core": "^10.0.28",
+    "@module-federation/proprietary-tools": "git+ssh://git@github.com:module-federation/proprietary-tools.git#master",
+
     "antd": "^4.2.5",
     "react": "^16.13.0",
     "react-dom": "^16.13.0"
