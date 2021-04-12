@@ -15,6 +15,7 @@ module.exports = {
     filename: "[name].[contenthash].js",
     chunkFilename: "[name].[contenthash].js",
     publicPath: `auto`,
+    uniqueName: `nav.${require("./package.json").version}`,
   },
   module: {
     rules: [
@@ -57,7 +58,6 @@ module.exports = {
   plugins: [
     new ModuleFederationPlugin({
       name: "nav__REMOTE_VERSION__",
-      library: { type: "var", name: "nav__REMOTE_VERSION__" },
       filename: "remoteEntry.js",
       remotes: {
         dsl: clientVersion({
@@ -82,14 +82,15 @@ module.exports = {
       publishVersion: require("./package.json").version,
       filename: "dashboard.json",
       dashboardURL:
-        "http://localhost:3000/api/update?token=29f387e1-a00d-46ea-9fd6-02ca5e97449c",
+          "http://localhost:3000/api/update?token=29f387e1-a00d-46ea-9fd6-02ca5e97449c",
+      versionChangeWebhook: "http://cnn.com/",
       metadata: {
+        clientUrl: "http://localhost:3000",
         source: {
-          url:
-            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav",
+          url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav",
         },
         remote: "http://localhost:3003/remoteEntry.js",
       },
-    }),
-  ],
+    })
+  ]
 };
