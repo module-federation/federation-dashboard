@@ -10,10 +10,13 @@ import Group from "../database/group";
 import "../webhooks";
 
 const convertMetadata = (metadataObj: any) =>
-  Object.entries(metadataObj || {}).map(([name, value]) => ({
-    name: name.toString(),
-    value: value.toString(),
-  }));
+  Object.entries(metadataObj || {}).map(([name, value]) => {
+    return {
+      name: name.toString(),
+      value:
+        typeof value === "object" ? JSON.stringify(value) : value.toString(),
+    };
+  });
 
 export default class ApplicationManager {
   static async update(application: any) {
@@ -21,6 +24,7 @@ export default class ApplicationManager {
 
     const app = await driver.application_find(application.id);
     const groupName = application.group || "default";
+
     if (!app) {
       console.log(`Adding app ${application.id}`);
       driver.application_update({
@@ -78,6 +82,7 @@ export default class ApplicationManager {
       environment: application.environment,
       latest: true,
       modules,
+      metadata: convertMetadata(application.metadata) as any,
       consumes: application.consumes as Consume[],
       overrides: application.overrides as Override[],
       dependencies: dependencies as Dependency[],
