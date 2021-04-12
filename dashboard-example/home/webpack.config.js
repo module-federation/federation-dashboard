@@ -103,3 +103,24 @@ module.exports = {
     }),
   ],
 };
+
+var remoteData = fetch("${dashboardURL}", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+  body: JSON.stringify({
+    query: `query {
+    groups {
+      name
+      applications(id: "${remoteName}") {
+        metadata {
+          name
+          value
+        }
+      }
+    }
+  }`,
+    })
+})
