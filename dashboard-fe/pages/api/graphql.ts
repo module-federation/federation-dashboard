@@ -162,6 +162,7 @@ const typeDefs = gql`
 
   type ApplicationOverride {
     version: String!
+    application: Application!
     name: String!
   }
 
@@ -425,6 +426,12 @@ const resolvers = {
       return name
         ? modules.filter(({ name: moduleName }) => name === moduleName)
         : modules;
+    },
+  },
+  ApplicationOverride: {
+    application: async ({ name }: { name: string }) => {
+      await dbDriver.setup();
+      return dbDriver.application_find(name);
     },
   },
   Group: {
