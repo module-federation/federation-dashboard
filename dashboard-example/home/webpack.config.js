@@ -67,12 +67,12 @@ module.exports = {
           remoteName: "dsl",
           dashboardURL: "http://localhost:3000/api/graphql",
         }),
-        // nav: "nav@http://localhost:3003/remoteEntry.js",
-        nav: clientVersion({
-          currentHost: "home",
-          remoteName: "nav",
-          dashboardURL: "http://localhost:3000/api/graphql",
-        }),
+        nav: "nav@http://localhost:3003/remoteEntry.js",
+        // nav: clientVersion({
+        //   currentHost: "home",
+        //   remoteName: "nav",
+        //   dashboardURL: "http://localhost:3000/api/graphql",
+        // }),
         utils: "utils@http://localhost:3005/remoteEntry.js",
       },
       exposes: {
@@ -103,24 +103,3 @@ module.exports = {
     }),
   ],
 };
-
-var remoteData = fetch("${dashboardURL}", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  },
-  body: JSON.stringify({
-    query: `query {
-    groups {
-      name
-      applications(id: "${remoteName}") {
-        metadata {
-          name
-          value
-        }
-      }
-    }
-  }`,
-    })
-})

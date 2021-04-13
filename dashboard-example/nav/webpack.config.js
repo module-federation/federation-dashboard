@@ -57,7 +57,7 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "nav__REMOTE_VERSION__",
+      name: "nav",
       filename: "remoteEntry.js",
       remotes: {
         dsl: clientVersion({
