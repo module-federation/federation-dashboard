@@ -15,6 +15,7 @@ module.exports = {
     publicPath: `auto`,
     uniqueName: `dsl.${require("./package.json").version}`,
   },
+  cache: false,
   module: {
     rules: [
       {

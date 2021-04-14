@@ -1,9 +1,10 @@
 let sendAnalyticsMessage = null;
 
-import("utils/analytics").then((mod) => {
+const utils = import("utils/analytics").then((mod) => {
   sendAnalyticsMessage = mod.sendAnalyticsMessage;
 });
 
-export const sendMessage = (msg) => {
+export const sendMessage = async (msg) => {
+  await utils;
   sendAnalyticsMessage(msg);
 };

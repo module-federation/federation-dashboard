@@ -1,12 +1,13 @@
 let sendAnalyticsMessage = null;
 const pending = [];
 
-import("utils/analytics").then((mod) => {
+const utils = import("utils/analytics").then((mod) => {
   sendAnalyticsMessage = mod.sendAnalyticsMessage;
   pending.forEach(sendAnalyticsMessage);
 });
 
-export const sendMessage = (msg) => {
+export const sendMessage = async (msg) => {
+  await utils;
   if (sendAnalyticsMessage) {
     sendAnalyticsMessage(msg);
   } else {

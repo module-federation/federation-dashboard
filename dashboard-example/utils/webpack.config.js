@@ -10,6 +10,7 @@ module.exports = {
     contentBase: path.join(__dirname, "dist"),
     port: 3005,
   },
+  cache: false,
   output: {
     filename: "[name].[contenthash].js",
     chunkFilename: "[name].[contenthash].js",
@@ -38,7 +39,8 @@ module.exports = {
       template: "./public/index.html",
     }),
     new ModuleFederationPlugin({
-      name: "utils",
+      name: "utils__REMOTE_VERSION__",
+      library: { type: "var", name: "utils__REMOTE_VERSION__" },
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
@@ -52,7 +54,7 @@ module.exports = {
         "http://localhost:3000/api/update?token=29f387e1-a00d-46ea-9fd6-02ca5e97449c",
       filename: "dashboard.json",
       metadata: {
-        baseUrl:"http://localhost:3005",
+        baseUrl: "http://localhost:3005",
         source: {
           url:
             "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/utils",
