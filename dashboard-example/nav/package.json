@@ -19,7 +19,7 @@
     "webpack-dev-server": "3.11.2"
   },
   "scripts": {
-    "start": "webpack-cli serve --open --liveReload",
+    "start": "webpack-cli serve  --liveReload",
     "build": "node ../../node_modules/webpack/bin/webpack.js --mode production",
     "serve": "serve dist -p 3003",
     "clean": "rm -rf dist"

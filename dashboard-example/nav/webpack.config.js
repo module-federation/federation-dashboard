@@ -3,60 +3,6 @@ const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const clientVersion = require("@module-federation/proprietary-tools/packages/managed-modules/client-version");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
-const injectScript = function (d, s, id, override, baseUrl) {
-  var remoteName = id.replace("federation-dynamic-remote-", "");
-  const promise = new Promise((resolve) => {
-    var js,
-      fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {
-      if (override) {
-        var remoteAndVersion = remoteName.split("-");
-
-        return resolve(
-          window[remoteAndVersion[0] + "_" + remoteAndVersion[1]] ||
-            window.pendingRemote[
-              remoteAndVersion[0] + "_" + remoteAndVersion[1]
-            ]
-        );
-      } else if (window[remoteName]) {
-        return resolve(window[remoteName]);
-      } else {
-        return resolve(window.pendingRemote[remoteName]);
-      }
-    }
-    js = d.createElement(s);
-    js.id = id;
-    js.onload = function () {
-      resolve();
-    };
-    if (!baseUrl)
-      console.error(
-        "missing baseUrl in  federation dashboard config for",
-        remoteName
-      );
-    const src =
-      override && override.version
-        ? baseUrl + "/" + override.version + ".remoteEntry.js"
-        : baseUrl + "/remoteEntry.js";
-    console.log("creating scrpit", src, id);
-    js.src = src;
-
-    js.setAttribute("data-webpack", remoteName);
-    fjs.parentNode.insertBefore(js, fjs);
-  });
-  if (!window.pendingRemote) {
-    window.pendingRemote = {};
-  }
-  if (override && override.version) {
-    var remoteAndVersion = remoteName.split("-");
-    window.pendingRemote[
-      remoteAndVersion[0] + "_" + remoteAndVersion[1]
-    ] = promise;
-  } else {
-    window.pendingRemote[remoteName] = promise;
-  }
-  return promise;
-};
 module.exports = {
   entry: "./src/index",
   mode: "development",
@@ -70,7 +16,7 @@ module.exports = {
     publicPath: `auto`,
     uniqueName: `nav.${require("./package.json").version}`,
   },
-  cache: false,
+  // cache: false,
   module: {
     rules: [
       {
@@ -101,10 +47,11 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        loader: "babel-loader",
+        loader: "esbuild-loader",
         exclude: /node_modules/,
         options: {
-          presets: ["@babel/preset-react"],
+          loader:'jsx',
+          target:"es2015",
         },
       },
     ],

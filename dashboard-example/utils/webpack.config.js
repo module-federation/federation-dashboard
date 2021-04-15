@@ -10,7 +10,7 @@ module.exports = {
     contentBase: path.join(__dirname, "dist"),
     port: 3005,
   },
-  cache: false,
+  // cache: false,
   output: {
     filename: "[name].[contenthash].js",
     chunkFilename: "[name].[contenthash].js",
@@ -26,10 +26,11 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        loader: "babel-loader",
+        loader: "esbuild-loader",
         exclude: /node_modules/,
         options: {
-          presets: ["@babel/preset-react"],
+          loader:'jsx',
+          target:"es2015",
         },
       },
     ],

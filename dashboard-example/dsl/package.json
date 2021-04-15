@@ -3,6 +3,7 @@
   "version": "0.4.0",
   "private": true,
   "devDependencies": {
+    "esbuild-loader": "^2.11.1",
     "@babel/core": "7.12.13",
     "@babel/preset-react": "7.12.13",
     "@module-federation/dashboard-plugin": "*",
@@ -19,7 +20,7 @@
     "webpack-dev-server": "3.11.2"
   },
   "scripts": {
-    "start": "node  ../../node_modules/webpack-cli/bin/cli.js serve --open --liveReload",
+    "start": "node  ../../node_modules/webpack-cli/bin/cli.js serve  --liveReload",
     "build": "node ../../node_modules/webpack/bin/webpack.js --mode production",
     "serve": "serve dist -p 3002",
     "clean": "rm -rf dist"

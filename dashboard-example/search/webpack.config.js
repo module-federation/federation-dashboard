@@ -17,7 +17,7 @@ module.exports = {
     chunkFilename: "[name].[contenthash].js",
     publicPath: `auto`,
   },
-  cache: false,
+  // cache: false,
   module: {
     rules: [
       {
@@ -48,10 +48,11 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        loader: "babel-loader",
+        loader: "esbuild-loader",
         exclude: /node_modules/,
         options: {
-          presets: ["@babel/preset-react"],
+          loader:'jsx',
+          target:"es2015",
         },
       },
     ],
