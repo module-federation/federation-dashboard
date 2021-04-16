@@ -4,7 +4,7 @@ The Module Federation dashboard takes visualizes the relationships between appli
 
 # What is Medusa??
 
-<a href="https://youtu.be/JkOvNPMo7Os" target="_blank"><img width="50%" src="http://i3.ytimg.com/vi/JkOvNPMo7Os/maxresdefault.jpg"/><a>
+<a href="https://youtu.be/JkOvNPMo7Os" target="_blank">click here to watch <img width="50%" src="http://i3.ytimg.com/vi/JkOvNPMo7Os/maxresdefault.jpg"/><a>
 
 # Installation and startup
 
