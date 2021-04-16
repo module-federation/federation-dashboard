@@ -16,14 +16,14 @@ Step 2:
 
 ```shell script
 > cd dashboard-fe
-> yarn start
+> yarn build && yarn start
 ```
 
 Step 3:
 
 ```shell script
 > cd dashboard-example
-> yarn start
+> yarn build && yarn serve
 ```
 
 # Trying it out on your own code
