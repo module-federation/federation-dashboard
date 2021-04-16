@@ -96,7 +96,7 @@ module.exports = ({currentHost, remoteName, dashboardURL}) => {
       if(data && data.groups && data.groups[0] && data.groups[0].applications && data.groups[0].applications[0]) {
         var currentApp = data.groups[0].applications[0];
         if (!data.groups[0].applications[0].overrides.length) {
-          metadata = data.groups[0].applications[0].metadata
+              metadata = data.groups[0].applications[0].metadata
           injectScript(document, "script", "federation-dynamic-remote-${remoteName}",data.groups[0].applications[0].metadata).then(function() {
             resolve(window.${remoteName});
             metadata = null
