@@ -1,6 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
-const clientVersion = require("@module-federation/proprietary-tools/packages/managed-modules/client-version");
+const clientVersion = require("@module-federation/dashboard-plugin/client-version");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
     publicPath: `auto`,
     uniqueName: `nav.${require("./package.json").version}`,
   },
-  // cache: false,
+  cache: false,
   module: {
     rules: [
       {
@@ -67,16 +67,8 @@ module.exports = {
           remoteName: "dsl",
           dashboardURL: "http://localhost:3000/api/graphql",
         }),
-        search: clientVersion({
-          currentHost: "nav",
-          remoteName: "search",
-          dashboardURL: "http://localhost:3000/api/graphql",
-        }),
-        utils: clientVersion({
-          currentHost: "nav",
-          remoteName: "utils",
-          dashboardURL: "http://localhost:3000/api/graphql",
-        }),
+        search: "search",
+        utils: "utils",
       },
       exposes: {
         "./Header": "./src/Header",
@@ -96,7 +88,6 @@ module.exports = {
       versionChangeWebhook: "http://cnn.com/",
       metadata: {
         baseUrl: "http://localhost:3003",
-        clientUrl: "http://localhost:3000",
         source: {
           url:
             "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav",

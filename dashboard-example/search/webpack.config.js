@@ -1,6 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
-const clientVersion = require("@module-federation/proprietary-tools/packages/managed-modules/client-version");
+const clientVersion = require("@module-federation/dashboard-plugin/client-version");
 
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
@@ -17,7 +17,7 @@ module.exports = {
     chunkFilename: "[name].[contenthash].js",
     publicPath: `auto`,
   },
-  // cache: false,
+  cache: false,
   module: {
     rules: [
       {
@@ -63,26 +63,14 @@ module.exports = {
       library: { type: "var", name: "search__REMOTE_VERSION__" },
       filename: "remoteEntry.js",
       remotes: {
-        nav: clientVersion({
-          currentHost: "search",
-          remoteName: "nav",
-          dashboardURL: "http://localhost:3000/api/graphql",
-        }),
+        nav: "nav",
         dsl: clientVersion({
           currentHost: "search",
           remoteName: "dsl",
           dashboardURL: "http://localhost:3000/api/graphql",
         }),
-        home: clientVersion({
-          currentHost: "search",
-          remoteName: "home",
-          dashboardURL: "http://localhost:3000/api/graphql",
-        }),
-        utils: clientVersion({
-          currentHost: "search",
-          remoteName: "home",
-          dashboardURL: "http://localhost:3000/api/graphql",
-        }),
+        home: "home",
+        utils: "utils",
       },
       exposes: {
         "./SearchList": "./src/SearchList",
