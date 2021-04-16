@@ -19,7 +19,7 @@
     "@webpack-cli/serve": "1.2.2"
   },
   "scripts": {
-    "start": "webpack-cli serve --open --liveReload",
+    "start": "webpack-cli serve  --liveReload",
     "build": "webpack --mode production",
     "serve": "serve dist -p 3004",
     "clean": "rm -rf dist"

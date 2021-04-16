@@ -10,8 +10,8 @@
     "babel-loader": "8.2.2",
     "css-loader": "5.0.1",
     "html-webpack-plugin": "5.3.1",
-    "less-loader": "8.0.0",
     "less": "4.1.1",
+    "less-loader": "8.0.0",
     "serve": "11.3.2",
     "style-loader": "2.0.0",
     "webpack": "5.31.2",
@@ -19,15 +19,16 @@
     "webpack-dev-server": "3.11.2"
   },
   "scripts": {
-    "start": "webpack-cli serve --open --liveReload",
+    "start": "webpack-cli serve  --liveReload",
     "build": "node ../../node_modules/webpack/bin/webpack.js --mode production",
     "serve": "serve dist -p 3001",
     "clean": "rm -rf dist"
   },
   "dependencies": {
     "@ant-design/icons": "^4.1.0",
-    "antd": "^4.2.5",
     "@module-federation/proprietary-tools": "git+ssh://git@github.com:module-federation/proprietary-tools.git#master",
+    "antd": "^4.2.5",
+    "esbuild-loader": "^2.11.1",
     "lodash": "^4.17.15",
     "react": "^16.13.0",
     "react-dom": "^16.13.0"

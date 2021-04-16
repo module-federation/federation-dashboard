@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
+const clientVersion = require("@module-federation/dashboard-plugin/client-version");
 
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
@@ -16,6 +17,7 @@ module.exports = {
     chunkFilename: "[name].[contenthash].js",
     publicPath: `auto`,
   },
+  cache: false,
   module: {
     rules: [
       {
@@ -46,27 +48,29 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        loader: "babel-loader",
+        loader: "esbuild-loader",
         exclude: /node_modules/,
         options: {
-          presets: ["@babel/preset-react"],
+          loader:'jsx',
+          target:"es2015",
         },
       },
     ],
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "search",
+      name: "search__REMOTE_VERSION__",
+      library: { type: "var", name: "search__REMOTE_VERSION__" },
       filename: "remoteEntry.js",
       remotes: {
-        nav: "nav@http://localhost:3003/remoteEntry.js",
+        nav: "nav",
         dsl: clientVersion({
           currentHost: "search",
           remoteName: "dsl",
           dashboardURL: "http://localhost:3000/api/graphql",
         }),
-        home: "home@http://localhost:3001/remoteEntry.js",
-        utils: "utils@http://localhost:3005/remoteEntry.js",
+        home: "home",
+        utils: "utils",
       },
       exposes: {
         "./SearchList": "./src/SearchList",
@@ -83,6 +87,7 @@ module.exports = {
       dashboardURL:
         "http://localhost:3000/api/update?token=29f387e1-a00d-46ea-9fd6-02ca5e97449c",
       metadata: {
+        baseUrl: "http://localhost:3004",
         source: {
           url:
             "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search",

@@ -1,8 +1,8 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
+const clientVersion = require("@module-federation/dashboard-plugin/client-version");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
-
 module.exports = {
   entry: "./src/index",
   mode: "development",
@@ -14,7 +14,9 @@ module.exports = {
     filename: "[name].[contenthash].js",
     chunkFilename: "[name].[contenthash].js",
     publicPath: `auto`,
+    uniqueName: `nav.${require("./package.json").version}`,
   },
+  cache: false,
   module: {
     rules: [
       {
@@ -45,27 +47,28 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        loader: "babel-loader",
+        loader: "esbuild-loader",
         exclude: /node_modules/,
         options: {
-          presets: ["@babel/preset-react"],
+          loader:'jsx',
+          target:"es2015",
         },
       },
     ],
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "nav",
+      name: "nav__REMOTE_VERSION__",
+      library: { type: "var", name: "nav__REMOTE_VERSION__" },
       filename: "remoteEntry.js",
       remotes: {
         dsl: clientVersion({
           currentHost: "nav",
           remoteName: "dsl",
           dashboardURL: "http://localhost:3000/api/graphql",
-          baseUrl: "http://localhost:3002",
         }),
-        search: "search@http://localhost:3004/remoteEntry.js",
-        utils: "utils@http://localhost:3005/remoteEntry.js",
+        search: "search",
+        utils: "utils",
       },
       exposes: {
         "./Header": "./src/Header",
@@ -82,7 +85,9 @@ module.exports = {
       filename: "dashboard.json",
       dashboardURL:
         "http://localhost:3000/api/update?token=29f387e1-a00d-46ea-9fd6-02ca5e97449c",
+      versionChangeWebhook: "http://cnn.com/",
       metadata: {
+        baseUrl: "http://localhost:3003",
         source: {
           url:
             "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav",

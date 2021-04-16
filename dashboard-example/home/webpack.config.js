@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
+const clientVersion = require("@module-federation/dashboard-plugin/client-version");
 const {
   container: { ModuleFederationPlugin },
 } = require("webpack");
@@ -17,6 +18,7 @@ module.exports = {
     chunkFilename: "[name].[contenthash].js",
     publicPath: `auto`,
   },
+  cache: false,
   module: {
     rules: [
       {
@@ -47,10 +49,11 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        loader: "babel-loader",
+        loader: "esbuild-loader",
         exclude: /node_modules/,
         options: {
-          presets: ["@babel/preset-react"],
+          loader:'jsx',
+          target:"es2015",
         },
       },
     ],
@@ -59,16 +62,16 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "home",
       filename: "remoteEntry.js",
+      library: { type: "var", name: "home" },
       remotes: {
-        search: "search@http://localhost:3004/remoteEntry.js",
         dsl: clientVersion({
           currentHost: "home",
           remoteName: "dsl",
           dashboardURL: "http://localhost:3000/api/graphql",
-          baseUrl: "http://localhost:3002",
         }),
-        nav: "nav@http://localhost:3003/remoteEntry.js",
-        utils: "utils@http://localhost:3005/remoteEntry.js",
+        search: "promise new Promise((resolve, reject) => {resolve(window.search)})",
+        nav: "nav",
+        utils: "utils",
       },
       exposes: {
         "./ProductCarousel": "./src/ProductCarousel",
@@ -79,6 +82,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
+      excludeChunks:["remoteEntry"]
     }),
     new DashboardPlugin({
       publishVersion: require("./package.json").version,
