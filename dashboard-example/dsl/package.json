@@ -1,14 +1,15 @@
 {
   "name": "@dashboard/dsl",
-  "version": "0.3.0",
+  "version": "0.6.0",
   "private": true,
   "devDependencies": {
+    "esbuild-loader": "^2.11.1",
     "@babel/core": "7.12.13",
     "@babel/preset-react": "7.12.13",
     "@module-federation/dashboard-plugin": "*",
     "babel-loader": "8.2.2",
     "css-loader": "5.0.1",
-    "html-webpack-plugin": "4.5.1",
+    "html-webpack-plugin": "5.3.1",
     "less-loader": "8.0.0",
     "less": "4.1.1",
     "serve": "11.3.2",
@@ -19,7 +20,7 @@
     "webpack-dev-server": "3.11.2"
   },
   "scripts": {
-    "start": "node  ../../node_modules/webpack-cli/bin/cli.js serve --open --liveReload",
+    "start": "node  ../../node_modules/webpack-cli/bin/cli.js serve  --liveReload",
     "build": "node ../../node_modules/webpack/bin/webpack.js --mode production",
     "serve": "serve dist -p 3002",
     "clean": "rm -rf dist"

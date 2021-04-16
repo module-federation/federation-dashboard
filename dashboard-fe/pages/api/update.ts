@@ -49,12 +49,12 @@ export default async (req: any, res: any) => {
   let session: { noAuth: boolean; user: {} } = false;
 
   let tokens = await checkForTokens();
-  if(tokens) {
+  if (tokens) {
     tokens = tokens.map((token) => {
       return token.value;
     });
   } else {
-    tokens = false
+    tokens = false;
   }
 
   const hasValidToken =

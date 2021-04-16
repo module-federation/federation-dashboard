@@ -122,6 +122,7 @@ const convertToGraph = (
     id: app,
     name: app,
     remote,
+    metadata,
     versionData,
     overrides: Object.values(overrides),
     consumes: consumes.map((con) => ({

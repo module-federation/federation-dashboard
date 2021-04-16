@@ -15,6 +15,7 @@ module.exports = {
     publicPath: `auto`,
     uniqueName: `dsl.${require("./package.json").version}`,
   },
+  cache: false,
   module: {
     rules: [
       {
@@ -48,10 +49,11 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        loader: "babel-loader",
+        loader: "esbuild-loader",
         exclude: /node_modules/,
         options: {
-          presets: ["@babel/preset-react"],
+          loader:'jsx',
+          target:"es2015",
         },
       },
     ],
@@ -79,6 +81,7 @@ module.exports = {
       dashboardURL:
         "http://localhost:3000/api/update?token=29f387e1-a00d-46ea-9fd6-02ca5e97449c",
       metadata: {
+        baseUrl: "http://localhost:3002",
         source: {
           url:
             "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/dsl",
