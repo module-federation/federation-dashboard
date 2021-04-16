@@ -89,7 +89,9 @@ module.exports = ({currentHost, remoteName, dashboardURL}) => {
   }\`,
     }),
   }).then(function(res){
-    return res.json().then(function(data){return data.data})
+    return res.json().then(function(data){
+    return data.data
+  })
   }).then(function(data){
       var metadata;
       ${injectScript.toString()}

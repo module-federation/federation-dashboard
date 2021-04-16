@@ -14,7 +14,6 @@ import { useQuery } from "@apollo/client";
 import clsx from "clsx";
 import { observer } from "mobx-react";
 import _ from "lodash";
-
 import store from "../src/store";
 import Layout from "../components/Layout";
 import withAuth from "../components/with-auth";

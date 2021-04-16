@@ -69,7 +69,7 @@ module.exports = {
           remoteName: "dsl",
           dashboardURL: "http://localhost:3000/api/graphql",
         }),
-        search: "promise new Promise((resolve, reject) => {resolve(window.search)})",
+        search: "search",
         nav: "nav",
         utils: "utils",
       },
