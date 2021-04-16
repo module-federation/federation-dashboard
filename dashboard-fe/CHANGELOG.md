@@ -1,5 +1,23 @@
 # @module-federation/dashboard
 
+## 2.1.0
+
+### Minor Changes
+
+- a8f94ae: Write mode and Active module management
+- d21524b: Adding write mode and version management
+- a8f94ae: Enable Standalone mode
+- b96e5ee: Adding server middleware and fixing partial graph uploads causing dashboard to crash
+- a8f94ae: Adding Mongo Driver, Improving auth and SSO, fix cors and auth api endpoints
+- c484a41: Single Sign on via Auth0
+- a8f94ae: Plugin writes versioned remotes on its own. Fixed dashboard db delays on versioned modules reflecting in BE
+
+### Patch Changes
+
+- e64168f: Adding ip whitelisting and custom servers
+- 6806ecf: Token based auth
+- 12daf97: Fixing issues if auth environment vars are missing
+
 ## 1.2.0
 
 ### Minor Changes

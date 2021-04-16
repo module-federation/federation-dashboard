@@ -1,12 +1,23 @@
 const { validateParams } = require("./helpers");
-const convertToGraph = ({
-  name,
-  federationRemoteEntry,
-  modules,
-  topLevelPackage,
-  metadata,
-}) => {
-  validateParams({ federationRemoteEntry, modules, topLevelPackage, metadata });
+const convertToGraph = (
+  {
+    name,
+    federationRemoteEntry,
+    modules,
+    topLevelPackage,
+    metadata,
+    versionData,
+    environment,
+    version,
+    posted,
+    group,
+  },
+  standalone
+) => {
+  validateParams(
+    { federationRemoteEntry, modules, topLevelPackage, metadata },
+    standalone
+  );
 
   const app = name;
   const overrides = {};
@@ -111,6 +122,8 @@ const convertToGraph = ({
     id: app,
     name: app,
     remote,
+    metadata,
+    versionData,
     overrides: Object.values(overrides),
     consumes: consumes.map((con) => ({
       ...con,
@@ -123,6 +136,10 @@ const convertToGraph = ({
       ...mod,
       requires: Array.from(mod.requires.values()),
     })),
+    environment,
+    version,
+    posted,
+    group,
   };
 
   return out;

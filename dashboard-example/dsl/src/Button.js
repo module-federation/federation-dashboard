@@ -1,7 +1,16 @@
 import React from "react";
-
 import { Button } from "antd";
-
-const MyButton = ({ children }) => <Button primary>{children}</Button>;
+console.log(
+  "REMOTE FEDERATION MANAGEMENT: using remote version: " +
+    require("../package.json").version
+);
+// red
+// green
+// blue
+const MyButton = ({ children }) => (
+  <Button primary style={{ background: "green" }}>
+    {children}
+  </Button>
+);
 
 export default MyButton;

@@ -1,8 +1,10 @@
 import Head from "next/head";
 import { Typography, Tabs, Tab, makeStyles } from "@material-ui/core";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import Link from "next/link";
+import { observer } from "mobx-react";
+import { get } from "lodash";
 
 import ApplicationsTable from "../components/ApplicationsTable";
 import ModuleChordChart from "../components/ModuleChordChart";
@@ -11,34 +13,36 @@ const ModuleUMLDiagram =
   typeof window === "undefined"
     ? () => <div />
     : require("../components/ModuleUMLDiagram.tsx").default;
-
 import Layout from "../components/Layout";
+import store from "../src/store";
 
 const GET_APPS = gql`
-  {
-    applications {
-      id
-      name
-      modules {
+  query($group: String!, $environment: String!) {
+    groups(name: $group) {
+      applications {
         id
         name
-        requires {
-          name
-        }
-      }
-      overrides {
-        id
-        name
-        version
-      }
-      consumes {
-        application {
-          id
-          name
-        }
-        name
-        usedIn {
-          file
+        versions(latest: true, environment: $environment) {
+          modules {
+            id
+            name
+            requires
+          }
+          overrides {
+            id
+            name
+            version
+          }
+          consumes {
+            application {
+              id
+              name
+            }
+            name
+            usedIn {
+              file
+            }
+          }
         }
       }
     }
@@ -52,59 +56,71 @@ const useHomeStyles = makeStyles({
 });
 
 const Home = () => {
-  const { data } = useQuery(GET_APPS);
+  const { data } = useQuery(GET_APPS, {
+    variables: {
+      environment: store.environment,
+      group: store.group,
+    },
+  });
   const [currentTab, currentTabSet] = React.useState(0);
   const classes = useHomeStyles();
+
+  const applications = get(data, "groups[0].applications", []).filter(
+    ({ versions }) => versions && versions.length > 0
+  );
 
   return (
     <Layout>
       <Head>
         <title>Federated Modules Dashboard</title>
       </Head>
-      {data && data.applications.length > 0 && (
+      {applications && applications.length > 0 && (
         <>
-          {data.applications.length > 1 && (
-            <>
-              <Tabs
-                value={currentTab}
-                onChange={(event, newValue) => {
-                  currentTabSet(newValue);
-                }}
-                aria-label="simple tabs example"
-              >
-                <Tab label="UML" />
-                <Tab label="Node Graph" />
-                <Tab label="Dependency Graph" />
-                <Tab label="Dependency Table" />
-              </Tabs>
-              <div style={{ display: currentTab === 0 ? "block" : "none" }}>
-                <ModuleUMLDiagram applications={data.applications} />
-              </div>
-              <div style={{ display: currentTab === 1 ? "block" : "none" }}>
-                <ModuleNodeGraph applications={data.applications} />
-              </div>
-              <div style={{ display: currentTab === 2 ? "block" : "none" }}>
-                <ModuleChordChart applications={data.applications} />
-              </div>
-              <div style={{ display: currentTab === 3 ? "block" : "none" }}>
-                <ApplicationsTable applications={data.applications} />
-              </div>
-            </>
+          <Tabs
+            value={currentTab}
+            onChange={(event, newValue) => {
+              currentTabSet(newValue);
+            }}
+            aria-label="simple tabs example"
+          >
+            <Tab label="UML" />
+            <Tab label="Dependency Table" />
+            {applications.length > 1 && <Tab label="Node Graph" />}
+            {applications.length > 1 && <Tab label="Dependency Graph" />}
+          </Tabs>
+          <div style={{ display: currentTab === 0 ? "block" : "none" }}>
+            {applications.length > 0 && (
+              <ModuleUMLDiagram
+                applications={applications}
+                size={applications.length}
+              />
+            )}
+          </div>
+          <div style={{ display: currentTab === 1 ? "block" : "none" }}>
+            <ApplicationsTable applications={applications} />
+          </div>
+          {applications.length > 1 && (
+            <div style={{ display: currentTab === 2 ? "block" : "none" }}>
+              <ModuleNodeGraph applications={applications} />
+            </div>
           )}
-          {data.applications.length === 1 && (
-            <ApplicationsTable applications={data.applications} />
+          {applications.length > 1 && (
+            <div style={{ display: currentTab === 3 ? "block" : "none" }}>
+              <ModuleChordChart applications={applications} />
+            </div>
           )}
         </>
       )}
-      {data && data.applications.length === 0 && (
+      {data && applications.length === 0 && (
         <>
+          <img src="/empty-data.svg" style={{ maxHeight: 400 }}></img>
           <Typography variant="h5">
             Get Started With Federated Modules
           </Typography>
           <Typography className={classes.helpParagraph}>
             If you already have applications that create or consume Federated
             Modules then you can import their metadata into this dashboard using
-            the{" "}
+            the
             <a
               href="https://www.npmjs.com/package/@module-federation/dashboard-plugin"
               target="_blank"
@@ -127,4 +143,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default observer(Home);

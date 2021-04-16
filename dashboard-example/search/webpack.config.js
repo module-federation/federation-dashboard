@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
+const clientVersion = require("@module-federation/dashboard-plugin/client-version");
 
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
@@ -12,10 +13,19 @@ module.exports = {
     port: 3004,
   },
   output: {
-    publicPath: "http://localhost:3004/",
+    filename: "[name].[contenthash].js",
+    chunkFilename: "[name].[contenthash].js",
+    publicPath: `auto`,
   },
+  cache: false,
   module: {
     rules: [
+      {
+        test: /\.m?js$/,
+        resolve: {
+          fullySpecified: false,
+        },
+      },
       {
         test: /\.less$/,
         use: [
@@ -30,6 +40,7 @@ module.exports = {
             options: {
               lessOptions: {
                 javascriptEnabled: true,
+                math: "always",
               },
             },
           },
@@ -37,22 +48,27 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        loader: "babel-loader",
+        loader: "esbuild-loader",
         exclude: /node_modules/,
         options: {
-          presets: ["@babel/preset-react"],
+          loader:'jsx',
+          target:"es2015",
         },
       },
     ],
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "search",
-      library: { type: "var", name: "search" },
+      name: "search__REMOTE_VERSION__",
+      library: { type: "var", name: "search__REMOTE_VERSION__" },
       filename: "remoteEntry.js",
       remotes: {
         nav: "nav",
-        dsl: "dsl",
+        dsl: clientVersion({
+          currentHost: "search",
+          remoteName: "dsl",
+          dashboardURL: "http://localhost:3000/api/graphql",
+        }),
         home: "home",
         utils: "utils",
       },
@@ -66,9 +82,12 @@ module.exports = {
       template: "./public/index.html",
     }),
     new DashboardPlugin({
+      publishVersion: require("./package.json").version,
       filename: "dashboard.json",
-      dashboardURL: "http://localhost:3000/api/update",
+      dashboardURL:
+        "http://localhost:3000/api/update?token=29f387e1-a00d-46ea-9fd6-02ca5e97449c",
       metadata: {
+        baseUrl: "http://localhost:3004",
         source: {
           url:
             "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search",

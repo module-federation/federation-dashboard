@@ -1,9 +1,7 @@
-function validateParams({
-  federationRemoteEntry,
-  topLevelPackage,
-  metadata,
-  modules,
-}) {
+function validateParams(
+  { federationRemoteEntry, topLevelPackage, metadata, modules },
+  standalone
+) {
   function objHasKeys(nestedObj, pathArr) {
     return pathArr.reduce(
       (obj, key) => (obj && obj[key] !== "undefined" ? obj[key] : undefined),
@@ -31,7 +29,9 @@ function validateParams({
     }
   }
   if ((modules && !modules.length) || typeof modules === "undefined") {
-    throw new Error("Modules must be defined and have length");
+    if (!standalone) {
+      throw new Error("Modules must be defined and have length");
+    }
   }
 
   if (typeof hasDependencies === "undefined") {
