@@ -56,13 +56,14 @@ And add the plugin to the `plugins` array and alter the parameters to suit.
       filename: "dashboard.json",
       dashboardURL: "http://localhost:3000/api/update",
       metadata: {
+        baseUrl:"http://localhost:3002",
         source: {
           url:
             "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/dsl",
         },
         remote: "http://localhost:3002/remoteEntry.js",
-      },
-    }),
+      }
+    })
 ```
 
 Neither `filename` nor `dashboardURL` are required. It's up to you how and when to invoke this plugin and how to store that data and send it to the dashboard. The `/api/update` endpoint just takes a JSON payload 'as-is'. To post the `dashboard.json` data manually use a `curl` request like this:

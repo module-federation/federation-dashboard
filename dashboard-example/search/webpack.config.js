@@ -17,6 +17,7 @@ module.exports = {
     chunkFilename: "[name].[contenthash].js",
     publicPath: `auto`,
   },
+  cache: false,
   module: {
     rules: [
       {
@@ -47,22 +48,27 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        loader: "babel-loader",
+        loader: "esbuild-loader",
         exclude: /node_modules/,
         options: {
-          presets: ["@babel/preset-react"],
+          loader:'jsx',
+          target:"es2015",
         },
       },
     ],
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "search",
-      library: { type: "var", name: "search" },
+      name: "search__REMOTE_VERSION__",
+      library: { type: "var", name: "search__REMOTE_VERSION__" },
       filename: "remoteEntry.js",
       remotes: {
         nav: "nav",
-        dsl: "dsl",
+        dsl: clientVersion({
+          currentHost: "search",
+          remoteName: "dsl",
+          dashboardURL: "http://localhost:3000/api/graphql",
+        }),
         home: "home",
         utils: "utils",
       },
@@ -81,6 +87,7 @@ module.exports = {
       dashboardURL:
         "http://localhost:3000/api/update?token=29f387e1-a00d-46ea-9fd6-02ca5e97449c",
       metadata: {
+        baseUrl: "http://localhost:3004",
         source: {
           url:
             "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search",

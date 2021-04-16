@@ -13,7 +13,7 @@ export const schema = Joi.object({
   group: Joi.string().required(),
   overrides: Joi.array().items(applicationOverrideSchema).required(),
   tags: Joi.array().items(Joi.string()).required(),
-  metadata: Joi.array().items(metadataSchema).required(),
+  metadata: Joi.array(),
   settings: applicationSettingsSchema,
 });
 

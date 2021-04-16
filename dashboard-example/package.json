@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "start": "lerna run --scope @dashboard/* --parallel start",
-    "build": "lerna run --scope @dashboard/* --concurrency=2 build",
+    "build": "lerna run --scope @dashboard/* --concurrency=4 build",
     "serve": "lerna run --scope @dashboard/* --parallel serve",
     "clean": "lerna run --scope @dashboard/* --parallel clean"
   },

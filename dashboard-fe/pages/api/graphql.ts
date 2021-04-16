@@ -162,6 +162,7 @@ const typeDefs = gql`
 
   type ApplicationOverride {
     version: String!
+    application: Application!
     name: String!
   }
 
@@ -427,6 +428,12 @@ const resolvers = {
         : modules;
     },
   },
+  ApplicationOverride: {
+    application: async ({ name }: { name: string }) => {
+      await dbDriver.setup();
+      return dbDriver.application_find(name);
+    },
+  },
   Group: {
     metrics: async ({ id }: any, { names }: any, ctx: any) => {
       await dbDriver.setup();
@@ -544,7 +551,9 @@ async function handler(req: any, res: any) {
     tokens.some((token) => {
       return req.query.token === token;
     });
-  console.log("has valid token", hasValidToken);
+  if (process.env.NODE_ENV === "production") {
+    console.log("has valid token", hasValidToken);
+  }
   // @ts-expect-error ts-migrate(2339) FIXME: Property 'INTERNAL_TOKEN' does not exist on type '... Remove this comment to see the full error message
   if (!hasValidToken) {
     //   // @ts-expect-error ts-migrate(2339) FIXME: Property 'user' does not exist on type '{ noAuth: ... Remove this comment to see the full error message
