@@ -80,7 +80,8 @@ yarn start
 
 
 ## Env file
-create a env file in ./ (the root) of this directory
+create an env file in ./ (the root) of this directory (dashboard-fe)
+
 
 ```
 # Auth0
@@ -97,7 +98,7 @@ VERSION_MANAGER=true
 EXTERNAL_URL=http://localhost:3000
 #
 ## Performance
-#PAGESPEED_KEYED_KEY=AIzaSyBctS5fzMZfw0ILVhFjIPlkWSnb5yZtWVc
+#PAGESPEED_KEYED_KEY=EnterMe
 #USE_CLOUD=true
 ##IP_WHITELIST="127.0.0.1 ::1 34.100.90.12"
 PORT=3000
