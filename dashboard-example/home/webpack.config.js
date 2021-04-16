@@ -1,8 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const clientVersion = require("@module-federation/dashboard-plugin/client-version");
-const navClientVersion = require("@module-federation/dashboard-plugin/nav-client-version");
-// const clientVersion = require("@module-federation/proprietary-tools/packages/managed-modules/client-version");
 const {
   container: { ModuleFederationPlugin },
 } = require("webpack");
