@@ -27,7 +27,6 @@ function injectScript(d, s, id, override) {
     }
     js = d.createElement(s);
     js.id = id;
-    js.async=true;
     js.onload = function () {
       resolve();
     };
