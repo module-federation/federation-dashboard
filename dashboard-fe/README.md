@@ -80,6 +80,8 @@ yarn start
 
 
 ## Env file
+create a env file in ./ (the root) of this directory
+
 ```
 # Auth0
 AUTH0_CLIENT_ID=EnterHEre
