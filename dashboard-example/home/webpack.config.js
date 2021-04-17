@@ -71,6 +71,12 @@ module.exports = {
         }),
         search: "search",
         nav: "nav",
+        // doesnt work
+        // nav: clientVersion({
+        //   currentHost: "home",
+        //   remoteName: "nav",
+        //   dashboardURL: "http://localhost:3000/api/graphql",
+        // }),
         utils: "utils",
       },
       exposes: {
