@@ -62,6 +62,7 @@ const Home = () => {
       group: store.group,
     },
   });
+  console.log(data);
   const [currentTab, currentTabSet] = React.useState(0);
   const classes = useHomeStyles();
 
@@ -96,19 +97,19 @@ const Home = () => {
               />
             )}
           </div>
-          <div style={{ display: currentTab === 1 ? "block" : "none" }}>
-            <ApplicationsTable applications={applications} />
-          </div>
-          {applications.length > 1 && (
-            <div style={{ display: currentTab === 2 ? "block" : "none" }}>
-              <ModuleNodeGraph applications={applications} />
-            </div>
-          )}
-          {applications.length > 1 && (
-            <div style={{ display: currentTab === 3 ? "block" : "none" }}>
-              <ModuleChordChart applications={applications} />
-            </div>
-          )}
+          {/*<div style={{ display: currentTab === 1 ? "block" : "none" }}>*/}
+          {/*  <ApplicationsTable applications={applications} />*/}
+          {/*</div>*/}
+          {/*{applications.length > 1 && (*/}
+          {/*  <div style={{ display: currentTab === 2 ? "block" : "none" }}>*/}
+          {/*    <ModuleNodeGraph applications={applications} />*/}
+          {/*  </div>*/}
+          {/*)}*/}
+          {/*{applications.length > 1 && (*/}
+          {/*  <div style={{ display: currentTab === 3 ? "block" : "none" }}>*/}
+          {/*    <ModuleChordChart applications={applications} />*/}
+          {/*  </div>*/}
+          {/*)}*/}
         </>
       )}
       {data && applications.length === 0 && (
