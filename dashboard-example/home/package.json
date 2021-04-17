@@ -26,7 +26,6 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.1.0",
-    "@module-federation/proprietary-tools": "git+ssh://git@github.com:module-federation/proprietary-tools.git#master",
     "antd": "^4.2.5",
     "esbuild-loader": "^2.11.1",
     "lodash": "^4.17.15",
