@@ -1,23 +1,42 @@
 {
   "name": "@module-federation/dashboard-plugin",
-  "version": "1.1.0",
+  "version": "2.1.0",
   "main": "FederationDashboardPlugin.js",
-  "license": "MIT",
+  "bin": "bin/federation-report.js",
+  "license": "Apache-2.0",
   "scripts": {
     "test": "jest --watch"
   },
+  "engines": {
+    "node": ">= 10"
+  },
+  "author": {
+    "email": "zackary.l.jackson@gmail.com",
+    "name": "Zackary Jackson",
+    "url": "https://twitter.com/ScriptedAlchemy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/module-federation/medusa.git"
+  },
+  "files": [
+    "bin",
+    "helpers",
+    "FederationDashboardPlugin.js",
+    "convertToGraph.js"
+  ],
   "dependencies": {
-    "@module-federation/automatic-vendor-federation": "^1.0.1",
-    "flatted": "^2.0.2",
+    "@module-federation/automatic-vendor-federation": "^1.2.1",
+    "flatted": "^3.0.0",
     "node-fetch": "^2.6.0"
   },
   "peerDependencies": {
-    "webpack": "^5.0.0-beta.17",
-    "webpack-sources": "^1.4.3"
+    "webpack": "5.31.2",
+    "webpack-sources": "^1.4.3 || ^2.0.0"
   },
   "devDependencies": {
-    "jest": "26.0.1",
-    "webpack": "^5.0.0-beta.17",
-    "webpack-sources": "^1.4.3"
+    "jest": "26.6.3",
+    "webpack": "5.31.2",
+    "webpack-sources": "2.0.1"
   }
 }

@@ -27,7 +27,7 @@ jobs:
           node-version: ${{ steps.setups.outputs.node_version }}
 
       - name: Yarn cache
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ${{ steps.setups.outputs.yarn_cache }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-node-${{ steps.setups.outputs.node_version }}
@@ -41,9 +41,12 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
 
       - name: Perform builds
+        env:
+          AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+          SESSION_COOKIE_SECRET_B64: ${{ secrets.SESSION_COOKIE_SECRET_B64 }}
         run: |-
           rm -fr dashboard-fe/node_modules
-          yarn workspace @module-federation/dashboard run docker:build
+          yarn workspace @module-federation/dashboard run docker:build:ci
           yarn workspace @module-federation/dashboard run docker:push
 
       - name: Create Release or Publish

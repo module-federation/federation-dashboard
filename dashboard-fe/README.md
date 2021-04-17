@@ -1,6 +1,10 @@
 # Federated Modules Dashboard
 
-## Docker useage
+## Feature Flags
+
+- `WITH_AUTH` - Enables Auth0 Authentication (default: `false`)
+
+## Docker usage
 
 To run the dashboard and test it out use this command:
 
@@ -72,4 +76,31 @@ Build the production server and start it.
 ```bash
 yarn build
 yarn start
+```
+
+
+## Env file
+create an env file in ./ (the root) of this directory (dashboard-fe)
+
+
+```
+# Auth0
+AUTH0_CLIENT_ID=EnterHEre
+AUTH0_CLIENT_SECRET=EnterHEre
+AUTH0_DOMAIN=EnterHEre #federation-dashboard.us.auth0.com
+REDIRECT_URI=http://localhost:3000/api/callback
+POST_LOGOUT_REDIRECT_URI=http://localhost:3000
+SESSION_COOKIE_SECRET=EnterHEre
+#
+## Feature Flags
+WITH_AUTH=false
+VERSION_MANAGER=true
+EXTERNAL_URL=http://localhost:3000
+#
+## Performance
+#PAGESPEED_KEYED_KEY=EnterMe
+#USE_CLOUD=true
+##IP_WHITELIST="127.0.0.1 ::1 34.100.90.12"
+PORT=3000
+
 ```

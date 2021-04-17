@@ -10,11 +10,14 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
-import Link from "next/link";
+import { useQuery } from "@apollo/client";
 import clsx from "clsx";
-
+import { observer } from "mobx-react";
+import _ from "lodash";
+import store from "../src/store";
 import Layout from "../components/Layout";
+import withAuth from "../components/with-auth";
+import { ApplicationLink } from "../components/links";
 
 const useStyles = makeStyles((theme) => ({
   headerRow: {
@@ -41,33 +44,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GET_APPS = gql`
-  {
-    applications {
-      id
-      name
-      overrides {
+  query($environment: String!, $group: String!) {
+    groups(name: $group) {
+      applications {
         id
         name
-        version
-      }
-      dependencies {
-        name
-        version
-      }
-      devDependencies {
-        name
-        version
-      }
-      optionalDependencies {
-        name
-        version
+        versions(latest: true, environment: $environment) {
+          overrides {
+            id
+            name
+            version
+          }
+          dependencies {
+            name
+            type
+            version
+          }
+        }
       }
     }
   }
 `;
 
 const Dependencies = () => {
-  const { data } = useQuery(GET_APPS);
+  const { data } = useQuery(GET_APPS, {
+    variables: {
+      group: store.group,
+      environment: store.environment,
+    },
+  });
   const classes = useStyles();
 
   const Dependency = ({ devDependency, override, version }) => {
@@ -84,7 +89,7 @@ const Dependencies = () => {
     return (
       <>
         <Typography
-          aria-owns={open ? "mouse-over-popover" : undefined}
+          aria-owns="mouse-over-popover"
           variant="body2"
           className={clsx({
             [classes.devDependency]: devDependency,
@@ -124,33 +129,22 @@ const Dependencies = () => {
   };
 
   const dependencyMap = {};
-  if (data) {
-    data.applications.forEach(
-      ({
-        id: appId,
-        dependencies,
-        devDependencies,
-        optionalDependencies,
-        overrides,
-      }) => {
-        const addDependency = ({ name, version }, type) => {
-          dependencyMap[name] = dependencyMap[name] || {};
-          dependencyMap[name][appId] = {
-            version,
-            type,
-            devDependency: type === "devDependency",
-            override:
-              overrides.find(({ name: ovName }) => ovName === name) !==
-              undefined,
-          };
+  const applications = _.get(data, "groups[0].applications", []);
+  if (applications) {
+    applications.forEach(({ id: appId, versions }) => {
+      versions[0].dependencies.forEach(({ name, version, type }) => {
+        dependencyMap[name] = dependencyMap[name] || {};
+        dependencyMap[name][appId] = {
+          version,
+          type,
+          devDependency: type === "devDependency",
+          override:
+            versions[0].overrides.find(
+              ({ name: ovName }) => ovName === name
+            ) !== undefined,
         };
-        dependencies.forEach((dep) => addDependency(dep, "dependency"));
-        devDependencies.forEach((dep) => addDependency(dep, "devDependency"));
-        optionalDependencies.forEach((dep) =>
-          addDependency(dep, "optionalDependency")
-        );
-      }
-    );
+      });
+    });
   }
 
   return (
@@ -164,12 +158,12 @@ const Dependencies = () => {
             <TableHead>
               <TableRow className={classes.headerRow}>
                 <TableCell />
-                {data.applications.map(({ name, id }) => (
-                  <TableCell>
+                {applications.map(({ name, id }) => (
+                  <TableCell key={["header", name, id].join(":")}>
                     <Typography>
-                      <Link href={`/applications/${id}`}>
+                      <ApplicationLink group={store.group} application={id}>
                         <a className={classes.headerCell}>{name}</a>
-                      </Link>
+                      </ApplicationLink>
                     </Typography>
                   </TableCell>
                 ))}
@@ -183,8 +177,8 @@ const Dependencies = () => {
                     <TableCell>
                       <Typography>{k}</Typography>
                     </TableCell>
-                    {data.applications.map(({ id }) => (
-                      <TableCell>
+                    {applications.map(({ id }) => (
+                      <TableCell key={id}>
                         {dependencyMap[k][id] && (
                           <Dependency {...dependencyMap[k][id]} />
                         )}
@@ -200,4 +194,4 @@ const Dependencies = () => {
   );
 };
 
-export default Dependencies;
+export default observer(Dependencies);

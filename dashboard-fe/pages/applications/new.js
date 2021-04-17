@@ -9,18 +9,28 @@ import {
   Grid,
   Paper,
 } from "@material-ui/core";
+import Template from "webpack/lib/Template";
 import { useForm, Controller } from "react-hook-form";
 import Layout from "../../components/Layout";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { Code, CodeWrapper, GeneratedCode } from "../../components/Code";
+import { observer } from "mobx-react";
+import _ from "lodash";
+
+import store from "../../src/store";
+import withAuth from "../../components/with-auth";
 
 const GET_APPS = gql`
-  {
-    applications {
-      id
-      name
-      remote
+  query($group: String!, $environment: String!) {
+    groups(name: $group) {
+      applications {
+        id
+        name
+        versions(latest: true, environment: $environment) {
+          remote
+        }
+      }
     }
   }
 `;
@@ -42,72 +52,110 @@ const useStyles = makeStyles({
   },
 });
 
-export default () => {
+const NewApp = () => {
   const { register, watch, control } = useForm({
     defaultValues: {
       name: "test-app",
       files: "./src/Component1,./src/Component2",
       shared: "react,react-dom",
-      ignoreVersion: "react,react-dom",
-      exclude: "lodash",
+      singleton: "react,react-dom",
+      exclude: "express",
       automaticFederation: true,
     },
   });
   const [applications, applicationsSet] = React.useState([]);
-  const { data } = useQuery(GET_APPS);
+  const { data } = useQuery(GET_APPS, {
+    variables: {
+      group: store.group,
+      environment: store.environment,
+    },
+  });
   const classes = useStyles();
+
+  const externalApplications = _.get(data, "groups[0].applications", []);
 
   const scriptTags = applications
     .map(
       (n) =>
         `<script src="${
-          data.applications.find(({ name }) => name === n).remote
+          externalApplications.find(({ name }) => name === n).versions[0].remote
         }"></script>`
     )
     .join("\n");
+
   const remotesCode =
     applications.length > 0
-      ? "\n" +
-        applications.map((name) => `      "${name}": "${name}"`).join(",\n") +
-        "\n    "
-      : "";
+      ? Template.asString([applications.map((name) => `"${name}": "${name}"`)])
+      : undefined;
 
-  const exposesCode = watch("files")
-    .split(",")
-    .map((file) => {
-      const fname = file.trim();
-      const mod = fname.replace(/.*\//, "");
-      return `      \"${mod}\": "${fname}"`;
-    })
-    .join(",\n");
+  const exposesCode = Template.asString(
+    watch("files")
+      .split(",")
+      .map((file) => {
+        const fname = file.trim();
+        const mod = fname.replace(/.*\//, "");
+        return `"./${mod}": "${fname}"`;
+      })
+  );
 
   const automaticPreamble = watch("automaticFederation")
-    ? `
-const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
-const packageJson = require("./package.json");
-const exclude = [${watch("exclude")
-        .split(",")
-        .map((n) => `"${n.trim()}"`)}];
-const ignoreVersion = [${watch("ignoreVersion")
-        .split(",")
-        .map((n) => `"${n.trim()}"`)}];
-`
-    : "";
-  const sharedCode = watch("automaticFederation")
-    ? `
-      AutomaticVendorFederation({
-        exclude,
-        ignoreVersion,
-        packageJson,
-        shareFrom: ["dependencies"],
-        ignorePatchVersion: true,
-      })
-    `
-    : watch("shared")
-        .split(",")
-        .map((mod) => `"${mod.trim()}"`)
-        .join(", ");
+    ? Template.asString([
+        'const deps = require("./package.json");',
+        "[",
+        Template.indent(
+          watch("exclude")
+            .split(",")
+            .map((n) => `"${n.trim()}"`)
+        ),
+        "].forEach((i)=>{delete deps.i})",
+      ])
+    : null;
 
+  const singleton = Template.asString(
+    watch("singleton")
+      .split(",")
+      .map((mod) => `{ "${mod.trim()}": { singleton:true } }`)
+  );
+
+  const sharedCode = Template.asString(
+    [watch("automaticFederation") ? "...deps" : null, singleton].filter(Boolean)
+  );
+
+  const remotesTemplate = remotesCode
+    ? Template.asString(["remotes: {", remotesCode, "}"])
+    : null;
+
+  const exposesTemplate = exposesCode
+    ? Template.asString(["exposes: {", Template.indent(exposesCode), "}"])
+    : null;
+
+  const sharedTemplate = sharedCode
+    ? Template.asString(["shared: {", Template.indent(sharedCode), "}"])
+    : null;
+
+  const pluginTemplate = Template.indent(
+    Template.asString([
+      "new ModuleFederationPlugin({",
+      Template.indent(
+        Template.asString(
+          [
+            `name: "${watch("name")}",`,
+            'filename: "remoteEntry.js",',
+            remotesTemplate,
+            exposesTemplate,
+            sharedTemplate,
+          ].filter(Boolean)
+        )
+      ),
+      "})",
+    ])
+  );
+  const boilerplate = Template.asString([
+    'const { ModuleFederationPlugin } = require("webpack").container;',
+    automaticPreamble,
+  ]).replace(/^\t/gm, "  ");
+
+  const codeSample = Template.asString([pluginTemplate]).replace(/\t/g, "  ");
   return (
     <Layout>
       <Head>
@@ -135,17 +183,18 @@ const ignoreVersion = [${watch("ignoreVersion")
               inputRef={register()}
               className={classes.textField}
             />
-            <Controller
-              as={
-                <FormControlLabel
-                  control={<Checkbox type="checkbox" />}
-                  label="Use automatic federation"
-                  key={name}
-                />
-              }
-              control={control}
-              name="automaticFederation"
-            />
+
+            {/*<Controller*/}
+            {/*  as={*/}
+            {/*    <FormControlLabel*/}
+            {/*      control={<Checkbox type="checkbox" />}*/}
+            {/*      label="Use automatic federation"*/}
+            {/*      key={"automaticFederation"}*/}
+            {/*    />*/}
+            {/*  }*/}
+            {/*  control={control}*/}
+            {/*  name="automaticFederation"*/}
+            {/*/>*/}
             {!watch("automaticFederation") && (
               <TextField
                 name="shared"
@@ -172,8 +221,8 @@ const ignoreVersion = [${watch("ignoreVersion")
             )}
             {watch("automaticFederation") && (
               <TextField
-                name="ignoreVersion"
-                label="Ignore Versions"
+                name="singleton"
+                label="Singletons"
                 helperText="comma seperated"
                 variant="outlined"
                 fullWidth
@@ -192,24 +241,13 @@ const ignoreVersion = [${watch("ignoreVersion")
                 Add this code to your Webpack configuration file.
               </Typography>
               <CodeWrapper>
-                <GeneratedCode>
-                  {`const { ModuleFederationPlugin } = require("webpack").container;`}
-                  {automaticPreamble}
-                </GeneratedCode>
-                <Code>{`plugins: [`}</Code>
-                <GeneratedCode>
-                  {`  new ModuleFederationPlugin({
-    name: "${watch("name")}",
-    library: { type: "var", name: "${watch("name")}" },
-    filename: "remoteEntry.js",
-    remotes: {${remotesCode}},
-    exposes: {
-${exposesCode}
-    },
-    shared: [${sharedCode}]
-  })  
-`}
-                </GeneratedCode>
+                <GeneratedCode>{boilerplate}</GeneratedCode>
+                <Code>
+                  {`// webpack config`}
+                  <br />
+                  {`plugins: [`}
+                </Code>
+                <GeneratedCode>{codeSample}</GeneratedCode>
                 <Code>{`]`}</Code>
               </CodeWrapper>
             </Paper>
@@ -217,7 +255,7 @@ ${exposesCode}
           <Grid item xs={3}>
             <Typography variant="h5">Import Modules</Typography>
             <FormGroup aria-label="Imported applications">
-              {data.applications.map(({ name }) => (
+              {externalApplications.map(({ name }) => (
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -260,3 +298,5 @@ ${exposesCode}
     </Layout>
   );
 };
+
+export default observer(NewApp);

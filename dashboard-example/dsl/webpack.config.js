@@ -2,7 +2,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
-
 module.exports = {
   entry: "./src/index",
   mode: "development",
@@ -11,10 +10,20 @@ module.exports = {
     port: 3002,
   },
   output: {
-    publicPath: "http://localhost:3002/",
+    filename: "[name].[contenthash].js",
+    chunkFilename: "[name].[contenthash].js",
+    publicPath: `auto`,
+    uniqueName: `dsl.${require("./package.json").version}`,
   },
+  cache: false,
   module: {
     rules: [
+      {
+        test: /\.m?js$/,
+        resolve: {
+          fullySpecified: false,
+        },
+      },
       {
         test: /\.less$/,
         use: [
@@ -23,12 +32,16 @@ module.exports = {
           },
           {
             loader: "css-loader",
+            options: {
+              modules: true,
+            },
           },
           {
             loader: "less-loader",
             options: {
               lessOptions: {
                 javascriptEnabled: true,
+                math: "always",
               },
             },
           },
@@ -36,18 +49,19 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        loader: "babel-loader",
+        loader: "esbuild-loader",
         exclude: /node_modules/,
         options: {
-          presets: ["@babel/preset-react"],
+          loader:'jsx',
+          target:"es2015",
         },
       },
     ],
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "dsl",
-      library: { type: "var", name: "dsl" },
+      name: "dsl__REMOTE_VERSION__",
+      library: { type: "var", name: "dsl__REMOTE_VERSION__" },
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
@@ -62,9 +76,12 @@ module.exports = {
       template: "./public/index.html",
     }),
     new DashboardPlugin({
+      publishVersion: require("./package.json").version,
       filename: "dashboard.json",
-      dashboardURL: "http://localhost:3000/api/update",
+      dashboardURL:
+        "http://localhost:3000/api/update?token=29f387e1-a00d-46ea-9fd6-02ca5e97449c",
       metadata: {
+        baseUrl: "http://localhost:3002",
         source: {
           url:
             "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/dsl",
