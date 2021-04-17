@@ -10,13 +10,20 @@
   "engines": {
     "node": ">= 10"
   },
+  "author": {
+    "email": "zackary.l.jackson@gmail.com",
+    "name": "Zackary Jackson",
+    "url": "https://twitter.com/ScriptedAlchemy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/module-federation/medusa.git"
+  },
   "files": [
     "bin",
     "helpers",
     "FederationDashboardPlugin.js",
-    "convertToGraph.js",
-    "../../propriatery-tools/packages/managed-modules/client-middleware.js",
-    "../../propriatery-tools/packages/managed-modules/client-version.js"
+    "convertToGraph.js"
   ],
   "dependencies": {
     "@module-federation/automatic-vendor-federation": "^1.2.1",
