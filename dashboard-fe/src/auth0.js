@@ -1,6 +1,5 @@
 import { initAuth0 } from "@auth0/nextjs-auth0";
 import { privateConfig } from "./config";
-
 export default privateConfig.WITH_AUTH
   ? initAuth0({
       clientId: privateConfig.AUTH0_CLIENT_ID,
