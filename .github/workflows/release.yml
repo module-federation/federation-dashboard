@@ -32,7 +32,7 @@ jobs:
           path: ${{ steps.setups.outputs.yarn_cache }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-node-${{ steps.setups.outputs.node_version }}
 
-      - run: yarn --frozen-lockfile
+      - run: yarn
 
       - name: Docker Login
         run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
