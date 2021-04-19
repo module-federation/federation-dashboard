@@ -50,6 +50,8 @@
     "@projectstorm/react-diagrams": "^6.2.0",
     "apollo-boost": "^0.4.9",
     "apollo-server-micro": "^2.19.0",
+    "graphql": "^15.5.0",
+    "graphql-tag": "^2.11.0",
     "arraystat": "^1.1.4",
     "bluebird": "^3.7.2",
     "canvasjs-react-charts": "^1.0.5",
