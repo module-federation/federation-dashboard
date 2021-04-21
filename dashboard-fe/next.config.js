@@ -3,6 +3,9 @@ const path = require("path");
 let merge = require("webpack-merge");
 
 module.exports = {
+  future: {
+    webpack5: true,
+  },
   webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
     if (isServer) {
       config.plugins.push(
