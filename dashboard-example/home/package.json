@@ -6,7 +6,7 @@
     "@babel/core": "7.12.13",
     "@babel/preset-react": "7.12.13",
     "@module-federation/dashboard-plugin": "*",
-    "@webpack-cli/serve": "1.2.2",
+    "@webpack-cli/serve": "1.5.1",
     "babel-loader": "8.2.2",
     "css-loader": "5.0.1",
     "html-webpack-plugin": "5.3.1",
