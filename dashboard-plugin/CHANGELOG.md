@@ -1,5 +1,16 @@
 # @module-federation/dashboard-plugin
 
+## 2.2.0
+
+### Minor Changes
+
+- c8c7f75: Updating pointers to file locations
+
+### Patch Changes
+
+- 5a8ea18: Fixed missing middlewares to RMM
+- 2471df5: Add default publishVersion for the remotes to work without param provided by Plugin config
+
 ## 2.1.0
 
 ### Minor Changes
