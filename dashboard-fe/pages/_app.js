@@ -1,3 +1,4 @@
+import React from "react";
 import "cross-fetch/polyfill";
 import { ApolloProvider } from "@apollo/client";
 import Head from "next/head";

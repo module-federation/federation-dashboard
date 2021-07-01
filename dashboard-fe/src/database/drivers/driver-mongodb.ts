@@ -49,7 +49,7 @@ class MongoDriver<T> {
 
   async insert(data: T): Promise<null> {
     return new Promise(async (resolve) => {
-      this.collection.insertOne(data, () => resolve());
+      this.collection.insertOne(data, () => resolve(null));
     });
   }
 
