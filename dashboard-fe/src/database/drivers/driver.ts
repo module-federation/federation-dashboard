@@ -8,13 +8,13 @@ import SiteSettings from "../siteSettings";
 export default abstract class Driver {
   abstract setup();
 
-  abstract async application_find(id: string): Promise<Application | null>;
-  abstract async application_findInGroups(
+  abstract application_find(id: string): Promise<Application | null>;
+  abstract application_findInGroups(
     groups: string[]
   ): Promise<Array<Application> | null>;
-  abstract async application_update(application: Application): Promise<null>;
-  abstract async application_delete(id: string): Promise<null>;
-  abstract async application_getMetrics(
+  abstract application_update(application: Application): Promise<null>;
+  abstract application_delete(id: string): Promise<null>;
+  abstract application_getMetrics(
     id: string
   ): Promise<Array<MetricValue> | null>;
 
