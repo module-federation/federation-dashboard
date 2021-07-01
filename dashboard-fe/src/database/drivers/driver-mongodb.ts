@@ -57,9 +57,11 @@ class MongoDriver<T> {
     return new Promise(async (resolve) => {
       this.collection.find(query).toArray((_, docs) => {
         if (docs.length > 0) {
-          this.collection.updateOne(query, { $set: data }, {}, () => resolve());
+          this.collection.updateOne(query, { $set: data }, {}, () =>
+            resolve(null)
+          );
         } else {
-          this.collection.insertOne(data, () => resolve());
+          this.collection.insertOne(data, () => resolve(null));
         }
       });
     });
@@ -67,7 +69,7 @@ class MongoDriver<T> {
 
   async delete(id: string): Promise<null> {
     return new Promise((resolve) => {
-      this.collection.deleteOne({ id }, {}, () => resolve());
+      this.collection.deleteOne({ id }, {}, () => resolve(null));
     });
   }
 }
