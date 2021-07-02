@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import gql from "graphql-tag";
 import { useLazyQuery } from "@apollo/client";
