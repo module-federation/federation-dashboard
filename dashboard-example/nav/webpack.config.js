@@ -50,8 +50,8 @@ module.exports = {
         loader: "esbuild-loader",
         exclude: /node_modules/,
         options: {
-          loader:'jsx',
-          target:"es2015",
+          loader: "jsx",
+          target: "es2015",
         },
       },
     ],

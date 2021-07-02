@@ -18,53 +18,49 @@ export default abstract class Driver {
     id: string
   ): Promise<Array<MetricValue> | null>;
 
-  abstract async application_addMetrics(
+  abstract application_addMetrics(
     id: string,
     metric: MetricValue
   ): Promise<Array<MetricValue> | null>;
 
-  abstract async applicationVersion_find(
+  abstract applicationVersion_find(
     applicationId: string,
     environment: string,
     version: string
   ): Promise<ApplicationVersion | null>;
-  abstract async applicationVersion_findAll(
+  abstract applicationVersion_findAll(
     applicationId: string,
     environment: string,
     version: string
   ): Promise<Array<ApplicationVersion>>;
-  abstract async applicationVersion_findLatest(
+  abstract applicationVersion_findLatest(
     applicationId: string,
     environment: string
   ): Promise<Array<ApplicationVersion>>;
-  abstract async applicationVersion_update(
+  abstract applicationVersion_update(
     version: ApplicationVersion
   ): Promise<null>;
-  abstract async applicationVersion_delete(
+  abstract applicationVersion_delete(
     applicationId: string,
     environment: string,
     version: string
   ): Promise<null>;
 
-  abstract async group_find(id: string): Promise<Group>;
-  abstract async group_findByName(name: string): Promise<Group>;
-  abstract async group_findAll(): Promise<Array<Group>>;
-  abstract async group_update(group: Group): Promise<Array<Group>>;
-  abstract async group_delete(id: string): Promise<Array<Group>>;
-  abstract async group_getMetrics(
-    id: string
-  ): Promise<Array<MetricValue> | null>;
+  abstract group_find(id: string): Promise<Group>;
+  abstract group_findByName(name: string): Promise<Group>;
+  abstract group_findAll(): Promise<Array<Group>>;
+  abstract group_update(group: Group): Promise<Array<Group>>;
+  abstract group_delete(id: string): Promise<Array<Group>>;
+  abstract group_getMetrics(id: string): Promise<Array<MetricValue> | null>;
 
-  abstract async group_updateMetric(group: Group): Promise<Array<Group> | null>;
+  abstract group_updateMetric(group: Group): Promise<Array<Group> | null>;
 
-  abstract async user_find(id: string): Promise<User>;
-  abstract async user_findByEmail(email: string): Promise<User>;
-  abstract async user_findAll(): Promise<Array<User>>;
-  abstract async user_update(user: User): Promise<Array<User>>;
-  abstract async user_delete(id: string): Promise<Array<User>>;
+  abstract user_find(id: string): Promise<User>;
+  abstract user_findByEmail(email: string): Promise<User>;
+  abstract user_findAll(): Promise<Array<User>>;
+  abstract user_update(user: User): Promise<Array<User>>;
+  abstract user_delete(id: string): Promise<Array<User>>;
 
-  abstract async siteSettings_get(): Promise<SiteSettings>;
-  abstract async siteSettings_update(
-    settings: SiteSettings
-  ): Promise<SiteSettings>;
+  abstract siteSettings_get(): Promise<SiteSettings>;
+  abstract siteSettings_update(settings: SiteSettings): Promise<SiteSettings>;
 }

@@ -1,8 +1,8 @@
 function injectScript(d, s, id, override) {
   // metadata is passed in since this function is included in the closeure
   //scope as a string
-  var baseUrl = metadata.find(function(o){
-    return o.name === 'baseUrl'
+  var baseUrl = metadata.find(function (o) {
+    return o.name === "baseUrl";
   });
 
   var remoteName = id.replace("federation-dynamic-remote-", "");
@@ -15,8 +15,8 @@ function injectScript(d, s, id, override) {
 
         return resolve(
           window[remoteAndVersion[0] + "_" + remoteAndVersion[1]] ||
-          window.pendingRemote[
-          remoteAndVersion[0] + "_" + remoteAndVersion[1]
+            window.pendingRemote[
+              remoteAndVersion[0] + "_" + remoteAndVersion[1]
             ]
         );
       } else if (window[remoteName]) {
@@ -32,11 +32,11 @@ function injectScript(d, s, id, override) {
     };
     const src =
       override && override.version
-        ? baseUrl.value+"/" + override.version + ".remoteEntry.js"
-        : baseUrl.value+"/remoteEntry.js";
+        ? baseUrl.value + "/" + override.version + ".remoteEntry.js"
+        : baseUrl.value + "/remoteEntry.js";
     js.src = src;
 
-    js.setAttribute("data-webpack", remoteName.replace('-', '_'));
+    js.setAttribute("data-webpack", remoteName.replace("-", "_"));
     fjs.parentNode.insertBefore(js, fjs);
   });
   if (!window.pendingRemote) {
@@ -45,15 +45,15 @@ function injectScript(d, s, id, override) {
   if (override && override.version) {
     var remoteAndVersion = remoteName.split("-");
     window.pendingRemote[
-    remoteAndVersion[0] + "_" + remoteAndVersion[1]
-      ] = promise;
+      remoteAndVersion[0] + "_" + remoteAndVersion[1]
+    ] = promise;
   } else {
     window.pendingRemote[remoteName] = promise;
   }
   return promise;
-};
+}
 
-module.exports = ({currentHost, remoteName, dashboardURL}) => {
+module.exports = ({ currentHost, remoteName, dashboardURL }) => {
   return `promise new Promise((resolve, reject) => {
    fetch("${dashboardURL}", {
     method: "POST",

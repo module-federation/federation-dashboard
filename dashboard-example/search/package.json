@@ -28,7 +28,6 @@
     "@ant-design/icons": "^4.1.0",
     "@emotion/core": "^10.0.28",
     "@module-federation/proprietary-tools": "git+ssh://git@github.com:module-federation/proprietary-tools.git#master",
-
     "antd": "^4.2.5",
     "react": "^16.13.0",
     "react-dom": "^16.13.0"
