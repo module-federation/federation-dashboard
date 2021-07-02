@@ -5,6 +5,10 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 
 module.exports = {
+  webpack5: true,
+  images: {
+    disableStaticImages: true,
+  },
   webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
     config.cache = false;
     if (isServer) {
