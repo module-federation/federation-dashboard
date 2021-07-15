@@ -1,3 +1,4 @@
+import React from "react";
 import "cross-fetch/polyfill";
 import { ApolloProvider } from "@apollo/client";
 import Head from "next/head";
@@ -40,5 +41,7 @@ function MyApp(props) {
     </React.Fragment>
   );
 }
-
+MyApp.getInitialProps = async (props) => {
+  return props;
+};
 export default withAuth(MyApp);

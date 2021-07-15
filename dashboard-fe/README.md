@@ -78,10 +78,9 @@ yarn build
 yarn start
 ```
 
-
 ## Env file
-create an env file in ./ (the root) of this directory (dashboard-fe)
 
+create an env file in ./ (the root) of this directory (dashboard-fe)
 
 ```
 # Auth0

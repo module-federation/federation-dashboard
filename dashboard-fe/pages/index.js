@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import { Typography, Tabs, Tab, makeStyles } from "@material-ui/core";
 import gql from "graphql-tag";
