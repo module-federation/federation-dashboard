@@ -7,7 +7,7 @@
     "@babel/preset-react": "7.14.5",
     "@module-federation/dashboard-plugin": "*",
     "babel-loader": "8.2.2",
-    "css-loader": "5.0.1",
+    "css-loader": "5.2.7",
     "html-webpack-plugin": "5.3.1",
     "less-loader": "8.0.0",
     "less": "4.1.1",
