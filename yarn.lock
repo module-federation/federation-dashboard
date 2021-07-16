@@ -16000,10 +16000,10 @@ react-layout-effect@^1.0.1:
   resolved "https://registry.yarnpkg.com/react-layout-effect/-/react-layout-effect-1.0.5.tgz#0dc4e24452aee5de66c93c166f0ec512dfb1be80"
   integrity sha512-zdRXHuch+OBHU6bvjTelOGUCM+UDr/iCY+c0wXLEAc+G4/FlcJruD/hUOzlKH5XgO90Y/BUJPNhI/g9kl+VAsA==
 
-react-lazy-hydration@^0.0.12:
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/react-lazy-hydration/-/react-lazy-hydration-0.0.12.tgz#9f128e7169a5acd5b16532a51a1483bf488d238d"
-  integrity sha512-/xfbPCe8+ud0qQEa0cINk4g6sBK90bs3KWL22XEUJK8WhMfWgWGRIkxq2inG1t866w+KY0/3Y8ReEpanBXQVaA==
+react-lazy-hydration@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-lazy-hydration/-/react-lazy-hydration-0.1.0.tgz#7ebca1b783d2a6b81360724704ec0c47b53611aa"
+  integrity sha512-TyQ55cxsvheS7ZGFH8zcrLrnfrpXy23wo0I0dtB3p3n8+VhpQE6vbULc7T8ikSOig2gbcS1CZUrti0U/8zZVZQ==
   dependencies:
     "@babel/runtime" "^7.9.2"
 
