@@ -3,7 +3,7 @@
   "version": "0.4.0",
   "private": true,
   "devDependencies": {
-    "esbuild-loader": "^2.11.1",
+    "esbuild-loader": "2.11.1",
     "@babel/core": "7.14.6",
     "@babel/preset-react": "7.14.5",
     "@module-federation/dashboard-plugin": "*",
