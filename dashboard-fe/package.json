@@ -45,7 +45,7 @@
     "@projectstorm/react-canvas-core": "^6.2.0",
     "@projectstorm/react-diagrams": "^6.2.0",
     "apollo-boost": "^0.4.9",
-    "apollo-server-micro": "^2.19.0",
+    "apollo-server-micro": "^3.0.0",
     "arraystat": "^1.1.4",
     "bluebird": "^3.7.2",
     "canvasjs-react-charts": "^1.0.5",
