@@ -12,7 +12,7 @@ import { UpArrow, DownArrow } from "./icons";
 import { ApplicationLink, ModuleLink } from "./links";
 import store from "../src/store";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: object) => ({
   headerRow: {
     background: theme.palette.grey[200],
   },

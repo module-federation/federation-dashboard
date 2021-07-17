@@ -3,7 +3,7 @@ const createApp = require("./app");
 const http = require("http");
 const next = require("next");
 const path = require("path");
-
+require("dotenv").config();
 const start = async () => {
   // Provide runtime config for frontend
   const nextApp = next({
@@ -16,7 +16,7 @@ const start = async () => {
 
   const server = http.createServer(app).listen(
     {
-      port: 3000,
+      port: process.env.PORT || 3000,
     },
     () => {
       const { port } = server.address();

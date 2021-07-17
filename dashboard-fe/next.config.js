@@ -29,7 +29,6 @@ module.exports = {
             const newEntry = Object.assign({}, entry, {
               dashboard: {
                 import: "./workers/init.js",
-                dependOn: null,
               },
             });
             return newEntry;

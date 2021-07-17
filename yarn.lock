@@ -2827,13 +2827,6 @@
   dependencies:
     find-package-json "^1.2.0"
 
-"@module-federation/dashboard-plugin@./dashboard-plugin":
-  version "2.1.0"
-  dependencies:
-    "@module-federation/automatic-vendor-federation" "^1.2.1"
-    flatted "^3.0.0"
-    node-fetch "^2.6.0"
-
 "@module-federation/proprietary-tools@git+ssh://git@github.com:module-federation/proprietary-tools.git#master":
   version "1.0.0"
   resolved "git+ssh://git@github.com:module-federation/proprietary-tools.git#9945d06e518f87ca7c6f21287b5ed3b2b8f10db9"
@@ -13622,7 +13615,7 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-next@11.0.2:
+next@11.0.2-canary.16:
   version "11.0.2-canary.16"
   resolved "https://registry.yarnpkg.com/next/-/next-11.0.2-canary.16.tgz#c124a4df4472f3ec9135d09d678dd74b88953d40"
   integrity sha512-n1w157O7LLSNBaSPZed1CYWBadZkNfhzCPsjMWadv2JbttrGirss8fRReljEY3Oi5yFTGXlfplESfbiJKKXXRQ==
@@ -19185,18 +19178,18 @@ webpack-merge@^5.7.3:
     clone-deep "^4.0.1"
     wildcard "^2.0.0"
 
-webpack-sources@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-2.2.0.tgz#058926f39e3d443193b6c31547229806ffd02bac"
-  integrity sha512-bQsA24JLwcnWGArOKUxYKhX3Mz/nK1Xf6hxullKERyktjNMC4x8koOeaDNTA2fEJ09BdWLbM/iTW0ithREUP0w==
+webpack-sources@2.3.0, webpack-sources@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-2.3.0.tgz#9ed2de69b25143a4c18847586ad9eccb19278cfa"
+  integrity sha512-WyOdtwSvOML1kbgtXbTDnEW0jkJ7hZr/bDByIwszhWd/4XX1A3XMkrbFMsuH4+/MfLlZCUzlAdg4r7jaGKEIgQ==
   dependencies:
     source-list-map "^2.0.1"
     source-map "^0.6.1"
 
-webpack-sources@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-2.3.0.tgz#9ed2de69b25143a4c18847586ad9eccb19278cfa"
-  integrity sha512-WyOdtwSvOML1kbgtXbTDnEW0jkJ7hZr/bDByIwszhWd/4XX1A3XMkrbFMsuH4+/MfLlZCUzlAdg4r7jaGKEIgQ==
+webpack-sources@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-2.2.0.tgz#058926f39e3d443193b6c31547229806ffd02bac"
+  integrity sha512-bQsA24JLwcnWGArOKUxYKhX3Mz/nK1Xf6hxullKERyktjNMC4x8koOeaDNTA2fEJ09BdWLbM/iTW0ithREUP0w==
   dependencies:
     source-list-map "^2.0.1"
     source-map "^0.6.1"
