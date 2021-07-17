@@ -85,7 +85,7 @@
     "react-d3-graph": "^2.4.1",
     "react-dom": "17.0.2",
     "react-force-graph-2d": "^1.16.0",
-    "react-hook-form": "^6.0.3",
+    "react-hook-form": "^7.0.0",
     "react-lazy-hydration": "^0.1.0",
     "read-json-stream": "^1.1.0",
     "recoil": "^0.1.0",
