@@ -63,7 +63,6 @@
     "express-ipfilter": "^1.1.2",
     "glob": "^7.1.6",
     "isomorphic-unfetch": "^3.0.0",
-    "lighthouse": "^6.2.0",
     "lodash": "^4.17.20",
     "ml-matrix": "^6.5.0",
     "mobx": "^5.15.4",
