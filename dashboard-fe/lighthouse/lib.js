@@ -1,14 +1,10 @@
-const lighthouse = require("lighthouse");
 const fs = require("fs");
-const glob = require("glob");
-const path = require("path");
 const merge = require("deepmerge");
 const cliProgress = require("cli-progress");
 const psi = require("psi");
 const { privateConfig } = require("../src/config");
 const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 import Promise from "bluebird";
-import ReadJSONStream from "read-json-stream";
 
 const RUNS = 30;
 let hasStarted = false;
