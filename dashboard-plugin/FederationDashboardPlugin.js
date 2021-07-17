@@ -93,7 +93,7 @@ class FederationDashboardPlugin {
       federationRemoteEntry: RemoteEntryChunk,
       buildHash: stats.hash,
       environment: this._options.environment, // 'development' if not specified
-      version: this._options.publishVersion, // '1.0.0' if not specified
+      version: this._options.publishVersion || "1.0.0", // '1.0.0' if not specified
       posted: this._options.posted, // Date.now() if not specified
       group: this._options.group, // 'default' if not specified
       modules,

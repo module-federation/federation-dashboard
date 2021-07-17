@@ -27,7 +27,6 @@
   "dependencies": {
     "@ant-design/icons": "^4.1.0",
     "@emotion/core": "^10.0.28",
-    "@module-federation/proprietary-tools": "git+ssh://git@github.com:module-federation/proprietary-tools.git#master",
     "antd": "^4.2.5",
     "lodash": "^4.17.15",
     "react": "17.0.2",

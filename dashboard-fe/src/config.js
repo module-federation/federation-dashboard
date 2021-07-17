@@ -37,21 +37,24 @@ module.exports.privateConfig = !process.browser
     )
   : {};
 
-module.exports.publicConfig =
-  typeof window === "undefined"
-    ? cleanObject(
-        Object.assign(
-          {},
-          {
-            AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
-            AUTH0_SCOPE: process.env.AUTH0_SCOPE,
-            AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
-            REDIRECT_URI: process.env.REDIRECT_URI,
-            WITH_AUTH: process.env.WITH_AUTH,
-            POST_LOGOUT_REDIRECT_URI: process.env.POST_LOGOUT_REDIRECT_URI,
-            EXTERNAL_URL:
-              process.env.EXTERNAL_URL || "http://mf-dash.ddns.net:3000/",
-          }
-        )
+module.exports.publicConfig = !process.browser
+  ? cleanObject(
+      Object.assign(
+        {},
+        {
+          AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
+          AUTH0_SCOPE: process.env.AUTH0_SCOPE,
+          AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
+          REDIRECT_URI: process.env.REDIRECT_URI,
+          WITH_AUTH: process.env.WITH_AUTH,
+          POST_LOGOUT_REDIRECT_URI: process.env.POST_LOGOUT_REDIRECT_URI,
+          EXTERNAL_URL:
+            process.env.EXTERNAL_URL || "http://mf-dash.ddns.net:3000/",
+        }
       )
-    : JSON.parse(document.getElementById("publicConfig").innerHTML);
+    )
+  : JSON.parse(
+      document.getElementById("publicConfig")
+        ? document.getElementById("publicConfig").innerHTML
+        : {}
+    );
