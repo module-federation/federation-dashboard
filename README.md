@@ -20,7 +20,7 @@ Step 2:
 
 ```shell script
 > cd dashboard-fe
-> yarn build && yarn serve
+> yarn build && yarn start
 ```
 
 Step 3:
