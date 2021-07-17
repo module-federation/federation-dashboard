@@ -24,24 +24,26 @@ const getPage = (pageName) => {
   return require(`../../.next/serverless/${pageName}`);
 };
 
-const createNextRouteHandler = ({ log }) => (req, res) => {
-  const pageManifest = require(`../../.next/serverless/pages-manifest.json`);
+const createNextRouteHandler =
+  ({ log }) =>
+  (req, res) => {
+    const pageManifest = require(`../../.next/serverless/pages-manifest.json`);
 
-  // Assign env vars to local
-  req.app.locals = req.app.locals || {};
-  Object.assign(req.app.locals, { log });
+    // Assign env vars to local
+    req.app.locals = req.app.locals || {};
+    Object.assign(req.app.locals, { log });
 
-  // Strip any query params off of req.url, leaving only path
-  const requestPath = req.url.split("?").shift();
+    // Strip any query params off of req.url, leaving only path
+    const requestPath = req.url.split("?").shift();
 
-  // Match requested path against list of routes
-  const page = getPage(pageManifest[requestPath]);
+    // Match requested path against list of routes
+    const page = getPage(pageManifest[requestPath]);
 
-  // Conditionally render component or respond as API
-  if (!page.render) {
-    return page.default(req, res);
-  }
-  return page.render(req, res);
-};
+    // Conditionally render component or respond as API
+    if (!page.render) {
+      return page.default(req, res);
+    }
+    return page.render(req, res);
+  };
 
 module.exports = createNextRouteHandler;

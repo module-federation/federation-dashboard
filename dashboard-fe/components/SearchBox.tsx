@@ -9,7 +9,7 @@ import { observer } from "mobx-react";
 import store from "../src/store";
 
 const GET_SIDEBAR_DATA = gql`
-  query($group: String!, $environment: String!) {
+  query ($group: String!, $environment: String!) {
     groups(name: $group) {
       applications {
         id

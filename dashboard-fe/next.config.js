@@ -1,8 +1,8 @@
 const webpack = require("webpack");
 const path = require("path");
 let merge = require("webpack-merge");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
   webpack5: true,
@@ -10,7 +10,6 @@ module.exports = {
     disableStaticImages: true,
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
-    config.cache = false;
     if (isServer) {
       config.plugins.push(
         // new BundleAnalyzerPlugin(),
@@ -28,7 +27,10 @@ module.exports = {
         entry() {
           return config.entry().then((entry) => {
             const newEntry = Object.assign({}, entry, {
-              dashboard: "./workers/init.js",
+              dashboard: {
+                import: "./workers/init.js",
+                dependOn: null,
+              },
             });
             return newEntry;
           });

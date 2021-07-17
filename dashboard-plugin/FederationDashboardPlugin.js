@@ -48,10 +48,8 @@ class FederationDashboardPlugin {
         "Dashboard plugin is missing Module Federation or standalone option"
       );
     }
-    this.FederationPluginOptions.name = this.FederationPluginOptions.name.replace(
-      "__REMOTE_VERSION__",
-      ""
-    );
+    this.FederationPluginOptions.name =
+      this.FederationPluginOptions.name.replace("__REMOTE_VERSION__", "");
     compiler.hooks.thisCompilation.tap(PLUGIN_NAME, (compilation) => {
       compilation.hooks.processAssets.tapPromise(
         {

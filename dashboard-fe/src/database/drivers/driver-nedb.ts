@@ -88,12 +88,10 @@ class TableDriver<T> {
 }
 
 export default class DriverNedb implements Driver {
-  private applicationTable: TableDriver<Application> = new TableDriver<Application>(
-    applications
-  );
-  private applicationVersionsTable: TableDriver<ApplicationVersion> = new TableDriver<ApplicationVersion>(
-    applicationVersions
-  );
+  private applicationTable: TableDriver<Application> =
+    new TableDriver<Application>(applications);
+  private applicationVersionsTable: TableDriver<ApplicationVersion> =
+    new TableDriver<ApplicationVersion>(applicationVersions);
   private metricsTable: TableDriver<MetricValue> = new TableDriver<MetricValue>(
     metrics
   );

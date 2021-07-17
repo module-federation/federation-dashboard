@@ -37,7 +37,7 @@ const GET_SETTINGS = gql`
 `;
 
 const SET_SETTINGS = gql`
-  mutation($settings: SiteSettingsInput!) {
+  mutation ($settings: SiteSettingsInput!) {
     updateSiteSettings(settings: $settings) {
       tokens {
         key

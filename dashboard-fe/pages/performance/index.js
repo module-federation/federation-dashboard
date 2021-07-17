@@ -14,7 +14,7 @@ import {
 let prevint;
 import { makeIDfromURL, removeMeta } from "../../lighthouse/utils.js";
 const GET_TRACKED = gql`
-  query($group: String!) {
+  query ($group: String!) {
     groups(name: $group) {
       settings {
         trackedURLs {
@@ -31,7 +31,7 @@ const GET_TRACKED = gql`
 `;
 
 const ADD_URL = gql`
-  mutation($settings: GroupSettingsInput!) {
+  mutation ($settings: GroupSettingsInput!) {
     updateGroupSettings(group: "default", settings: $settings) {
       trackedURLs {
         url
@@ -212,11 +212,8 @@ Performance.getInitialProps = async ({ req, res }) => {
     const runQuery = async (url) => {
       const fetch = __non_webpack_require__("node-fetch");
       const gql = __non_webpack_require__("graphql-tag");
-      const {
-        ApolloClient,
-        createHttpLink,
-        InMemoryCache,
-      } = __non_webpack_require__("@apollo/client");
+      const { ApolloClient, createHttpLink, InMemoryCache } =
+        __non_webpack_require__("@apollo/client");
       const cache = new InMemoryCache({ addTypename: false });
       const link = createHttpLink({
         uri: url + "api/graphql",

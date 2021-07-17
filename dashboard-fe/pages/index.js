@@ -18,7 +18,7 @@ import Layout from "../components/Layout";
 import store from "../src/store";
 
 const GET_APPS = gql`
-  query($group: String!, $environment: String!) {
+  query ($group: String!, $environment: String!) {
     groups(name: $group) {
       applications {
         id

@@ -26,7 +26,7 @@ import store from "../src/store";
 import { ApplicationLink, ModuleLink } from "./links";
 
 const GET_SIDEBAR_DATA = gql`
-  query($group: String!, $environment: String!) {
+  query ($group: String!, $environment: String!) {
     groups(name: $group) {
       applications {
         id

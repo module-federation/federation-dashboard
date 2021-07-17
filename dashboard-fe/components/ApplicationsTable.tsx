@@ -22,7 +22,7 @@ const ApplicationsTable = ({ applications }) => {
   const classes = useStyles();
   const modules = applications
     .map(({ id, name, versions }) =>
-      versions[0].modules.map((mod) => ({
+      versions[0].modules.map((mod: { name: string }) => ({
         ...mod,
         absoluteId: `${id}:${mod.name}`,
         applicationId: id,

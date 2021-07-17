@@ -23,8 +23,8 @@ describe("NEDB Driver Tests", () => {
         return MockDatastore;
       });
 
-      const DriverNedb = require("../../../../src/database/drivers/driver-nedb")
-        .default;
+      const DriverNedb =
+        require("../../../../src/database/drivers/driver-nedb").default;
       const driver = new DriverNedb();
       driver
         .applicationVersion_find("home", "development", "1.0.0")
@@ -99,8 +99,8 @@ describe("NEDB Driver Tests", () => {
         return MockDatastore;
       });
 
-      const DriverNedb = require("../../../../src/database/drivers/driver-nedb")
-        .default;
+      const DriverNedb =
+        require("../../../../src/database/drivers/driver-nedb").default;
       const driver = new DriverNedb();
       driver
         .applicationVersion_update({

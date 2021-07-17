@@ -47,7 +47,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GET_MODULES = gql`
-  query($group: String!, $app: String!, $environment: String!, $name: String!) {
+  query (
+    $group: String!
+    $app: String!
+    $environment: String!
+    $name: String!
+  ) {
     groups(name: $group) {
       applications(id: $app) {
         name

@@ -89,8 +89,7 @@ module.exports = {
       metadata: {
         baseUrl: "http://localhost:3003",
         source: {
-          url:
-            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav",
+          url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav",
         },
         remote: "http://localhost:3003/remoteEntry.js",
       },

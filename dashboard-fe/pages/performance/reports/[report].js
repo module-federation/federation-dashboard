@@ -37,7 +37,7 @@ const CanvasJSChart = dynamic(
 );
 
 const ADD_VARIENT = gql`
-  mutation($settings: GroupSettingsInput!) {
+  mutation ($settings: GroupSettingsInput!) {
     updateGroupSettings(group: "default", settings: $settings) {
       trackedURLs {
         url
@@ -262,9 +262,8 @@ const TimeSeriesChart = React.memo((props) => {
             Math.max(timeSeriesData.length - 5, 0)
           );
         }
-        const timeSeriesScatterData = generateTimeSeriesScatterChartData(
-          timeSeriesData
-        );
+        const timeSeriesScatterData =
+          generateTimeSeriesScatterChartData(timeSeriesData);
 
         setData(timeSeriesScatterData);
       });
@@ -433,7 +432,7 @@ class Report extends React.Component {
         this.apolloClient.mutate({
           variables: { settings: updatedTrackedUrls },
           mutation: gql`
-            mutation($settings: GroupSettingsInput!) {
+            mutation ($settings: GroupSettingsInput!) {
               updateGroupSettings(group: "default", settings: $settings) {
                 trackedURLs {
                   url
@@ -518,7 +517,7 @@ class Report extends React.Component {
         this.apolloClient.mutate({
           variables: { settings: updatedTrackedUrls },
           mutation: gql`
-            mutation($settings: GroupSettingsInput!) {
+            mutation ($settings: GroupSettingsInput!) {
               updateGroupSettings(group: "default", settings: $settings) {
                 trackedURLs {
                   url
@@ -587,15 +586,12 @@ Report.getInitialProps = async ({ query }) => {
     hostname + "api/get-report?report=" + query.report
   ).then((res) => res.json());
 
-  const [
-    scatterChartData,
-    whiskerChartData,
-    multiSeriesChartData,
-  ] = await Promise.all([
-    generateScatterChartData(report),
-    generateWhiskerChartData(report),
-    generateMultiSeriesChartData(report),
-  ]);
+  const [scatterChartData, whiskerChartData, multiSeriesChartData] =
+    await Promise.all([
+      generateScatterChartData(report),
+      generateWhiskerChartData(report),
+      generateMultiSeriesChartData(report),
+    ]);
   return {
     scatterChartData,
     whiskerChartData,

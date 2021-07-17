@@ -23,7 +23,7 @@ const client = new ApolloClient({
 });
 
 const GET_USER = gql`
-  query($email: String!) {
+  query ($email: String!) {
     userByEmail(email: $email) {
       id
       email
@@ -34,7 +34,7 @@ const GET_USER = gql`
   }
 `;
 const UPDATE_USER = gql`
-  mutation($user: UserInput!) {
+  mutation ($user: UserInput!) {
     updateUser(user: $user) {
       id
       email

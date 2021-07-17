@@ -102,8 +102,7 @@ const templateData = {
       usedIn: [
         {
           file: "src/Header.js",
-          url:
-            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/src/Header.js",
+          url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/src/Header.js",
         },
       ],
     },
@@ -114,8 +113,7 @@ const templateData = {
       usedIn: [
         {
           file: "src/Header.js",
-          url:
-            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/src/Header.js",
+          url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/src/Header.js",
         },
       ],
     },
@@ -126,8 +124,7 @@ const templateData = {
       usedIn: [
         {
           file: "src/analytics.js",
-          url:
-            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/src/analytics.js",
+          url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav/src/analytics.js",
         },
       ],
     },

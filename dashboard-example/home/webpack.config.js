@@ -94,8 +94,7 @@ module.exports = {
         clientUrl: "http://localhost:3000",
         baseUrl: "http://localhost:3001",
         source: {
-          url:
-            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home",
+          url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home",
         },
         remote: "http://localhost:3001/remoteEntry.js",
       },

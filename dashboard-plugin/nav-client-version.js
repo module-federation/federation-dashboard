@@ -47,9 +47,8 @@ function injectScript(d, s, id, override) {
   }
   if (override && override.version) {
     var remoteAndVersion = remoteName.split("-");
-    window.pendingRemote[
-      remoteAndVersion[0] + "_" + remoteAndVersion[1]
-    ] = promise;
+    window.pendingRemote[remoteAndVersion[0] + "_" + remoteAndVersion[1]] =
+      promise;
   } else {
     window.pendingRemote[remoteName] = promise;
   }
