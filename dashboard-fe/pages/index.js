@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import { Typography, Tabs, Tab, makeStyles } from "@material-ui/core";
 import gql from "graphql-tag";
@@ -17,7 +18,7 @@ import Layout from "../components/Layout";
 import store from "../src/store";
 
 const GET_APPS = gql`
-  query($group: String!, $environment: String!) {
+  query ($group: String!, $environment: String!) {
     groups(name: $group) {
       applications {
         id

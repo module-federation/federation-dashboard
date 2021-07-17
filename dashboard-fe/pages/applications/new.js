@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import {
   makeStyles,
@@ -22,7 +23,7 @@ import store from "../../src/store";
 import withAuth from "../../components/with-auth";
 
 const GET_APPS = gql`
-  query($group: String!, $environment: String!) {
+  query ($group: String!, $environment: String!) {
     groups(name: $group) {
       applications {
         id

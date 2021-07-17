@@ -64,7 +64,7 @@ class TableDriver<T> {
 
   async insert<TA>(data: T): Promise<TA> {
     return new Promise(async (resolve) => {
-      this.store.insert(data, () => resolve());
+      this.store.insert(data, () => resolve(null));
     });
   }
 
@@ -72,9 +72,9 @@ class TableDriver<T> {
     return new Promise(async (resolve) => {
       this.store.find(query, (_, docs) => {
         if (docs.length > 0) {
-          this.store.update(query, { $set: data }, {}, () => resolve());
+          this.store.update(query, { $set: data }, {}, () => resolve(null));
         } else {
-          this.store.insert(data, () => resolve());
+          this.store.insert(data, () => resolve(null));
         }
       });
     });
@@ -82,18 +82,16 @@ class TableDriver<T> {
 
   async delete<TA>(id: string): Promise<TA> {
     return new Promise((resolve) => {
-      this.store.remove({ id }, {}, () => resolve());
+      this.store.remove({ id }, {}, () => resolve(null));
     });
   }
 }
 
 export default class DriverNedb implements Driver {
-  private applicationTable: TableDriver<Application> = new TableDriver<Application>(
-    applications
-  );
-  private applicationVersionsTable: TableDriver<ApplicationVersion> = new TableDriver<ApplicationVersion>(
-    applicationVersions
-  );
+  private applicationTable: TableDriver<Application> =
+    new TableDriver<Application>(applications);
+  private applicationVersionsTable: TableDriver<ApplicationVersion> =
+    new TableDriver<ApplicationVersion>(applicationVersions);
   private metricsTable: TableDriver<MetricValue> = new TableDriver<MetricValue>(
     metrics
   );

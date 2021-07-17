@@ -123,7 +123,10 @@ const createWorker = async (data, request, moduleExport) => {
     // attach the remote container, initialize share scopes.
     // The webpack parser does something similer when you require(app1/thing), so make a RemoteModule
     const federatedRequire = await initRemote(
-      path.join(process.cwd(), ".next/server/static/runtime/remoteEntry.js"),
+      path.join(
+        process.cwd(),
+        ".next/server/chunks/static/runtime/remoteEntry.js"
+      ),
       () => ({
         initSharing: __webpack_init_sharing__,
         shareScopes: __webpack_share_scopes__,

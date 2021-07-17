@@ -51,8 +51,8 @@ module.exports = {
         loader: "esbuild-loader",
         exclude: /node_modules/,
         options: {
-          loader:'jsx',
-          target:"es2015",
+          loader: "jsx",
+          target: "es2015",
         },
       },
     ],
@@ -89,8 +89,7 @@ module.exports = {
       metadata: {
         baseUrl: "http://localhost:3004",
         source: {
-          url:
-            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search",
+          url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search",
         },
         remote: "http://localhost:3004/remoteEntry.js",
       },

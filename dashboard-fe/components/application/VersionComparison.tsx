@@ -39,7 +39,7 @@ const useStyles = makeStyles({
 });
 
 export const GET_ALL_VERSIONS = gql`
-  query($name: String!, $group: String!, $environment: String!) {
+  query ($name: String!, $group: String!, $environment: String!) {
     groups(name: $group) {
       applications(id: $name) {
         versions(environment: $environment) {

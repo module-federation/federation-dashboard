@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import gql from "graphql-tag";
 import { useLazyQuery } from "@apollo/client";
@@ -8,7 +9,7 @@ import Layout from "../../../components/Layout";
 import { ApplicationLink } from "../../../components/links";
 
 const GET_APPS = gql`
-  query($name: String!) {
+  query ($name: String!) {
     groups(name: $name) {
       applications {
         id

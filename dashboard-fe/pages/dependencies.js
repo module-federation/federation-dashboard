@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import {
   Table,
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GET_APPS = gql`
-  query($environment: String!, $group: String!) {
+  query ($environment: String!, $group: String!) {
     groups(name: $group) {
       applications {
         id

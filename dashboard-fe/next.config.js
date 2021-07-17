@@ -1,10 +1,13 @@
 const webpack = require("webpack");
 const path = require("path");
 let merge = require("webpack-merge");
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
-  future: {
-    webpack5: true,
+  webpack5: true,
+  images: {
+    disableStaticImages: true,
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
     if (isServer) {
@@ -24,7 +27,9 @@ module.exports = {
         entry() {
           return config.entry().then((entry) => {
             const newEntry = Object.assign({}, entry, {
-              dashboard: "./workers/init.js",
+              dashboard: {
+                import: "./workers/init.js",
+              },
             });
             return newEntry;
           });

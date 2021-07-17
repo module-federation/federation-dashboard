@@ -44,7 +44,7 @@ const useStyles = makeStyles({
 });
 
 export const GET_REMOTE_VERSIONS = gql`
-  query($name: String!, $environment: String!, $group: String!) {
+  query ($name: String!, $environment: String!, $group: String!) {
     groups(name: $group) {
       applications(id: $name) {
         versions(environment: $environment) {
@@ -57,7 +57,7 @@ export const GET_REMOTE_VERSIONS = gql`
 `;
 
 export const GET_HEAD_VERSION = gql`
-  query($name: String!, $group: String!, $environment: String!) {
+  query ($name: String!, $group: String!, $environment: String!) {
     groups(name: $group) {
       applications(id: $name) {
         id
@@ -101,7 +101,7 @@ export const GET_HEAD_VERSION = gql`
 `;
 
 export const GET_APPS = gql`
-  query($name: String!, $group: String!, $environment: String!) {
+  query ($name: String!, $group: String!, $environment: String!) {
     groups(name: $group) {
       applications(id: $name) {
         id
@@ -116,7 +116,7 @@ export const GET_APPS = gql`
 `;
 
 export const SET_VERSION = gql`
-  mutation($group: String!, $application: String!, $version: String!) {
+  mutation ($group: String!, $application: String!, $version: String!) {
     publishVersion(
       group: $group
       application: $application
@@ -128,7 +128,7 @@ export const SET_VERSION = gql`
 `;
 
 export const SET_REMOTE_VERSION = gql`
-  mutation(
+  mutation (
     $group: String!
     $application: String!
     $remote: String!

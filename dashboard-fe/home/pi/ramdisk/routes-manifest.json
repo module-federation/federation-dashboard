@@ -1,0 +1,46 @@
+{
+  "version": 3,
+  "pages404": true,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "rewrites": [],
+  "headers": [],
+  "dynamicRoutes": [
+    {
+      "page": "/applications/[group]",
+      "regex": "^/applications/([^/]+?)(?:/)?$",
+      "routeKeys": { "group": "group" },
+      "namedRegex": "^/applications/(?<group>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/applications/[group]/[application]",
+      "regex": "^/applications/([^/]+?)/([^/]+?)(?:/)?$",
+      "routeKeys": { "group": "group", "application": "application" },
+      "namedRegex": "^/applications/(?<group>[^/]+?)/(?<application>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/applications/[group]/[application]/[module]",
+      "regex": "^/applications/([^/]+?)/([^/]+?)/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "group": "group",
+        "application": "application",
+        "module": "module"
+      },
+      "namedRegex": "^/applications/(?<group>[^/]+?)/(?<application>[^/]+?)/(?<module>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/performance/reports/[report]",
+      "regex": "^/performance/reports/([^/]+?)(?:/)?$",
+      "routeKeys": { "report": "report" },
+      "namedRegex": "^/performance/reports/(?<report>[^/]+?)(?:/)?$"
+    }
+  ],
+  "dataRoutes": []
+}
