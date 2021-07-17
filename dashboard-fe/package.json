@@ -67,7 +67,7 @@
     "lodash": "^4.17.20",
     "ml-matrix": "^6.5.0",
     "mobx": "^5.15.4",
-    "mobx-react": "^6.2.2",
+    "mobx-react": "^7.0.0",
     "moment": "^2.27.0",
     "mongodb": "^3.6.2",
     "native-url": "^0.3.4",
