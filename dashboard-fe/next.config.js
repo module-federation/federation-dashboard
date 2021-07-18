@@ -27,9 +27,7 @@ module.exports = {
         entry() {
           return config.entry().then((entry) => {
             const newEntry = Object.assign({}, entry, {
-              dashboard: {
-                import: "./workers/init.js",
-              },
+              dashboard_worker: ["./workers/init.js"],
             });
             return newEntry;
           });
