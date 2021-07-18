@@ -54,7 +54,7 @@ export default async (req, res) => {
             console.error(err);
           })
           .then(function (result) {
-            // pool.terminate();
+            pool.terminate();
             return result;
           });
         try {
@@ -69,7 +69,7 @@ export default async (req, res) => {
     return globbedData;
   };
   const safePath = req.query.report.split("/").slice(-1)[0];
-
+  console.log(safePath);
   const globbedData = await pool
     .exec(getGlobbedFiles, [safePath])
     .then(function (result) {

@@ -9,7 +9,7 @@ import Promise from "bluebird";
 const RUNS = 30;
 let hasStarted = false;
 
-const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
+const launchPageSpeedInsightsLighthouse = async (url, desktop, failed) => {
   const mode = desktop ? "desktop" : "mobile";
   const opts = {
     key: privateConfig.PAGESPEED_KEY,
@@ -22,12 +22,16 @@ const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
     hasStarted = true;
     console.log("url:", url, "\n");
     console.log("Warming CDN Cache...\n");
-    await Promise.all([
-      await psi(url, opts),
-      await psi(url, opts),
-      await psi(url, opts),
-    ]);
+    await psi(url, opts);
+    console.log("done warming");
     bar1.start(RUNS, 0);
+  }
+  if (failed) {
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 5000);
+    });
   }
   try {
     const data2 = await psi(url, opts);
@@ -37,7 +41,8 @@ const launchPageSpeedInsightsLighthouse = async (url, desktop) => {
       json: JSON.stringify(data2.data.lighthouseResult),
     };
   } catch (e) {
-    return launchPageSpeedInsightsLighthouse(url);
+    console.log("lighthouse test failed, running again", e);
+    return launchPageSpeedInsightsLighthouse(url, true, true);
   }
 };
 
@@ -90,7 +95,7 @@ export const init = (url, title, desktop = true) => {
           delete taskRunResult.js.audits["final-screenshot"];
           return taskRunResult;
         },
-        { concurrency: 10 }
+        { concurrency: 3 }
       );
       const testResults = await promResults;
       if (title) {
