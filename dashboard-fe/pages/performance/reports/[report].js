@@ -254,7 +254,10 @@ const TimeSeriesChart = React.memo((props) => {
     //     window.dashboard.get("./utils");
     //   }
     // }
-    fetch(hostname + "api/get-timeseries?report=" + query.report)
+    fetch(
+      publicConfig.EXTERNAL_API_ROUTE ||
+        hostname + "api/get-timeseries?report=" + query.report
+    )
       .then((res) => res.json())
       .then((timeSeriesData) => {
         if (isRecent) {
@@ -552,29 +555,26 @@ class Report extends React.Component {
           />
         </div>
         <div>
-          <LazyHydrate whenIdle>
-            <WhiskerChart
-              whiskerChartData={this.props.whiskerChartData}
-              toggleDataSeries={this.toggleDataSeries}
-            />
-          </LazyHydrate>
-          <LazyHydrate whenIdle>
-            <ScatterChart
-              scatterChartData={this.props.scatterChartData}
-              toggleDataSeries={this.toggleDataSeries}
-            />
-          </LazyHydrate>
+          <WhiskerChart
+            whiskerChartData={this.props.whiskerChartData}
+            toggleDataSeries={this.toggleDataSeries}
+          />
+
+          <ScatterChart
+            scatterChartData={this.props.scatterChartData}
+            toggleDataSeries={this.toggleDataSeries}
+          />
+
           <MultiSeriesChart
             multiSeriesChartData={this.props.multiSeriesChartData}
             toggleDataSeries={this.toggleDataSeries}
           />
-          <LazyHydrate whenIdle>
-            <TimeSeriesChart
-              query={this.props.query}
-              multiSeriesChartData={this.props.multiSeriesChartData}
-              toggleDataSeries={this.toggleDataSeries}
-            />
-          </LazyHydrate>
+
+          <TimeSeriesChart
+            query={this.props.query}
+            multiSeriesChartData={this.props.multiSeriesChartData}
+            toggleDataSeries={this.toggleDataSeries}
+          />
         </div>
       </>
     );
