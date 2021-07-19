@@ -50,6 +50,7 @@ module.exports.publicConfig = !process.browser
           POST_LOGOUT_REDIRECT_URI: process.env.POST_LOGOUT_REDIRECT_URI,
           EXTERNAL_URL:
             process.env.EXTERNAL_URL || "http://mf-dash.ddns.net:3000/",
+          EXTERNAL_API_ROUTE: process.env.EXTERNAL_API_ROUTE,
         }
       )
     )
