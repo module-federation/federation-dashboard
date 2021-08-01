@@ -64,7 +64,7 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
       query: \`query {
     groups {
       name
-      applications(id: "${currentHost}") {
+      applications(id: "${currentHost}", remote: "${remoteName}") {
         name
         versions {
           version

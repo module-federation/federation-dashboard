@@ -224,10 +224,11 @@ const typeDefs = gql`
     name: String!
     group: String!
     metadata: [Metadata!]!
+    remote: String!
     tags: [String!]!
     metrics(names: [String!]): [MetricValue!]!
     overrides: [ApplicationOverride!]!
-    versions(environment: String, latest: Boolean): [ApplicationVersion!]!
+    versions(environment: String, latest: Boolean, remote:String): [ApplicationVersion!]!
     settings: ApplicationSettings
   }
 
@@ -239,7 +240,7 @@ const typeDefs = gql`
     id: String!
     name: String!
     metadata: [Metadata!]!
-    applications(id: String): [Application!]!
+    applications(id: String, remote: String): [Application!]!
     metrics(names: [String!]): [MetricValue!]!
     settings: GroupSettings
   }
@@ -282,8 +283,9 @@ const resolvers = {
       await dbDriver.setup();
       return dbDriver.user_findByEmail(email);
     },
-    groups: async (_: any, { name }: any, ctx: any) => {
+    groups: async (_: any, props: any, ctx: any) => {
       await dbDriver.setup();
+      const { name } = props
       if (name) {
         const found = await dbDriver.group_findByName(name);
         return found ? [found] : [];
@@ -380,8 +382,14 @@ const resolvers = {
     },
   },
   Application: {
-    versions: async ({ id }: any, { environment, latest }: any, ctx: any) => {
+    versions: async (props: any, props2: any, ctx: any) => {
+      console.log(props);
+      console.log(props2);
+      console.log(ctx);
+      const  { environment, latest, remote } = props2
+      const  { id } = props
       ctx.environment = environment;
+
       await dbDriver.setup();
       let found = await dbDriver.applicationVersion_findAll(id, environment);
       if (latest !== undefined) {
