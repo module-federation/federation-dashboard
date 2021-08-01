@@ -1,7 +1,7 @@
 import dbDriver from "../database/drivers";
 
 export default class VersionManager {
-  static async  publishVersion(group: any, application: any, version: any) {
+  static async publishVersion(group: any, application: any, version: any) {
     await dbDriver.setup();
 
     // TODO: Pass in the environment
