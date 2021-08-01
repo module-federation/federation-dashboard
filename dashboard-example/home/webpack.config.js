@@ -70,13 +70,13 @@ module.exports = {
           dashboardURL: "http://localhost:3000/api/graphql",
         }),
         search: "search",
-        nav: "nav",
+        // nav: "nav",
         // doesnt work
-        // nav: clientVersion({
-        //   currentHost: "home",
-        //   remoteName: "nav",
-        //   dashboardURL: "http://localhost:3000/api/graphql",
-        // }),
+        nav: clientVersion({
+          currentHost: "home",
+          remoteName: "nav",
+          dashboardURL: "http://localhost:3000/api/graphql",
+        }),
         utils: "utils",
       },
       exposes: {
