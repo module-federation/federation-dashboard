@@ -10,7 +10,11 @@ import {
   TableCell,
   Select,
   MenuItem,
+  Button,
+  Tooltip,
+  IconButton,
 } from "@material-ui/core";
+import { Delete } from "@material-ui/icons";
 import Link from "next/link";
 import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/client";
@@ -21,6 +25,7 @@ import _ from "lodash";
 
 import store from "../../src/store";
 import { ModuleLink } from "../links";
+import React from "react";
 
 const useStyles = makeStyles({
   title: {
@@ -471,6 +476,18 @@ export const CurrentVersion = observer(
         ],
       });
     };
+    const deleteApplicationHandler = () => {
+      console.log("delete application", {
+        name,
+        group: store.group,
+      });
+      // deleteApplication({
+      //   variables: {
+      //     group: store.group,
+      //     application: name,
+      //   }
+      // })
+    };
 
     const dependencies = application.dependencies.filter(
       ({ type }) => type === "dependency"
@@ -487,7 +504,7 @@ export const CurrentVersion = observer(
     return (
       <div>
         <Grid container>
-          <Grid item xs={9}>
+          <Grid item xs={8}>
             <Typography variant="h4" className={classes.title}>
               {name}
             </Typography>
@@ -514,6 +531,16 @@ export const CurrentVersion = observer(
               </Typography>
             </Grid>
           )}
+          <Grid item xs={1}>
+            <Tooltip title="Delete Application">
+              <IconButton
+                aria-label="delete application"
+                onClick={deleteApplicationHandler}
+              >
+                <Delete />
+              </IconButton>
+            </Tooltip>
+          </Grid>
         </Grid>
 
         <Grid container spacing={3}>
