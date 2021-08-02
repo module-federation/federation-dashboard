@@ -132,6 +132,14 @@ export const SET_VERSION = gql`
   }
 `;
 
+export const DELETE_APPLICATION = gql`
+  mutation ($group: String!, $application: String!) {
+    deleteApplication(group: $group, application: $application) {
+      environment
+    }
+  }
+`;
+
 export const SET_REMOTE_VERSION = gql`
   mutation (
     $group: String!
@@ -449,6 +457,8 @@ export const CurrentVersion = observer(
     const router = useRouter();
     const classes = useStyles();
     const [publishVersion] = useMutation(SET_VERSION);
+    const [deleteApplication] = useMutation(DELETE_APPLICATION);
+
     const handleVersionChange = (application, version) => {
       publishVersion({
         variables: {
@@ -477,16 +487,12 @@ export const CurrentVersion = observer(
       });
     };
     const deleteApplicationHandler = () => {
-      console.log("delete application", {
-        name,
-        group: store.group,
+      deleteApplication({
+        variables: {
+          group: store.group,
+          application: name,
+        },
       });
-      // deleteApplication({
-      //   variables: {
-      //     group: store.group,
-      //     application: name,
-      //   }
-      // })
     };
 
     const dependencies = application.dependencies.filter(
