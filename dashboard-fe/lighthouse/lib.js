@@ -91,8 +91,11 @@ export const init = (url, title, desktop = true) => {
           delete taskRunResult.js.environment;
           delete taskRunResult.js.userAgent;
           delete taskRunResult.js.i18n;
+          delete taskRunResult.i18n;
           delete taskRunResult.js.audits["screenshot-thumbnails"];
           delete taskRunResult.js.audits["final-screenshot"];
+          delete taskRunResult.js.audits["full-page-screenshot"];
+
           return taskRunResult;
         },
         { concurrency: 3 }
