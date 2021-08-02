@@ -37,7 +37,7 @@
   },
   "volta": {
     "node": "14.15.4",
-    "yarn": "1.22.10"
+    "yarn": "1.22.11"
   },
   "contributors": [
     "Jack Herrington <jherr@pobox.com>",
