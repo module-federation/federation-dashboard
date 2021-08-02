@@ -64,7 +64,7 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
       query: \`query {
     groups {
       name
-      applications(id: "${currentHost}") {
+      applications(id: "${currentHost}", remote: "${remoteName}") {
         name
         versions {
           version
@@ -104,7 +104,7 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
           });
           return;
         }
-        var allOverrides = currentApp.overrides.map((override) => {
+       currentApp.overrides.map((override) => {
           var objVersion = override && override.version ? override.version.split('.').join('_') : "";
           metadata = override.application.metadata
           return injectScript(

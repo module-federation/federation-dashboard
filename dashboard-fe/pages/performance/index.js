@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, Component } from "react";
 import List from "@material-ui/core/List";
 import Button from "@material-ui/core/Button";
 import gql from "graphql-tag";
@@ -11,8 +11,10 @@ import {
   GET_HEAD_VERSION,
   SET_REMOTE_VERSION,
 } from "../../components/application/CurrentVersion";
+
 let prevint;
 import { makeIDfromURL, removeMeta } from "../../lighthouse/utils.js";
+
 const GET_TRACKED = gql`
   query ($group: String!) {
     groups(name: $group) {
@@ -198,7 +200,18 @@ const Performance = ({ groupData }) => {
     </Fragment>
   );
 };
-Performance.getInitialProps = async ({ req, res }) => {
+
+class PerformanceWrapper extends Component {
+  componentDidCatch(error, errorInfo) {
+    window.location.reload();
+  }
+
+  render() {
+    return <Performance {...this.props} />;
+  }
+}
+
+PerformanceWrapper.getInitialProps = async ({ req, res }) => {
   const isProd = process.env.NODE_ENV !== "development";
   const url = isProd
     ? process.browser
@@ -258,4 +271,4 @@ Performance.getInitialProps = async ({ req, res }) => {
     return { groupData: data };
   }
 };
-export default Performance;
+export default PerformanceWrapper;

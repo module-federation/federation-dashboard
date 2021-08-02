@@ -152,7 +152,6 @@ const typeDefs = gql`
     version: String!
     latest: Boolean!
     posted: String!
-    remote: String!
     remotes: [Remote!]!
     dependencies: [Dependency]!
     overrides: [Override!]!
@@ -224,10 +223,15 @@ const typeDefs = gql`
     name: String!
     group: String!
     metadata: [Metadata!]!
+    remote: String!
     tags: [String!]!
     metrics(names: [String!]): [MetricValue!]!
     overrides: [ApplicationOverride!]!
-    versions(environment: String, latest: Boolean): [ApplicationVersion!]!
+    versions(
+      environment: String
+      latest: Boolean
+      remote: String
+    ): [ApplicationVersion!]!
     settings: ApplicationSettings
   }
 
@@ -239,7 +243,7 @@ const typeDefs = gql`
     id: String!
     name: String!
     metadata: [Metadata!]!
-    applications(id: String): [Application!]!
+    applications(id: String, remote: String): [Application!]!
     metrics(names: [String!]): [MetricValue!]!
     settings: GroupSettings
   }
@@ -282,8 +286,9 @@ const resolvers = {
       await dbDriver.setup();
       return dbDriver.user_findByEmail(email);
     },
-    groups: async (_: any, { name }: any, ctx: any) => {
+    groups: async (_: any, props: any, ctx: any) => {
       await dbDriver.setup();
+      const { name } = props;
       if (name) {
         const found = await dbDriver.group_findByName(name);
         return found ? [found] : [];
@@ -382,6 +387,7 @@ const resolvers = {
   Application: {
     versions: async ({ id }: any, { environment, latest }: any, ctx: any) => {
       ctx.environment = environment;
+
       await dbDriver.setup();
       let found = await dbDriver.applicationVersion_findAll(id, environment);
       if (latest !== undefined) {
@@ -445,13 +451,26 @@ const resolvers = {
         ? metrics.filter(({ name }: any) => names.includes(name))
         : metrics;
     },
-    applications: async ({ id }: any, { id: applicationId }, ctx: any) => {
+    applications: async (
+      { id }: any,
+      { id: applicationId, remote },
+      ctx: any
+    ) => {
       ctx.group = id;
+
       await dbDriver.setup();
       if (!applicationId) {
         return dbDriver.application_findInGroups([id]);
       } else {
-        const found = await dbDriver.application_find(applicationId);
+        let found = await dbDriver.application_find(applicationId);
+        if (remote && Array.isArray(found.overrides)) {
+          found.overrides = found.overrides.filter((override) => {
+            if (override.name) {
+              return override.name === remote;
+            }
+            return false;
+          });
+        }
         return found ? [found] : [];
       }
     },
