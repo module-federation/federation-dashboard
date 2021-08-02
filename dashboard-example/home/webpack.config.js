@@ -69,15 +69,21 @@ module.exports = {
           remoteName: "dsl",
           dashboardURL: "http://localhost:3000/api/graphql",
         }),
-        search: "search",
-        nav: "nav",
-        // doesnt work
-        // nav: clientVersion({
-        //   currentHost: "home",
-        //   remoteName: "nav",
-        //   dashboardURL: "http://localhost:3000/api/graphql",
-        // }),
-        utils: "utils",
+        search: clientVersion({
+          currentHost: "home",
+          remoteName: "search",
+          dashboardURL: "http://localhost:3000/api/graphql",
+        }),
+        nav: clientVersion({
+          currentHost: "home",
+          remoteName: "nav",
+          dashboardURL: "http://localhost:3000/api/graphql",
+        }),
+        utils: clientVersion({
+          currentHost: "home",
+          remoteName: "utils",
+          dashboardURL: "http://localhost:3000/api/graphql",
+        }),
       },
       exposes: {
         "./ProductCarousel": "./src/ProductCarousel",

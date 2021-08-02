@@ -1,6 +1,6 @@
 {
   "name": "@dashboard/nav",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "private": true,
   "devDependencies": {
     "@babel/core": "7.14.6",
