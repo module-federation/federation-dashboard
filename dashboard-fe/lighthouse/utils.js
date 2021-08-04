@@ -1,7 +1,6 @@
 const randomColor = require("randomcolor");
 const arraystat = require("arraystat");
 const workerpool = require("workerpool");
-const fs = require('fs');
 
 const pool = workerpool.pool({
   options: {
@@ -109,7 +108,9 @@ const generateScatterChartProcessor = (data) => {
 
 const createWorker = async (data, request, moduleExport) => {
   if (!process.browser) {
+    const fs = __non_webpack_require__("fs");
     const path = __non_webpack_require__("path");
+    console.log('FS',fs);
     // could also make this an external, then just use "require"
     const initRemote = __non_webpack_require__(
       // needs webpack runtime to get __webpack_require__
