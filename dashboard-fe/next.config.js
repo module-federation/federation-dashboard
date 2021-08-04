@@ -9,6 +9,9 @@ module.exports = {
   images: {
     disableStaticImages: true,
   },
+  experimental: {
+    pageDataCollectionTimeout: 600,
+  },
   webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
     if (isServer) {
       config.plugins.push(
