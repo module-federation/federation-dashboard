@@ -18,6 +18,5 @@
     "build": "node ../../node_modules/webpack/bin/webpack.js --mode production",
     "serve": "serve dist -p 3005",
     "clean": "rm -rf dist"
-  },
-  "dependencies": {}
+  }
 }
