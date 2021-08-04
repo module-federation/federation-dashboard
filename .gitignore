@@ -110,3 +110,4 @@ buildServer
 
 # editors
 .vscode
+/.yarn/
