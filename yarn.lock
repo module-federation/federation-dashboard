@@ -2850,20 +2850,25 @@
     flatted "^3.0.0"
     node-fetch "^2.6.0"
 
-"@next/env@11.0.2-canary.17":
-  version "11.0.2-canary.17"
-  resolved "https://registry.yarnpkg.com/@next/env/-/env-11.0.2-canary.17.tgz#a0484760adae9e9b478da66c7483d5ff2485f07e"
-  integrity sha512-ba3U2C/D7gmF10GvITY1q9BN4+1yvTTF9EQAzQ0SU2r7qVj6FMdOGGZbzHtN60rmUlQPDxKDhP0RB4RZOpEsvw==
+"@napi-rs/triples@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@napi-rs/triples/-/triples-1.0.3.tgz#76d6d0c3f4d16013c61e45dfca5ff1e6c31ae53c"
+  integrity sha512-jDJTpta+P4p1NZTFVLHJ/TLFVYVcOqv6l8xwOeBKNPMgY/zDYH/YH7SJbvrr/h1RcS9GzbPcLKGzpuK9cV56UA==
 
-"@next/polyfill-module@11.0.2-canary.17":
-  version "11.0.2-canary.17"
-  resolved "https://registry.yarnpkg.com/@next/polyfill-module/-/polyfill-module-11.0.2-canary.17.tgz#b7067faab30c4a9f0fd72719c95c23bbba7a42de"
-  integrity sha512-7Jggm8UCGDwJ/NuoJYU/OpH9KjZUdzSOv0ACSStvvmnNAehOpNYBWG4+gyv7GCU+eojAX9TQkT/l99AvM8zM4g==
+"@next/env@11.0.2-canary.25":
+  version "11.0.2-canary.25"
+  resolved "https://registry.yarnpkg.com/@next/env/-/env-11.0.2-canary.25.tgz#25e09a8e7768149b585b4d15f88e855aa4d29f58"
+  integrity sha512-uE2q2Tyky8w5OTPynHPnVgiTXRgs7ER172/ftCGMKLlpOG1bqkWhEld2d0TG/NoKUj05CBcvEHbbOiwMNMM8aQ==
 
-"@next/react-dev-overlay@11.0.2-canary.17":
-  version "11.0.2-canary.17"
-  resolved "https://registry.yarnpkg.com/@next/react-dev-overlay/-/react-dev-overlay-11.0.2-canary.17.tgz#860937349da209b84ffb3ce06fd2fd025a9cdcdd"
-  integrity sha512-JGFR6xwRj/EDxl0IX+N2EwxQLBsZlK7xqRPjjt4hK+MG695sPdQSJElJh4Qb9wrYcl61XxOkXlucnyd+PEFFhQ==
+"@next/polyfill-module@11.0.2-canary.25":
+  version "11.0.2-canary.25"
+  resolved "https://registry.yarnpkg.com/@next/polyfill-module/-/polyfill-module-11.0.2-canary.25.tgz#d324315152fff6b12583625c51c3f9031eb61407"
+  integrity sha512-UzTbaElZUYZpteXhdYeL9pReTAWdlLu8u+SVGDU1MPb9nZf9lFgQwnKsqIMa8ueuiW4dvuVUFgkEGhY4K0wf4A==
+
+"@next/react-dev-overlay@11.0.2-canary.25":
+  version "11.0.2-canary.25"
+  resolved "https://registry.yarnpkg.com/@next/react-dev-overlay/-/react-dev-overlay-11.0.2-canary.25.tgz#4c0e1a9f2276bebfb38fb028a99879dd0fc977b2"
+  integrity sha512-l/panDVfbjNnJLusYyzCkOVu04IEClLDh2QBXDYGPO4AoEghavCE3vctT98ZiiuPdry0esgpQIL3MrAQ01mA4g==
   dependencies:
     "@babel/code-frame" "7.12.11"
     anser "1.4.9"
@@ -2877,10 +2882,10 @@
     stacktrace-parser "0.1.10"
     strip-ansi "6.0.0"
 
-"@next/react-refresh-utils@11.0.2-canary.17":
-  version "11.0.2-canary.17"
-  resolved "https://registry.yarnpkg.com/@next/react-refresh-utils/-/react-refresh-utils-11.0.2-canary.17.tgz#0fac5709870db4170898c71bf9a7ad4a86680e42"
-  integrity sha512-Ffkt/96cjQyAKSxUkDJX/2STYdNa0A+WRH5jr83kXkyhDLy/n7UuUdHq+eWch7tNCW0UZk5zi4XYoglul7jc1g==
+"@next/react-refresh-utils@11.0.2-canary.25":
+  version "11.0.2-canary.25"
+  resolved "https://registry.yarnpkg.com/@next/react-refresh-utils/-/react-refresh-utils-11.0.2-canary.25.tgz#51eb566fbcd2fe7653a0269bd858fd130a747047"
+  integrity sha512-h4UG1PkIbo8CnideBx6pg4s6AVSdC0mTYM1PNI7Nb26d7UHPK8siMwlEAxVocs61MNdHE1sb/NUB+j/2nO1U1w==
 
 "@nivo/arcs@0.73.0":
   version "0.73.0"
@@ -2952,6 +2957,13 @@
   integrity sha512-6tRRV5mzn1siArAlChXqBC/ISD0AV0tvGRbuyZokVXcM2xbvtfi6OAPaZ10UYbVejBo1rRI3gnhhyNkP0UG2ug==
   dependencies:
     "@react-spring/web" "9.2.4"
+
+"@node-rs/helper@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@node-rs/helper/-/helper-1.2.1.tgz#e079b05f21ff4329d82c4e1f71c0290e4ecdc70c"
+  integrity sha512-R5wEmm8nbuQU0YGGmYVjEc0OHtYsuXdpRG+Ut/3wZ9XAvQWyThN08bTh2cBJgoZxHQUPtvRfeQuxcAgLuiBISg==
+  dependencies:
+    "@napi-rs/triples" "^1.0.3"
 
 "@nodelib/fs.scandir@2.1.3":
   version "2.1.3"
@@ -11983,17 +11995,18 @@ neo-async@^2.5.0, neo-async@^2.6.0, neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
-next@11.0.2-canary.17:
-  version "11.0.2-canary.17"
-  resolved "https://registry.yarnpkg.com/next/-/next-11.0.2-canary.17.tgz#ea35928078eaa9cb7b969dfd59a7ea283966ab02"
-  integrity sha512-wv5+zNjjkntfYfmGJKfy4xTDYgm+qlLHCMnUmgPAYN3YA1H67pZ1e1pgnb/8UDicEBfdINtdQZoREpTvwwLM2A==
+next@11.0.2-canary.25:
+  version "11.0.2-canary.25"
+  resolved "https://registry.yarnpkg.com/next/-/next-11.0.2-canary.25.tgz#75e3b70c79f0ee5178b29ed1d37e8a7cdde3f0c6"
+  integrity sha512-EflK9lVrHoBUMSp7Y0rQurBcAdOgDJ+srUPitbNkS7B9RuCOMaLl+xFBy1O0lvXY37zD+WW1k+HElyNZnCMTAw==
   dependencies:
     "@babel/runtime" "7.12.5"
     "@hapi/accept" "5.0.2"
-    "@next/env" "11.0.2-canary.17"
-    "@next/polyfill-module" "11.0.2-canary.17"
-    "@next/react-dev-overlay" "11.0.2-canary.17"
-    "@next/react-refresh-utils" "11.0.2-canary.17"
+    "@next/env" "11.0.2-canary.25"
+    "@next/polyfill-module" "11.0.2-canary.25"
+    "@next/react-dev-overlay" "11.0.2-canary.25"
+    "@next/react-refresh-utils" "11.0.2-canary.25"
+    "@node-rs/helper" "1.2.1"
     assert "2.0.0"
     ast-types "0.13.2"
     browserify-zlib "0.2.0"
@@ -12023,7 +12036,6 @@ next@11.0.2-canary.17:
     pnp-webpack-plugin "1.6.4"
     postcss "8.2.15"
     process "0.11.10"
-    prop-types "15.7.2"
     querystring-es3 "0.2.1"
     raw-body "2.4.1"
     react-is "17.0.2"
@@ -13415,7 +13427,7 @@ promzard@^0.3.0:
   dependencies:
     read "1"
 
-prop-types@15.7.2, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -14396,7 +14408,12 @@ regenerate@^1.4.0:
   resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.2.tgz#b9346d8827e8f5a32f7ba29637d398b69014848a"
   integrity sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==
 
-regenerator-runtime@0.13.7, regenerator-runtime@^0.13.4:
+regenerator-runtime@0.13.9:
+  version "0.13.9"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz#8925742a98ffd90814988d7566ad30ca3b263b52"
+  integrity sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==
+
+regenerator-runtime@^0.13.4:
   version "0.13.7"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.7.tgz#cac2dacc8a1ea675feaabaeb8ae833898ae46f55"
   integrity sha512-a54FxoJDIr27pgf7IgeQGxmqUNYrcV338lf/6gH456HZ/PhX+5BcwHXG9ajESmwe6WRO0tAzRUrRmNONWgkrew==
