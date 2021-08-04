@@ -125,7 +125,7 @@ const createWorker = async (data, request, moduleExport) => {
     const federatedRequire = await initRemote(
       path.join(
         process.cwd(),
-        ".next/server/chunks/static/runtime/remoteEntry.js"
+        ".next/server/static/runtime/remoteEntry.js"
       ),
       () => ({
         initSharing: __webpack_init_sharing__,
@@ -374,7 +374,22 @@ const generateMultiSeriesChartData = (data) => {
   }
   return {};
 };
-
+const generateUserTimings = data => {
+  return Object.entries(data).reduce((acc,[group,results])=>{
+    console.log(results);
+    acc[group] = results.reduce((acc1,result)=>{
+      const res = {}
+      res.fetchTime = result.fetchTime
+      res.timings = result.audits['user-timings'].details.items.map(detail=>{
+        return {name: detail.name,duration: detail.duration || detail.startTime}
+      })
+      acc1.push(res)
+      return acc1
+    },[]);
+    console.log(acc);
+    return acc
+  },{})
+}
 const makeIDfromURL = (url) => {
   const urlObj = new URL(url);
   let id = urlObj.host.replace("www.", "");
@@ -407,4 +422,5 @@ module.exports = {
   generateMultiSeriesChartProcessor,
   getReport,
   getReportWorker,
+  generateUserTimings
 };

@@ -57,5 +57,5 @@ module.exports.publicConfig = !process.browser
   : JSON.parse(
       document.getElementById("publicConfig")
         ? document.getElementById("publicConfig").innerHTML
-        : {}
+        : "{}"
     );

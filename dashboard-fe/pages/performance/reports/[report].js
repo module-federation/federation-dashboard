@@ -9,6 +9,7 @@ import {
   generateWhiskerChartData,
   generateMultiSeriesChartData,
   generateTimeSeriesScatterChartData,
+  generateUserTimings,
   removeMeta,
   makeIDfromURL,
 } from "../../../lighthouse/utils";
@@ -295,6 +296,7 @@ const link = createHttpLink({
 
 class Report extends React.Component {
   constructor(props) {
+    console.log(props);
     super(props);
     this.state = {
       inputValue: "",
@@ -541,6 +543,8 @@ class Report extends React.Component {
   };
 
   render() {
+
+
     return (
       <>
         <div>
@@ -575,6 +579,16 @@ class Report extends React.Component {
             multiSeriesChartData={this.props.multiSeriesChartData}
             toggleDataSeries={this.toggleDataSeries}
           />
+          <ul>
+          {this.props?.userTimingsData?.Latest && this.props.userTimingsData.Latest.map((item)=>{
+           return <><li>{item.fetchTime}</li>
+             {item.timings.map(timing=>{
+               return <li>{timing.name} <strong>{timing.duration}</strong></li>
+             })}
+           <li></li>
+           </>
+          })}
+          </ul>
         </div>
       </>
     );
@@ -586,16 +600,18 @@ Report.getInitialProps = async ({ query }) => {
     hostname + "api/get-report?report=" + query.report
   ).then((res) => res.json());
 
-  const [scatterChartData, whiskerChartData, multiSeriesChartData] =
+  const [scatterChartData, whiskerChartData, multiSeriesChartData, userTimingsData] =
     await Promise.all([
       generateScatterChartData(report),
       generateWhiskerChartData(report),
       generateMultiSeriesChartData(report),
+      generateUserTimings(report),
     ]);
   return {
     scatterChartData,
     whiskerChartData,
     multiSeriesChartData,
+    userTimingsData,
     meta,
     appKeys: Object.keys(report),
     query,
