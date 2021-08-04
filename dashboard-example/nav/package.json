@@ -3,7 +3,7 @@
   "version": "6.1.0",
   "private": true,
   "devDependencies": {
-    "@babel/core": "7.14.8",
+    "@babel/core": "7.15.0",
     "@babel/preset-react": "7.14.5",
     "@module-federation/dashboard-plugin": "*",
     "@webpack-cli/serve": "1.5.1",
