@@ -122,10 +122,18 @@ const createWorker = async (data, request, moduleExport) => {
     // essentially do what webpack is supposed to do in a proper environment.
     // attach the remote container, initialize share scopes.
     // The webpack parser does something similer when you require(app1/thing), so make a RemoteModule
+    let remoteLocation
+    if(fs.existsSync(path.join(process.cwd(),".next/server/static/runtime/remoteEntry.js"))) {
+      remoteLocation = ".next/server/static/runtime/remoteEntry.js"
+    } else {
+      remoteLocation = ".next/server/chunks/static/runtime/remoteEntry.js"
+    }
+
+
     const federatedRequire = await initRemote(
       path.join(
         process.cwd(),
-        ".next/server/static/runtime/remoteEntry.js"
+        remoteLocation
       ),
       () => ({
         initSharing: __webpack_init_sharing__,
