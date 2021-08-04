@@ -3914,17 +3914,17 @@ __metadata:
 
 "@module-federation/dashboard-plugin@file:./dashboard-plugin::locator=module-federation-examples-root%40workspace%3A.":
   version: 2.2.0
-  resolution: "@module-federation/dashboard-plugin@file:./dashboard-plugin#./dashboard-plugin::hash=b54b2a&locator=module-federation-examples-root%40workspace%3A."
+  resolution: "@module-federation/dashboard-plugin@file:./dashboard-plugin#./dashboard-plugin::hash=81a422&locator=module-federation-examples-root%40workspace%3A."
   dependencies:
     "@module-federation/automatic-vendor-federation": ^1.2.1
     flatted: ^3.0.0
     node-fetch: ^2.6.0
   peerDependencies:
     webpack: 5.45.1
-    webpack-sources: ^1.4.3 || ^2.0.0
+    webpack-sources: ^1.4.3 || ^2.0.0 || ^3.0.0
   bin:
     dashboard-plugin: bin/federation-report.js
-  checksum: 3c46b18c562e8d4b861b7ed6a21387e2e02e3dde13de0f7f7f12898e2786a7960cd7c0ce0d91ed1750c315d438d87e4f87209dfc7a4ea323c6e071e2c554944b
+  checksum: 6c7c242b3473734ed87a082f6d46d7aef1bd4a792fc5d31b89be0b14ef1019243f236c79b1c06c0587c5674c3ad4557721d2c6ecf1a14b163043ba7bff877af6
   languageName: node
   linkType: hard
 
@@ -3937,10 +3937,10 @@ __metadata:
     jest: 26.6.3
     node-fetch: ^2.6.0
     webpack: 5.45.1
-    webpack-sources: 2.3.1
+    webpack-sources: 3.2.0
   peerDependencies:
     webpack: 5.45.1
-    webpack-sources: ^1.4.3 || ^2.0.0
+    webpack-sources: ^1.4.3 || ^2.0.0 || ^3.0.0
   bin:
     dashboard-plugin: bin/federation-report.js
   languageName: unknown
@@ -22766,13 +22766,10 @@ typescript@~4.0.2:
   languageName: node
   linkType: hard
 
-"webpack-sources@npm:2.3.1":
-  version: 2.3.1
-  resolution: "webpack-sources@npm:2.3.1"
-  dependencies:
-    source-list-map: ^2.0.1
-    source-map: ^0.6.1
-  checksum: 6fd67f2274a84c5f51ad89767112ec8b47727134bf0f2ba0cff458c970f18966939a24128bdbddba621cd66eeb2bef0552642a9333cd8e54514f7b2a71776346
+"webpack-sources@npm:3.2.0, webpack-sources@npm:^3.1.1":
+  version: 3.2.0
+  resolution: "webpack-sources@npm:3.2.0"
+  checksum: 8f1d686bd6aab2eda330579a07e14803cb2e01415f5a603697402aea3c36e98c1d2731167c3e97e50170cf1b0214cf8ef945fc639b100d1e3b67c023feb35716
   languageName: node
   linkType: hard
 
@@ -22793,13 +22790,6 @@ typescript@~4.0.2:
     source-list-map: ^2.0.1
     source-map: ^0.6.1
   checksum: f0b3d13d3f350712c828c7187573d43d15fc1a96a11e81f69e3f10220d611dab95b529aca79ded9690a94040491bd7e4d84717f4467762211762cd01795a7b71
-  languageName: node
-  linkType: hard
-
-"webpack-sources@npm:^3.1.1":
-  version: 3.2.0
-  resolution: "webpack-sources@npm:3.2.0"
-  checksum: 8f1d686bd6aab2eda330579a07e14803cb2e01415f5a603697402aea3c36e98c1d2731167c3e97e50170cf1b0214cf8ef945fc639b100d1e3b67c023feb35716
   languageName: node
   linkType: hard
 
