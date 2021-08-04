@@ -71,7 +71,7 @@
     "mongodb": "^3.6.2",
     "native-url": "^0.3.4",
     "nedb": "^1.8.0",
-    "next": "11.0.2-canary.17",
+    "next": "11.0.2-canary.25",
     "node-fetch": "^2.6.0",
     "node-ip": "^0.1.2",
     "pathfinding": "^0.4.18",
