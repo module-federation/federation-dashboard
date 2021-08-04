@@ -1,6 +1,7 @@
 const randomColor = require("randomcolor");
 const arraystat = require("arraystat");
 const workerpool = require("workerpool");
+const fs = require('fs');
 
 const pool = workerpool.pool({
   options: {
