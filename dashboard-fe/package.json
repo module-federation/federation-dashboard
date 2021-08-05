@@ -92,7 +92,7 @@
     "token-generator": "^1.0.0",
     "ts-migrate": "0.1.21",
     "uuid": "^8.3.2",
-    "workerpool": "6.1.5"
+    "workerpool": "6.0.2"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "7.14.5",
