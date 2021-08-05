@@ -641,24 +641,6 @@ class Report extends React.Component {
             multiSeriesChartData={this.props.userTimingsData}
             toggleDataSeries={this.toggleDataSeries}
           />
-          <ul>
-            {this.props?.userTimingsData?.Latest &&
-              this.props.userTimingsData.Latest.map((item) => {
-                return (
-                  <>
-                    <li>{item.fetchTime}</li>
-                    {item.timings.map((timing) => {
-                      return (
-                        <li>
-                          {timing.name} <strong>{timing.duration}</strong>
-                        </li>
-                      );
-                    })}
-                    <li></li>
-                  </>
-                );
-              })}
-          </ul>
         </div>
       </>
     );
