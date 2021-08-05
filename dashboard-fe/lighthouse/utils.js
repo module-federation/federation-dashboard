@@ -34,8 +34,8 @@ const getReport = async (safePath) => {
 };
 const getReportWorker = async (safePath) => {
   if (!process.browser) {
-    const fs = __non_webpack_require__("fs");
-    const path = __non_webpack_require__("path");
+    const fs = await import(/* webpackIgnore: true */"fs");
+    const path = await import(/* webpackIgnore: true */"path");
 
     function getData(fileName, type) {
       return fs.promises.readFile(fileName, { encoding: type });
@@ -108,17 +108,17 @@ const generateScatterChartProcessor = (data) => {
 
 const createWorker = async (data, request, moduleExport) => {
   if (!process.browser) {
-    const path = __non_webpack_require__("path");
-    const fs = __non_webpack_require__("fs");
+    const path = await import(/* webpackIgnore: true */"path");
+    const fs = await import(/* webpackIgnore: true */"fs");
     // could also make this an external, then just use "require"
-    const initRemote = __non_webpack_require__(
+    const initRemote = (await import(/* webpackIgnore: true */
       // needs webpack runtime to get __webpack_require__
       // externally require the worker code with node.js This could be inline,
       // but i decided to move the bootstapping code somewhere else. Technically if this were not next.js
       // we should be able to import('dashboard/utils')
       // workers/index.js was in this file, but its cleaner to just move the boilerplate
       path.join(process.cwd(), "workers/index.js")
-    );
+    )).default;
 
     // essentially do what webpack is supposed to do in a proper environment.
     // attach the remote container, initialize share scopes.
@@ -254,7 +254,6 @@ const generateTimeSeriesScatterChartData = (data) => {
 
 const generateWhiskerChartDataProcessor = (data) => {
   return Object.entries(data).map(([group, results]) => {
-    // const generateColor = randomColor();
     const obj = {
       type: "boxAndWhisker",
       name: group,
