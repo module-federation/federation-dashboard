@@ -171,28 +171,32 @@ const generateUserTimeingsScatterChartData = (data) => {
   if (!data[0].timings) {
     return null;
   }
-  const scatterObject = data[0].timings.reduce((acc, timing) => {
-    const obj = {
-      type: "spline",
-      name: timing.name,
-      showInLegend: true,
-      // markerType: "dot",
-      dataPoints: [],
-      xValueType: "dateTime",
-    };
-    acc[timing.name] = obj;
-    return acc;
-  }, {});
-
+  let scatterObject = {}
+  data.forEach((item) => {
+     item.timings.reduce((acc, timing) => {
+      const obj = {
+        type: "spline",
+        name: timing.name,
+        showInLegend: true,
+        // markerType: "dot",
+        dataPoints: [],
+        xValueType: "dateTime",
+      };
+      acc[timing.name] = obj;
+      return acc;
+    }, scatterObject);
+  })
   data.map((item) => {
     item.timings.map((timing) => {
-      scatterObject[timing.name].dataPoints.push({
-        x: new Date(item.fetchTime).getTime(),
-        y: parseInt(toFixed(timing.duration)),
-      });
+      if(scatterObject?.[timing.name]?.dataPoints) {
+        scatterObject[timing.name].dataPoints.push({
+          x: new Date(item.fetchTime).getTime(),
+          y: parseInt(toFixed(timing.duration)),
+        });
+      }
     });
   });
-  return Object.values(scatterObject).map((mappedObject) => {
+  return Object.values(scatterObject).filter(mappedObject=>mappedObject?.dataPoints?.[0]).map((mappedObject) => {
     mappedObject.dataPoints = mappedObject.dataPoints.sort(function (a, b) {
       return b.x - a.x;
     });
