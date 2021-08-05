@@ -111,3 +111,4 @@ buildServer
 # editors
 .vscode
 .yarn/cache
+.yarn/install-state.gz
