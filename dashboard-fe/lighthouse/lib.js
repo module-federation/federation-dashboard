@@ -98,7 +98,7 @@ export const init = (url, title, desktop = true) => {
 
           return taskRunResult;
         },
-        { concurrency: 3 }
+        { concurrency: 5 }
       );
       const testResults = await promResults;
       if (title) {

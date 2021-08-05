@@ -9,6 +9,7 @@ import {
   generateWhiskerChartData,
   generateMultiSeriesChartData,
   generateTimeSeriesScatterChartData,
+  generateUserTimeingsScatterChartData,
   generateUserTimings,
   removeMeta,
   makeIDfromURL,
@@ -289,6 +290,65 @@ const TimeSeriesChart = React.memo((props) => {
     </>
   );
 });
+const UserTimingsChart = React.memo((props) => {
+  const [data, setData] = useState(false);
+  const [gotRef, setRef] = useState(false);
+  const timeSeriesScatterChartOptions = {
+    height: typeof window === "object" ? window.innerHeight : null,
+    theme: "dark2",
+    title: {
+      text: "User Timings",
+    },
+    axisX: {
+      title: "Date",
+      labelFormatter: function (e) {
+        const { CanvasJS } = require("canvasjs-react-charts");
+
+        return CanvasJS.formatDate(e.value, "DD MMM");
+      },
+    },
+    axisY: {
+      title: "Timing",
+      suffix: "ms",
+      includeZero: false,
+      // logarithmic: true,
+      // interval: 0.2,
+      minimum: 500,
+    },
+    legend: {
+      cursor: "pointer",
+      itemclick: (e) => {
+        props.toggleDataSeries(e);
+        gotRef.render();
+      },
+    },
+
+    data: data,
+  };
+
+  useEffect(() => {
+    const timeSeriesScatterData = generateUserTimeingsScatterChartData(
+      props.multiSeriesChartData
+    );
+
+    setData(timeSeriesScatterData);
+  }, []);
+  if (!data) {
+    return null;
+  }
+
+  return (
+    <>
+      <CanvasJSChart
+        options={timeSeriesScatterChartOptions}
+        onRef={(ref) => {
+          createRef(ref);
+          setRef(ref);
+        }}
+      />
+    </>
+  );
+});
 
 const link = createHttpLink({
   uri: "/api/graphql",
@@ -296,7 +356,6 @@ const link = createHttpLink({
 
 class Report extends React.Component {
   constructor(props) {
-    console.log(props);
     super(props);
     this.state = {
       inputValue: "",
@@ -543,8 +602,6 @@ class Report extends React.Component {
   };
 
   render() {
-
-
     return (
       <>
         <div>
@@ -579,16 +636,11 @@ class Report extends React.Component {
             multiSeriesChartData={this.props.multiSeriesChartData}
             toggleDataSeries={this.toggleDataSeries}
           />
-          <ul>
-          {this.props?.userTimingsData?.Latest && this.props.userTimingsData.Latest.map((item)=>{
-           return <><li>{item.fetchTime}</li>
-             {item.timings.map(timing=>{
-               return <li>{timing.name} <strong>{timing.duration}</strong></li>
-             })}
-           <li></li>
-           </>
-          })}
-          </ul>
+
+          <UserTimingsChart
+            multiSeriesChartData={this.props.userTimingsData}
+            toggleDataSeries={this.toggleDataSeries}
+          />
         </div>
       </>
     );
@@ -600,18 +652,22 @@ Report.getInitialProps = async ({ query }) => {
     hostname + "api/get-report?report=" + query.report
   ).then((res) => res.json());
 
-  const [scatterChartData, whiskerChartData, multiSeriesChartData, userTimingsData] =
-    await Promise.all([
-      generateScatterChartData(report),
-      generateWhiskerChartData(report),
-      generateMultiSeriesChartData(report),
-      generateUserTimings(report),
-    ]);
-  return {
+  const [
     scatterChartData,
     whiskerChartData,
     multiSeriesChartData,
     userTimingsData,
+  ] = await Promise.all([
+    generateScatterChartData(report),
+    generateWhiskerChartData(report),
+    generateMultiSeriesChartData(report),
+    generateUserTimings(report),
+  ]);
+  return {
+    scatterChartData,
+    whiskerChartData,
+    multiSeriesChartData,
+    userTimingsData: userTimingsData?.Latest,
     meta,
     appKeys: Object.keys(report),
     query,

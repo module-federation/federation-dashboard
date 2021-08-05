@@ -167,6 +167,38 @@ const generateScatterChartData = async (data) => {
   return {};
 };
 
+const generateUserTimeingsScatterChartData = (data) => {
+  if (!data[0].timings) {
+    return null;
+  }
+  const scatterObject = data[0].timings.reduce((acc, timing) => {
+    const obj = {
+      type: "spline",
+      name: timing.name,
+      showInLegend: true,
+      // markerType: "dot",
+      dataPoints: [],
+      xValueType: "dateTime",
+    };
+    acc[timing.name] = obj;
+    return acc;
+  }, {});
+
+  data.map((item) => {
+    item.timings.map((timing) => {
+      scatterObject[timing.name].dataPoints.push({
+        x: new Date(item.fetchTime).getTime(),
+        y: parseInt(toFixed(timing.duration)),
+      });
+    });
+  });
+  return Object.values(scatterObject).map((mappedObject) => {
+    mappedObject.dataPoints = mappedObject.dataPoints.sort(function (a, b) {
+      return b.x - a.x;
+    });
+    return mappedObject
+  });
+};
 const generateTimeSeriesScatterChartData = (data) => {
   const scatterObject = [
     "first-contentful-paint",
@@ -386,7 +418,6 @@ const generateMultiSeriesChartData = (data) => {
 const generateUserTimings = (data) => {
   return Promise.resolve(
     Object.entries(data).reduce((acc, [group, results]) => {
-      console.log(results);
       acc[group] = results.reduce((acc1, result) => {
         const res = {};
         res.fetchTime = result.fetchTime;
@@ -401,7 +432,6 @@ const generateUserTimings = (data) => {
         acc1.push(res);
         return acc1;
       }, []);
-      console.log(acc);
       return acc;
     }, {})
   );
@@ -432,6 +462,7 @@ module.exports = {
   toFixed,
   cache,
   pool,
+  generateUserTimeingsScatterChartData,
   generateTimeSeriesScatterChartData,
   generateScatterChartProcessor,
   generateWhiskerChartDataProcessor,
