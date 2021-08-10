@@ -13,11 +13,13 @@ const pool = workerpool.pool({
 
 export default async (req, res) => {
   const getGlobbedFiles = async (safePath) => {
-    const glob = __non_webpack_require__("glob");
-    const path = __non_webpack_require__("path");
-    const fs = __non_webpack_require__("fs");
-    const BPromise = __non_webpack_require__("bluebird");
-    const workerpool = __non_webpack_require__("workerpool");
+    const glob = (await import(/* webpackIgnore: true */"glob")).default;
+    const path = await import(/* webpackIgnore: true */"path");
+    const fs = await import(/* webpackIgnore: true */"fs");
+    const BBPromise = await import(/* webpackIgnore: true */"bluebird");
+    const BPromise = BBPromise.default || BBPromise
+    const workerpoolP = await import(/* webpackIgnore: true */"workerpool");
+    const workerpool = workerpoolP.default || workerpoolP
     const pool = workerpool.pool({
       options: {
         minWorkers: 2,
@@ -26,8 +28,11 @@ export default async (req, res) => {
         workerType: "auto",
       },
     });
-    function getData(fileName, type = "utf8") {
-      const fs = __non_webpack_require__("fs");
+  
+
+    async function getData(fileName, type = "utf8") {
+      const fs = await import(/* webpackIgnore: true */"fs");
+    
       return fs.promises.readFile(fileName, { encoding: type });
     }
     const globbedFiles = await new Promise((resolve, reject) => {

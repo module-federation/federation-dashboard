@@ -10,7 +10,8 @@ module.exports = {
     disableStaticImages: true,
   },
   experimental: {
-    pageDataCollectionTimeout: 600,
+    pageDataCollectionTimeout: 6000,
+    staticPageGenerationTimeout: 6000,
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
     if (isServer) {

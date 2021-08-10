@@ -108,8 +108,10 @@ const generateScatterChartProcessor = (data) => {
 
 const createWorker = async (data, request, moduleExport) => {
   if (!process.browser) {
+    console.log('create worker');
     const path = await import(/* webpackIgnore: true */"path");
     const fs = await import(/* webpackIgnore: true */"fs");
+    console.log('async require fs,path')
     // could also make this an external, then just use "require"
     const initRemote = (await import(/* webpackIgnore: true */
       // needs webpack runtime to get __webpack_require__
@@ -119,6 +121,7 @@ const createWorker = async (data, request, moduleExport) => {
       // workers/index.js was in this file, but its cleaner to just move the boilerplate
       path.join(process.cwd(), "workers/index.js")
     )).default;
+    console.log('async require remote container', initRemote);
 
     // essentially do what webpack is supposed to do in a proper environment.
     // attach the remote container, initialize share scopes.
