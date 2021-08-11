@@ -7,6 +7,7 @@ import store from "../src/store";
 import { publicConfig } from "../src/config";
 import PropTypes from "prop-types";
 import withAuth from "../components/with-auth";
+import { UserProvider } from "@auth0/nextjs-auth0";
 
 function MyApp(props) {
   const { Component, pageProps } = props;
@@ -26,13 +27,6 @@ function MyApp(props) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
         <link rel="icon" href="/favicon.ico" />
-        <script
-          id="publicConfig"
-          type="application/json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(publicConfig),
-          }}
-        />
       </Head>
       <CssBaseline />
       <ApolloProvider client={store.client}>

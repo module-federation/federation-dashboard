@@ -34,8 +34,8 @@ const getReport = async (safePath) => {
 };
 const getReportWorker = async (safePath) => {
   if (!process.browser) {
-    const fs = await import(/* webpackIgnore: true */"fs");
-    const path = await import(/* webpackIgnore: true */"path");
+    const fs = await import(/* webpackIgnore: true */ "fs");
+    const path = await import(/* webpackIgnore: true */ "path");
 
     function getData(fileName, type) {
       return fs.promises.readFile(fileName, { encoding: type });
@@ -108,20 +108,23 @@ const generateScatterChartProcessor = (data) => {
 
 const createWorker = async (data, request, moduleExport) => {
   if (!process.browser) {
-    console.log('create worker');
-    const path = await import(/* webpackIgnore: true */"path");
-    const fs = await import(/* webpackIgnore: true */"fs");
-    console.log('async require fs,path')
+    console.log("create worker");
+    const path = await import(/* webpackIgnore: true */ "path");
+    const fs = await import(/* webpackIgnore: true */ "fs");
+    console.log("async require fs,path");
     // could also make this an external, then just use "require"
-    const initRemote = (await import(/* webpackIgnore: true */
-      // needs webpack runtime to get __webpack_require__
-      // externally require the worker code with node.js This could be inline,
-      // but i decided to move the bootstapping code somewhere else. Technically if this were not next.js
-      // we should be able to import('dashboard/utils')
-      // workers/index.js was in this file, but its cleaner to just move the boilerplate
-      path.join(process.cwd(), "workers/index.js")
-    )).default;
-    console.log('async require remote container', initRemote);
+    const initRemote = (
+      await import(
+        /* webpackIgnore: true */
+        // needs webpack runtime to get __webpack_require__
+        // externally require the worker code with node.js This could be inline,
+        // but i decided to move the bootstapping code somewhere else. Technically if this were not next.js
+        // we should be able to import('dashboard/utils')
+        // workers/index.js was in this file, but its cleaner to just move the boilerplate
+        path.join(process.cwd(), "workers/index.js")
+      )
+    ).default;
+    console.log("async require remote container", initRemote);
 
     // essentially do what webpack is supposed to do in a proper environment.
     // attach the remote container, initialize share scopes.
@@ -174,9 +177,9 @@ const generateUserTimeingsScatterChartData = (data) => {
   if (!data[0].timings) {
     return null;
   }
-  let scatterObject = {}
+  let scatterObject = {};
   data.forEach((item) => {
-     item.timings.reduce((acc, timing) => {
+    item.timings.reduce((acc, timing) => {
       const obj = {
         type: "spline",
         name: timing.name,
@@ -188,10 +191,10 @@ const generateUserTimeingsScatterChartData = (data) => {
       acc[timing.name] = obj;
       return acc;
     }, scatterObject);
-  })
+  });
   data.map((item) => {
     item.timings.map((timing) => {
-      if(scatterObject?.[timing.name]?.dataPoints) {
+      if (scatterObject?.[timing.name]?.dataPoints) {
         scatterObject[timing.name].dataPoints.push({
           x: new Date(item.fetchTime).getTime(),
           y: parseInt(toFixed(timing.duration)),
@@ -199,12 +202,14 @@ const generateUserTimeingsScatterChartData = (data) => {
       }
     });
   });
-  return Object.values(scatterObject).filter(mappedObject=>mappedObject?.dataPoints?.[0]).map((mappedObject) => {
-    mappedObject.dataPoints = mappedObject.dataPoints.sort(function (a, b) {
-      return b.x - a.x;
+  return Object.values(scatterObject)
+    .filter((mappedObject) => mappedObject?.dataPoints?.[0])
+    .map((mappedObject) => {
+      mappedObject.dataPoints = mappedObject.dataPoints.sort(function (a, b) {
+        return b.x - a.x;
+      });
+      return mappedObject;
     });
-    return mappedObject
-  });
 };
 const generateTimeSeriesScatterChartData = (data) => {
   const scatterObject = [

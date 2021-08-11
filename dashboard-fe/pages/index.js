@@ -63,7 +63,6 @@ const Home = () => {
       group: store.group,
     },
   });
-  console.log(data);
   const [currentTab, currentTabSet] = React.useState(0);
   const classes = useHomeStyles();
 

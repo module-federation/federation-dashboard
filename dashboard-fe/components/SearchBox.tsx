@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, TextField, fade } from "@material-ui/core";
+import { makeStyles, TextField, alpha } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
@@ -29,9 +29,9 @@ const useStyles = makeStyles((theme) => ({
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,

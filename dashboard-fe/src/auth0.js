@@ -1,22 +1,15 @@
 import { initAuth0 } from "@auth0/nextjs-auth0";
-import { privateConfig } from "./config";
-export default privateConfig.WITH_AUTH
+import { privateConfig, publicConfig } from "./config";
+
+export default publicConfig.WITH_AUTH
   ? initAuth0({
-      clientId: privateConfig.AUTH0_CLIENT_ID,
-      clientSecret: privateConfig.AUTH0_CLIENT_SECRET,
-      scope: privateConfig.AUTH0_SCOPE,
-      domain: privateConfig.AUTH0_DOMAIN,
-      redirectUri: privateConfig.REDIRECT_URI,
-      postLogoutRedirectUri: privateConfig.POST_LOGOUT_REDIRECT_URI,
-      session: {
-        cookieSecret: privateConfig.SESSION_COOKIE_SECRET,
-        cookieLifetime: privateConfig.SESSION_COOKIE_LIFETIME,
-        storeIdToken: false,
-        storeRefreshToken: false,
-        storeAccessToken: false,
-      },
+      clientID: privateConfig.AUTH0_CLIENT_ID,
+      secret: privateConfig.AUTH0_CLIENT_SECRET,
+      issuerBaseURL: privateConfig.AUTH0_ISSUER_BASE_URL,
+      baseURL: privateConfig.AUTH0_BASE_URL,
     })
   : {
+      withPageAuthRequired() {},
       handleLogin() {},
       handleProfile() {},
       getSession() {
