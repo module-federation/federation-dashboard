@@ -145,11 +145,13 @@ export default class DriverMongoDB implements Driver {
   async application_find(id: string): Promise<Application | null> {
     return await this.applicationTable.find(id);
   }
+
   async application_findInGroups(
     groups: string[]
   ): Promise<Array<Application> | null> {
     return await this.applicationTable.search({ group: { $in: groups } });
   }
+
   async application_getMetrics(id: string): Promise<Array<MetricValue> | null> {
     return await this.metricsTable.search({
       type: "application",
@@ -168,11 +170,13 @@ export default class DriverMongoDB implements Driver {
       ...metric,
     });
   }
+
   async application_update(application: Application): Promise<null> {
     Joi.assert(application, applicationSchema);
     bus.publish("updateApplication", application);
     return this.applicationTable.update({ id: application.id }, application);
   }
+
   async application_delete(id: string): Promise<null> {
     return this.applicationTable.delete(id);
   }
@@ -240,6 +244,7 @@ export default class DriverMongoDB implements Driver {
     const id = [applicationId, environment, version].join(":");
     return this.applicationVersionsTable.delete(id);
   }
+
   async group_getMetrics(id: string): Promise<Array<MetricValue> | null> {
     return this.metricsTable.search({
       type: "group",
@@ -255,6 +260,7 @@ export default class DriverMongoDB implements Driver {
   async group_find(id: string): Promise<Group> {
     return this.groupsTable.find(id);
   }
+
   async group_findByName(name: string): Promise<Group> {
     return this.groupsTable
       .search({ name })
@@ -278,50 +284,44 @@ export default class DriverMongoDB implements Driver {
   async user_find(id: string): Promise<User> {
     return this.usersTable.find(id);
   }
+
   async user_findByEmail(email: string): Promise<User> {
     const found = await this.usersTable.search({ email });
     return Promise.resolve(found.length > 0 ? found[0] : null);
   }
+
   async user_findAll(): Promise<Array<User>> {
     return this.usersTable.search({});
   }
+
   async user_update(user: User): Promise<Array<User>> {
     Joi.assert(user, userSchema);
     return this.usersTable.update({ id: user.id }, user);
   }
+
   async user_delete(id: string): Promise<Array<User>> {
     return this.usersTable.delete(id);
   }
 
-  async siteSettings_get(): Promise<SiteSettings> {
+  async siteSettings_get(): Promise<Array<SiteSettings> | null> {
     let settings = {
       webhooks: [],
       tokens: [],
+      id: "siteSettings",
     };
     // console.log(this.siteSettings.count())
-    if (!(await this.siteSettings.find("siteSettings"))) {
+    if (!(await this.siteSettings.search({ id: "siteSettings" }))) {
       await this.siteSettings.update({ id: "siteSettings" }, settings);
     }
-    console.log(await this.siteSettings.search({}));
 
-    //console.log('sitesettings', this.siteSettings);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir);
-    }
-    if (fs.existsSync(siteSettingsPath)) {
-      try {
-        settings = JSON.parse(fs.readFileSync(siteSettingsPath).toString());
-      } catch (e) {
-        console.error(e);
-      }
-    } else {
-      fs.writeFileSync(siteSettingsPath, JSON.stringify(settings));
-    }
-    return Promise.resolve(settings);
+    return this.siteSettings.search({ id: "siteSettings" });
   }
+
   async siteSettings_update(settings: SiteSettings): Promise<SiteSettings> {
     Joi.assert(settings, siteSettingsSchema);
-    fs.writeFileSync(siteSettingsPath, JSON.stringify(settings));
-    return Promise.resolve(settings);
+    return this.siteSettings.update(
+      { id: "siteSettings" },
+      { id: "siteSettings", ...settings }
+    );
   }
 }

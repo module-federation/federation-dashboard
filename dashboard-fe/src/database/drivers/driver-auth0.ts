@@ -280,7 +280,7 @@ export default class DriverNedb implements Driver {
     return this.usersTable.delete(id);
   }
 
-  async siteSettings_get(): Promise<SiteSettings> {
+  async siteSettings_get(): Promise<Array<SiteSettings> | null> {
     let settings = {
       tokens: [],
       webhooks: [],
