@@ -37,6 +37,7 @@ const apiAuthGate = async (req: any, res: any, callback: any) => {
   return callback(req, res);
 };
 const checkForTokens = async () => {
+  await dbDriver.setup();
   const { tokens } = await dbDriver.siteSettings_get();
   if (Array.isArray(tokens) && tokens.length === 0) {
     return false;

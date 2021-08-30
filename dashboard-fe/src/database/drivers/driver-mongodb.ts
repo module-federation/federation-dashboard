@@ -80,6 +80,7 @@ export default class DriverMongoDB implements Driver {
   private metricsTable: MongoDriver<MetricValue> = null;
   private groupsTable: MongoDriver<Group> = null;
   private usersTable: MongoDriver<User> = null;
+  private siteSettings: MongoDriver<SiteSettings> = null;
   private static isSetup = false;
   private static isInSetup = false;
   private client: MongoClient = null;
@@ -95,15 +96,12 @@ export default class DriverMongoDB implements Driver {
     if (DriverMongoDB.isSetup || DriverMongoDB.isInSetup) {
       return false;
     }
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir);
-    }
-    if (!fs.existsSync(siteSettingsPath)) {
-      fs.writeFileSync(siteSettingsPath, JSON.stringify({}));
-    }
 
     DriverMongoDB.isInSetup = true;
-
+    let connectionSetupResolve;
+    let connectionSetup = new Promise((resolve) => {
+      connectionSetupResolve = resolve;
+    });
     this.client.connect(async (err) => {
       if (err) {
         console.error("Error during MongoDB database startup");
@@ -125,6 +123,9 @@ export default class DriverMongoDB implements Driver {
       );
       this.groupsTable = new MongoDriver<Group>(db.collection("groups"));
       this.usersTable = new MongoDriver<User>(db.collection("users"));
+      this.siteSettings = new MongoDriver<SiteSettings>(
+        db.collection("siteSettings")
+      );
 
       const defaultGroup = await this.group_find("default");
       if (!defaultGroup) {
@@ -136,7 +137,9 @@ export default class DriverMongoDB implements Driver {
       }
 
       DriverMongoDB.isSetup = true;
+      connectionSetupResolve();
     });
+    return connectionSetup;
   }
 
   async application_find(id: string): Promise<Application | null> {
@@ -295,6 +298,13 @@ export default class DriverMongoDB implements Driver {
       webhooks: [],
       tokens: [],
     };
+    // console.log(this.siteSettings.count())
+    if (!(await this.siteSettings.find("siteSettings"))) {
+      await this.siteSettings.update({ id: "siteSettings" }, settings);
+    }
+    console.log(await this.siteSettings.search({}));
+
+    //console.log('sitesettings', this.siteSettings);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir);
     }
