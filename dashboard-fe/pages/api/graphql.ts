@@ -296,7 +296,8 @@ const resolvers = {
         return dbDriver.group_findAll();
       }
     },
-    siteSettings: () => {
+    siteSettings: async () => {
+      await dbDriver.setup();
       return dbDriver.siteSettings_get();
     },
   },
@@ -540,6 +541,7 @@ const fetchToken = (headers) => {
 };
 
 const checkForTokens = async () => {
+  await dbDriver.setup();
   const { tokens } = await dbDriver.siteSettings_get();
   if (Array.isArray(tokens) && tokens.length === 0) {
     return false;
