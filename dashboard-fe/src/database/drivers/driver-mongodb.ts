@@ -95,7 +95,9 @@ export default class DriverMongoDB implements Driver {
     if (DriverMongoDB.isSetup || DriverMongoDB.isInSetup) {
       return false;
     }
-
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
     if (!fs.existsSync(siteSettingsPath)) {
       fs.writeFileSync(siteSettingsPath, JSON.stringify({}));
     }
@@ -293,6 +295,9 @@ export default class DriverMongoDB implements Driver {
       webhooks: [],
       tokens: [],
     };
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
     if (fs.existsSync(siteSettingsPath)) {
       try {
         settings = JSON.parse(fs.readFileSync(siteSettingsPath).toString());
