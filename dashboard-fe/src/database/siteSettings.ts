@@ -44,5 +44,5 @@ export class Webhook {
 export default class SiteSettings {
   webhooks: Webhook[] = [];
   tokens: Token[] = [];
-  id: string;
+  id?: string;
 }
