@@ -4,7 +4,7 @@ let driver = null;
 if (process.env.MONGO_URL) {
   driver = new DriverMongoDB();
 } else {
-  const DriverNedb = require('./driver-nedb')
+  const DriverNedb = require("./driver-nedb").default
   driver = new DriverNedb();
 }
 
