@@ -120,6 +120,7 @@ const WhiskerChart = React.memo((props) => {
     />
   );
 });
+WhiskerChart.displayName = "WhiskerChart";
 const ScatterChart = React.memo((props) => {
   const [ready, setReady] = useState(false);
   const [gotRef, setRef] = useState(false);
@@ -167,6 +168,7 @@ const ScatterChart = React.memo((props) => {
     />
   );
 });
+ScatterChart.displayName = "ScatterChart";
 const MultiSeriesChart = React.memo((props) => {
   const [ready, setReady] = useState(false);
   const [gotRef, setRef] = useState(false);
@@ -211,6 +213,7 @@ const MultiSeriesChart = React.memo((props) => {
     />
   );
 });
+MultiSeriesChart.displayName = "MultiSeriesChart";
 const TimeSeriesChart = React.memo((props) => {
   const [data, setData] = useState(false);
   const [gotRef, setRef] = useState(false);
@@ -290,6 +293,7 @@ const TimeSeriesChart = React.memo((props) => {
     </>
   );
 });
+TimeSeriesChart.displayName = "TimeSeriesChart";
 const UserTimingsChart = React.memo((props) => {
   const [data, setData] = useState(false);
   const [gotRef, setRef] = useState(false);
@@ -349,7 +353,7 @@ const UserTimingsChart = React.memo((props) => {
     </>
   );
 });
-
+UserTimingsChart.displayName = "UserTimingsChart";
 const link = createHttpLink({
   uri: "/api/graphql",
 });
