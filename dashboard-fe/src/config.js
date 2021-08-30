@@ -7,6 +7,11 @@ const cleanObject = (object) => {
     return { ...acc, [key]: value };
   }, {});
 };
+const baseUrl = (process.env.EXTERNAL_URL || process.env.VERCEL_URL).includes(
+  "http"
+)
+  ? process.env.EXTERNAL_URL || process.env.VERCEL_URL
+  : "https://" + (process.env.EXTERNAL_URL || process.env.VERCEL_URL);
 
 module.exports.privateConfig = !process.browser
   ? cleanObject(
@@ -16,12 +21,7 @@ module.exports.privateConfig = !process.browser
           AUTH0_CLIENT_SECRET: process.env.AUTH0_CLIENT_SECRET,
           AUTH0_BASE_URL: process.env.EXTERNAL_URL || process.env.VERCEL_URL,
           AUTH0_ISSUER_BASE_URL: process.env.AUTH0_ISSUER_BASE_URL,
-          REDIRECT_URI: new URL(
-            process.env.REDIRECT_URI,
-            process.env.EXTERNAL_URL || process.env.VERCEL_URL.includes("http")
-              ? process.env.VERCEL_URL
-              : "https://" + process.env.VERCEL_URL
-          ).href,
+          REDIRECT_URI: new URL(process.env.REDIRECT_URI, baseUrl).href,
           AUTH0_SECRET: process.env.AUTH0_SECRET
             ? new Buffer.from(process.env.AUTH0_SECRET, "base64").toString(
                 "ascii"
@@ -45,12 +45,7 @@ module.exports.publicConfig = !process.browser
         {
           AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
           AUTH0_ISSUER_BASE_URL: process.env.AUTH0_ISSUER_BASE_URL,
-          REDIRECT_URI: new URL(
-            process.env.REDIRECT_URI,
-            process.env.EXTERNAL_URL || process.env.VERCEL_URL.includes("http")
-              ? process.env.VERCEL_URL
-              : "https://" + process.env.VERCEL_URL
-          ).href,
+          REDIRECT_URI: new URL(process.env.REDIRECT_URI, baseUrl).href,
           WITH_AUTH: process.env.WITH_AUTH,
           AUTH0_BASE_URL: process.env.EXTERNAL_URL || process.env.VERCEL_URL,
           EXTERNAL_URL: process.env.EXTERNAL_URL || process.env.VERCEL_URL,
