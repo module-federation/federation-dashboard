@@ -18,7 +18,9 @@ module.exports.privateConfig = !process.browser
           AUTH0_ISSUER_BASE_URL: process.env.AUTH0_ISSUER_BASE_URL,
           REDIRECT_URI: new URL(
             process.env.REDIRECT_URI,
-            process.env.EXTERNAL_URL || process.env.VERCEL_URL
+            process.env.EXTERNAL_URL || process.env.VERCEL_URL.includes("http")
+              ? process.env.VERCEL_URL
+              : "https://" + process.env.VERCEL_URL
           ).href,
           AUTH0_SECRET: process.env.AUTH0_SECRET
             ? new Buffer.from(process.env.AUTH0_SECRET, "base64").toString(
@@ -45,7 +47,9 @@ module.exports.publicConfig = !process.browser
           AUTH0_ISSUER_BASE_URL: process.env.AUTH0_ISSUER_BASE_URL,
           REDIRECT_URI: new URL(
             process.env.REDIRECT_URI,
-            process.env.EXTERNAL_URL || process.env.VERCEL_URL
+            process.env.EXTERNAL_URL || process.env.VERCEL_URL.includes("http")
+              ? process.env.VERCEL_URL
+              : "https://" + process.env.VERCEL_URL
           ).href,
           WITH_AUTH: process.env.WITH_AUTH,
           AUTH0_BASE_URL: process.env.EXTERNAL_URL || process.env.VERCEL_URL,
