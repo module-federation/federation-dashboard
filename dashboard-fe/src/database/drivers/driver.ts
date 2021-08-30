@@ -61,6 +61,6 @@ export default abstract class Driver {
   abstract user_update(user: User): Promise<Array<User>>;
   abstract user_delete(id: string): Promise<Array<User>>;
 
-  abstract siteSettings_get(): Promise<Array<SiteSettings> | null>;
+  abstract siteSettings_get(): Promise<SiteSettings>;
   abstract siteSettings_update(settings: SiteSettings): Promise<SiteSettings>;
 }

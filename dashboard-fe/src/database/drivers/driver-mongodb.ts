@@ -304,7 +304,7 @@ export default class DriverMongoDB implements Driver {
     return this.usersTable.delete(id);
   }
 
-  async siteSettings_get(): Promise<Array<SiteSettings> | null> {
+  async siteSettings_get(): Promise<Array<SiteSettings> | any> {
     let settings = {
       webhooks: [],
       tokens: [],
