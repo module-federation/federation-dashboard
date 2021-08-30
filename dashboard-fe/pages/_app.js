@@ -1,4 +1,7 @@
 import React from "react";
+if (!process.browser) {
+  React.useLayoutEffect = React.useEffect;
+}
 import "cross-fetch/polyfill";
 import { ApolloProvider } from "@apollo/client";
 import Head from "next/head";

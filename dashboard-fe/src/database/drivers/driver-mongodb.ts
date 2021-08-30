@@ -81,6 +81,7 @@ export default class DriverMongoDB implements Driver {
   private groupsTable: MongoDriver<Group> = null;
   private usersTable: MongoDriver<User> = null;
   private siteSettings: MongoDriver<SiteSettings> = null;
+  private connectionSetup: Promise<any>;
   private static isSetup = false;
   private static isInSetup = false;
   private client: MongoClient = null;
@@ -93,53 +94,58 @@ export default class DriverMongoDB implements Driver {
   }
 
   async setup() {
-    if (DriverMongoDB.isSetup || DriverMongoDB.isInSetup) {
+    if (DriverMongoDB.isSetup) {
       return false;
     }
 
-    DriverMongoDB.isInSetup = true;
     let connectionSetupResolve;
-    let connectionSetup = new Promise((resolve) => {
+    this.connectionSetup = new Promise((resolve) => {
       connectionSetupResolve = resolve;
     });
+
+    if(DriverMongoDB.isInSetup) {
+      return this.connectionSetup
+    }
+
+    DriverMongoDB.isInSetup = true;
     this.client.connect(async (err) => {
-      if (err) {
-        console.error("Error during MongoDB database startup");
-        console.error(err.toString());
-        process.exit(1);
-      }
-      console.log(`Connected successfully to server: ${mongoDB}`);
+        if (err) {
+          console.error("Error during MongoDB database startup");
+          console.error(err.toString());
+          process.exit(1);
+        }
+        console.log(`Connected successfully to server: ${mongoDB}`);
 
-      const db = this.client.db(mongoDB);
+        const db = this.client.db(mongoDB);
 
-      this.applicationTable = new MongoDriver<Application>(
-        db.collection("applications")
-      );
-      this.applicationVersionsTable = new MongoDriver<ApplicationVersion>(
-        db.collection("applicationVersions")
-      );
-      this.metricsTable = new MongoDriver<MetricValue>(
-        db.collection("metrics")
-      );
-      this.groupsTable = new MongoDriver<Group>(db.collection("groups"));
-      this.usersTable = new MongoDriver<User>(db.collection("users"));
-      this.siteSettings = new MongoDriver<SiteSettings>(
-        db.collection("siteSettings")
-      );
+        this.applicationTable = new MongoDriver<Application>(
+          db.collection("applications")
+        );
+        this.applicationVersionsTable = new MongoDriver<ApplicationVersion>(
+          db.collection("applicationVersions")
+        );
+        this.metricsTable = new MongoDriver<MetricValue>(
+          db.collection("metrics")
+        );
+        this.groupsTable = new MongoDriver<Group>(db.collection("groups"));
+        this.usersTable = new MongoDriver<User>(db.collection("users"));
+        this.siteSettings = new MongoDriver<SiteSettings>(
+          db.collection("siteSettings")
+        );
 
-      const defaultGroup = await this.group_find("default");
-      if (!defaultGroup) {
-        await this.group_update({
-          id: "default",
-          name: "default",
-          metadata: [],
-        });
-      }
+        const defaultGroup = await this.group_find("default");
+        if (!defaultGroup) {
+          await this.group_update({
+            id: "default",
+            name: "default",
+            metadata: [],
+          });
+        }
 
-      DriverMongoDB.isSetup = true;
-      connectionSetupResolve();
-    });
-    return connectionSetup;
+        DriverMongoDB.isSetup = true;
+        connectionSetupResolve();
+      });
+    return this.connectionSetup;
   }
 
   async application_find(id: string): Promise<Application | null> {
