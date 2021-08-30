@@ -85,13 +85,17 @@ export default class DriverMongoDB implements Driver {
   private client: MongoClient = null;
 
   constructor() {
-    this.client = new MongoClient(mongoURL);
+    this.client = new MongoClient(mongoURL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
   }
 
   async setup() {
     if (DriverMongoDB.isSetup || DriverMongoDB.isInSetup) {
       return false;
     }
+
     DriverMongoDB.isInSetup = true;
 
     this.client.connect(async (err) => {
@@ -130,15 +134,15 @@ export default class DriverMongoDB implements Driver {
   }
 
   async application_find(id: string): Promise<Application | null> {
-    return this.applicationTable.find(id);
+    return await this.applicationTable.find(id);
   }
   async application_findInGroups(
     groups: string[]
   ): Promise<Array<Application> | null> {
-    return this.applicationTable.search({ group: { $in: groups } });
+    return await this.applicationTable.search({ group: { $in: groups } });
   }
   async application_getMetrics(id: string): Promise<Array<MetricValue> | null> {
-    return this.metricsTable.search({
+    return await this.metricsTable.search({
       type: "application",
       id,
     });
