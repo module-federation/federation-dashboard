@@ -125,6 +125,7 @@ const Home = () => {
             <a
               href="https://www.npmjs.com/package/@module-federation/dashboard-plugin"
               target="_blank"
+              rel="noreferrer"
             >
               @module-federation/dashboard-plugin
             </a>

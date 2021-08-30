@@ -216,7 +216,7 @@ const Metadata = ({ metadata }) => (
           <TableCell>{name}</TableCell>
           <TableCell>
             {isLink(value) ? (
-              <a href={value} target="_blank">
+              <a href={value} target="_blank" rel="noreferrer">
                 {value}
               </a>
             ) : (
