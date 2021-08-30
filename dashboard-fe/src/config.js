@@ -14,9 +14,12 @@ module.exports.privateConfig = !process.browser
         {
           AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
           AUTH0_CLIENT_SECRET: process.env.AUTH0_CLIENT_SECRET,
-          AUTH0_BASE_URL: process.env.EXTERNAL_URL,
+          AUTH0_BASE_URL: process.env.EXTERNAL_URL || process.env.VERCEL_URL,
           AUTH0_ISSUER_BASE_URL: process.env.AUTH0_ISSUER_BASE_URL,
-          REDIRECT_URI: process.env.REDIRECT_URI,
+          REDIRECT_URI: new URL(
+            process.env.REDIRECT_URI,
+            process.env.EXTERNAL_URL || process.env.VERCEL_URL
+          ).href,
           AUTH0_SECRET: process.env.AUTH0_SECRET
             ? new Buffer.from(process.env.AUTH0_SECRET, "base64").toString(
                 "ascii"
@@ -40,9 +43,12 @@ module.exports.publicConfig = !process.browser
         {
           AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
           AUTH0_ISSUER_BASE_URL: process.env.AUTH0_ISSUER_BASE_URL,
-          REDIRECT_URI: process.env.REDIRECT_URI,
+          REDIRECT_URI: new URL(
+            process.env.REDIRECT_URI,
+            process.env.EXTERNAL_URL || process.env.VERCEL_URL
+          ).href,
           WITH_AUTH: process.env.WITH_AUTH,
-          AUTH0_BASE_URL: process.env.EXTERNAL_URL,
+          AUTH0_BASE_URL: process.env.EXTERNAL_URL || process.env.VERCEL_URL,
           EXTERNAL_URL: process.env.EXTERNAL_URL || process.env.VERCEL_URL,
           EXTERNAL_API_ROUTE: process.env.EXTERNAL_API_ROUTE,
         }
