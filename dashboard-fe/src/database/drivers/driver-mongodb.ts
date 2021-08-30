@@ -96,6 +96,10 @@ export default class DriverMongoDB implements Driver {
       return false;
     }
 
+    if (!fs.existsSync(siteSettingsPath)) {
+      fs.writeFileSync(siteSettingsPath, JSON.stringify({}));
+    }
+
     DriverMongoDB.isInSetup = true;
 
     this.client.connect(async (err) => {
