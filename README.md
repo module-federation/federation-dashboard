@@ -13,7 +13,7 @@ Trying it out on the test data
 Step 1:
 
 ```shell script
-> yarn install --no-lockfile
+> yarn install
 ```
 
 Step 2:
