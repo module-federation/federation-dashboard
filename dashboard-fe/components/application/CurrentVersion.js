@@ -516,7 +516,7 @@ export const CurrentVersion = observer(
               {name}
             </Typography>
           </Grid>
-          {store.showVersionManagement && (
+          {store.showVersionManagement ? (
             <Grid item xs={3}>
               <Typography variant="h6" className={classes.title}>
                 <>
@@ -537,6 +537,8 @@ export const CurrentVersion = observer(
                 </>
               </Typography>
             </Grid>
+          ) : (
+            <Grid item xs={3} />
           )}
           <Grid item xs={1}>
             <Tooltip title="Delete Application">
