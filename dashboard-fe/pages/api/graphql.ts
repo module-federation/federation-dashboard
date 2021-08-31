@@ -26,6 +26,7 @@ const typeDefs = gql`
       application: String!
       settings: ApplicationSettingsInput!
     ): ApplicationSettings
+    deleteApplication(group: String!, application: String!): DeleteApplication
     updateGroupSettings(
       group: String!
       settings: GroupSettingsInput!
@@ -239,6 +240,11 @@ const typeDefs = gql`
     trackedURLs: [TrackedURL]
   }
 
+  type DeleteApplication {
+    group: String!
+    application: String!
+  }
+
   type Group {
     id: String!
     name: String!
@@ -311,6 +317,10 @@ const resolvers = {
       app.settings = settings;
       await dbDriver.application_update(app);
       return settings;
+    },
+    deleteApplication: async (_: any, { group, application }: any) => {
+      await dbDriver.setup();
+      dbDriver.application_delete(application);
     },
     updateGroupSettings: async (_: any, { group, settings }: any) => {
       await dbDriver.setup();
