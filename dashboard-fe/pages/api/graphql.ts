@@ -296,7 +296,8 @@ const resolvers = {
         return dbDriver.group_findAll();
       }
     },
-    siteSettings: () => {
+    siteSettings: async () => {
+      await dbDriver.setup();
       return dbDriver.siteSettings_get();
     },
   },
@@ -540,6 +541,7 @@ const fetchToken = (headers) => {
 };
 
 const checkForTokens = async () => {
+  await dbDriver.setup();
   const { tokens } = await dbDriver.siteSettings_get();
   if (Array.isArray(tokens) && tokens.length === 0) {
     return false;
@@ -547,12 +549,13 @@ const checkForTokens = async () => {
     return tokens;
   }
 };
+
 async function handler(req: any, res: any) {
   await runMiddleware(req, res, allowCors);
   // @ts-expect-error ts-migrate(2554) FIXME: Expected 1 arguments, but got 0.
   let session: { noAuth: boolean; user: {} } = false;
-  if (process.env.NODE_ENV === "production") {
-    session = await auth0.getSession(req);
+  if (process.env.WITH_AUTH) {
+    session = auth0.getSession(req, res);
   }
   const tokens = await checkForTokens();
 

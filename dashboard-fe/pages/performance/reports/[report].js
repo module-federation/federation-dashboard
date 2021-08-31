@@ -9,6 +9,8 @@ import {
   generateWhiskerChartData,
   generateMultiSeriesChartData,
   generateTimeSeriesScatterChartData,
+  generateUserTimeingsScatterChartData,
+  generateUserTimings,
   removeMeta,
   makeIDfromURL,
 } from "../../../lighthouse/utils";
@@ -118,6 +120,7 @@ const WhiskerChart = React.memo((props) => {
     />
   );
 });
+WhiskerChart.displayName = "WhiskerChart";
 const ScatterChart = React.memo((props) => {
   const [ready, setReady] = useState(false);
   const [gotRef, setRef] = useState(false);
@@ -165,6 +168,7 @@ const ScatterChart = React.memo((props) => {
     />
   );
 });
+ScatterChart.displayName = "ScatterChart";
 const MultiSeriesChart = React.memo((props) => {
   const [ready, setReady] = useState(false);
   const [gotRef, setRef] = useState(false);
@@ -209,6 +213,7 @@ const MultiSeriesChart = React.memo((props) => {
     />
   );
 });
+MultiSeriesChart.displayName = "MultiSeriesChart";
 const TimeSeriesChart = React.memo((props) => {
   const [data, setData] = useState(false);
   const [gotRef, setRef] = useState(false);
@@ -288,7 +293,67 @@ const TimeSeriesChart = React.memo((props) => {
     </>
   );
 });
+TimeSeriesChart.displayName = "TimeSeriesChart";
+const UserTimingsChart = React.memo((props) => {
+  const [data, setData] = useState(false);
+  const [gotRef, setRef] = useState(false);
+  const timeSeriesScatterChartOptions = {
+    height: typeof window === "object" ? window.innerHeight : null,
+    theme: "dark2",
+    title: {
+      text: "User Timings",
+    },
+    axisX: {
+      title: "Date",
+      labelFormatter: function (e) {
+        const { CanvasJS } = require("canvasjs-react-charts");
 
+        return CanvasJS.formatDate(e.value, "DD MMM");
+      },
+    },
+    axisY: {
+      title: "Timing",
+      suffix: "ms",
+      includeZero: false,
+      // logarithmic: true,
+      // interval: 0.2,
+      minimum: 500,
+    },
+    legend: {
+      cursor: "pointer",
+      itemclick: (e) => {
+        props.toggleDataSeries(e);
+        gotRef.render();
+      },
+    },
+
+    data: data,
+  };
+
+  useEffect(() => {
+    const timeSeriesScatterData = generateUserTimeingsScatterChartData(
+      props.multiSeriesChartData
+    );
+
+    setData(timeSeriesScatterData);
+  }, []);
+  if (!data) {
+    return null;
+  }
+
+  return (
+    <>
+      <CanvasJSChart
+        options={timeSeriesScatterChartOptions}
+        onRef={(ref) => {
+          createRef(ref);
+          setRef(ref);
+        }}
+      />
+    </>
+  );
+});
+UserTimingsChart.displayName = "UserTimingsChart";
 const link = createHttpLink({
   uri: "/api/graphql",
 });
@@ -575,6 +640,11 @@ class Report extends React.Component {
             multiSeriesChartData={this.props.multiSeriesChartData}
             toggleDataSeries={this.toggleDataSeries}
           />
+
+          <UserTimingsChart
+            multiSeriesChartData={this.props.userTimingsData}
+            toggleDataSeries={this.toggleDataSeries}
+          />
         </div>
       </>
     );
@@ -586,16 +656,22 @@ Report.getInitialProps = async ({ query }) => {
     hostname + "api/get-report?report=" + query.report
   ).then((res) => res.json());
 
-  const [scatterChartData, whiskerChartData, multiSeriesChartData] =
-    await Promise.all([
-      generateScatterChartData(report),
-      generateWhiskerChartData(report),
-      generateMultiSeriesChartData(report),
-    ]);
+  const [
+    scatterChartData,
+    whiskerChartData,
+    multiSeriesChartData,
+    userTimingsData,
+  ] = await Promise.all([
+    generateScatterChartData(report),
+    generateWhiskerChartData(report),
+    generateMultiSeriesChartData(report),
+    generateUserTimings(report),
+  ]);
   return {
     scatterChartData,
     whiskerChartData,
     multiSeriesChartData,
+    userTimingsData: userTimingsData?.Latest,
     meta,
     appKeys: Object.keys(report),
     query,

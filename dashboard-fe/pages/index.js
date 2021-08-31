@@ -63,7 +63,6 @@ const Home = () => {
       group: store.group,
     },
   });
-  console.log(data);
   const [currentTab, currentTabSet] = React.useState(0);
   const classes = useHomeStyles();
 
@@ -126,6 +125,7 @@ const Home = () => {
             <a
               href="https://www.npmjs.com/package/@module-federation/dashboard-plugin"
               target="_blank"
+              rel="noreferrer"
             >
               @module-federation/dashboard-plugin
             </a>

@@ -182,8 +182,8 @@ export const VersionComparison = ({ group, environment, name }: any) => {
           </TableCell>
         </TableRow>
         {uniqueModules.map((module) => (
-          <TableRow>
-            <TableCell key={["module", module].join("")}>
+          <TableRow key={["module", module].join("")}>
+            <TableCell>
               <ModuleLink group={group} application={name} module={module}>
                 {module}
               </ModuleLink>
@@ -210,8 +210,8 @@ export const VersionComparison = ({ group, environment, name }: any) => {
           </TableCell>
         </TableRow>
         {uniqueConsumes.map((module) => (
-          <TableRow>
-            <TableCell key={["consumes", module].join("")}>
+          <TableRow key={["consumes", module].join("")}>
+            <TableCell>
               <ModuleLink
                 group={group}
                 application={consumeApp[module]}
@@ -241,8 +241,8 @@ export const VersionComparison = ({ group, environment, name }: any) => {
           </TableCell>
         </TableRow>
         {uniqueOverrides.map((module: any) => (
-          <TableRow>
-            <TableCell key={["override", module].join("")}>{module}</TableCell>
+          <TableRow key={["override", module].join("")}>
+            <TableCell>{module}</TableCell>
             {versions.map(({ version, dependencies }: any) => (
               <TableCell
                 key={["override", version, module].join("")}
@@ -270,10 +270,8 @@ export const VersionComparison = ({ group, environment, name }: any) => {
           </TableCell>
         </TableRow>
         {uniqueDependencies.map((module: any) => (
-          <TableRow>
-            <TableCell key={["dependency", module].join("")}>
-              {module}
-            </TableCell>
+          <TableRow key={["dependency", module].join("")}>
+            <TableCell>{module}</TableCell>
             {versions.map(({ version, dependencies }: any) => (
               <TableCell
                 key={["dependency", version, module].join("")}

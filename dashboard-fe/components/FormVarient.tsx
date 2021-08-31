@@ -25,7 +25,7 @@ export default function Form(props) {
         {props.appKeys &&
           props.appKeys.map((i) => {
             return (
-              <ListItem>
+              <ListItem key={i}>
                 {i}
                 <IconButton onClick={() => props.onDelete(i)} aria-label={i}>
                   <Delete />

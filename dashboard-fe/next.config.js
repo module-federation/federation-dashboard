@@ -1,18 +1,23 @@
 const webpack = require("webpack");
-const path = require("path");
 let merge = require("webpack-merge");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
-  webpack5: true,
   images: {
     disableStaticImages: true,
+  },
+  experimental: {
+    pageDataCollectionTimeout: 6000,
+    staticPageGenerationTimeout: 6000,
+  },
+  env: {
+    VERCEL: process.env.VERCEL,
+    VERCEL_URL: process.env.VERCEL_URL,
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
     if (isServer) {
       config.plugins.push(
-        // new BundleAnalyzerPlugin(),
         new webpack.container.ModuleFederationPlugin({
           name: "dashboard",
           library: { type: config.output.libraryTarget, name: "dashboard" },

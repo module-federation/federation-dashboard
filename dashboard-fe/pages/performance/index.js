@@ -223,10 +223,13 @@ PerformanceWrapper.getInitialProps = async ({ req, res }) => {
 
   if (!process.browser) {
     const runQuery = async (url) => {
-      const fetch = __non_webpack_require__("node-fetch");
-      const gql = __non_webpack_require__("graphql-tag");
-      const { ApolloClient, createHttpLink, InMemoryCache } =
-        __non_webpack_require__("@apollo/client");
+      const fetchP = await import("node-fetch");
+      const fetch = fetchP.default || fetchP;
+      const gqlP = await import("graphql-tag");
+      const gql = gqlP.default || gqlP;
+      const { ApolloClient, createHttpLink, InMemoryCache } = await import(
+        "@apollo/client"
+      );
       const cache = new InMemoryCache({ addTypename: false });
       const link = createHttpLink({
         uri: url + "api/graphql",
@@ -270,5 +273,6 @@ PerformanceWrapper.getInitialProps = async ({ req, res }) => {
     const data = await runQuery(url);
     return { groupData: data };
   }
+  return {};
 };
 export default PerformanceWrapper;

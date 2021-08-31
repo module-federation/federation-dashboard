@@ -34,8 +34,8 @@ const getReport = async (safePath) => {
 };
 const getReportWorker = async (safePath) => {
   if (!process.browser) {
-    const fs = __non_webpack_require__("fs");
-    const path = __non_webpack_require__("path");
+    const fs = await import(/* webpackIgnore: true */ "fs");
+    const path = await import(/* webpackIgnore: true */ "path");
 
     function getData(fileName, type) {
       return fs.promises.readFile(fileName, { encoding: type });
@@ -108,25 +108,40 @@ const generateScatterChartProcessor = (data) => {
 
 const createWorker = async (data, request, moduleExport) => {
   if (!process.browser) {
-    const path = __non_webpack_require__("path");
+    console.log("create worker");
+    const path = await import(/* webpackIgnore: true */ "path");
+    const fs = await import(/* webpackIgnore: true */ "fs");
+    console.log("async require fs,path");
     // could also make this an external, then just use "require"
-    const initRemote = __non_webpack_require__(
-      // needs webpack runtime to get __webpack_require__
-      // externally require the worker code with node.js This could be inline,
-      // but i decided to move the bootstapping code somewhere else. Technically if this were not next.js
-      // we should be able to import('dashboard/utils')
-      // workers/index.js was in this file, but its cleaner to just move the boilerplate
-      path.join(process.cwd(), "workers/index.js")
-    );
+    const initRemote = (
+      await import(
+        /* webpackIgnore: true */
+        // needs webpack runtime to get __webpack_require__
+        // externally require the worker code with node.js This could be inline,
+        // but i decided to move the bootstapping code somewhere else. Technically if this were not next.js
+        // we should be able to import('dashboard/utils')
+        // workers/index.js was in this file, but its cleaner to just move the boilerplate
+        path.join(process.cwd(), "workers/index.js")
+      )
+    ).default;
+    console.log("async require remote container", initRemote);
 
     // essentially do what webpack is supposed to do in a proper environment.
     // attach the remote container, initialize share scopes.
     // The webpack parser does something similer when you require(app1/thing), so make a RemoteModule
+    let remoteLocation;
+    if (
+      fs.existsSync(
+        path.join(process.cwd(), ".next/server/static/runtime/remoteEntry.js")
+      )
+    ) {
+      remoteLocation = ".next/server/static/runtime/remoteEntry.js";
+    } else {
+      remoteLocation = ".next/server/chunks/static/runtime/remoteEntry.js";
+    }
+
     const federatedRequire = await initRemote(
-      path.join(
-        process.cwd(),
-        ".next/server/chunks/static/runtime/remoteEntry.js"
-      ),
+      path.join(process.cwd(), remoteLocation),
       () => ({
         initSharing: __webpack_init_sharing__,
         shareScopes: __webpack_share_scopes__,
@@ -158,6 +173,44 @@ const generateScatterChartData = async (data) => {
   return {};
 };
 
+const generateUserTimeingsScatterChartData = (data) => {
+  if (!data[0].timings) {
+    return null;
+  }
+  let scatterObject = {};
+  data.forEach((item) => {
+    item.timings.reduce((acc, timing) => {
+      const obj = {
+        type: "spline",
+        name: timing.name,
+        showInLegend: true,
+        // markerType: "dot",
+        dataPoints: [],
+        xValueType: "dateTime",
+      };
+      acc[timing.name] = obj;
+      return acc;
+    }, scatterObject);
+  });
+  data.map((item) => {
+    item.timings.map((timing) => {
+      if (scatterObject?.[timing.name]?.dataPoints) {
+        scatterObject[timing.name].dataPoints.push({
+          x: new Date(item.fetchTime).getTime(),
+          y: parseInt(toFixed(timing.duration)),
+        });
+      }
+    });
+  });
+  return Object.values(scatterObject)
+    .filter((mappedObject) => mappedObject?.dataPoints?.[0])
+    .map((mappedObject) => {
+      mappedObject.dataPoints = mappedObject.dataPoints.sort(function (a, b) {
+        return b.x - a.x;
+      });
+      return mappedObject;
+    });
+};
 const generateTimeSeriesScatterChartData = (data) => {
   const scatterObject = [
     "first-contentful-paint",
@@ -213,7 +266,6 @@ const generateTimeSeriesScatterChartData = (data) => {
 
 const generateWhiskerChartDataProcessor = (data) => {
   return Object.entries(data).map(([group, results]) => {
-    // const generateColor = randomColor();
     const obj = {
       type: "boxAndWhisker",
       name: group,
@@ -374,7 +426,27 @@ const generateMultiSeriesChartData = (data) => {
   }
   return {};
 };
-
+const generateUserTimings = (data) => {
+  return Promise.resolve(
+    Object.entries(data).reduce((acc, [group, results]) => {
+      acc[group] = results.reduce((acc1, result) => {
+        const res = {};
+        res.fetchTime = result.fetchTime;
+        res.timings = result.audits["user-timings"].details.items.map(
+          (detail) => {
+            return {
+              name: detail.name,
+              duration: detail.duration || detail.startTime,
+            };
+          }
+        );
+        acc1.push(res);
+        return acc1;
+      }, []);
+      return acc;
+    }, {})
+  );
+};
 const makeIDfromURL = (url) => {
   const urlObj = new URL(url);
   let id = urlObj.host.replace("www.", "");
@@ -401,10 +473,12 @@ module.exports = {
   toFixed,
   cache,
   pool,
+  generateUserTimeingsScatterChartData,
   generateTimeSeriesScatterChartData,
   generateScatterChartProcessor,
   generateWhiskerChartDataProcessor,
   generateMultiSeriesChartProcessor,
   getReport,
   getReportWorker,
+  generateUserTimings,
 };

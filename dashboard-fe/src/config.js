@@ -7,6 +7,14 @@ const cleanObject = (object) => {
     return { ...acc, [key]: value };
   }, {});
 };
+let baseUrl;
+if (!process.browser) {
+  baseUrl = (process.env.EXTERNAL_URL || process.env.VERCEL_URL).includes(
+    "http"
+  )
+    ? process.env.EXTERNAL_URL || process.env.VERCEL_URL
+    : "https://" + (process.env.EXTERNAL_URL || process.env.VERCEL_URL);
+}
 
 module.exports.privateConfig = !process.browser
   ? cleanObject(
@@ -14,23 +22,18 @@ module.exports.privateConfig = !process.browser
         {
           AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
           AUTH0_CLIENT_SECRET: process.env.AUTH0_CLIENT_SECRET,
-          AUTH0_SCOPE: process.env.AUTH0_SCOPE,
-          AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
-          REDIRECT_URI: process.env.REDIRECT_URI,
-          POST_LOGOUT_REDIRECT_URI: process.env.POST_LOGOUT_REDIRECT_URI,
-          SESSION_COOKIE_SECRET: process.env.SESSION_COOKIE_SECRET
-            ? new Buffer.from(
-                process.env.SESSION_COOKIE_SECRET,
-                "base64"
-              ).toString("ascii")
+          AUTH0_BASE_URL: baseUrl,
+          AUTH0_ISSUER_BASE_URL: process.env.AUTH0_ISSUER_BASE_URL,
+          AUTH0_SECRET: process.env.AUTH0_SECRET
+            ? new Buffer.from(process.env.AUTH0_SECRET, "base64").toString(
+                "ascii"
+              )
             : undefined,
-          SESSION_COOKIE_LIFETIME: 60 * 60 * 8,
           WITH_AUTH: process.env.WITH_AUTH,
           VERSION_MANAGER: process.env.VERSION_MANAGER,
           PAGESPEED_KEY: process.env.PAGESPEED_KEY,
           USE_CLOUD: process.env.USE_CLOUD,
-          EXTERNAL_URL:
-            process.env.EXTERNAL_URL || "http://mf-dash.ddns.net:3000/",
+          EXTERNAL_URL: baseUrl,
         },
         require("dotenv").config().parsed || {}
       )
@@ -43,13 +46,10 @@ module.exports.publicConfig = !process.browser
         {},
         {
           AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
-          AUTH0_SCOPE: process.env.AUTH0_SCOPE,
-          AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
-          REDIRECT_URI: process.env.REDIRECT_URI,
+          AUTH0_ISSUER_BASE_URL: process.env.AUTH0_ISSUER_BASE_URL,
           WITH_AUTH: process.env.WITH_AUTH,
-          POST_LOGOUT_REDIRECT_URI: process.env.POST_LOGOUT_REDIRECT_URI,
-          EXTERNAL_URL:
-            process.env.EXTERNAL_URL || "http://mf-dash.ddns.net:3000/",
+          AUTH0_BASE_URL: baseUrl,
+          EXTERNAL_URL: baseUrl,
           EXTERNAL_API_ROUTE: process.env.EXTERNAL_API_ROUTE,
         }
       )
@@ -57,5 +57,5 @@ module.exports.publicConfig = !process.browser
   : JSON.parse(
       document.getElementById("publicConfig")
         ? document.getElementById("publicConfig").innerHTML
-        : {}
+        : "{}"
     );

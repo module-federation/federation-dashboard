@@ -15,13 +15,8 @@ import SiteSettings, { schema as siteSettingsSchema } from "../siteSettings";
 
 import Driver from "./driver";
 
-const mongoURL =
-  process.env.MONGO_URL ||
-  "mongodb://127.0.0.1:52276/d0c89fc0-1d3d-4f62-a334-3f9734745778?";
+const mongoURL = process.env.MONGO_URL;
 const mongoDB = process.env.MONGO_DB || "fmdashboard";
-
-const dir = process.env.DATA_DIR || path.join(process.cwd(), "./.fm-dashboard");
-const siteSettingsPath = path.join(dir, "/siteSettings.json");
 
 class MongoDriver<T> {
   constructor(private collection: Collection) {}
@@ -80,20 +75,34 @@ export default class DriverMongoDB implements Driver {
   private metricsTable: MongoDriver<MetricValue> = null;
   private groupsTable: MongoDriver<Group> = null;
   private usersTable: MongoDriver<User> = null;
+  private siteSettings: MongoDriver<SiteSettings> = null;
+  private connectionSetup: Promise<any>;
   private static isSetup = false;
   private static isInSetup = false;
   private client: MongoClient = null;
 
   constructor() {
-    this.client = new MongoClient(mongoURL);
+    this.client = new MongoClient(mongoURL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
   }
 
   async setup() {
-    if (DriverMongoDB.isSetup || DriverMongoDB.isInSetup) {
+    if (DriverMongoDB.isSetup) {
       return false;
     }
-    DriverMongoDB.isInSetup = true;
 
+    let connectionSetupResolve;
+    this.connectionSetup = new Promise((resolve) => {
+      connectionSetupResolve = resolve;
+    });
+
+    if (DriverMongoDB.isInSetup) {
+      return this.connectionSetup;
+    }
+
+    DriverMongoDB.isInSetup = true;
     this.client.connect(async (err) => {
       if (err) {
         console.error("Error during MongoDB database startup");
@@ -115,6 +124,9 @@ export default class DriverMongoDB implements Driver {
       );
       this.groupsTable = new MongoDriver<Group>(db.collection("groups"));
       this.usersTable = new MongoDriver<User>(db.collection("users"));
+      this.siteSettings = new MongoDriver<SiteSettings>(
+        db.collection("siteSettings")
+      );
 
       const defaultGroup = await this.group_find("default");
       if (!defaultGroup) {
@@ -126,19 +138,23 @@ export default class DriverMongoDB implements Driver {
       }
 
       DriverMongoDB.isSetup = true;
+      connectionSetupResolve();
     });
+    return this.connectionSetup;
   }
 
   async application_find(id: string): Promise<Application | null> {
-    return this.applicationTable.find(id);
+    return await this.applicationTable.find(id);
   }
+
   async application_findInGroups(
     groups: string[]
   ): Promise<Array<Application> | null> {
-    return this.applicationTable.search({ group: { $in: groups } });
+    return await this.applicationTable.search({ group: { $in: groups } });
   }
+
   async application_getMetrics(id: string): Promise<Array<MetricValue> | null> {
-    return this.metricsTable.search({
+    return await this.metricsTable.search({
       type: "application",
       id,
     });
@@ -155,11 +171,13 @@ export default class DriverMongoDB implements Driver {
       ...metric,
     });
   }
+
   async application_update(application: Application): Promise<null> {
     Joi.assert(application, applicationSchema);
     bus.publish("updateApplication", application);
     return this.applicationTable.update({ id: application.id }, application);
   }
+
   async application_delete(id: string): Promise<null> {
     return this.applicationTable.delete(id);
   }
@@ -227,6 +245,7 @@ export default class DriverMongoDB implements Driver {
     const id = [applicationId, environment, version].join(":");
     return this.applicationVersionsTable.delete(id);
   }
+
   async group_getMetrics(id: string): Promise<Array<MetricValue> | null> {
     return this.metricsTable.search({
       type: "group",
@@ -242,6 +261,7 @@ export default class DriverMongoDB implements Driver {
   async group_find(id: string): Promise<Group> {
     return this.groupsTable.find(id);
   }
+
   async group_findByName(name: string): Promise<Group> {
     return this.groupsTable
       .search({ name })
@@ -265,40 +285,44 @@ export default class DriverMongoDB implements Driver {
   async user_find(id: string): Promise<User> {
     return this.usersTable.find(id);
   }
+
   async user_findByEmail(email: string): Promise<User> {
     const found = await this.usersTable.search({ email });
     return Promise.resolve(found.length > 0 ? found[0] : null);
   }
+
   async user_findAll(): Promise<Array<User>> {
     return this.usersTable.search({});
   }
+
   async user_update(user: User): Promise<Array<User>> {
     Joi.assert(user, userSchema);
     return this.usersTable.update({ id: user.id }, user);
   }
+
   async user_delete(id: string): Promise<Array<User>> {
     return this.usersTable.delete(id);
   }
 
-  async siteSettings_get(): Promise<SiteSettings> {
+  async siteSettings_get(): Promise<Array<SiteSettings> | any> {
     let settings = {
       webhooks: [],
       tokens: [],
+      id: "siteSettings",
     };
-    if (fs.existsSync(siteSettingsPath)) {
-      try {
-        settings = JSON.parse(fs.readFileSync(siteSettingsPath).toString());
-      } catch (e) {
-        console.error(e);
-      }
-    } else {
-      fs.writeFileSync(siteSettingsPath, JSON.stringify(settings));
+    // console.log(this.siteSettings.count())
+    if (!(await this.siteSettings.search({ id: "siteSettings" }))) {
+      await this.siteSettings.update({ id: "siteSettings" }, settings);
     }
-    return Promise.resolve(settings);
+
+    return this.siteSettings.search({ id: "siteSettings" });
   }
+
   async siteSettings_update(settings: SiteSettings): Promise<SiteSettings> {
     Joi.assert(settings, siteSettingsSchema);
-    fs.writeFileSync(siteSettingsPath, JSON.stringify(settings));
-    return Promise.resolve(settings);
+    return this.siteSettings.update(
+      { id: "siteSettings" },
+      { id: "siteSettings", ...settings }
+    );
   }
 }

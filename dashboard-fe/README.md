@@ -84,12 +84,10 @@ create an env file in ./ (the root) of this directory (dashboard-fe)
 
 ```
 # Auth0
-AUTH0_CLIENT_ID=EnterHEre
-AUTH0_CLIENT_SECRET=EnterHEre
-AUTH0_DOMAIN=EnterHEre #federation-dashboard.us.auth0.com
-REDIRECT_URI=http://localhost:3000/api/callback
-POST_LOGOUT_REDIRECT_URI=http://localhost:3000
-SESSION_COOKIE_SECRET=EnterHEre
+AUTH0_CLIENT_ID=enterMe
+AUTH0_CLIENT_SECRET=enterMe
+AUTH0_ISSUER_BASE_URL=enterMe
+AUTH0_SECRET=enterMe
 #
 ## Feature Flags
 WITH_AUTH=false
