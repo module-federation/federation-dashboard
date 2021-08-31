@@ -494,6 +494,14 @@ export const CurrentVersion = observer(
         },
       });
     };
+    const deleteApplicationHandler = () => {
+      deleteApplication({
+        variables: {
+          group: store.group,
+          application: name,
+        },
+      });
+    };
 
     const dependencies = application.dependencies.filter(
       ({ type }) => type === "dependency"

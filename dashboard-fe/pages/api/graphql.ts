@@ -26,6 +26,7 @@ const typeDefs = gql`
       application: String!
       settings: ApplicationSettingsInput!
     ): ApplicationSettings
+    deleteApplication(group: String!, application: String!): DeleteApplication
     updateGroupSettings(
       group: String!
       settings: GroupSettingsInput!
@@ -237,6 +238,11 @@ const typeDefs = gql`
 
   type GroupSettings {
     trackedURLs: [TrackedURL]
+  }
+
+  type DeleteApplication {
+    group: String!
+    application: String!
   }
 
   type Group {
