@@ -135,7 +135,7 @@ export const SET_VERSION = gql`
 export const DELETE_APPLICATION = gql`
   mutation ($group: String!, $application: String!) {
     deleteApplication(group: $group, application: $application) {
-      environment
+      group
     }
   }
 `;
@@ -486,14 +486,7 @@ export const CurrentVersion = observer(
         ],
       });
     };
-    const deleteApplicationHandler = () => {
-      deleteApplication({
-        variables: {
-          group: store.group,
-          application: name,
-        },
-      });
-    };
+
     const deleteApplicationHandler = () => {
       deleteApplication({
         variables: {

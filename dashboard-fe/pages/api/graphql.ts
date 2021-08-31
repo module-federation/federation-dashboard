@@ -318,6 +318,10 @@ const resolvers = {
       await dbDriver.application_update(app);
       return settings;
     },
+    deleteApplication: async (_: any, { group, application }: any) => {
+      await dbDriver.setup();
+      dbDriver.application_delete(application);
+    },
     updateGroupSettings: async (_: any, { group, settings }: any) => {
       await dbDriver.setup();
       const grp = await dbDriver.group_find(group);
