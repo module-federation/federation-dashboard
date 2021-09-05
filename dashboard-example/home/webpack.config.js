@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const DashboardPlugin = require("@module-federation/dashboard-plugin");
+const DashboardPlugin = require("../../dashboard-plugin/FederationDashboardPlugin");
 const clientVersion = require("../../dashboard-plugin/client-version");
+
 const {
   container: { ModuleFederationPlugin },
 } = require("webpack");
@@ -59,6 +60,7 @@ module.exports = {
     ],
   },
   plugins: [
+    // new FunctionCall(),
     new ModuleFederationPlugin({
       name: "home",
       filename: "remoteEntry.js",
