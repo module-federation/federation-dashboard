@@ -233,15 +233,11 @@ const TokenForm = ({ siteSettings }) => {
 };
 export function Settings() {
   const data = null;
-  // const { data } = useQuery(GET_SETTINGS);
   const resp = useQuery(GET_SETTINGS);
-  resp.refetch({ thing: null });
-  resp.refetch({ other: "thing" });
-  resp.refetch();
-  resp.refetch();
-  resp.refetch();
-  resp.refetch();
-  console.log(resp);
+
+  React.useEffect(()=>{
+    console.log(resp);
+  },[resp])
 
   return null;
   return (

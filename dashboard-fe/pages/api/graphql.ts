@@ -306,12 +306,12 @@ const resolvers = {
     },
     siteSettings: async (_: any, props: any, ctx: any) => {
       await dbDriver.setup();
-      if (privateConfig.WITH_AUTH) {
+      // if (privateConfig.WITH_AUTH) {
         console.log(ctx.user.email);
         const settings = await dbDriver.siteSettings_get(ctx.user.email);
         console.log("settings", settings);
-        return [{ webhooks: [], tokens: [] }];
-      }
+        return settings
+      // }
       // return dbDriver.siteSettings_get();
     },
   },
