@@ -4,16 +4,16 @@ import { Typography, Tabs, Tab, makeStyles } from "@material-ui/core";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
 import Link from "next/link";
-import { observer } from "mobx-react";
+// import { observer } from "mobx-react";
 import { get } from "lodash";
-
+import dynamic from "next/dynamic";
 import ApplicationsTable from "../components/ApplicationsTable";
 import ModuleChordChart from "../components/ModuleChordChart";
 import ModuleNodeGraph from "../components/ModuleNodeGraph";
-const ModuleUMLDiagram =
-  typeof window === "undefined"
-    ? () => <div />
-    : require("../components/ModuleUMLDiagram.tsx").default;
+const ModuleUMLDiagram = dynamic(
+  () => import("../components/ModuleUMLDiagram.tsx"),
+  { ssr: false }
+);
 import Layout from "../components/Layout";
 import store from "../src/store";
 
@@ -89,23 +89,27 @@ const Home = () => {
             {applications.length > 1 && <Tab label="Node Graph" />}
             {applications.length > 1 && <Tab label="Dependency Graph" />}
           </Tabs>
-          <div style={{ display: currentTab === 0 ? "block" : "none" }}>
-            {applications.length > 0 && (
-              <ModuleUMLDiagram
-                applications={applications}
-                size={applications.length}
-              />
-            )}
-          </div>
-          <div style={{ display: currentTab === 1 ? "block" : "none" }}>
-            <ApplicationsTable applications={applications} />
-          </div>
-          {applications.length > 1 && (
-            <div style={{ display: currentTab === 2 ? "block" : "none" }}>
+          {currentTab === 0 && (
+            <div>
+              {applications.length > 0 && (
+                <ModuleUMLDiagram
+                  applications={applications}
+                  size={applications.length}
+                />
+              )}
+            </div>
+          )}
+          {currentTab === 1 && (
+            <div>
+              <ApplicationsTable applications={applications} />
+            </div>
+          )}
+          {currentTab === 2 && applications.length > 1 && (
+            <div>
               <ModuleNodeGraph applications={applications} />
             </div>
           )}
-          {applications.length > 1 && (
+          {false && applications.length > 1 && (
             <div style={{ display: currentTab === 3 ? "block" : "none" }}>
               <ModuleChordChart applications={applications} />
             </div>
@@ -145,4 +149,4 @@ const Home = () => {
   );
 };
 
-export default observer(Home);
+export default Home;
