@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const DashboardPlugin = require("@module-federation/dashboard-plugin");
+const DashboardPlugin = require("../../dashboard-plugin/FederationDashboardPlugin");
 const clientVersion = require("../../dashboard-plugin/client-version");
+
 const {
   container: { ModuleFederationPlugin },
 } = require("webpack");
@@ -59,6 +60,7 @@ module.exports = {
     ],
   },
   plugins: [
+    // new FunctionCall(),
     new ModuleFederationPlugin({
       name: "home",
       filename: "remoteEntry.js",
@@ -100,7 +102,7 @@ module.exports = {
       publishVersion: require("./package.json").version,
       filename: "dashboard.json",
       dashboardURL:
-        "http://localhost:3000/api/update?token=29f387e1-a00d-46ea-9fd6-02ca5e97449c",
+        "https://federation-dashboard-alpha.vercel.app/api/update?token=29f387e1-a00d-46ea-9fd6-02ca5e97449c",
       versionChangeWebhook: "http://cnn.com/",
       metadata: {
         clientUrl: "http://localhost:3000",

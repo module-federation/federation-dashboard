@@ -11,6 +11,7 @@ const convertToGraph = (
     version,
     posted,
     group,
+    functionRemotes,
   },
   standalone
 ) => {
@@ -113,6 +114,39 @@ const convertToGraph = (
       };
     }
   });
+
+  // TODO move this into the main consumes loop
+  if (Array.isArray(functionRemotes)) {
+    const dynamicConsumes = Object.values(
+      functionRemotes.reduce((acc, [file, applicationID, name]) => {
+        const cleanName = name.replace("./", "");
+        const objectId = applicationID + "/" + cleanName;
+        const cleanFile = file.replace("./", "");
+        const foundExistingConsume = consumes.find((consumeObj) => {
+          return (
+            consumeObj.applicationID === applicationID &&
+            consumeObj.name === cleanName
+          );
+        });
+        if (foundExistingConsume) {
+          foundExistingConsume.usedIn.add(cleanFile);
+          return acc;
+        }
+        if (acc[objectId]) {
+          acc[objectId].usedIn.add(cleanFile);
+          return acc;
+        }
+        acc[objectId] = {
+          applicationID,
+          name: cleanName,
+          consumingApplicationID: app,
+          usedIn: new Set([cleanFile]),
+        };
+        return acc;
+      }, {})
+    );
+    consumes.push(...dynamicConsumes);
+  }
 
   const sourceUrl = metadata && metadata.source ? metadata.source.url : "";
   const remote = metadata && metadata.remote ? metadata.remote : "";

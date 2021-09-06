@@ -310,7 +310,7 @@ export default class DriverMongoDB implements Driver {
       tokens: [],
       id: "siteSettings",
     };
-    // console.log(this.siteSettings.count())
+
     if (!(await this.siteSettings.search({ id: "siteSettings" }))) {
       await this.siteSettings.update({ id: "siteSettings" }, settings);
     }
