@@ -20,7 +20,6 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 import { v4 as uuidv4 } from "uuid";
 import Layout from "../components/Layout";
 import store from "../src/store";
-import url from "native-url";
 
 const GET_SETTINGS = gql`
   {
