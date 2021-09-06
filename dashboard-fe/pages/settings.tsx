@@ -232,14 +232,8 @@ const TokenForm = ({ siteSettings }) => {
   );
 };
 export function Settings() {
-  const data = null;
-  const resp = useQuery(GET_SETTINGS);
+  const { data } = useQuery(GET_SETTINGS);
 
-  React.useEffect(()=>{
-    console.log(resp);
-  },[resp])
-
-  return null;
   return (
     <Layout>
       {data && (
