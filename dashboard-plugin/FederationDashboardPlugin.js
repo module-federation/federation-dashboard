@@ -27,7 +27,7 @@ class FederationDashboardPlugin {
    */
   constructor(options) {
     this._options = Object.assign(
-      { debug: false, filename: "dashboard.json" },
+      { debug: false, filename: "dashboard.json", useAST: false },
       options
     );
     this._dashData = null;
@@ -55,11 +55,6 @@ class FederationDashboardPlugin {
     }
     this.FederationPluginOptions.name =
       this.FederationPluginOptions.name.replace("__REMOTE_VERSION__", "");
-
-    // compiler.hooks.emit.tapAsync(PLUGIN_NAME, (compilation, callback) => {
-    //   this.parseModuleAst(compilation, callback);
-    // });
-
     compiler.hooks.thisCompilation.tap(PLUGIN_NAME, (compilation) => {
       compilation.hooks.processAssets.tapPromise(
         {
@@ -178,7 +173,9 @@ class FederationDashboardPlugin {
   processWebpackGraph(curCompiler, callback) {
     const liveStats = curCompiler.getStats();
     const stats = liveStats.toJson();
-    this.parseModuleAst(curCompiler);
+    if (this._options.useAST) {
+      this.parseModuleAst(curCompiler);
+    }
 
     // filter modules
     const modules = this.getFilteredModules(stats);

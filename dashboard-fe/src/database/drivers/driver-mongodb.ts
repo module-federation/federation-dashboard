@@ -312,9 +312,9 @@ export default class DriverMongoDB implements Driver {
       id: id ? id : "siteSettings",
     };
 
-    // if (!(await this.siteSettings.search({ id: settings.id }))) {
-    //   await this.siteSettings.update({ id: settings.id }, settings);
-    // }
+    if (!(await this.siteSettings.search({ id: "siteSettings" }))) {
+      await this.siteSettings.update({ id: "siteSettings" }, settings);
+    }
 
     const siteSetting = await this.siteSettings.search({ id: settings.id });
 
