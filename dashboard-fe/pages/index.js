@@ -109,8 +109,8 @@ const Home = () => {
               <ModuleNodeGraph applications={applications} />
             </div>
           )}
-          {false && applications.length > 1 && (
-            <div style={{ display: currentTab === 3 ? "block" : "none" }}>
+          {currentTab === 3 && applications.length > 1 && (
+            <div>
               <ModuleChordChart applications={applications} />
             </div>
           )}
