@@ -19,6 +19,6 @@
     "@module-federation/dashboard-plugin": "../dashboard-plugin"
   },
   "devDependencies": {
-    "concurrently": "^6.2.1"
+    "concurrently": "6.2.1"
   }
 }

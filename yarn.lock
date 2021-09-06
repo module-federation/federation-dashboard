@@ -3226,7 +3226,7 @@ __metadata:
     dagre: ^0.8.5
     deepmerge: 4.2.2
     dotenv: 10.0.0
-    eslint: ^7.32.0
+    eslint: 7.32.0
     eslint-config-next: 11.1.0
     express: 4.17.1
     express-ipfilter: 1.2.0
@@ -7508,7 +7508,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"concurrently@npm:6.2.1, concurrently@npm:^6.2.1":
+"concurrently@npm:6.2.1":
   version: 6.2.1
   resolution: "concurrently@npm:6.2.1"
   dependencies:
@@ -8641,7 +8641,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "dashboard-example-084980@workspace:dashboard-example"
   dependencies:
-    concurrently: ^6.2.1
+    concurrently: 6.2.1
   languageName: unknown
   linkType: soft
 
@@ -9957,7 +9957,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^7.32.0":
+"eslint@npm:7.32.0":
   version: 7.32.0
   resolution: "eslint@npm:7.32.0"
   dependencies:
