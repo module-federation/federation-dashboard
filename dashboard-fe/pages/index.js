@@ -4,7 +4,7 @@ import { Typography, Tabs, Tab, makeStyles } from "@material-ui/core";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
 import Link from "next/link";
-// import { observer } from "mobx-react";
+import { observer } from "mobx-react";
 import { get } from "lodash";
 import dynamic from "next/dynamic";
 import ApplicationsTable from "../components/ApplicationsTable";
@@ -149,4 +149,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default observer(Home);
