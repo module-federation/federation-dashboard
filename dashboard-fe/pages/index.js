@@ -8,14 +8,20 @@ import { observer } from "mobx-react";
 import { get } from "lodash";
 import dynamic from "next/dynamic";
 import ApplicationsTable from "../components/ApplicationsTable";
-import ModuleChordChart from "../components/ModuleChordChart";
-import ModuleNodeGraph from "../components/ModuleNodeGraph";
+import Layout from "../components/Layout";
+import store from "../src/store";
+
+const ModuleChordChart = dynamic(
+  () => import("../components/ModuleChordChart"),
+  { ssr: false }
+);
+const ModuleNodeGraph = dynamic(() => import("../components/ModuleNodeGraph"), {
+  ssr: false,
+});
 const ModuleUMLDiagram = dynamic(
   () => import("../components/ModuleUMLDiagram.tsx"),
   { ssr: false }
 );
-import Layout from "../components/Layout";
-import store from "../src/store";
 
 const GET_APPS = gql`
   query ($group: String!, $environment: String!) {
