@@ -27,7 +27,7 @@ class FederationDashboardPlugin {
    */
   constructor(options) {
     this._options = Object.assign(
-      { debug: false, filename: "dashboard.json" },
+      { debug: false, filename: "dashboard.json", useAST: false },
       options
     );
     this._dashData = null;
@@ -178,7 +178,9 @@ class FederationDashboardPlugin {
   processWebpackGraph(curCompiler, callback) {
     const liveStats = curCompiler.getStats();
     const stats = liveStats.toJson();
-    this.parseModuleAst(curCompiler);
+    if (this._options.useAST) {
+      this.parseModuleAst(curCompiler);
+    }
 
     // filter modules
     const modules = this.getFilteredModules(stats);
