@@ -3136,7 +3136,7 @@ __metadata:
 
 "@module-federation/dashboard-plugin@file:./dashboard-plugin::locator=module-federation-examples-root%40workspace%3A.":
   version: 2.2.0
-  resolution: "@module-federation/dashboard-plugin@file:./dashboard-plugin#./dashboard-plugin::hash=efb8a0&locator=module-federation-examples-root%40workspace%3A."
+  resolution: "@module-federation/dashboard-plugin@file:./dashboard-plugin#./dashboard-plugin::hash=298240&locator=module-federation-examples-root%40workspace%3A."
   dependencies:
     "@babel/generator": ^7.15.4
     "@babel/parser": ^7.15.5
@@ -3150,7 +3150,7 @@ __metadata:
     webpack-sources: ^1.4.3 || ^2.0.0
   bin:
     dashboard-plugin: bin/federation-report.js
-  checksum: b59d1b29ef8f26e04f15b4cb475fea6332b55a625b87de15215e6ffca4a924e9cc07bf571526b36f8eee87e589e1cade50bb2f8f1af09c9c93dd3788d9709448
+  checksum: 21a0f906cf7bf681827756025081b77e1abff944e7e55026200388045df3f64e8b2f8c96b558fa37501fa4d9ac4f979d06fee678b7dc84db66197b2581cbc8f1
   languageName: node
   linkType: hard
 
@@ -3258,7 +3258,7 @@ __metadata:
     regenerator-runtime: 0.13.9
     request-ip: 2.1.3
     token-generator: ^1.0.0
-    typescript: 4.3.5
+    typescript: 4.4.2
     uuid: ^8.3.2
     webpack: 5.47.1
     webpack-bundle-analyzer: 4.4.2
@@ -21507,23 +21507,23 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-typescript@4.3.5:
-  version: 4.3.5
-  resolution: "typescript@npm:4.3.5"
+typescript@4.4.2:
+  version: 4.4.2
+  resolution: "typescript@npm:4.4.2"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: bab033b5e2b0790dd35b77fd005df976ef80b8d84fd2c6e63cc31808151875beae9216e5a315fe7068e8499905c3c354248fe83272cdfc13b7705635f0c66c97
+  checksum: 194e08e9d1971d667d6fd1a0554616b7022312a2319d70e81a64e502a265992061ee7817ed9a69b52bbabe7a9b85e7938cb8c11c433e40a516b277f8c4dacd51
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4.3.5#~builtin<compat/typescript>":
-  version: 4.3.5
-  resolution: "typescript@patch:typescript@npm%3A4.3.5#~builtin<compat/typescript>::version=4.3.5&hash=d8b4e7"
+"typescript@patch:typescript@4.4.2#~builtin<compat/typescript>":
+  version: 4.4.2
+  resolution: "typescript@patch:typescript@npm%3A4.4.2#~builtin<compat/typescript>::version=4.4.2&hash=d8b4e7"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: bc2c4fdf0f1557fdafe4ef74848c72ebd9c8c60829568248f869121aea2bb20e16649a252431d0acb185ec118143be22bed73d08f64379557810d82756afedde
+  checksum: 11d6ab6e868117908c388401e2ac06d503c5c8709115ab80ee69a1a6352c1f98471d1e595636bfe6a2d6b20b03a44df6bb2d3d198cea97c0c328968cd18d2b70
   languageName: node
   linkType: hard
 
