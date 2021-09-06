@@ -138,7 +138,7 @@ const Home = () => {
           <Typography className={classes.helpParagraph}>
             If you have an application that you want to configure to import or
             export Federated Modules then use the{" "}
-            <Link href="/applications/new">
+            <Link href="/applications/new" passHref>
               <a>Configuration Wizard</a>
             </Link>
             .
