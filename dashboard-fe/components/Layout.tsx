@@ -8,13 +8,13 @@ import {
   Divider,
   Typography,
   IconButton,
-  Link,
   Drawer,
   Container,
   Avatar,
   Menu,
   MenuItem,
 } from "@material-ui/core";
+import Link from "next/link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { observer } from "mobx-react";
@@ -55,6 +55,9 @@ const UserMenu = observer(() => {
         >
           <MenuItem>
             <Link href="/profile">Profile</Link>
+          </MenuItem>
+          <MenuItem>
+            <Link href="/settings">Settings</Link>
           </MenuItem>
           <MenuItem>
             <Link href="/api/logout">Logout</Link>

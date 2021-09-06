@@ -36,9 +36,9 @@ const apiAuthGate = async (req: any, res: any, callback: any) => {
 
   return callback(req, res);
 };
-const checkForTokens = async () => {
+const checkForTokens = async (session) => {
   await dbDriver.setup();
-  const { tokens } = await dbDriver.siteSettings_get();
+  const { tokens } = await dbDriver.siteSettings_get(session?.user?.email);
   if (Array.isArray(tokens) && tokens.length === 0) {
     return false;
   } else {
@@ -48,8 +48,10 @@ const checkForTokens = async () => {
 
 export default async (req: any, res: any) => {
   let session: { noAuth: boolean; user: {} } = false;
-
-  let tokens = await checkForTokens();
+  if (process.env.WITH_AUTH) {
+    session = await auth0.getSession(req);
+  }
+  let tokens = await checkForTokens(session);
   if (tokens) {
     tokens = tokens.map((token) => {
       return token.value;

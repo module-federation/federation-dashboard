@@ -4,6 +4,7 @@ import fetch from "node-fetch";
 import "../lighthouse/add-url";
 
 const hookSusbscriber = async (type: any, payload: any) => {
+  return null;
   await dbDriver.setup();
   const [settings] = await dbDriver.siteSettings_get();
   return Promise.all(

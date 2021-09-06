@@ -304,25 +304,28 @@ export default class DriverMongoDB implements Driver {
     return this.usersTable.delete(id);
   }
 
-  async siteSettings_get(): Promise<Array<SiteSettings> | any> {
+  // @ts-ignore
+  async siteSettings_get(id): Promise<Array<SiteSettings> | any> {
     let settings = {
       webhooks: [],
       tokens: [],
-      id: "siteSettings",
+      id: id ? id : "siteSettings",
     };
-    // console.log(this.siteSettings.count())
-    if (!(await this.siteSettings.search({ id: "siteSettings" }))) {
-      await this.siteSettings.update({ id: "siteSettings" }, settings);
-    }
 
-    return this.siteSettings.search({ id: "siteSettings" });
+    // if (!(await this.siteSettings.search({ id: settings.id }))) {
+    //   await this.siteSettings.update({ id: settings.id }, settings);
+    // }
+
+    const siteSetting = await this.siteSettings.search({ id: settings.id });
+
+    return siteSetting;
   }
 
   async siteSettings_update(settings: SiteSettings): Promise<SiteSettings> {
+    if (!settings.id) {
+      settings.id = "siteSettings";
+    }
     Joi.assert(settings, siteSettingsSchema);
-    return this.siteSettings.update(
-      { id: "siteSettings" },
-      { id: "siteSettings", ...settings }
-    );
+    return this.siteSettings.update({ id: settings.id }, settings);
   }
 }

@@ -92,6 +92,7 @@ const typeDefs = gql`
   type SiteSettings {
     webhooks: [Webhook]
     tokens: [Token]
+    id: String
   }
 
   input WebhookInput {
@@ -107,6 +108,7 @@ const typeDefs = gql`
   input SiteSettingsInput {
     webhooks: [WebhookInput]
     tokens: [TokenInput]
+    id: String
   }
 
   input MetadataInput {
@@ -302,9 +304,15 @@ const resolvers = {
         return dbDriver.group_findAll();
       }
     },
-    siteSettings: async () => {
+    siteSettings: async (_: any, props: any, ctx: any) => {
       await dbDriver.setup();
-      return dbDriver.siteSettings_get();
+      if (privateConfig.WITH_AUTH) {
+        console.log(ctx.user.email);
+        const settings = await dbDriver.siteSettings_get(ctx.user.email);
+        console.log("settings", settings);
+        return [{ webhooks: [], tokens: [] }];
+      }
+      // return dbDriver.siteSettings_get();
     },
   },
   Mutation: {
@@ -389,10 +397,14 @@ const resolvers = {
       });
       return dbDriver.user_find(user.email);
     },
-    updateSiteSettings: async (_: any, { settings }: any) => {
+    updateSiteSettings: async (_: any, { settings }: any, ctx: any) => {
       await dbDriver.setup();
-      await dbDriver.siteSettings_update(settings);
-      return dbDriver.siteSettings_get();
+      if (process.env.WITH_AUTH) {
+        await dbDriver.siteSettings_update({ ...settings, id: ctx.user.email });
+        return dbDriver.siteSettings_get(ctx.user.email);
+      }
+      // await dbDriver.siteSettings_update(settings);
+      // return dbDriver.siteSettings_get();
     },
   },
   Application: {
@@ -488,7 +500,18 @@ const resolvers = {
   },
 };
 
-const apolloServer = new ApolloServer({ typeDefs, resolvers });
+const apolloServer = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req, res }) => {
+    if (privateConfig.WITH_AUTH) {
+      const session = auth0.getSession(req, res);
+      return {
+        user: session.user,
+      };
+    }
+  },
+});
 
 const apolloHandler = apolloServer.createHandler({
   path: "/api/graphql",
@@ -550,9 +573,9 @@ const fetchToken = (headers) => {
   });
 };
 
-const checkForTokens = async () => {
+const checkForTokens = async (session) => {
   await dbDriver.setup();
-  const { tokens } = await dbDriver.siteSettings_get();
+  const { tokens } = await dbDriver.siteSettings_get(session?.user?.email);
   if (Array.isArray(tokens) && tokens.length === 0) {
     return false;
   } else {
@@ -567,7 +590,8 @@ async function handler(req: any, res: any) {
   if (process.env.WITH_AUTH) {
     session = auth0.getSession(req, res);
   }
-  const tokens = await checkForTokens();
+
+  const tokens = await checkForTokens(session);
 
   if (
     !tokens ||

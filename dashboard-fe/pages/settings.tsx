@@ -20,10 +20,12 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 import { v4 as uuidv4 } from "uuid";
 import Layout from "../components/Layout";
 import store from "../src/store";
+import url from "native-url";
 
 const GET_SETTINGS = gql`
   {
     siteSettings {
+      id
       tokens {
         key
         value
@@ -73,7 +75,9 @@ export function SettingsForm({ siteSettings }) {
     reValidateMode: "onChange",
     defaultValues: siteSettings,
   });
+
   const [setSettings] = useMutation(SET_SETTINGS);
+
   const [webhookIndexes, setWebhookIndexes] = React.useState<Array<number>>(
     Object.keys(siteSettings.webhooks).map((i) => parseInt(i))
   );
@@ -228,11 +232,21 @@ const TokenForm = ({ siteSettings }) => {
   );
 };
 export function Settings() {
-  const { data } = useQuery(GET_SETTINGS);
-  if (!store.isAuthorized) return null;
+  const data = null;
+  // const { data } = useQuery(GET_SETTINGS);
+  const resp = useQuery(GET_SETTINGS);
+  resp.refetch({ thing: null });
+  resp.refetch({ other: "thing" });
+  resp.refetch();
+  resp.refetch();
+  resp.refetch();
+  resp.refetch();
+  console.log(resp);
+
+  return null;
   return (
     <Layout>
-      {store.isAuthorized && data && (
+      {data && (
         <>
           <h1>Webhooks</h1>
           <SettingsForm siteSettings={data.siteSettings} />
