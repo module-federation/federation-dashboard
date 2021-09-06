@@ -1513,7 +1513,7 @@ __metadata:
     "@babel/preset-react": 7.14.5
     "@emotion/core": ^10.0.28
     "@module-federation/dashboard-plugin": "*"
-    "@webpack-cli/serve": 1.5.1
+    "@webpack-cli/serve": 1.5.2
     antd: ^4.2.5
     babel-loader: 8.2.2
     css-loader: 5.2.7
@@ -1540,7 +1540,7 @@ __metadata:
     "@babel/core": 7.14.8
     "@babel/preset-react": 7.14.5
     "@module-federation/dashboard-plugin": "*"
-    "@webpack-cli/serve": 1.5.1
+    "@webpack-cli/serve": 1.5.2
     antd: ^4.2.5
     babel-loader: 8.2.2
     css-loader: 5.2.7
@@ -1568,7 +1568,7 @@ __metadata:
     "@babel/preset-react": 7.14.5
     "@emotion/core": ^10.0.28
     "@module-federation/dashboard-plugin": "*"
-    "@webpack-cli/serve": 1.5.1
+    "@webpack-cli/serve": 1.5.2
     antd: ^4.2.5
     babel-loader: 8.2.2
     css-loader: 5.2.7
@@ -1595,7 +1595,7 @@ __metadata:
     "@babel/preset-react": 7.14.5
     "@emotion/core": ^10.0.28
     "@module-federation/dashboard-plugin": "*"
-    "@webpack-cli/serve": 1.5.1
+    "@webpack-cli/serve": 1.5.2
     antd: ^4.2.5
     babel-loader: 8.2.2
     css-loader: 5.2.7
@@ -1619,7 +1619,7 @@ __metadata:
     "@babel/core": 7.14.8
     "@babel/preset-react": 7.14.5
     "@module-federation/dashboard-plugin": "*"
-    "@webpack-cli/serve": 1.5.1
+    "@webpack-cli/serve": 1.5.2
     babel-loader: 8.2.2
     serve: 11.3.2
     webpack: 5.45.1
@@ -4804,15 +4804,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@webpack-cli/serve@npm:1.5.1":
-  version: 1.5.1
-  resolution: "@webpack-cli/serve@npm:1.5.1"
+"@webpack-cli/serve@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@webpack-cli/serve@npm:1.5.2"
   peerDependencies:
     webpack-cli: 4.x.x
   peerDependenciesMeta:
     webpack-dev-server:
       optional: true
-  checksum: 62485c3ddfe337c9fbe755423a63990f3544793ca2d380baf03017f49d53e6ff88d37399119865a204dfbb5941d1de2dba6f41cf8737b25145f20762368c1dee
+  checksum: 1666c69606581193574fb5f2cd58fececf933f34725261752d44c8097640474903de8bec4076c717d48838cfc8937fccee699ce74e4c880e1c327157757250fa
   languageName: node
   linkType: hard
 
@@ -15478,7 +15478,7 @@ fsevents@~2.3.1:
   resolution: "module-federation-examples-root@workspace:."
   dependencies:
     "@changesets/cli": 2.16.0
-    "@webpack-cli/serve": 1.5.1
+    "@webpack-cli/serve": 1.5.2
     concurrently: 6.2.1
     husky: 4.3.8
     lerna: 4.0.0
