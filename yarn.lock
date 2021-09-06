@@ -3141,7 +3141,7 @@ __metadata:
 
 "@module-federation/dashboard-plugin@file:./dashboard-plugin::locator=module-federation-examples-root%40workspace%3A.":
   version: 2.2.0
-  resolution: "@module-federation/dashboard-plugin@file:./dashboard-plugin#./dashboard-plugin::hash=0f752b&locator=module-federation-examples-root%40workspace%3A."
+  resolution: "@module-federation/dashboard-plugin@file:./dashboard-plugin#./dashboard-plugin::hash=298240&locator=module-federation-examples-root%40workspace%3A."
   dependencies:
     "@babel/generator": ^7.15.4
     "@babel/parser": ^7.15.5
@@ -3155,7 +3155,7 @@ __metadata:
     webpack-sources: ^1.4.3 || ^2.0.0
   bin:
     dashboard-plugin: bin/federation-report.js
-  checksum: 259b52bb0618b7fe3fe69d740c89b1276ed5b1e782ea737950dac10c52b7adf4799b9e14e6037af3239c7d907aa41bc6cd9259cbc9bba74a386f0085a78aa22b
+  checksum: 21a0f906cf7bf681827756025081b77e1abff944e7e55026200388045df3f64e8b2f8c96b558fa37501fa4d9ac4f979d06fee678b7dc84db66197b2581cbc8f1
   languageName: node
   linkType: hard
 
@@ -3268,7 +3268,7 @@ __metadata:
     webpack: 5.47.1
     webpack-bundle-analyzer: 4.4.2
     webpack-merge: 5.8.0
-    workerpool: 6.1.2
+    workerpool: 6.1.5
   languageName: unknown
   linkType: soft
 
@@ -22542,10 +22542,10 @@ typescript@4.3.5:
   languageName: node
   linkType: hard
 
-"workerpool@npm:6.1.2":
-  version: 6.1.2
-  resolution: "workerpool@npm:6.1.2"
-  checksum: 8f1b62b8a150dbe40fd9a61aceacec0a15dd478f9f50246915de19a919143ae8974d2371341d9d80fb02e1f93e7dbe45cb7948c871384946c0842e118e031d74
+"workerpool@npm:6.1.5":
+  version: 6.1.5
+  resolution: "workerpool@npm:6.1.5"
+  checksum: 5defea1fd3e36b4f83c2bb184cade4a71e27030d46ee5efe704e90e19baf3a5c7146fddef010cbd0b7df3edbfca1e9e851bd35d8da8c99ec6d8bbfe121d8c0b0
   languageName: node
   linkType: hard
 
