@@ -1,16 +1,7 @@
 {
   "env": {
     "development": {
-      "presets": [
-        [
-          "next/babel",
-          {
-            "class-properties": {
-              "loose": true
-            }
-          }
-        ]
-      ],
+      "presets": ["next/babel"],
       "plugins": [
         "@babel/plugin-proposal-optional-chaining",
         [

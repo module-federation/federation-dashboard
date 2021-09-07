@@ -304,6 +304,13 @@ export default class DriverMongoDB implements Driver {
     return this.usersTable.delete(id);
   }
 
+  async getTokens(token) {
+    const settings = await this.siteSettings.search({});
+    return settings.find(({ tokens }) => {
+      return tokens?.[0]?.value === token;
+    });
+  }
+
   // @ts-ignore
   async siteSettings_get(id): Promise<Array<SiteSettings> | any> {
     let settings = {
