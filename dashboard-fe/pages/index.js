@@ -6,16 +6,22 @@ import { useQuery } from "@apollo/client";
 import Link from "next/link";
 import { observer } from "mobx-react";
 import { get } from "lodash";
-
+import dynamic from "next/dynamic";
 import ApplicationsTable from "../components/ApplicationsTable";
-import ModuleChordChart from "../components/ModuleChordChart";
-import ModuleNodeGraph from "../components/ModuleNodeGraph";
-const ModuleUMLDiagram =
-  typeof window === "undefined"
-    ? () => <div />
-    : require("../components/ModuleUMLDiagram.tsx").default;
 import Layout from "../components/Layout";
 import store from "../src/store";
+
+const ModuleChordChart = dynamic(
+  () => import("../components/ModuleChordChart"),
+  { ssr: false }
+);
+const ModuleNodeGraph = dynamic(() => import("../components/ModuleNodeGraph"), {
+  ssr: false,
+});
+const ModuleUMLDiagram = dynamic(
+  () => import("../components/ModuleUMLDiagram.tsx"),
+  { ssr: false }
+);
 
 const GET_APPS = gql`
   query ($group: String!, $environment: String!) {
@@ -89,24 +95,28 @@ const Home = () => {
             {applications.length > 1 && <Tab label="Node Graph" />}
             {applications.length > 1 && <Tab label="Dependency Graph" />}
           </Tabs>
-          <div style={{ display: currentTab === 0 ? "block" : "none" }}>
-            {applications.length > 0 && (
-              <ModuleUMLDiagram
-                applications={applications}
-                size={applications.length}
-              />
-            )}
-          </div>
-          <div style={{ display: currentTab === 1 ? "block" : "none" }}>
-            <ApplicationsTable applications={applications} />
-          </div>
-          {applications.length > 1 && (
-            <div style={{ display: currentTab === 2 ? "block" : "none" }}>
+          {currentTab === 0 && (
+            <div>
+              {applications.length > 0 && (
+                <ModuleUMLDiagram
+                  applications={applications}
+                  size={applications.length}
+                />
+              )}
+            </div>
+          )}
+          {currentTab === 1 && (
+            <div>
+              <ApplicationsTable applications={applications} />
+            </div>
+          )}
+          {currentTab === 2 && applications.length > 1 && (
+            <div>
               <ModuleNodeGraph applications={applications} />
             </div>
           )}
-          {applications.length > 1 && (
-            <div style={{ display: currentTab === 3 ? "block" : "none" }}>
+          {currentTab === 3 && applications.length > 1 && (
+            <div>
               <ModuleChordChart applications={applications} />
             </div>
           )}
@@ -134,7 +144,7 @@ const Home = () => {
           <Typography className={classes.helpParagraph}>
             If you have an application that you want to configure to import or
             export Federated Modules then use the{" "}
-            <Link href="/applications/new">
+            <Link href="/applications/new" passHref>
               <a>Configuration Wizard</a>
             </Link>
             .

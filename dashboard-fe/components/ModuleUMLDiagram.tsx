@@ -189,8 +189,6 @@ class LayoutWidget extends React.Component<
   render() {
     return (
       <div>
-        <Button onClick={() => this.autoDistribute()}>Layout</Button>
-        {/* @ts-ignore*/}
         <CanvasContainer>
           <CanvasWidget engine={this.props.engine} />
         </CanvasContainer>

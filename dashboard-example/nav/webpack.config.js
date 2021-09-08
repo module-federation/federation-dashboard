@@ -84,7 +84,7 @@ module.exports = {
       publishVersion: require("./package.json").version,
       filename: "dashboard.json",
       dashboardURL:
-        "https://federation-dashboard-alpha.vercel.app/api/update?token=29f387e1-a00d-46ea-9fd6-02ca5e97449c",
+        "https://federation-dashboard-alpha.vercel.app/api/update?token=ca9e136d-0ec1-4f46-9d11-817d24219531",
       versionChangeWebhook: "http://cnn.com/",
       metadata: {
         baseUrl: "http://localhost:3003",

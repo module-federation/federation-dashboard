@@ -1,7 +1,8 @@
 import ApplicationManager from "../../src/managers/Application";
 import auth0 from "../../src/auth0";
 import dbDriver from "../../src/database/drivers";
-
+import { privateConfig } from "../../src/config";
+import { MongoClient } from "mongodb";
 export const config = {
   api: {
     bodyParser: {
@@ -21,65 +22,82 @@ const dataIsValid = (data: any) =>
   data.modules !== undefined;
 
 const apiAuthGate = async (req: any, res: any, callback: any) => {
-  const session = await auth0.getSession(req);
-  // @ts-expect-error ts-migrate(2339) FIXME: Property 'noAuth' does not exist on type '{ noAuth... Remove this comment to see the full error message
-  if (session && session.noAuth) return callback(req, res);
-
+  // const session = await auth0.getSession(req,res);// @ts-expect-error ts-migrate(2339) FIXME: Property 'noAuth' does not exist on type '{ noAuth... Remove this comment to see the full error message
   // @ts-expect-error ts-migrate(2339) FIXME: Property 'INTERNAL_TOKEN' does not exist on type '... Remove this comment to see the full error message
-  if (res.hasValidTokenn) {
-    // @ts-expect-error ts-migrate(2339) FIXME: Property 'user' does not exist on type '{ noAuth: ... Remove this comment to see the full error message
-    if (!session || !session.user) {
-      res.status(401).json({ error: "Unauthorized" });
-      return;
-    }
+  if (!res.hasValidToken) {
+    // if (!session || !session.user) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+    // }
   }
 
   return callback(req, res);
 };
-const checkForTokens = async () => {
-  await dbDriver.setup();
-  const { tokens } = await dbDriver.siteSettings_get();
-  if (Array.isArray(tokens) && tokens.length === 0) {
+const checkForTokens = async (token) => {
+  // create fresh connection for when no user exists to setup driver
+  const client = new MongoClient(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  return new Promise((resolve) => {
+    client.connect(async (err) => {
+      if (err) {
+        console.error("Error during MongoDB database startup");
+        console.error(err.toString());
+        process.exit(1);
+      }
+      const mainDB = client.db("fmdashboard");
+      const siteSettings = mainDB.collection("siteSettings");
+      const settings = await siteSettings.find({}).toArray();
+      const foundSettings = settings.find(({ tokens }) => {
+        return tokens?.[0]?.value === token;
+      });
+      resolve(foundSettings);
+    });
+  }).then((foundToken) => {
+    client.close();
+    if (foundToken) {
+      return foundToken.id;
+    }
     return false;
-  } else {
-    return tokens;
-  }
+  });
 };
 
 export default async (req: any, res: any) => {
-  let session: { noAuth: boolean; user: {} } = false;
+  let user = privateConfig.WITH_AUTH
+    ? await checkForTokens(req?.query?.token)
+    : true;
+  // if (tokens) {
+  //   tokens = tokens.map((token) => {
+  //     return token.value;
+  //   });
+  // } else {
+  //   tokens = false;
+  // }
+  //
+  // const hasValidToken =
+  //   tokens &&
+  //   tokens.some((token) => {
+  //     return req.query.token === token;
+  //   });
+  //
+  // Object.assign(res, { hasValidToken: hasValidToken });
+  // if (
+  //   !tokens ||
+  //   req?.headers?.Authorization?.find((token) => tokens.includes(token))
+  // ) {
+  //   session = {
+  //     user: {},
+  //     noAuth: false,
+  //   };
+  // }
 
-  let tokens = await checkForTokens();
-  if (tokens) {
-    tokens = tokens.map((token) => {
-      return token.value;
-    });
-  } else {
-    tokens = false;
-  }
-
-  const hasValidToken =
-    tokens &&
-    tokens.some((token) => {
-      return req.query.token === token;
-    });
-
-  Object.assign(res, { hasValidToken: hasValidToken });
-  if (
-    !tokens ||
-    req?.headers?.Authorization?.find((token) => tokens.includes(token))
-  ) {
-    session = {
-      user: {},
-      noAuth: false,
-    };
-  }
-
-  apiAuthGate.hasValidToken = hasValidToken;
+  // @ts-ignore
+  res.hasValidToken = user;
   return apiAuthGate(req, res, async () => {
-    if (dataIsValid(req.body) || hasValidToken) {
+    if (dataIsValid(req.body) && user) {
       console.log(`Updating ${req.body.name}#${req.body.version}`);
-      await ApplicationManager.update(req.body);
+      await ApplicationManager.update(req.body, user);
       res.send(true);
     } else {
       res.send(false);

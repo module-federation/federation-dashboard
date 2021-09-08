@@ -24,6 +24,7 @@ import store from "../src/store";
 const GET_SETTINGS = gql`
   {
     siteSettings {
+      id
       tokens {
         key
         value
@@ -73,7 +74,9 @@ export function SettingsForm({ siteSettings }) {
     reValidateMode: "onChange",
     defaultValues: siteSettings,
   });
+
   const [setSettings] = useMutation(SET_SETTINGS);
+
   const [webhookIndexes, setWebhookIndexes] = React.useState<Array<number>>(
     Object.keys(siteSettings.webhooks).map((i) => parseInt(i))
   );
@@ -229,10 +232,10 @@ const TokenForm = ({ siteSettings }) => {
 };
 export function Settings() {
   const { data } = useQuery(GET_SETTINGS);
-  if (!store.isAuthorized) return null;
+
   return (
     <Layout>
-      {store.isAuthorized && data && (
+      {data && (
         <>
           <h1>Webhooks</h1>
           <SettingsForm siteSettings={data.siteSettings} />

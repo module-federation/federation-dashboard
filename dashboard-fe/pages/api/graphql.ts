@@ -9,6 +9,7 @@ import { privateConfig } from "../../src/config";
 import auth0 from "../../src/auth0";
 import "../../src/webhooks";
 import url from "native-url";
+import { application } from "express";
 
 const typeDefs = gql`
   scalar Date
@@ -92,6 +93,7 @@ const typeDefs = gql`
   type SiteSettings {
     webhooks: [Webhook]
     tokens: [Token]
+    id: String
   }
 
   input WebhookInput {
@@ -107,6 +109,7 @@ const typeDefs = gql`
   input SiteSettingsInput {
     webhooks: [WebhookInput]
     tokens: [TokenInput]
+    id: String
   }
 
   input MetadataInput {
@@ -289,11 +292,11 @@ const resolvers = {
       };
     },
     userByEmail: async (_: any, { email }: any) => {
-      await dbDriver.setup();
+      await dbDriver.setup(email);
       return dbDriver.user_findByEmail(email);
     },
     groups: async (_: any, props: any, ctx: any) => {
-      await dbDriver.setup();
+      await dbDriver.setup(ctx?.user?.email);
       const { name } = props;
       if (name) {
         const found = await dbDriver.group_findByName(name);
@@ -302,28 +305,34 @@ const resolvers = {
         return dbDriver.group_findAll();
       }
     },
-    siteSettings: async () => {
-      await dbDriver.setup();
-      return dbDriver.siteSettings_get();
+    siteSettings: async (_: any, props: any, ctx: any) => {
+      await dbDriver.setup(ctx?.user?.email);
+      const settings = await dbDriver.siteSettings_get(ctx?.user?.email);
+      return settings[0];
     },
   },
   Mutation: {
     updateApplicationSettings: async (
       _: any,
-      { group, application, settings }: any
+      { group, application, settings }: any,
+      ctx
     ) => {
-      await dbDriver.setup();
+      await dbDriver.setup(ctx?.user?.email);
       const app = await dbDriver.application_find(application);
       app.settings = settings;
       await dbDriver.application_update(app);
       return settings;
     },
-    deleteApplication: async (_: any, { group, application }: any) => {
-      await dbDriver.setup();
+    deleteApplication: async (
+      _: any,
+      { group, application }: any,
+      ctx: any
+    ) => {
+      await dbDriver.setup(ctx?.user?.email);
       dbDriver.application_delete(application);
     },
-    updateGroupSettings: async (_: any, { group, settings }: any) => {
-      await dbDriver.setup();
+    updateGroupSettings: async (_: any, { group, settings }: any, ctx: any) => {
+      await dbDriver.setup(ctx?.user?.email);
       const grp = await dbDriver.group_find(group);
       grp.settings = settings;
       await dbDriver.group_update(grp);
@@ -331,9 +340,10 @@ const resolvers = {
     },
     addMetric: async (
       _: any,
-      { group, application, date, name, value, url }: any
+      { group, application, date, name, value, url }: any,
+      ctx: any
     ) => {
-      await dbDriver.setup();
+      await dbDriver.setup(ctx?.user?.email);
       dbDriver.application_addMetrics(application, {
         date: new Date(Date.parse(date)),
         id: application ? application : group,
@@ -348,9 +358,10 @@ const resolvers = {
 
     updateMetric: async (
       _: any,
-      { group, application, date, name, value, url }: any
+      { group, application, date, name, value, url }: any,
+      ctx: any
     ) => {
-      await dbDriver.setup();
+      await dbDriver.setup(ctx?.user?.email);
       console.log("Mutation", group, value, name);
       dbDriver.group_updateMetric(application, {
         id: application ? application : group,
@@ -362,11 +373,16 @@ const resolvers = {
       });
       return true;
     },
-    publishVersion: async (_: any, { group, application, version }: any) => {
+    publishVersion: async (
+      _: any,
+      { group, application, version }: any,
+      ctx: any
+    ) => {
       const out = await VersionManager.publishVersion(
         group,
         application,
-        version
+        version,
+        ctx
       );
       return out;
     },
@@ -382,24 +398,28 @@ const resolvers = {
       );
     },
     updateUser: async (_: any, { user }: any) => {
-      await dbDriver.setup();
+      await dbDriver.setup(user.email);
       await dbDriver.user_update({
         id: user.email,
         ...user,
       });
       return dbDriver.user_find(user.email);
     },
-    updateSiteSettings: async (_: any, { settings }: any) => {
-      await dbDriver.setup();
-      await dbDriver.siteSettings_update(settings);
-      return dbDriver.siteSettings_get();
+    updateSiteSettings: async (_: any, { settings }: any, ctx: any) => {
+      await dbDriver.setup(ctx?.user?.email);
+      if (process.env.WITH_AUTH) {
+        await dbDriver.siteSettings_update({ ...settings, id: ctx.user.email });
+        return dbDriver.siteSettings_get(ctx.user.email);
+      }
+      // await dbDriver.siteSettings_update(settings);
+      // return dbDriver.siteSettings_get();
     },
   },
   Application: {
     versions: async ({ id }: any, { environment, latest }: any, ctx: any) => {
       ctx.environment = environment;
 
-      await dbDriver.setup();
+      await dbDriver.setup(ctx?.user?.email);
       let found = await dbDriver.applicationVersion_findAll(id, environment);
       if (latest !== undefined) {
         found = found.filter(({ latest }: any) => latest);
@@ -407,7 +427,7 @@ const resolvers = {
       return found;
     },
     metrics: async ({ id }: any, { names }: any, ctx: any) => {
-      await dbDriver.setup();
+      await dbDriver.setup(ctx?.user?.email);
       const metrics = await dbDriver.application_getMetrics(id);
       if (names) {
       } else {
@@ -419,17 +439,17 @@ const resolvers = {
   },
   Consume: {
     consumingApplication: async (parent: any, args: any, ctx: any) => {
-      await dbDriver.setup();
+      await dbDriver.setup(ctx?.user?.email);
       return dbDriver.application_find(parent.consumingApplicationID);
     },
     application: async (parent: any, args: any, ctx: any) => {
-      await dbDriver.setup();
+      await dbDriver.setup(ctx?.user?.email);
       return dbDriver.application_find(parent.applicationID);
     },
   },
   Module: {
     consumedBy: async (parent: any, args: any, ctx: any) => {
-      await dbDriver.setup();
+      await dbDriver.setup(ctx?.user?.email);
       return ModuleManager.getConsumedBy(
         ctx.group,
         ctx.environment,
@@ -446,14 +466,15 @@ const resolvers = {
     },
   },
   ApplicationOverride: {
-    application: async ({ name }: { name: string }) => {
-      await dbDriver.setup();
+    application: async ({ name }: { name: string }, props, ctx: any) => {
+      console.log("applicationOverride");
+      await dbDriver.setup(ctx?.user?.email);
       return dbDriver.application_find(name);
     },
   },
   Group: {
     metrics: async ({ id }: any, { names }: any, ctx: any) => {
-      await dbDriver.setup();
+      await dbDriver.setup(ctx?.user?.email);
       const metrics = await dbDriver.group_getMetrics(id);
       if (names) {
       } else {
@@ -469,7 +490,7 @@ const resolvers = {
     ) => {
       ctx.group = id;
 
-      await dbDriver.setup();
+      await dbDriver.setup(ctx?.user?.email);
       if (!applicationId) {
         return dbDriver.application_findInGroups([id]);
       } else {
@@ -488,7 +509,18 @@ const resolvers = {
   },
 };
 
-const apolloServer = new ApolloServer({ typeDefs, resolvers });
+const apolloServer = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req, res }) => {
+    if (privateConfig.WITH_AUTH) {
+      const session = auth0.getSession(req, res);
+      return {
+        user: session.user,
+      };
+    }
+  },
+});
 
 const apolloHandler = apolloServer.createHandler({
   path: "/api/graphql",
@@ -527,32 +559,9 @@ const allowCors = async (req: any, res: any, next: any) => {
   return next(req, res);
 };
 
-const fetchToken = (headers) => {
-  return fetch(url.resolve(privateConfig.EXTERNAL_URL, "api/graphql"), {
-    method: "POST",
-    headers: {
-      ...headers,
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({
-      query: `query {
-    {
-      siteSettings {
-        tokens {
-          key
-          value
-        }
-      }
-    }
-  }`,
-    }),
-  });
-};
-
-const checkForTokens = async () => {
-  await dbDriver.setup();
-  const { tokens } = await dbDriver.siteSettings_get();
+const checkForTokens = async (session) => {
+  await dbDriver.setup(session?.user?.email);
+  const { tokens } = await dbDriver.siteSettings_get(session?.user?.email);
   if (Array.isArray(tokens) && tokens.length === 0) {
     return false;
   } else {
@@ -567,7 +576,8 @@ async function handler(req: any, res: any) {
   if (process.env.WITH_AUTH) {
     session = auth0.getSession(req, res);
   }
-  const tokens = await checkForTokens();
+
+  const tokens = await checkForTokens(session);
 
   if (
     !tokens ||
@@ -604,7 +614,6 @@ async function handler(req: any, res: any) {
     //   }
   }
 
-  console.log("runMiddleware");
   await runMiddleware(req, res, apolloHandler);
 }
 

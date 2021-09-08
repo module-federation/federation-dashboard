@@ -1512,7 +1512,7 @@ __metadata:
     antd: ^4.2.5
     babel-loader: 8.2.2
     css-loader: 5.2.7
-    esbuild-loader: 2.13.1
+    esbuild-loader: 2.15.1
     html-webpack-plugin: 5.3.2
     less: 4.1.1
     less-loader: 8.1.1
@@ -3136,7 +3136,7 @@ __metadata:
 
 "@module-federation/dashboard-plugin@file:./dashboard-plugin::locator=module-federation-examples-root%40workspace%3A.":
   version: 2.2.0
-  resolution: "@module-federation/dashboard-plugin@file:./dashboard-plugin#./dashboard-plugin::hash=298240&locator=module-federation-examples-root%40workspace%3A."
+  resolution: "@module-federation/dashboard-plugin@file:./dashboard-plugin#./dashboard-plugin::hash=eb1c01&locator=module-federation-examples-root%40workspace%3A."
   dependencies:
     "@babel/generator": ^7.15.4
     "@babel/parser": ^7.15.5
@@ -3150,7 +3150,7 @@ __metadata:
     webpack-sources: ^1.4.3 || ^2.0.0
   bin:
     dashboard-plugin: bin/federation-report.js
-  checksum: 21a0f906cf7bf681827756025081b77e1abff944e7e55026200388045df3f64e8b2f8c96b558fa37501fa4d9ac4f979d06fee678b7dc84db66197b2581cbc8f1
+  checksum: f24591aff9f0f5bdc36da6de969c8ff2a2290a155821d89764003eb35ac69ac2ad8f2a4e220bad2a9b3bb25234b509b534bebcf2c8537303229f2a3c2d23354c
   languageName: node
   linkType: hard
 
@@ -3257,6 +3257,7 @@ __metadata:
     read-json-stream: 1.1.0
     regenerator-runtime: 0.13.9
     request-ip: 2.1.3
+    sha1: ^1.1.1
     token-generator: ^1.0.0
     typescript: 4.4.2
     uuid: ^8.3.2
@@ -7031,6 +7032,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"charenc@npm:>= 0.0.1":
+  version: 0.0.2
+  resolution: "charenc@npm:0.0.2"
+  checksum: 81dcadbe57e861d527faf6dd3855dc857395a1c4d6781f4847288ab23cffb7b3ee80d57c15bba7252ffe3e5e8019db767757ee7975663ad2ca0939bb8fcaf2e5
+  languageName: node
+  linkType: hard
+
 "chokidar@npm:3.5.1":
   version: 3.5.1
   resolution: "chokidar@npm:3.5.1"
@@ -7939,6 +7947,13 @@ __metadata:
     shebang-command: ^2.0.0
     which: ^2.0.1
   checksum: 671cc7c7288c3a8406f3c69a3ae2fc85555c04169e9d611def9a675635472614f1c0ed0ef80955d5b6d4e724f6ced67f0ad1bb006c2ea643488fcfef994d7f52
+  languageName: node
+  linkType: hard
+
+"crypt@npm:>= 0.0.1":
+  version: 0.0.2
+  resolution: "crypt@npm:0.0.2"
+  checksum: baf4c7bbe05df656ec230018af8cf7dbe8c14b36b98726939cef008d473f6fe7a4fad906cfea4062c93af516f1550a3f43ceb4d6615329612c6511378ed9fe34
   languageName: node
   linkType: hard
 
@@ -9703,24 +9718,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild-loader@npm:2.13.1":
-  version: 2.13.1
-  resolution: "esbuild-loader@npm:2.13.1"
-  dependencies:
-    esbuild: ^0.11.19
-    joycon: ^3.0.1
-    json5: ^2.2.0
-    loader-utils: ^2.0.0
-    tapable: ^2.2.0
-    type-fest: ^1.0.1
-    webpack-sources: ^2.2.0
-  peerDependencies:
-    webpack: ^4.40.0 || ^5.0.0
-  checksum: 2b2cad7c7f0364d210706bab6558e9adfc3325b1ba0447b18a816260ea450f48e3846f11670c505162b19bebe9c77fe81cc21f9e7820f1304a74df3edfd0c131
-  languageName: node
-  linkType: hard
-
-"esbuild-loader@npm:^2.11.1":
+"esbuild-loader@npm:2.15.1, esbuild-loader@npm:^2.11.1":
   version: 2.15.1
   resolution: "esbuild-loader@npm:2.15.1"
   dependencies:
@@ -9734,15 +9732,6 @@ __metadata:
   peerDependencies:
     webpack: ^4.40.0 || ^5.0.0
   checksum: bbc7e9a07b0a9cb4bbe06764f9d68e1c620299c30c16d923b8e36c13b13663c0c9db533e5684ce4d9ca470aba776ea919f3d6b97b6132374e34b8139ce8551b6
-  languageName: node
-  linkType: hard
-
-"esbuild@npm:^0.11.19":
-  version: 0.11.23
-  resolution: "esbuild@npm:0.11.23"
-  bin:
-    esbuild: bin/esbuild
-  checksum: d55bea84f94e7854fa6fb013ffc63747f2286001b3d73c2a7beb605e6e4847c24ff2cde0660f03045d06d083695c8082423b007a9ee8687e70b52719458bfdd6
   languageName: node
   linkType: hard
 
@@ -19778,6 +19767,16 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
+"sha1@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "sha1@npm:1.1.1"
+  dependencies:
+    charenc: ">= 0.0.1"
+    crypt: ">= 0.0.1"
+  checksum: da9f47e949988e2f595ef19733fd1dc736866ef6de4e421a55c13b444c03ae532e528b7350ae6ea55d9fb053be61d4648ec2cd5250d46cfdbdf4f6b4e763713d
+  languageName: node
+  linkType: hard
+
 "shallow-clone@npm:^3.0.0":
   version: 3.0.1
   resolution: "shallow-clone@npm:3.0.1"
@@ -21518,7 +21517,7 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"type-fest@npm:^1.0.1, type-fest@npm:^1.4.0":
+"type-fest@npm:^1.4.0":
   version: 1.4.0
   resolution: "type-fest@npm:1.4.0"
   checksum: b011c3388665b097ae6a109a437a04d6f61d81b7357f74cbcb02246f2f5bd72b888ae33631b99871388122ba0a87f4ff1c94078e7119ff22c70e52c0ff828201

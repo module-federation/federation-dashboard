@@ -29,6 +29,7 @@ export const tokenSchema = Joi.object({
 export const schema = Joi.object({
   webhooks: Joi.array().items(webhookSchema).required(),
   tokens: Joi.array().items(tokenSchema).required(),
+  id: Joi.string(),
 });
 
 export class Token {

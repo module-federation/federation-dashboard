@@ -55,11 +55,6 @@ class FederationDashboardPlugin {
     }
     this.FederationPluginOptions.name =
       this.FederationPluginOptions.name.replace("__REMOTE_VERSION__", "");
-
-    // compiler.hooks.emit.tapAsync(PLUGIN_NAME, (compilation, callback) => {
-    //   this.parseModuleAst(compilation, callback);
-    // });
-
     compiler.hooks.thisCompilation.tap(PLUGIN_NAME, (compilation) => {
       compilation.hooks.processAssets.tapPromise(
         {

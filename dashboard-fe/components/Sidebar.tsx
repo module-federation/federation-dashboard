@@ -98,7 +98,7 @@ const SideBar = ({ restricted }) => {
   if (restricted) {
     return (
       <List>
-        <Link href="/api/login">
+        <Link href="/api/login" passHref>
           <ListItem button>
             <ListItemIcon>
               <LockIcon />
@@ -177,7 +177,7 @@ const SideBar = ({ restricted }) => {
               </div>
             );
           })}
-          <Link href={`/applications/new`}>
+          <Link href={`/applications/new`} passHref>
             <ListItem button>
               <ListItemIcon>
                 <PlusIcon />
@@ -187,7 +187,7 @@ const SideBar = ({ restricted }) => {
           </Link>
         </>
       )}
-      <Link href={`/dependencies`}>
+      <Link href={`/dependencies`} passHref>
         <ListItem button>
           <ListItemIcon>
             <ShareIcon />
