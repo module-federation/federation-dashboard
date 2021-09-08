@@ -54,13 +54,19 @@ const UserMenu = observer(() => {
           onClose={handleClose}
         >
           <MenuItem>
-            <Link href="/profile">Profile</Link>
+            <Link href="/profile" passHref>
+              Profile
+            </Link>
           </MenuItem>
           <MenuItem>
-            <Link href="/settings">Settings</Link>
+            <Link href="/settings" passHref>
+              Settings
+            </Link>
           </MenuItem>
           <MenuItem>
-            <Link href="/api/logout">Logout</Link>
+            <Link href="/api/logout" passHref>
+              Logout
+            </Link>
           </MenuItem>
         </Menu>
       </>
@@ -180,8 +186,14 @@ const Layout = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Link href="/" className={classes.title}>
-            <Typography component="h1" variant="h6" color="inherit" noWrap>
+          <Link href="/" passHref>
+            <Typography
+              className={classes.title}
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+            >
               <strong>Federated Modules</strong> Dashboard
             </Typography>
           </Link>

@@ -19,9 +19,9 @@ const convertMetadata = (metadataObj: any) =>
   });
 
 export default class ApplicationManager {
-  static async update(application: any) {
-    await driver.setup();
-
+  static async update(application: any, namespace: string) {
+    console.log("applicationManager", namespace);
+    await driver.setup(namespace);
     const app = await driver.application_find(application.id);
     const groupName = application.group || "default";
 

@@ -6,7 +6,7 @@ import User from "../user";
 import SiteSettings from "../siteSettings";
 
 export default abstract class Driver {
-  abstract setup();
+  abstract setup(id: string);
 
   abstract application_find(id: string): Promise<Application | null>;
   abstract application_findInGroups(

@@ -2,6 +2,7 @@ import ApplicationManager from "../../src/managers/Application";
 import auth0 from "../../src/auth0";
 import dbDriver from "../../src/database/drivers";
 import { privateConfig } from "../../src/config";
+import { MongoClient } from "mongodb";
 export const config = {
   api: {
     bodyParser: {
@@ -33,16 +34,37 @@ const apiAuthGate = async (req: any, res: any, callback: any) => {
   return callback(req, res);
 };
 const checkForTokens = async (token) => {
-  await dbDriver.setup();
-  const foundToken = await dbDriver.getTokens(token);
-  if (foundToken) {
-    return true;
-  }
-  return false;
+  // create fresh connection for when no user exists to setup driver
+  const client = new MongoClient(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  return new Promise((resolve) => {
+    client.connect(async (err) => {
+      if (err) {
+        console.error("Error during MongoDB database startup");
+        console.error(err.toString());
+        process.exit(1);
+      }
+      const mainDB = client.db("fmdashboard");
+      const siteSettings = mainDB.collection("siteSettings");
+      const settings = await siteSettings.find({}).toArray();
+      const foundSettings = settings.find(({ tokens }) => {
+        return tokens?.[0]?.value === token;
+      });
+      resolve(foundSettings);
+    });
+  }).then((foundToken) => {
+    client.close();
+    if (foundToken) {
+      return foundToken.id;
+    }
+    return false;
+  });
 };
 
 export default async (req: any, res: any) => {
-  let hasValidToken = privateConfig.WITH_AUTH
+  let user = privateConfig.WITH_AUTH
     ? await checkForTokens(req?.query?.token)
     : true;
   // if (tokens) {
@@ -71,11 +93,11 @@ export default async (req: any, res: any) => {
   // }
 
   // @ts-ignore
-  res.hasValidToken = hasValidToken;
+  res.hasValidToken = user;
   return apiAuthGate(req, res, async () => {
-    if (dataIsValid(req.body) && hasValidToken) {
+    if (dataIsValid(req.body) && user) {
       console.log(`Updating ${req.body.name}#${req.body.version}`);
-      await ApplicationManager.update(req.body);
+      await ApplicationManager.update(req.body, user);
       res.send(true);
     } else {
       res.send(false);

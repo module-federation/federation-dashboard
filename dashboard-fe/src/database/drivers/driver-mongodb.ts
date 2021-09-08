@@ -3,6 +3,7 @@ import Joi from "@hapi/joi";
 import fs from "fs";
 import bus from "../../event-bus";
 import { Collection, MongoClient } from "mongodb";
+import sha1 from "sha1";
 
 import Application, { schema as applicationSchema } from "../application";
 import ApplicationVersion, {
@@ -14,6 +15,7 @@ import User, { schema as userSchema } from "../user";
 import SiteSettings, { schema as siteSettingsSchema } from "../siteSettings";
 
 import Driver from "./driver";
+import { name } from "next/dist/telemetry/ci-info";
 
 const mongoURL = process.env.MONGO_URL;
 const mongoDB = process.env.MONGO_DB || "fmdashboard";
@@ -24,7 +26,7 @@ class MongoDriver<T> {
   async find(id: string): Promise<T | null> {
     return new Promise((resolve) => {
       this.collection.find({ id }).toArray((_, docs) => {
-        if (docs.length > 0) {
+        if (docs && docs.length > 0) {
           delete docs[0]._id;
           resolve(docs[0]);
         } else {
@@ -37,7 +39,7 @@ class MongoDriver<T> {
   async search(query: any): Promise<Array<T> | null> {
     return new Promise((resolve) => {
       this.collection.find(query).toArray((_, docs) => {
-        resolve(docs.map(({ _id, ...data }) => ({ ...data })) || []);
+        resolve(docs?.map(({ _id, ...data }) => ({ ...data })) || []);
       });
     });
   }
@@ -51,7 +53,7 @@ class MongoDriver<T> {
   async update<TA>(query: any, data: TA): Promise<null> {
     return new Promise(async (resolve) => {
       this.collection.find(query).toArray((_, docs) => {
-        if (docs.length > 0) {
+        if (docs && docs.length > 0) {
           this.collection.updateOne(query, { $set: data }, {}, () =>
             resolve(null)
           );
@@ -88,10 +90,13 @@ export default class DriverMongoDB implements Driver {
     });
   }
 
-  async setup() {
+  async setup(namespace: string | null): Promise<any> {
     if (DriverMongoDB.isSetup) {
       return false;
     }
+    let hashedNamespace = sha1(namespace);
+    // mongo can only support a database name of 38 chars
+    hashedNamespace = hashedNamespace.substring(0, 38);
 
     let connectionSetupResolve;
     this.connectionSetup = new Promise((resolve) => {
@@ -110,8 +115,13 @@ export default class DriverMongoDB implements Driver {
         process.exit(1);
       }
       console.log(`Connected successfully to server: ${mongoDB}`);
+      console.log(
+        `Connected successfully to server: ${hashedNamespace}(${namespace})`
+      );
 
-      const db = this.client.db(mongoDB);
+      const mainDB = this.client.db(mongoDB);
+
+      const db = this.client.db(hashedNamespace);
 
       this.applicationTable = new MongoDriver<Application>(
         db.collection("applications")
@@ -123,9 +133,9 @@ export default class DriverMongoDB implements Driver {
         db.collection("metrics")
       );
       this.groupsTable = new MongoDriver<Group>(db.collection("groups"));
-      this.usersTable = new MongoDriver<User>(db.collection("users"));
+      this.usersTable = new MongoDriver<User>(mainDB.collection("users"));
       this.siteSettings = new MongoDriver<SiteSettings>(
-        db.collection("siteSettings")
+        mainDB.collection("siteSettings")
       );
 
       const defaultGroup = await this.group_find("default");
@@ -304,7 +314,7 @@ export default class DriverMongoDB implements Driver {
     return this.usersTable.delete(id);
   }
 
-  async getTokens(token) {
+  async getTokens(token: string) {
     const settings = await this.siteSettings.search({});
     return settings.find(({ tokens }) => {
       return tokens?.[0]?.value === token;

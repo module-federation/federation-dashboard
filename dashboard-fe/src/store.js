@@ -20,7 +20,6 @@ const defaultOptions = {
 };
 const client = new ApolloClient({
   uri: clientUrl,
-  defaultOptions,
 });
 
 const GET_USER = gql`

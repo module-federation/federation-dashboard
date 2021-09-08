@@ -1,8 +1,14 @@
 import dbDriver from "../database/drivers";
 
 export default class VersionManager {
-  static async publishVersion(group: any, application: any, version: any) {
-    await dbDriver.setup();
+  static async publishVersion(
+    group: any,
+    application: any,
+    version: any,
+    ctx: any
+  ) {
+    console.log("publishVersion");
+    await dbDriver.setup(ctx?.user?.email);
 
     // TODO: Pass in the environment
     const app = await dbDriver.applicationVersion_find(
@@ -42,6 +48,7 @@ export default class VersionManager {
     remote: any,
     version: any
   ) {
+    console.log("setRemoteVersion");
     const app = await dbDriver.application_find(application);
     const overridesWithoutRemote = app.overrides.filter(
       ({ name }: any) => name !== remote
