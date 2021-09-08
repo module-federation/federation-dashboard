@@ -66,7 +66,7 @@
     "isomorphic-unfetch": "3.1.0",
     "lodash": "4.17.21",
     "ml-matrix": "^6.5.0",
-    "mobx": "^5.15.4",
+    "mobx": "^6.0.0",
     "mobx-react": "^6.2.2",
     "moment": "2.29.1",
     "mongodb": "^3.6.2",

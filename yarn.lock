@@ -3136,7 +3136,7 @@ __metadata:
 
 "@module-federation/dashboard-plugin@file:./dashboard-plugin::locator=module-federation-examples-root%40workspace%3A.":
   version: 2.2.0
-  resolution: "@module-federation/dashboard-plugin@file:./dashboard-plugin#./dashboard-plugin::hash=eb1c01&locator=module-federation-examples-root%40workspace%3A."
+  resolution: "@module-federation/dashboard-plugin@file:./dashboard-plugin#./dashboard-plugin::hash=41b794&locator=module-federation-examples-root%40workspace%3A."
   dependencies:
     "@babel/generator": ^7.15.4
     "@babel/parser": ^7.15.5
@@ -3150,7 +3150,7 @@ __metadata:
     webpack-sources: ^1.4.3 || ^2.0.0
   bin:
     dashboard-plugin: bin/federation-report.js
-  checksum: f24591aff9f0f5bdc36da6de969c8ff2a2290a155821d89764003eb35ac69ac2ad8f2a4e220bad2a9b3bb25234b509b534bebcf2c8537303229f2a3c2d23354c
+  checksum: f1e2d8f5009fefea359de768369721f4d34413748992a667cc7bf1f352ba4f812e78af460b65a5c0697a8e7d54732162510641bf86f34804c8c88c1c7fa1aad3
   languageName: node
   linkType: hard
 
@@ -3231,7 +3231,7 @@ __metadata:
     jest-babel: 1.0.1
     lodash: 4.17.21
     ml-matrix: ^6.5.0
-    mobx: ^5.15.4
+    mobx: ^6.0.0
     mobx-react: ^6.2.2
     moment: 2.29.1
     mongodb: ^3.6.2
@@ -15471,10 +15471,10 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"mobx@npm:^5.15.4":
-  version: 5.15.7
-  resolution: "mobx@npm:5.15.7"
-  checksum: 46aa00c330a256fdde1c030cf8bab0baebc7fdfb23709884400ac486c318ce650acc336fd8f1e629b5c8680d82051f2aed4737406c4ac6fe1b2d9f3d978c4339
+"mobx@npm:^6.0.0":
+  version: 6.3.3
+  resolution: "mobx@npm:6.3.3"
+  checksum: f281068f1d98c7f4182f8a2d4a4040cedfe48eae16b951746f6d4bd02d7c4f182d906f6ad31526540c41ba08ce0f1ff137a769213cd2c1c5181bd9e9fa76652f
   languageName: node
   linkType: hard
 
