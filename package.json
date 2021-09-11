@@ -9,7 +9,6 @@
   "workspaces": {
     "packages": [
       "dashboard-example",
-      "dashboard-plugin",
       "dashboard-fe"
     ]
   },
