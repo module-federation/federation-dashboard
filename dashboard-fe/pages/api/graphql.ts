@@ -515,12 +515,26 @@ const apolloServer = new ApolloServer({
   resolvers,
   context: ({ req, res }) => {
     if (privateConfig.WITH_AUTH) {
+      let user;
       if (res.hasValidToken) {
-        return { user: { email: res.hasValidToken } };
+        user = { user: { email: res.hasValidToken } };
+      } else {
+        user = auth0.getSession(req, res);
       }
-      const session = auth0.getSession(req, res);
+      if (!user) {
+        res.status(401).json({
+          errors: [
+            {
+              message: "Unauthorized",
+              extensions: { code: "UNAUTHENTICATED" },
+            },
+          ],
+        });
+        res.end();
+        return;
+      }
       return {
-        user: session.user,
+        user: user.user,
       };
     }
   },
@@ -602,7 +616,7 @@ async function handler(req: any, res: any) {
   //   session = auth0.getSession(req, res);
   // }
 
-  const user = await checkForTokens(req.query.token);
+  const user = await checkForTokens(req.query.token || "noToken");
 
   // if (
   //   !tokens ||
