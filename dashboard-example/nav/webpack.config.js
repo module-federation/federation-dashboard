@@ -65,7 +65,8 @@ module.exports = {
         dsl: clientVersion({
           currentHost: "nav",
           remoteName: "dsl",
-          dashboardURL: "http://localhost:3000/api/graphql",
+          dashboardURL:
+            "http://localhost:3000/api/graphql?token=d9a72038-a1cd-4069-85e2-d8f56d84372e",
         }),
         search: "search",
         utils: "utils",
