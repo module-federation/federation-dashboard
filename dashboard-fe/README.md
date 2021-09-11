@@ -1,4 +1,4 @@
-# Federated Modules Dashboard
+# Medusa
 
 ## Feature Flags
 

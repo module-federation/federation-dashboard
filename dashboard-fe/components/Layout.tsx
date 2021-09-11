@@ -194,7 +194,7 @@ const Layout = ({ children }) => {
               color="inherit"
               noWrap
             >
-              <strong>Federated Modules</strong> Dashboard
+              <strong>Medusa</strong>
             </Typography>
           </Link>
           <SearchBox />

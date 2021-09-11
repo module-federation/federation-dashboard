@@ -54,7 +54,7 @@ const Application = () => {
   return (
     <Layout>
       <Head>
-        <title>Federated Modules Dashboard</title>
+        <title>Medusa</title>
       </Head>
       <div className={classes.container}>
         {application && (

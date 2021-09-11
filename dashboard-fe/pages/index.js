@@ -79,7 +79,7 @@ const Home = () => {
   return (
     <Layout>
       <Head>
-        <title>Federated Modules Dashboard</title>
+        <title>Medusa</title>
       </Head>
       {applications && applications.length > 0 && (
         <>
