@@ -3135,8 +3135,8 @@ __metadata:
   linkType: hard
 
 "@module-federation/dashboard-plugin@file:./dashboard-plugin::locator=module-federation-examples-root%40workspace%3A.":
-  version: 2.2.0
-  resolution: "@module-federation/dashboard-plugin@file:./dashboard-plugin#./dashboard-plugin::hash=96f9d1&locator=module-federation-examples-root%40workspace%3A."
+  version: 2.3.0
+  resolution: "@module-federation/dashboard-plugin@file:./dashboard-plugin#./dashboard-plugin::hash=dbddf5&locator=module-federation-examples-root%40workspace%3A."
   dependencies:
     "@babel/generator": ^7.15.4
     "@babel/parser": ^7.15.5
@@ -3150,31 +3150,9 @@ __metadata:
     webpack-sources: ^1.4.3 || ^2.0.0
   bin:
     dashboard-plugin: bin/federation-report.js
-  checksum: fdd1012cdb86276e6572aa5cc840f3cd7e05bce113d364524157952e72b29203b2b9dfa64c6d91bc7fc98b6399da54e80e16968678ce1856052e29f0974335b4
+  checksum: d2d3de41e854cca2458cd7b4fd1c259ef3a6df21b941503fd6a4c73d8b4502d34fec959f4aff2dda3b3c57a129416c9083ad744d43367accb8b53f2d866614e9
   languageName: node
   linkType: hard
-
-"@module-federation/dashboard-plugin@workspace:dashboard-plugin":
-  version: 0.0.0-use.local
-  resolution: "@module-federation/dashboard-plugin@workspace:dashboard-plugin"
-  dependencies:
-    "@babel/generator": ^7.15.4
-    "@babel/parser": ^7.15.5
-    "@babel/traverse": ^7.15.4
-    "@babel/types": ^7.15.4
-    "@module-federation/automatic-vendor-federation": ^1.2.1
-    flatted: ^3.0.0
-    jest: 26.6.3
-    node-fetch: ^2.6.0
-    webpack: 5.52.0
-    webpack-sources: 2.3.1
-  peerDependencies:
-    webpack: 5.52.0
-    webpack-sources: ^1.4.3 || ^2.0.0
-  bin:
-    dashboard-plugin: bin/federation-report.js
-  languageName: unknown
-  linkType: soft
 
 "@module-federation/dashboard@workspace:dashboard-fe":
   version: 0.0.0-use.local
@@ -22268,7 +22246,7 @@ typescript@4.4.2:
   languageName: node
   linkType: hard
 
-"webpack-sources@npm:2.3.1, webpack-sources@npm:^2.2.0":
+"webpack-sources@npm:^2.2.0":
   version: 2.3.1
   resolution: "webpack-sources@npm:2.3.1"
   dependencies:

@@ -203,6 +203,14 @@ const TokenForm = ({ siteSettings }) => {
   )?.[0]?.value;
   const [writeToken, setWriteToken] = useState(writeTokenFound || "");
   const [readToken, setReadToken] = useState(readTokenFound || "");
+  useEffect(() => {
+    if (writeTokenFound) {
+      setWriteToken(writeTokenFound);
+    }
+    if (readTokenFound) {
+      setReadToken(readTokenFound);
+    }
+  }, [writeTokenFound, readTokenFound]);
   const generateWriteToken = () => {
     setWriteToken(uuidv4());
   };
@@ -279,16 +287,22 @@ const TokenForm = ({ siteSettings }) => {
   );
 };
 export function Settings() {
-  const { data = { siteSettings: { tokens: [], webhooks: [] } } } =
-    useQuery(GET_SETTINGS);
-
+  let { data } = useQuery(GET_SETTINGS);
+  const [state, setState] = useState({
+    siteSettings: { tokens: [], webhooks: [] },
+  });
+  useEffect(() => {
+    if (data) {
+      setState(data);
+    }
+  }, [data]);
   return (
     <Layout>
       <>
         <h1>Webhooks</h1>
-        <SettingsForm siteSettings={data.siteSettings} />
+        <SettingsForm siteSettings={state.siteSettings} />
         <h1>Plugin Token</h1>
-        <TokenForm siteSettings={data.siteSettings} />
+        <TokenForm siteSettings={state.siteSettings} />
       </>
     </Layout>
   );
