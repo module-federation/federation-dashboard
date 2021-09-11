@@ -64,9 +64,7 @@ const UserMenu = observer(() => {
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link href="/api/logout" passHref>
-              Logout
-            </Link>
+            <a href="/api/auth/logout">Logout</a>
           </MenuItem>
         </Menu>
       </>

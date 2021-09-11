@@ -279,18 +279,17 @@ const TokenForm = ({ siteSettings }) => {
   );
 };
 export function Settings() {
-  const { data } = useQuery(GET_SETTINGS);
+  const { data = { siteSettings: { tokens: [], webhooks: [] } } } =
+    useQuery(GET_SETTINGS);
 
   return (
     <Layout>
-      {data && (
-        <>
-          <h1>Webhooks</h1>
-          <SettingsForm siteSettings={data.siteSettings} />
-          <h1>Plugin Token</h1>
-          <TokenForm siteSettings={data.siteSettings} />
-        </>
-      )}
+      <>
+        <h1>Webhooks</h1>
+        <SettingsForm siteSettings={data.siteSettings} />
+        <h1>Plugin Token</h1>
+        <TokenForm siteSettings={data.siteSettings} />
+      </>
     </Layout>
   );
 }
