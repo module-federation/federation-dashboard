@@ -23,7 +23,8 @@
     "bin",
     "helpers",
     "FederationDashboardPlugin.js",
-    "convertToGraph.js"
+    "convertToGraph.js",
+    "LICENSE"
   ],
   "dependencies": {
     "@babel/generator": "^7.15.4",
