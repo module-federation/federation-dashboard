@@ -52,7 +52,7 @@ module.exports = {
     new DashboardPlugin({
       publishVersion: require("./package.json").version,
       dashboardURL:
-        "https://federation-dashboard-alpha.vercel.app/api/update?token=ca9e136d-0ec1-4f46-9d11-817d24219531",
+        "http://localhost:3000/api/update?token=ca9e136d-0ec1-4f46-9d11-817d24219531",
       filename: "dashboard.json",
       metadata: {
         baseUrl: "http://localhost:3005",

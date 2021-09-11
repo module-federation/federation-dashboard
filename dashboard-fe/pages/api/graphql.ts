@@ -10,6 +10,7 @@ import auth0 from "../../src/auth0";
 import "../../src/webhooks";
 import url from "native-url";
 import { application } from "express";
+import { MongoClient } from "mongodb";
 
 const typeDefs = gql`
   scalar Date
@@ -514,6 +515,9 @@ const apolloServer = new ApolloServer({
   resolvers,
   context: ({ req, res }) => {
     if (privateConfig.WITH_AUTH) {
+      if (res.hasValidToken) {
+        return { user: { email: res.hasValidToken } };
+      }
       const session = auth0.getSession(req, res);
       return {
         user: session.user,
@@ -559,60 +563,82 @@ const allowCors = async (req: any, res: any, next: any) => {
   return next(req, res);
 };
 
-const checkForTokens = async (session) => {
-  await dbDriver.setup(session?.user?.email);
-  const { tokens } = await dbDriver.siteSettings_get(session?.user?.email);
-  if (Array.isArray(tokens) && tokens.length === 0) {
+const checkForTokens = async (token) => {
+  // create fresh connection for when no user exists to setup driver
+  const client = new MongoClient(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  return new Promise((resolve) => {
+    client.connect(async (err) => {
+      if (err) {
+        console.error("Error during MongoDB database startup");
+        console.error(err.toString());
+        process.exit(1);
+      }
+      const mainDB = client.db("fmdashboard");
+      const siteSettings = mainDB.collection("siteSettings");
+      const settings = await siteSettings.find({}).toArray();
+      const foundSettings = settings.find(({ tokens }) => {
+        const pluginToken = tokens.find((t) => t.key === "readOnlyToken");
+        return pluginToken?.value === token;
+      });
+      resolve(foundSettings);
+    });
+  }).then((foundToken) => {
+    client.close();
+    if (foundToken) {
+      return foundToken.id;
+    }
     return false;
-  } else {
-    return tokens;
-  }
+  });
 };
 
 async function handler(req: any, res: any) {
   await runMiddleware(req, res, allowCors);
   // @ts-expect-error ts-migrate(2554) FIXME: Expected 1 arguments, but got 0.
-  let session: { noAuth: boolean; user: {} } = false;
-  if (process.env.WITH_AUTH) {
-    session = auth0.getSession(req, res);
-  }
+  // let session: { noAuth: boolean; user: {} } = false;
+  // if (process.env.WITH_AUTH && !req.query.token) {
+  //   session = auth0.getSession(req, res);
+  // }
 
-  const tokens = await checkForTokens(session);
+  const user = await checkForTokens(req.query.token);
 
-  if (
-    !tokens ||
-    req?.headers?.Authorization?.find((token) => tokens.includes(token))
-  ) {
-    session = {
-      user: {},
-      noAuth: false,
-    };
-  }
-  const hasValidToken =
-    tokens &&
-    tokens.some((token) => {
-      return req.query.token === token;
-    });
-  if (process.env.NODE_ENV === "production") {
-    console.log("has valid token", hasValidToken);
-  }
+  // if (
+  //   !tokens ||
+  //   req?.headers?.Authorization?.find((token) => tokens.includes(token))
+  // ) {
+  //   session = {
+  //     user: {},
+  //     noAuth: false,
+  //   };
+  // }
+  // const hasValidToken =
+  //   tokens &&
+  //   tokens.some((token) => {
+  //     return req.query.token === token;
+  //   });
+  // if (process.env.NODE_ENV === "production") {
+  //   console.log("has valid token", hasValidToken);
+  // }
+  res.hasValidToken = user;
   // @ts-expect-error ts-migrate(2339) FIXME: Property 'INTERNAL_TOKEN' does not exist on type '... Remove this comment to see the full error message
-  if (!hasValidToken) {
-    //   // @ts-expect-error ts-migrate(2339) FIXME: Property 'user' does not exist on type '{ noAuth: ... Remove this comment to see the full error message
-    //   if (!session || !session.user) {
-    //     // @ts-expect-error ts-migrate(2339) FIXME: Property 'noAuth' does not exist on type '{ noAuth... Remove this comment to see the full error message
-    //     if (!session.noAuth) {
-    //       res.status(401).json({
-    //         errors: [
-    //           {
-    //             message: "Unauthorized",
-    //             extensions: { code: "UNAUTHENTICATED" },
-    //           },
-    //         ],
-    //       });
-    //     }
-    //   }
-  }
+  // if (!hasValidToken) {
+  //   // @ts-expect-error ts-migrate(2339) FIXME: Property 'user' does not exist on type '{ noAuth: ... Remove this comment to see the full error message
+  //   if (!session || !session.user) {
+  //     // @ts-expect-error ts-migrate(2339) FIXME: Property 'noAuth' does not exist on type '{ noAuth... Remove this comment to see the full error message
+  //     if (!session.noAuth) {
+  //       res.status(401).json({
+  //         errors: [
+  //           {
+  //             message: "Unauthorized",
+  //             extensions: { code: "UNAUTHENTICATED" },
+  //           },
+  //         ],
+  //       });
+  //     }
+  //   }
+  // }
 
   await runMiddleware(req, res, apolloHandler);
 }
