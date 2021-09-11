@@ -50,7 +50,8 @@ const checkForTokens = async (token) => {
       const siteSettings = mainDB.collection("siteSettings");
       const settings = await siteSettings.find({}).toArray();
       const foundSettings = settings.find(({ tokens }) => {
-        return tokens?.[0]?.value === token;
+        const pluginToken = tokens.find((t) => t.key === "pluginToken");
+        return pluginToken?.value === token;
       });
       resolve(foundSettings);
     });

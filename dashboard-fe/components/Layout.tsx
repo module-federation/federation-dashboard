@@ -64,7 +64,7 @@ const UserMenu = observer(() => {
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link href="/api/logout" passHref>
+            <Link href="/api/auth/logout" prefetch={false}>
               Logout
             </Link>
           </MenuItem>

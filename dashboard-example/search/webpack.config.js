@@ -67,7 +67,8 @@ module.exports = {
         dsl: clientVersion({
           currentHost: "search",
           remoteName: "dsl",
-          dashboardURL: "http://localhost:3000/api/graphql",
+          dashboardURL:
+            "http://localhost:3000/api/graphql?token=d9a72038-a1cd-4069-85e2-d8f56d84372e",
         }),
         home: "home",
         utils: "utils",
@@ -85,7 +86,7 @@ module.exports = {
       publishVersion: require("./package.json").version,
       filename: "dashboard.json",
       dashboardURL:
-        "https://federation-dashboard-alpha.vercel.app/api/update?token=ca9e136d-0ec1-4f46-9d11-817d24219531",
+        "http://localhost:3000/api/update?token=ca9e136d-0ec1-4f46-9d11-817d24219531",
       metadata: {
         baseUrl: "http://localhost:3004",
         source: {

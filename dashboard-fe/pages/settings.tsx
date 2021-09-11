@@ -63,6 +63,9 @@ const useStyles = makeStyles({
   textField: {
     marginTop: "1em",
   },
+  tokenField: {
+    minWidth: "450px",
+  },
   pizzaImage: {
     width: "100%",
   },
@@ -174,6 +177,7 @@ const TokenForm = ({ siteSettings }) => {
       ...siteSettings,
     }),
   });
+  const classes = useStyles();
 
   const [setSettings] = useMutation(SET_SETTINGS);
 
@@ -191,22 +195,33 @@ const TokenForm = ({ siteSettings }) => {
     });
   };
 
-  const [token, setToken] = useState(siteSettings.tokens?.[0]?.value || "");
-  const generateToken = () => {
-    setToken(uuidv4());
+  const writeTokenFound = siteSettings.tokens?.filter(
+    (t) => t.key === "pluginToken"
+  )?.[0]?.value;
+  const readTokenFound = siteSettings.tokens?.filter(
+    (t) => t.key === "readOnlyToken"
+  )?.[0]?.value;
+  const [writeToken, setWriteToken] = useState(writeTokenFound || "");
+  const [readToken, setReadToken] = useState(readTokenFound || "");
+  const generateWriteToken = () => {
+    setWriteToken(uuidv4());
+  };
+  const generateReadToken = () => {
+    setReadToken(uuidv4());
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <FormControl>
-            <InputLabel htmlFor="pluginToken">Dashboard Token</InputLabel>
+            <InputLabel htmlFor="pluginToken">Write Token</InputLabel>
             <Input
+              className={classes.tokenField}
               name="pluginToken"
               id="pluginToken"
               aria-describedby="my-helper-text"
               inputRef={register({ required: true })}
-              value={token}
+              value={writeToken}
             />
 
             <FormHelperText id="my-helper-text">
@@ -216,8 +231,41 @@ const TokenForm = ({ siteSettings }) => {
             {errors.pluginToken && <span>This field is required</span>}
           </FormControl>
           <FormControl>
-            <Button variant="contained" color="primary" onClick={generateToken}>
-              Generate Token
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={generateWriteToken}
+            >
+              Generate Write Token
+            </Button>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <FormControl>
+            <InputLabel htmlFor="readOnlyToken">Read Only Token</InputLabel>
+            <Input
+              className={classes.tokenField}
+              name="readOnlyToken"
+              id="readOnlyToken"
+              aria-describedby="read only token"
+              inputRef={register({ required: true })}
+              value={readToken}
+            />
+
+            <FormHelperText id="read-only-reason">
+              Needed to bypass auth gates and provide read only access to
+              consumers
+              <br />
+            </FormHelperText>
+            {errors.pluginToken && <span>This field is required</span>}
+          </FormControl>
+          <FormControl>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={generateReadToken}
+            >
+              Generate Read Token
             </Button>
           </FormControl>
         </Grid>
@@ -231,18 +279,17 @@ const TokenForm = ({ siteSettings }) => {
   );
 };
 export function Settings() {
-  const { data } = useQuery(GET_SETTINGS);
+  const { data = { siteSettings: { tokens: [], webhooks: [] } } } =
+    useQuery(GET_SETTINGS);
 
   return (
     <Layout>
-      {data && (
-        <>
-          <h1>Webhooks</h1>
-          <SettingsForm siteSettings={data.siteSettings} />
-          <h1>Plugin Token</h1>
-          <TokenForm siteSettings={data.siteSettings} />
-        </>
-      )}
+      <>
+        <h1>Webhooks</h1>
+        <SettingsForm siteSettings={data.siteSettings} />
+        <h1>Plugin Token</h1>
+        <TokenForm siteSettings={data.siteSettings} />
+      </>
     </Layout>
   );
 }

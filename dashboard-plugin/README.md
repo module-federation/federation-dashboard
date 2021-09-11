@@ -17,12 +17,15 @@ const DashboardPlugin = require("@module-federation/dashboard-plugin");
 ```js
 plugins: [
   ...new DashboardPlugin({
-    dashboardURL: "http://localhost:3000/api/update",
+    dashboardURL:
+      "https://federation-dashboard-alpha.vercel.app/api/update?token=writeToken",
   }),
 ];
 ```
 
-This will post the `ModuleFederationPlugin` metrics to the update endpoint at `http://localhost:3000/api/update`.
+This will post the `ModuleFederationPlugin` metrics to the update endpoint at `https://federation-dashboard-alpha.vercel.app/api/update?token=writeToken`.
+
+**In order to send data to Medusa, you need to create a write token.** It can be configured here: https://federation-dashboard-alpha.vercel.app/settings
 
 There are also other options:
 
@@ -41,7 +44,8 @@ Metadata is _optional_ and is specified as an object.
 ```js
 plugins: [
   ...new DashboardPlugin({
-    dashboardURL: "http://localhost:3000/api/update",
+    dashboardURL:
+      "https://federation-dashboard-alpha.vercel.app/api/update?token=writeToken",
     metadata: {
       source: {
         url: "http://github.com/myorg/myproject/tree/master",

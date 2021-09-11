@@ -141,6 +141,14 @@ const Home = () => {
             </a>
             .
           </Typography>
+          <Typography>
+            Go to{" "}
+            <Link href="/settings" passHref>
+              settings
+            </Link>{" "}
+            and configure read/write tokens. You will not be able to connect to
+            Medusa without API tokens
+          </Typography>
           <Typography className={classes.helpParagraph}>
             If you have an application that you want to configure to import or
             export Federated Modules then use the{" "}

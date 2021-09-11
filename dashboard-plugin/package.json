@@ -1,6 +1,6 @@
 {
   "name": "@module-federation/dashboard-plugin",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "main": "FederationDashboardPlugin.js",
   "bin": "bin/federation-report.js",
   "license": "Apache-2.0",
@@ -23,7 +23,8 @@
     "bin",
     "helpers",
     "FederationDashboardPlugin.js",
-    "convertToGraph.js"
+    "convertToGraph.js",
+    "LICENSE"
   ],
   "dependencies": {
     "@babel/generator": "^7.15.4",
