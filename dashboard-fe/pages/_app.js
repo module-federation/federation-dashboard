@@ -5,6 +5,7 @@ if (!process.browser) {
 import "cross-fetch/polyfill";
 import { ApolloProvider } from "@apollo/client";
 import Head from "next/head";
+import Script from "next/script";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import store from "../src/store";
 import { publicConfig } from "../src/config";
@@ -35,6 +36,17 @@ function MyApp(props) {
       <ApolloProvider client={store.client}>
         <Component {...pageProps} />
       </ApolloProvider>
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-EY5KSYXPTL" />
+      <Script
+        id="show-banner"
+        dangerouslySetInnerHTML={{
+          __html: `window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-EY5KSYXPTL');`,
+        }}
+      />
     </React.Fragment>
   );
 }
