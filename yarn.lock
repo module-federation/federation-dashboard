@@ -1521,7 +1521,7 @@ __metadata:
     react-dom: 17.0.2
     serve: 11.3.2
     style-loader: 2.0.0
-    webpack: 5.52.0
+    webpack: 5.52.1
     webpack-cli: 4.7.2
     webpack-dev-server: 3.11.2
   languageName: unknown
@@ -1548,7 +1548,7 @@ __metadata:
     react-dom: 17.0.2
     serve: 11.3.2
     style-loader: 2.0.0
-    webpack: 5.52.0
+    webpack: 5.52.1
     webpack-cli: 4.7.2
     webpack-dev-server: 3.11.2
   languageName: unknown
@@ -1575,7 +1575,7 @@ __metadata:
     react-dom: 17.0.2
     serve: 11.3.2
     style-loader: 2.0.0
-    webpack: 5.52.0
+    webpack: 5.52.1
     webpack-cli: 4.7.2
     webpack-dev-server: 3.11.2
   languageName: unknown
@@ -1601,7 +1601,7 @@ __metadata:
     react-dom: 17.0.2
     serve: 11.3.2
     style-loader: 2.0.0
-    webpack: 5.52.0
+    webpack: 5.52.1
     webpack-cli: 4.7.2
     webpack-dev-server: 3.11.2
   languageName: unknown
@@ -1617,7 +1617,7 @@ __metadata:
     "@webpack-cli/serve": 1.5.2
     babel-loader: 8.2.2
     serve: 11.3.2
-    webpack: 5.52.0
+    webpack: 5.52.1
     webpack-cli: 4.7.2
     webpack-dev-server: 3.11.2
   languageName: unknown
@@ -3136,7 +3136,7 @@ __metadata:
 
 "@module-federation/dashboard-plugin@file:./dashboard-plugin::locator=module-federation-examples-root%40workspace%3A.":
   version: 2.3.0
-  resolution: "@module-federation/dashboard-plugin@file:./dashboard-plugin#./dashboard-plugin::hash=dbddf5&locator=module-federation-examples-root%40workspace%3A."
+  resolution: "@module-federation/dashboard-plugin@file:./dashboard-plugin#./dashboard-plugin::hash=cb7f53&locator=module-federation-examples-root%40workspace%3A."
   dependencies:
     "@babel/generator": ^7.15.4
     "@babel/parser": ^7.15.5
@@ -3146,11 +3146,11 @@ __metadata:
     flatted: ^3.0.0
     node-fetch: ^2.6.0
   peerDependencies:
-    webpack: 5.52.0
+    webpack: 5.52.1
     webpack-sources: ^1.4.3 || ^2.0.0
   bin:
     dashboard-plugin: bin/federation-report.js
-  checksum: d2d3de41e854cca2458cd7b4fd1c259ef3a6df21b941503fd6a4c73d8b4502d34fec959f4aff2dda3b3c57a129416c9083ad744d43367accb8b53f2d866614e9
+  checksum: fe573489c8ecd0eb7b0d46b466d937a77d50a19954e308d1ca0eb9add1831835b5e23c232a75283a65d78c8778639ff57887d443c8911e6964786ab5a07b98cc
   languageName: node
   linkType: hard
 
@@ -3239,7 +3239,7 @@ __metadata:
     token-generator: ^1.0.0
     typescript: 4.4.2
     uuid: ^8.3.2
-    webpack: 5.52.0
+    webpack: 5.52.1
     webpack-bundle-analyzer: 4.4.2
     webpack-merge: 5.8.0
     workerpool: 6.1.5
@@ -22263,9 +22263,9 @@ typescript@4.4.2:
   languageName: node
   linkType: hard
 
-"webpack@npm:5.52.0":
-  version: 5.52.0
-  resolution: "webpack@npm:5.52.0"
+"webpack@npm:5.52.1":
+  version: 5.52.1
+  resolution: "webpack@npm:5.52.1"
   dependencies:
     "@types/eslint-scope": ^3.7.0
     "@types/estree": ^0.0.50
@@ -22296,7 +22296,7 @@ typescript@4.4.2:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: fe7cbb761b251a6885d67971f8763a9675ca4777ff863be4cbe76a6ab22a3f810be2728fe7b9c31f74259001859a3915ad581f0e4aca5255cdb13ccab3472f00
+  checksum: 3a509d571ec7b7a1f21d364c7abbfa994bc0bd897bf57d690e56ad3a0b438e0065255ec92720d1839a8ea2ad526041306d0b0f7a7efaf8789f37d18b20cb20a3
   languageName: node
   linkType: hard
 
