@@ -110,11 +110,15 @@ module.exports = {
       versionChangeWebhook: "http://cnn.com/",
       metadata: {
         clientUrl: "http://localhost:3000",
-        baseUrl: "http://localhost:3001",
+        baseUrl: process.env.VERCEL_URL
+          ? process.env.VERCEL_URL
+          : "http://localhost:3001",
         source: {
           url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home",
         },
-        remote: "http://localhost:3001/remoteEntry.js",
+        remote: process.env.VERCEL_URL
+          ? process.env.VERCEL_URL + "/remoteEntry.js"
+          : "http://localhost:3001/remoteEntry.js",
       },
     }),
   ],
