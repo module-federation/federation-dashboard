@@ -153,9 +153,24 @@ const NewApp = () => {
   );
   const boilerplate = Template.asString([
     'const { ModuleFederationPlugin } = require("webpack").container;',
+    'const DashboardPlugin = require("@module-federation/dashboard-plugin");',
     automaticPreamble,
   ]).replace(/^\t/gm, "  ");
 
+  const dashboardPlugin = Template.asString(
+    Template.indent([
+      `new DashboardPlugin(`,
+      Template.indent([
+        `publishVersion: require("./package.json").version`,
+        `dashboardURL: "https://federation-dashboard-alpha.vercel.app/api/update?token={writeToken}"`,
+        `name: "${watch("name")}",`,
+        `metadata: {`,
+        Template.indent([`remote: "http://localhost:3001/remoteEntry.js",`]),
+        `}`,
+      ]),
+      `)`,
+    ])
+  ).replace(/\t/gm, "  ");
   const codeSample = Template.asString([pluginTemplate]).replace(/\t/g, "  ");
   return (
     <Layout>
@@ -185,17 +200,6 @@ const NewApp = () => {
               className={classes.textField}
             />
 
-            {/*<Controller*/}
-            {/*  as={*/}
-            {/*    <FormControlLabel*/}
-            {/*      control={<Checkbox type="checkbox" />}*/}
-            {/*      label="Use automatic federation"*/}
-            {/*      key={"automaticFederation"}*/}
-            {/*    />*/}
-            {/*  }*/}
-            {/*  control={control}*/}
-            {/*  name="automaticFederation"*/}
-            {/*/>*/}
             {!watch("automaticFederation") && (
               <TextField
                 name="shared"
@@ -249,6 +253,7 @@ const NewApp = () => {
                   {`plugins: [`}
                 </Code>
                 <GeneratedCode>{codeSample}</GeneratedCode>
+                <GeneratedCode>{dashboardPlugin}</GeneratedCode>
                 <Code>{`]`}</Code>
               </CodeWrapper>
             </Paper>
