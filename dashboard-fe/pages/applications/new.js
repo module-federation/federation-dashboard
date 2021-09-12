@@ -27,6 +27,10 @@ const GET_APPS = gql`
       applications {
         id
         name
+        metadata {
+          name
+          value
+        }
         versions(latest: true, environment: $environment) {
           remotes {
             name
@@ -73,17 +77,19 @@ const NewApp = () => {
       environment: store.environment,
     },
   });
+  console.log(data);
   const classes = useStyles();
 
   const externalApplications = _.get(data, "groups[0].applications", []);
 
   const scriptTags = applications
-    .map(
-      (n) =>
-        `<script src="${
-          externalApplications.find(({ name }) => name === n).versions[0].remote
-        }"></script>`
-    )
+    .map((n) => {
+      return `<script data-webpack="${n}" src="${
+        externalApplications
+          .find(({ name }) => name === n)
+          ?.metadata?.find(({ name }) => name === "remote")?.value
+      }"></script>`;
+    })
     .join("\n");
 
   const remotesCode =
