@@ -66,7 +66,7 @@ module.exports = {
           currentHost: "nav",
           remoteName: "dsl",
           dashboardURL:
-            "http://localhost:3000/api/graphql?token=d9a72038-a1cd-4069-85e2-d8f56d84372e",
+            "https://federation-dashboard-alpha.vercel.app/api/update?token=ca9e136d-0ec1-4f46-9d11-817d24219531",
         }),
         search: "search",
         utils: "utils",
@@ -92,7 +92,9 @@ module.exports = {
         source: {
           url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav",
         },
-        remote: "http://localhost:3003/remoteEntry.js",
+        remote: process.env.VERCEL_URL
+          ? process.env.VERCEL_URL + "/remoteEntry.js"
+          : "http://localhost:3003/remoteEntry.js",
       },
     }),
   ],
