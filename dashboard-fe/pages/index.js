@@ -142,12 +142,14 @@ const Home = () => {
             .
           </Typography>
           <Typography>
+            <br />
             Go to{" "}
             <Link href="/settings" passHref>
               settings
             </Link>{" "}
             and configure read/write tokens. You will not be able to connect to
             Medusa without API tokens
+            <br />
           </Typography>
           <Typography className={classes.helpParagraph}>
             If you have an application that you want to configure to import or
@@ -156,6 +158,17 @@ const Home = () => {
               <a>Configuration Wizard</a>
             </Link>
             .
+            <br />
+          </Typography>
+          <Typography variant="h5">
+            This is <strong>alpha</strong> software!
+          </Typography>
+          <Typography>
+            Some features are incomplete. We will keep improving the platform
+            and soon add a roadmap page. <br />
+            Many are looking forward to Remote Module Management. <br />
+            Medusa has this capability built-in, but we have not yet released
+            the capability in the webpack plugin.
           </Typography>
         </>
       )}
