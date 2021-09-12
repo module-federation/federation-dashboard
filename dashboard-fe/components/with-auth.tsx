@@ -1,15 +1,12 @@
-import React, { Component } from "react";
-
-import auth0 from "../src/auth0";
-import createLoginUrl from "../src/url-helper";
-import RedirectToLogin from "./login-redirect";
+import React, { Component, FC } from "react";
 import { publicConfig } from "../src/config";
 import { useUser } from "@auth0/nextjs-auth0";
 import { UserProvider } from "@auth0/nextjs-auth0";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-export default function withAuth(InnerComponent) {
+
+export default function withAuth(InnerComponent: FC) {
   if (!publicConfig.WITH_AUTH) {
-    const NoAuth = (props) => {
+    const NoAuth = (props: object) => {
       return <InnerComponent {...props} user={null} />;
     };
     return NoAuth;
