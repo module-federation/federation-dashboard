@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
-console.log(process.env);
+console.log("the url is ", process.env.VERCEL_URL);
 module.exports = {
   entry: "./src/index",
   mode: "development",
