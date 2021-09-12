@@ -3,6 +3,7 @@ const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
 console.log("the url is ", process.env.VERCEL_URL);
+console.log(process.env);
 module.exports = {
   entry: "./src/index",
   mode: "development",
