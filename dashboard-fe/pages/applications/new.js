@@ -20,7 +20,6 @@ import { observer } from "mobx-react";
 import _ from "lodash";
 
 import store from "../../src/store";
-import withAuth from "../../components/with-auth";
 
 const GET_APPS = gql`
   query ($group: String!, $environment: String!) {
@@ -29,7 +28,9 @@ const GET_APPS = gql`
         id
         name
         versions(latest: true, environment: $environment) {
-          remote
+          remotes {
+            name
+          }
         }
       }
     }
@@ -64,6 +65,7 @@ const NewApp = () => {
       automaticFederation: true,
     },
   });
+
   const [applications, applicationsSet] = React.useState([]);
   const { data } = useQuery(GET_APPS, {
     variables: {
@@ -177,21 +179,32 @@ const NewApp = () => {
       <Head>
         <title>New Federated Module Application</title>
       </Head>
-      {data && (
-        <Grid container className={classes.container} spacing={3}>
-          <Grid item xs={3}>
-            <Typography variant="h5">Export Modules</Typography>
+      <Grid container className={classes.container} spacing={3}>
+        <Grid item xs={3}>
+          <Typography variant="h5">Export Modules</Typography>
+          <TextField
+            name="name"
+            label="Application Name"
+            fullWidth
+            variant="outlined"
+            inputRef={register({ required: true })}
+            className={classes.textField}
+          />
+          <TextField
+            name="files"
+            label="Files to export"
+            helperText="comma seperated"
+            variant="outlined"
+            fullWidth
+            multiline
+            inputRef={register()}
+            className={classes.textField}
+          />
+
+          {!watch("automaticFederation") && (
             <TextField
-              name="name"
-              label="Application Name"
-              fullWidth
-              variant="outlined"
-              inputRef={register({ required: true })}
-              className={classes.textField}
-            />
-            <TextField
-              name="files"
-              label="Files to export"
+              name="shared"
+              label="Modules to share"
               helperText="comma seperated"
               variant="outlined"
               fullWidth
@@ -199,65 +212,54 @@ const NewApp = () => {
               inputRef={register()}
               className={classes.textField}
             />
-
-            {!watch("automaticFederation") && (
-              <TextField
-                name="shared"
-                label="Modules to share"
-                helperText="comma seperated"
-                variant="outlined"
-                fullWidth
-                multiline
-                inputRef={register()}
-                className={classes.textField}
-              />
-            )}
-            {watch("automaticFederation") && (
-              <TextField
-                name="exclude"
-                label="Modules to exclude"
-                helperText="comma seperated"
-                variant="outlined"
-                fullWidth
-                multiline
-                inputRef={register()}
-                className={classes.textField}
-              />
-            )}
-            {watch("automaticFederation") && (
-              <TextField
-                name="singleton"
-                label="Singletons"
-                helperText="comma seperated"
-                variant="outlined"
-                fullWidth
-                multiline
-                inputRef={register()}
-                className={classes.textField}
-              />
-            )}
-          </Grid>
-          <Grid item xs={9}>
-            <Paper elevation={3} className={classes.configSection}>
-              <Typography variant="h5" className={classes.title}>
-                Webpack Configuration
-              </Typography>
-              <Typography variant="body1" className={classes.explanation}>
-                Add this code to your Webpack configuration file.
-              </Typography>
-              <CodeWrapper>
-                <GeneratedCode>{boilerplate}</GeneratedCode>
-                <Code>
-                  {`// webpack config`}
-                  <br />
-                  {`plugins: [`}
-                </Code>
-                <GeneratedCode>{codeSample}</GeneratedCode>
-                <GeneratedCode>{dashboardPlugin}</GeneratedCode>
-                <Code>{`]`}</Code>
-              </CodeWrapper>
-            </Paper>
-          </Grid>
+          )}
+          {watch("automaticFederation") && (
+            <TextField
+              name="exclude"
+              label="Modules to exclude"
+              helperText="comma seperated"
+              variant="outlined"
+              fullWidth
+              multiline
+              inputRef={register()}
+              className={classes.textField}
+            />
+          )}
+          {watch("automaticFederation") && (
+            <TextField
+              name="singleton"
+              label="Singletons"
+              helperText="comma seperated"
+              variant="outlined"
+              fullWidth
+              multiline
+              inputRef={register()}
+              className={classes.textField}
+            />
+          )}
+        </Grid>
+        <Grid item xs={9}>
+          <Paper elevation={3} className={classes.configSection}>
+            <Typography variant="h5" className={classes.title}>
+              Webpack Configuration
+            </Typography>
+            <Typography variant="body1" className={classes.explanation}>
+              Add this code to your Webpack configuration file.
+            </Typography>
+            <CodeWrapper>
+              <GeneratedCode>{boilerplate}</GeneratedCode>
+              <Code>
+                {`// webpack config`}
+                <br />
+                {`plugins: [`}
+              </Code>
+              <GeneratedCode>{codeSample}</GeneratedCode>
+              <GeneratedCode>{dashboardPlugin}</GeneratedCode>
+              <Code>{`]`}</Code>
+            </CodeWrapper>
+          </Paper>
+        </Grid>
+        {externalApplications.length > 0 && (
           <Grid item xs={3}>
             <Typography variant="h5">Import Modules</Typography>
             <FormGroup aria-label="Imported applications">
@@ -284,23 +286,23 @@ const NewApp = () => {
               ))}
             </FormGroup>
           </Grid>
-          <Grid item xs={9}>
-            {applications.length > 0 && (
-              <Paper elevation={3} className={classes.configSection}>
-                <Typography variant="h5" className={classes.title}>
-                  Script Tags
-                </Typography>
-                <Typography variant="body1" className={classes.explanation}>
-                  Add these script tags to your page template.
-                </Typography>
-                <CodeWrapper>
-                  <GeneratedCode>{scriptTags}</GeneratedCode>
-                </CodeWrapper>
-              </Paper>
-            )}
-          </Grid>
+        )}
+        <Grid item xs={9}>
+          {applications.length > 0 && (
+            <Paper elevation={3} className={classes.configSection}>
+              <Typography variant="h5" className={classes.title}>
+                Script Tags
+              </Typography>
+              <Typography variant="body1" className={classes.explanation}>
+                Add these script tags to your page template.
+              </Typography>
+              <CodeWrapper>
+                <GeneratedCode>{scriptTags}</GeneratedCode>
+              </CodeWrapper>
+            </Paper>
+          )}
         </Grid>
-      )}
+      </Grid>
     </Layout>
   );
 };
