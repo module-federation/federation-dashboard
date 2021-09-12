@@ -16,7 +16,7 @@
     ]
   },
   "resolutions": {
-    "@module-federation/dashboard-plugin": "../dashboard-plugin"
+    "@module-federation/dashboard-plugin": "^2.3.0"
   },
   "devDependencies": {
     "concurrently": "6.2.1"

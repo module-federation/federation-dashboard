@@ -1,5 +1,5 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const DashboardPlugin = require("../../dashboard-plugin/FederationDashboardPlugin");
+const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const clientVersion = require("@module-federation/dashboard-plugin/client-version");
 
 const { ModuleFederationPlugin } = require("webpack").container;
@@ -86,7 +86,7 @@ module.exports = {
       publishVersion: require("./package.json").version,
       filename: "dashboard.json",
       dashboardURL:
-        "http://localhost:3000/api/update?token=ca9e136d-0ec1-4f46-9d11-817d24219531",
+        "https://federation-dashboard-alpha.vercel.app/api/update?token=ca9e136d-0ec1-4f46-9d11-817d24219531",
       metadata: {
         baseUrl: "http://localhost:3004",
         source: {

@@ -77,7 +77,7 @@ const NewApp = () => {
       environment: store.environment,
     },
   });
-  console.log(data);
+
   const classes = useStyles();
 
   const externalApplications = _.get(data, "groups[0].applications", []);
