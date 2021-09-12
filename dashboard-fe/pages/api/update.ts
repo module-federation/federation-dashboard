@@ -66,7 +66,7 @@ const checkForTokens = async (token) => {
 
 export default async (req: any, res: any) => {
   let user = privateConfig.WITH_AUTH
-    ? await checkForTokens(req?.query?.token)
+    ? await checkForTokens(req.query.token || "noToken")
     : true;
   // if (tokens) {
   //   tokens = tokens.map((token) => {
