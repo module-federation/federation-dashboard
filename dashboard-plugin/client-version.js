@@ -5,8 +5,6 @@ function injectScript(d, s, id, override) {
     return o.name === "baseUrl";
   });
 
-  console.log("logging metadata", metadata);
-
   var remoteName = id.replace("federation-dynamic-remote-", "");
   const promise = new Promise((resolve) => {
     var js,
@@ -95,6 +93,7 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
   })
   }).then(function(data){
       var metadata;
+      console.log(data);
       ${injectScript.toString()}
       if(data && data.groups && data.groups[0] && data.groups[0].applications && data.groups[0].applications[0]) {
         var currentApp = data.groups[0].applications[0];
