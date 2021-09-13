@@ -33,7 +33,7 @@
     "@babel/types": "^7.15.4",
     "@module-federation/automatic-vendor-federation": "^1.2.1",
     "flatted": "^3.0.0",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^3.0.0"
   },
   "peerDependencies": {
     "webpack": "5.52.1",
