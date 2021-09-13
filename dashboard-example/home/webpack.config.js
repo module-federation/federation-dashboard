@@ -123,13 +123,13 @@ module.exports = {
       metadata: {
         clientUrl: "http://localhost:3000",
         baseUrl: process.env.VERCEL_URL
-          ? process.env.VERCEL_URL
+          ? "https://" + process.env.VERCEL_URL
           : "http://localhost:3001",
         source: {
           url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home",
         },
         remote: process.env.VERCEL_URL
-          ? process.env.VERCEL_URL + "/remoteEntry.js"
+          ? "https://" + process.env.VERCEL_URL + "/remoteEntry.js"
           : "http://localhost:3001/remoteEntry.js",
       },
     }),

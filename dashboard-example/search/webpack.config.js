@@ -88,11 +88,15 @@ module.exports = {
       dashboardURL:
         "https://federation-dashboard-alpha.vercel.app/api/update?token=ca9e136d-0ec1-4f46-9d11-817d24219531",
       metadata: {
-        baseUrl: "http://localhost:3004",
+        baseUrl: process.env.VERCEL_URL
+          ? "https://" + process.env.VERCEL_URL
+          : "http://localhost:3004",
         source: {
           url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search",
         },
-        remote: "http://localhost:3004/remoteEntry.js",
+        remote: process.env.VERCEL_URL
+          ? "https://" + process.env.VERCEL_URL + "/remoteEntry.js"
+          : "http://localhost:3004/remoteEntry.js",
       },
     }),
   ],
