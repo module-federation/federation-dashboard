@@ -3136,7 +3136,7 @@ __metadata:
 
 "@module-federation/dashboard-plugin@file:./dashboard-plugin::locator=module-federation-examples-root%40workspace%3A.":
   version: 2.3.0
-  resolution: "@module-federation/dashboard-plugin@file:./dashboard-plugin#./dashboard-plugin::hash=02072b&locator=module-federation-examples-root%40workspace%3A."
+  resolution: "@module-federation/dashboard-plugin@file:./dashboard-plugin#./dashboard-plugin::hash=1bae70&locator=module-federation-examples-root%40workspace%3A."
   dependencies:
     "@babel/generator": ^7.15.4
     "@babel/parser": ^7.15.5
@@ -3150,7 +3150,7 @@ __metadata:
     webpack-sources: ^1.4.3 || ^2.0.0
   bin:
     dashboard-plugin: bin/federation-report.js
-  checksum: 68080f2f48f68439f8468bb1e8c00ed96cf675c6d6ae345c0d59ffcf5ab5442bb3f879ba23f237e18100b0a15cacbe2a65fddbf10fd3abd78675f00177cea1e7
+  checksum: ccbbd3c9db9bb8a56f0be27c4bafd8805fe6baaeb56728b23ab737169e044d765660b36ba2b5d14a520c46b7d29c193607203c2ee33a10e8876c0252dd597005
   languageName: node
   linkType: hard
 
