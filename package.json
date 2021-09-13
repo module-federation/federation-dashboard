@@ -9,11 +9,12 @@
   "workspaces": {
     "packages": [
       "dashboard-example",
-      "dashboard-fe"
+      "dashboard-example/*",
+      "dashboard-fe",
+      "dashboard-plugin"
     ]
   },
   "resolutions": {
-    "@module-federation/dashboard-plugin": "./dashboard-plugin",
     "webpack-cli": "4.7.2",
     "@webpack-cli/serve": "1.5.2"
   },
