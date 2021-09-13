@@ -1,7 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
-const clientVersion = require("@module-federation/dashboard-plugin/client-version");
-
+const clientVersion = require("../../dashboard-plugin/client-version");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
 
