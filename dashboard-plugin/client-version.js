@@ -5,6 +5,8 @@ function injectScript(d, s, id, override) {
     return o.name === "baseUrl";
   });
 
+  console.log("logging metadata", metadata);
+
   var remoteName = id.replace("federation-dynamic-remote-", "");
   const promise = new Promise((resolve) => {
     var js,
