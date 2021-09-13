@@ -66,7 +66,7 @@ module.exports = {
           currentHost: "nav",
           remoteName: "dsl",
           dashboardURL:
-            "https://federation-dashboard-alpha.vercel.app/api/update?token=ca9e136d-0ec1-4f46-9d11-817d24219531",
+            "https://federation-dashboard-alpha.vercel.app/api/graphql?token=ca9e136d-0ec1-4f46-9d11-817d24219531",
         }),
         search: "search",
         utils: "utils",
