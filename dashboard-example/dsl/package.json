@@ -1,6 +1,6 @@
 {
   "name": "@dashboard/dsl",
-  "version": "0.4.1",
+  "version": "0.4.3",
   "private": true,
   "devDependencies": {
     "@babel/core": "7.15.5",
