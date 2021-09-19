@@ -235,7 +235,7 @@ export default class DriverMongoDB implements Driver {
         environment,
         version,
       });
-      applicationTableCache.set(cacheKey, versions);
+      // applicationTableCache.set(cacheKey, versions);
     }
     return versions.length > 0 ? versions[0] : null;
   }
