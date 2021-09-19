@@ -54,7 +54,7 @@ function injectScript(d, s, id, override) {
 
 module.exports = ({ currentHost, remoteName, dashboardURL }) => {
   return `promise new Promise((resolve, reject) => {
-   fetch("${dashboardURL}&currentHost=${currentHost}&remote=${remoteName}", {
+   fetch("${dashboardURL}&currentHost=${currentHost}&remoteName=${remoteName}", {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
