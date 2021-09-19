@@ -228,15 +228,15 @@ export default class DriverMongoDB implements Driver {
     const cacheKey = `${this.hashedNamespace}-${sha1(
       JSON.stringify({ applicationId, environment, version })
     )}`;
-    let versions = applicationTableCache.get(cacheKey);
-    if (!versions) {
-      versions = await this.applicationVersionsTable.search({
-        applicationId,
-        environment,
-        version,
-      });
-      // applicationTableCache.set(cacheKey, versions);
-    }
+    // let versions = applicationTableCache.get(cacheKey);
+    // if (!versions) {
+    let versions = await this.applicationVersionsTable.search({
+      applicationId,
+      environment,
+      version,
+    });
+    // applicationTableCache.set(cacheKey, versions);
+    // }
     return versions.length > 0 ? versions[0] : null;
   }
 
@@ -255,11 +255,11 @@ export default class DriverMongoDB implements Driver {
       q.version = version;
     }
     const cacheKey = `${this.hashedNamespace}-${sha1(JSON.stringify(q))}`;
-    let versions = applicationTableCache.get(cacheKey);
-    if (!versions) {
-      versions = await this.applicationVersionsTable.search(q);
-      applicationTableCache.set(cacheKey, versions);
-    }
+    // let versions = applicationTableCache.get(cacheKey);
+    // if (!versions) {
+    let versions = await this.applicationVersionsTable.search(q);
+    // applicationTableCache.set(cacheKey, versions);
+    // }
     return versions.length > 0 ? versions : [];
   }
 
