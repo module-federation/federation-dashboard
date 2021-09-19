@@ -81,23 +81,25 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
-    new DashboardPlugin({
-      publishVersion: require("./package.json").version,
-      filename: "dashboard.json",
-      dashboardURL:
-        "https://federation-dashboard-alpha.vercel.app/api/update?token=ca9e136d-0ec1-4f46-9d11-817d24219531",
-      versionChangeWebhook: "http://cnn.com/",
-      metadata: {
-        baseUrl: process.env.VERCEL_URL
-          ? "https://" + process.env.VERCEL_URL
-          : "http://localhost:3003",
-        source: {
-          url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav",
-        },
-        remote: process.env.VERCEL_URL
-          ? "https://" + process.env.VERCEL_URL + "/remoteEntry.js"
-          : "http://localhost:3003/remoteEntry.js",
-      },
-    }),
+    process.env.VERCEL_GIT_COMMIT_REF === "master"
+      ? new DashboardPlugin({
+          publishVersion: require("./package.json").version,
+          filename: "dashboard.json",
+          dashboardURL:
+            "https://federation-dashboard-alpha.vercel.app/api/update?token=ca9e136d-0ec1-4f46-9d11-817d24219531",
+          versionChangeWebhook: "http://cnn.com/",
+          metadata: {
+            baseUrl: process.env.VERCEL_URL
+              ? "https://" + process.env.VERCEL_URL
+              : "http://localhost:3003",
+            source: {
+              url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/nav",
+            },
+            remote: process.env.VERCEL_URL
+              ? "https://" + process.env.VERCEL_URL + "/remoteEntry.js"
+              : "http://localhost:3003/remoteEntry.js",
+          },
+        })
+      : () => {},
   ],
 };
