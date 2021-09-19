@@ -284,14 +284,8 @@ export default class DriverMongoDB implements Driver {
 
   async applicationVersion_update(version: ApplicationVersion): Promise<any> {
     Joi.assert(version, applicationVersionSchema);
-    const cacheKey = `${this.hashedNamespace}-${sha1(
-      JSON.stringify({
-        applicationId: version.applicationId,
-        environment: version.environment,
-        version: version.version,
-      })
-    )}`;
-    applicationTableCache.del(cacheKey);
+
+    applicationTableCache.reset();
     await this.applicationVersionsTable.update(
       {
         applicationId: version.applicationId,

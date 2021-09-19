@@ -646,6 +646,7 @@ async function handler(req: any, res: any) {
   // if (process.env.WITH_AUTH && !req.query.token) {
   //   session = auth0.getSession(req, res);
   // }
+  console.time("checkForTokens");
   let user;
   user = cache.get(req.query.token);
   if (!user) {
@@ -654,6 +655,7 @@ async function handler(req: any, res: any) {
       cache.set(req.query.token, user);
     }
   }
+  console.timeEnd("checkForTokens");
 
   // if (
   //   !tokens ||
