@@ -126,7 +126,7 @@ export default class DriverMongoDB implements Driver {
       console.log(
         `Connected successfully to server: ${hashedNamespace}(${namespace})`
       );
-
+      console.time("mongo setup");
       const mainDB = this.client.db(mongoDB);
 
       const db = this.client.db(hashedNamespace);
@@ -156,22 +156,27 @@ export default class DriverMongoDB implements Driver {
       }
 
       DriverMongoDB.isSetup = true;
+      console.timeEnd("mongo setup");
       connectionSetupResolve();
     });
     return this.connectionSetup;
   }
 
   async application_find(id: string): Promise<Application | null> {
+    console.time("application_find");
     const application = await this.applicationTable.find(id);
+    console.timeEnd("application_find");
     return application;
   }
 
   async application_findInGroups(
     groups: string[]
   ): Promise<Array<Application> | null> {
+    console.time("application_findInGroups");
     const application = await this.applicationTable.search({
       group: { $in: groups },
     });
+    console.timeEnd("application_findInGroups");
     return application;
   }
 
