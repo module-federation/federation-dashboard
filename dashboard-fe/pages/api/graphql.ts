@@ -8,9 +8,18 @@ import VersionManager from "../../src/managers/Version";
 import { privateConfig } from "../../src/config";
 import auth0 from "../../src/auth0";
 import "../../src/webhooks";
-import url from "native-url";
+import LRU from "lru-cache";
 import { application } from "express";
 import { MongoClient } from "mongodb";
+
+const options = {
+  max: 500,
+  length: function (n, key) {
+    return n * 2 + key.length;
+  },
+  maxAge: 1000 * 60 * 60,
+};
+const cache = new LRU(options);
 
 const typeDefs = gql`
   scalar Date
@@ -634,8 +643,15 @@ async function handler(req: any, res: any) {
   // if (process.env.WITH_AUTH && !req.query.token) {
   //   session = auth0.getSession(req, res);
   // }
-
-  const user = await checkForTokens(req.query.token || "noToken");
+  let user;
+  if (cache.has(req.query.token)) {
+    user = cache.get(req.query.token);
+  } else {
+    user = await checkForTokens(req.query.token || "noToken");
+    if (req.query.token) {
+      cache.set(req.query.token, user);
+    }
+  }
 
   // if (
   //   !tokens ||

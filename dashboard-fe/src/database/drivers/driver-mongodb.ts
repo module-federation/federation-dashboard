@@ -1,10 +1,9 @@
 import path from "path";
 import Joi from "@hapi/joi";
-import fs from "fs";
 import bus from "../../event-bus";
 import { Collection, MongoClient } from "mongodb";
 import sha1 from "sha1";
-
+import LRU from "lru-cache";
 import Application, { schema as applicationSchema } from "../application";
 import ApplicationVersion, {
   schema as applicationVersionSchema,
@@ -15,10 +14,18 @@ import User, { schema as userSchema } from "../user";
 import SiteSettings, { schema as siteSettingsSchema } from "../siteSettings";
 
 import Driver from "./driver";
-import { name } from "next/dist/telemetry/ci-info";
 
 const mongoURL = process.env.MONGO_URL;
 const mongoDB = process.env.MONGO_DB || "fmdashboard";
+
+const options = {
+  max: 5000,
+  length: function (n, key) {
+    return n * 2 + key.length;
+  },
+  maxAge: 1000 * 60 * 60,
+};
+const applicationTableCache = new LRU(options);
 
 class MongoDriver<T> {
   constructor(private collection: Collection) {}
@@ -82,6 +89,7 @@ export default class DriverMongoDB implements Driver {
   private static isSetup = false;
   private static isInSetup = false;
   private client: MongoClient = null;
+  private hashedNamespace: string;
 
   constructor() {
     this.client = new MongoClient(mongoURL, {
@@ -96,7 +104,7 @@ export default class DriverMongoDB implements Driver {
     }
     let hashedNamespace = sha1(namespace);
     // mongo can only support a database name of 38 chars
-    hashedNamespace = hashedNamespace.substring(0, 38);
+    this.hashedNamespace = hashedNamespace = hashedNamespace.substring(0, 38);
 
     let connectionSetupResolve;
     this.connectionSetup = new Promise((resolve) => {
@@ -154,13 +162,28 @@ export default class DriverMongoDB implements Driver {
   }
 
   async application_find(id: string): Promise<Application | null> {
-    return await this.applicationTable.find(id);
+    const cacheKey = `${this.hashedNamespace}-${id}`;
+    let application = applicationTableCache.get(cacheKey);
+
+    if (!application) {
+      application = await this.applicationTable.find(id);
+      applicationTableCache.set(cacheKey, application);
+    }
+    return application;
   }
 
   async application_findInGroups(
     groups: string[]
   ): Promise<Array<Application> | null> {
-    return await this.applicationTable.search({ group: { $in: groups } });
+    const cacheKey = `${this.hashedNamespace}-${sha1(JSON.stringify(groups))}`;
+    let application = applicationTableCache.get(cacheKey);
+    if (!application) {
+      application = await this.applicationTable.search({
+        group: { $in: groups },
+      });
+      applicationTableCache.set(cacheKey, application);
+    }
+    return application;
   }
 
   async application_getMetrics(id: string): Promise<Array<MetricValue> | null> {
@@ -183,12 +206,17 @@ export default class DriverMongoDB implements Driver {
   }
 
   async application_update(application: Application): Promise<null> {
+    const cacheKey = `${this.hashedNamespace}-${application.id}`;
+
     Joi.assert(application, applicationSchema);
     bus.publish("updateApplication", application);
+    applicationTableCache.del(cacheKey);
     return this.applicationTable.update({ id: application.id }, application);
   }
 
   async application_delete(id: string): Promise<null> {
+    const cacheKey = `${this.hashedNamespace}-${id}`;
+    applicationTableCache.del(cacheKey);
     return this.applicationTable.delete(id);
   }
 
@@ -197,11 +225,18 @@ export default class DriverMongoDB implements Driver {
     environment: string,
     version: string
   ): Promise<ApplicationVersion | null> {
-    const versions = await this.applicationVersionsTable.search({
-      applicationId,
-      environment,
-      version,
-    });
+    const cacheKey = `${this.hashedNamespace}-${sha1(
+      JSON.stringify({ applicationId, environment, version })
+    )}`;
+    let versions = applicationTableCache.get(cacheKey);
+    if (!versions) {
+      versions = await this.applicationVersionsTable.search({
+        applicationId,
+        environment,
+        version,
+      });
+      applicationTableCache.set(cacheKey, versions);
+    }
     return versions.length > 0 ? versions[0] : null;
   }
 
@@ -219,7 +254,12 @@ export default class DriverMongoDB implements Driver {
     if (version) {
       q.version = version;
     }
-    const versions = await this.applicationVersionsTable.search(q);
+    const cacheKey = `${this.hashedNamespace}-${sha1(JSON.stringify(q))}`;
+    let versions = applicationTableCache.get(cacheKey);
+    if (!versions) {
+      versions = await this.applicationVersionsTable.search(q);
+      applicationTableCache.set(cacheKey, versions);
+    }
     return versions.length > 0 ? versions : [];
   }
 
@@ -227,15 +267,31 @@ export default class DriverMongoDB implements Driver {
     applicationId: string,
     environment: string
   ): Promise<Array<ApplicationVersion>> {
-    return this.applicationVersionsTable.search({
-      applicationId,
-      environment,
-      latest: true,
-    });
+    const cacheKey = `${this.hashedNamespace}-${sha1(
+      JSON.stringify({ applicationId, environment, latest: true })
+    )}`;
+    let latestVersion = applicationTableCache.get(cacheKey);
+    if (!latestVersion) {
+      latestVersion = await this.applicationVersionsTable.search({
+        applicationId,
+        environment,
+        latest: true,
+      });
+      applicationTableCache.set(cacheKey, latestVersion);
+    }
+    return latestVersion;
   }
 
   async applicationVersion_update(version: ApplicationVersion): Promise<any> {
     Joi.assert(version, applicationVersionSchema);
+    const cacheKey = `${this.hashedNamespace}-${sha1(
+      JSON.stringify({
+        applicationId: version.applicationId,
+        environment: version.environment,
+        version: version.version,
+      })
+    )}`;
+    applicationTableCache.del(cacheKey);
     await this.applicationVersionsTable.update(
       {
         applicationId: version.applicationId,
@@ -252,6 +308,14 @@ export default class DriverMongoDB implements Driver {
     environment: string,
     version: string
   ): Promise<null> {
+    const cacheKey = `${this.hashedNamespace}-${sha1(
+      JSON.stringify({
+        applicationId,
+        environment,
+        version,
+      })
+    )}`;
+    applicationTableCache.del(cacheKey);
     const id = [applicationId, environment, version].join(":");
     return this.applicationVersionsTable.delete(id);
   }
@@ -269,31 +333,59 @@ export default class DriverMongoDB implements Driver {
   }
 
   async group_find(id: string): Promise<Group> {
-    return this.groupsTable.find(id);
+    const cacheKey = `${this.hashedNamespace}-${sha1(id)}`;
+    let group = applicationTableCache.get(cacheKey);
+    if (!group) {
+      group = this.groupsTable.find(id);
+      applicationTableCache.set(cacheKey, group);
+    }
+    return group;
   }
 
   async group_findByName(name: string): Promise<Group> {
-    return this.groupsTable
-      .search({ name })
-      .then((data) => (data && data.length ? data[0] : null));
+    const cacheKey = `${this.hashedNamespace}-${sha1(name)}`;
+    let group = applicationTableCache.get(cacheKey);
+    if (!group) {
+      group = await this.groupsTable
+        .search({ name })
+        .then((data) => (data && data.length ? data[0] : null));
+      applicationTableCache.set(cacheKey, group);
+    }
+    return group;
   }
 
   async group_findAll(): Promise<Array<Group>> {
-    return this.groupsTable.search({});
+    const cacheKey = `${this.hashedNamespace}-group_findAll`;
+    let group = applicationTableCache.get(cacheKey);
+    if (!group) {
+      group = await this.groupsTable.search({});
+      applicationTableCache.set(cacheKey, group);
+    }
+    return group;
   }
 
   async group_update(group: Group): Promise<Array<Group>> {
     Joi.assert(group, groupSchema);
     bus.publish("groupUpdated", group);
+    const cacheKey = `${this.hashedNamespace}-${sha1(group.id)}`;
+    applicationTableCache.del(cacheKey);
     return this.groupsTable.update({ id: group.id }, group);
   }
 
   async group_delete(id: string): Promise<Array<Group>> {
+    const cacheKey = `${this.hashedNamespace}-${sha1(id)}`;
+    applicationTableCache.del(cacheKey);
     return this.groupsTable.delete(id);
   }
 
   async user_find(id: string): Promise<User> {
-    return this.usersTable.find(id);
+    const cacheKey = id;
+    let user = applicationTableCache.get(cacheKey);
+    if (!user) {
+      user = await this.usersTable.find(id);
+      applicationTableCache.set(cacheKey, user);
+    }
+    return user;
   }
 
   async user_findByEmail(email: string): Promise<User> {
@@ -307,17 +399,19 @@ export default class DriverMongoDB implements Driver {
 
   async user_update(user: User): Promise<Array<User>> {
     Joi.assert(user, userSchema);
+    applicationTableCache.del(user.id);
     return this.usersTable.update({ id: user.id }, user);
   }
 
   async user_delete(id: string): Promise<Array<User>> {
+    applicationTableCache.del(id);
     return this.usersTable.delete(id);
   }
 
   async getTokens(token: string) {
     const settings = await this.siteSettings.search({});
     return settings.find(({ tokens }) => {
-      return tokens?.[0]?.value === token;
+      return tokens?.[0]?.value === token || "noToken";
     });
   }
 

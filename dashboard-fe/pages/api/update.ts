@@ -33,6 +33,7 @@ const apiAuthGate = async (req: any, res: any, callback: any) => {
 
   return callback(req, res);
 };
+
 const checkForTokens = async (token) => {
   // create fresh connection for when no user exists to setup driver
   const client = new MongoClient(process.env.MONGO_URL, {
@@ -56,7 +57,6 @@ const checkForTokens = async (token) => {
       resolve(foundSettings);
     });
   }).then((foundToken) => {
-    client.close();
     if (foundToken) {
       return foundToken.id;
     }
