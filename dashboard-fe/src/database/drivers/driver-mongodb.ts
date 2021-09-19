@@ -90,7 +90,6 @@ export default class DriverMongoDB implements Driver {
   private static isSetup = false;
   private static isInSetup = false;
   private client: MongoClient = null;
-  private hashedNamespace: string;
 
   constructor() {
     this.client = new MongoClient(mongoURL, {
@@ -105,7 +104,7 @@ export default class DriverMongoDB implements Driver {
     }
     let hashedNamespace = sha1(namespace);
     // mongo can only support a database name of 38 chars
-    this.hashedNamespace = hashedNamespace = hashedNamespace.substring(0, 38);
+    hashedNamespace = hashedNamespace.substring(0, 38);
 
     let connectionSetupResolve;
     this.connectionSetup = new Promise((resolve) => {
