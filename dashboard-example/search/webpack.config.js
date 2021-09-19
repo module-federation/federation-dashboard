@@ -70,7 +70,7 @@ module.exports = {
             process.env.VERCEL_URL
               ? "https://federation-dashboard-alpha.vercel.app"
               : "http://localhost:3000"
-          }/api/graphql?token=d9a72038-a1cd-4069-85e2-d8f56d84372e`,
+          }/api/get-remote?token=d9a72038-a1cd-4069-85e2-d8f56d84372e`,
         }),
         home: "home",
         utils: "utils",

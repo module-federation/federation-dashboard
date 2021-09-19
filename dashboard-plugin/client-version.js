@@ -54,47 +54,11 @@ function injectScript(d, s, id, override) {
 
 module.exports = ({ currentHost, remoteName, dashboardURL }) => {
   return `promise new Promise((resolve, reject) => {
-   fetch("${dashboardURL}", {
-    method: "POST",
+   fetch("${dashboardURL}&currentHost=${currentHost}&remote=${remoteName}", {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
     },
-    body: JSON.stringify({
-      query: \`query {
-    groups {
-      name
-      applications(id: "${currentHost}", remote: "${remoteName}") {
-        name
-        versions {
-          version
-          metadata {
-            name
-            value
-          }
-        }
-        metadata {
-          name
-          value
-        }
-        overrides {
-          name
-          version
-          application {
-            metadata {
-              name
-              value
-            }
-          }
-        }
-      }
-    }
-  }\`,
-    }),
-  }).then(function(res){
-    return res.json().then(function(data){
-    return data.data
-  })
   }).then(function(data){
       var metadata;
       ${injectScript.toString()}

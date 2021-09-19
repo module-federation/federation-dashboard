@@ -640,13 +640,15 @@ const checkForTokens = async (token) => {
 };
 
 async function handler(req: any, res: any) {
+  const ts = Math.random();
+  console.time("checkForTokens-" + ts);
+
   await runMiddleware(req, res, allowCors);
   // @ts-expect-error ts-migrate(2554) FIXME: Expected 1 arguments, but got 0.
   // let session: { noAuth: boolean; user: {} } = false;
   // if (process.env.WITH_AUTH && !req.query.token) {
   //   session = auth0.getSession(req, res);
   // }
-  console.time("checkForTokens");
   let user;
   user = cache.get(req.query.token);
   if (!user) {
@@ -655,7 +657,6 @@ async function handler(req: any, res: any) {
       cache.set(req.query.token, user);
     }
   }
-  console.timeEnd("checkForTokens");
 
   // if (
   //   !tokens ||
@@ -675,6 +676,8 @@ async function handler(req: any, res: any) {
   //   console.log("has valid token", hasValidToken);
   // }
   res.hasValidToken = user;
+  console.timeEnd("checkForTokens-" + ts);
+
   // @ts-expect-error ts-migrate(2339) FIXME: Property 'INTERNAL_TOKEN' does not exist on type '... Remove this comment to see the full error message
   // if (!hasValidToken) {
   //   // @ts-expect-error ts-migrate(2339) FIXME: Property 'user' does not exist on type '{ noAuth: ... Remove this comment to see the full error message

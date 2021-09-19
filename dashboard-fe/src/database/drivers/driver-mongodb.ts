@@ -163,9 +163,11 @@ export default class DriverMongoDB implements Driver {
   }
 
   async application_find(id: string): Promise<Application | null> {
-    console.time("application_find");
+    const ts = Math.random();
+
+    console.time("application_find" + ts);
     const application = await this.applicationTable.find(id);
-    console.timeEnd("application_find");
+    console.timeEnd("application_find" + ts);
     return application;
   }
 
