@@ -568,13 +568,16 @@ const apolloServer = new ApolloServer({
   },
 });
 
-const apolloHandler = apolloServer.createHandler({
-  path: "/api/graphql",
-});
+const apolloHandler = apolloServer.start().then(() =>
+  apolloServer.createHandler({
+    path: "/api/graphql",
+  })
+);
 
-function runMiddleware(req: any, res: any, fn: any) {
-  return new Promise((resolve, reject) => {
-    fn(req, res, (result: any) => {
+async function runMiddleware(req: any, res: any, fn: any) {
+  const callback = await fn;
+  return new Promise(async (resolve, reject) => {
+    callback(req, res, (result: any) => {
       if (result instanceof Error) {
         return reject(result);
       }
@@ -644,9 +647,8 @@ async function handler(req: any, res: any) {
   //   session = auth0.getSession(req, res);
   // }
   let user;
-  if (cache.has(req.query.token)) {
-    user = cache.get(req.query.token);
-  } else {
+  user = cache.get(req.query.token);
+  if (!user) {
     user = await checkForTokens(req.query.token || "noToken");
     if (req.query.token) {
       cache.set(req.query.token, user);
