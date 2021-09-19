@@ -59,7 +59,11 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
       "Content-Type": "application/json",
       Accept: "application/json",
     },
-  }).then(function(data){
+  })
+  .then(function(res){
+    return res.json()
+  })
+  .then(function(data){
       var metadata;
       ${injectScript.toString()}
       if(data && data.groups && data.groups[0] && data.groups[0].applications && data.groups[0].applications[0]) {
