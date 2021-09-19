@@ -68,6 +68,10 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
         name
         versions {
           version
+          metadata {
+            name
+            value
+          }
         }
         metadata {
           name
@@ -93,7 +97,6 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
   })
   }).then(function(data){
       var metadata;
-      console.log(data);
       ${injectScript.toString()}
       if(data && data.groups && data.groups[0] && data.groups[0].applications && data.groups[0].applications[0]) {
         var currentApp = data.groups[0].applications[0];
@@ -107,6 +110,7 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
         }
        currentApp.overrides.map((override) => {
           var objVersion = override && override.version ? override.version.split('.').join('_') : "";
+         
           metadata = override.application.metadata
           return injectScript(
             document,

@@ -159,6 +159,7 @@ const typeDefs = gql`
     posted: String!
     remotes: [Remote!]!
     dependencies: [Dependency]!
+    metadata: [Metadata!]!
     overrides: [Override!]!
     modules(name: String): [Module!]!
     consumes: [Consume!]!
@@ -422,6 +423,7 @@ const resolvers = {
 
       await dbDriver.setup(ctx?.user?.email);
       let found = await dbDriver.applicationVersion_findAll(id, environment);
+
       if (latest !== undefined) {
         found = found.filter(({ latest }: any) => latest);
       }
@@ -467,10 +469,27 @@ const resolvers = {
     },
   },
   ApplicationOverride: {
-    application: async ({ name }: { name: string }, props, ctx: any) => {
-      console.log("applicationOverride");
+    application: async (
+      { name, version }: { name: string; version: string },
+      props,
+      ctx: any
+    ) => {
+      let env = ctx.environment;
+      if (!ctx.environment) {
+        env = "development";
+      }
       await dbDriver.setup(ctx?.user?.email);
-      return dbDriver.application_find(name);
+      if (version) {
+        // TODO: this needs to come form graph query
+        const foundVersion = await dbDriver.applicationVersion_find(
+          name,
+          env,
+          version
+        );
+        return foundVersion;
+      }
+      const found = await dbDriver.application_find(name);
+      return found;
     },
   },
   Group: {

@@ -6,7 +6,7 @@ const {
   container: { ModuleFederationPlugin },
 } = require("webpack");
 const path = require("path");
-
+console.log(process.env);
 module.exports = {
   entry: "./src/index",
   mode: "development",
