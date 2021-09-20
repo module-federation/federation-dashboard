@@ -10,7 +10,7 @@ export default (req, res) => {
   );
   res.setHeader(
     "Cache-Control",
-    "public, s-maxage=60000, stale-while-revalidate=59"
+    "max-age=0, public, s-maxage=10, stale-while-revalidate=59"
   );
 
   if (req.method === "OPTIONS") {
