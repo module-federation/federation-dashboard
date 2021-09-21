@@ -216,11 +216,17 @@ export default class DriverMongoDB implements Driver {
     environment: string,
     version: string
   ): Promise<ApplicationVersion | null> {
+    const ts = Math.random();
+    console.time("applicationVersion_find-" + ts);
+
     let versions = await this.applicationVersionsTable.search({
       applicationId,
       environment,
       version,
     });
+
+    console.timeEnd("applicationVersion_find-" + ts);
+
     return versions.length > 0 ? versions[0] : null;
   }
 
@@ -229,6 +235,8 @@ export default class DriverMongoDB implements Driver {
     environment: string,
     version?: string
   ): Promise<Array<ApplicationVersion>> {
+    const ts = Math.random();
+    console.time("applicationVersion_findAll-" + ts);
     const q: any = {
       applicationId,
     };
@@ -239,6 +247,8 @@ export default class DriverMongoDB implements Driver {
       q.version = version;
     }
     const versions = await this.applicationVersionsTable.search(q);
+
+    console.timeEnd("applicationVersion_findAll-" + ts);
 
     return versions.length > 0 ? versions : [];
   }
