@@ -18,9 +18,7 @@ export default (req, res) => {
     return;
   }
   const { currentHost, remoteName, token } = req.query;
-  console.log(
-    new URL(`/api/graphql?token=${token}`, privateConfig.EXTERNAL_URL).href
-  );
+
   fetch(
     new URL(`/api/graphql?token=${token}`, privateConfig.EXTERNAL_URL).href,
     {
