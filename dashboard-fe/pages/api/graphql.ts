@@ -626,6 +626,9 @@ const checkForTokens = async (token) => {
       const settings = await siteSettings.find({}).toArray();
       const foundSettings = settings.find(({ tokens }) => {
         const pluginToken = tokens.find((t) => t.key === "readOnlyToken");
+        if(!pluginToken?.value || !token) {
+          return false
+        }
         return pluginToken?.value === token;
       });
       resolve(foundSettings);
