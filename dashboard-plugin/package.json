@@ -36,12 +36,12 @@
     "node-fetch": "^2.6.0"
   },
   "peerDependencies": {
-    "webpack": "5.52.1",
+    "webpack": "5.61.0",
     "webpack-sources": "^1.4.3 || ^2.0.0"
   },
   "devDependencies": {
     "jest": "26.6.3",
-    "webpack": "5.52.1",
+    "webpack": "5.61.0",
     "webpack-sources": "2.3.1"
   }
 }
