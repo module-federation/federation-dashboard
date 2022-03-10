@@ -2811,10 +2811,10 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.2.tgz#ee771e2ba4b3dc5b372935d549fd9617bf345b8c"
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
-"@types/mongodb@3.6.5":
-  version "3.6.5"
-  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.6.5.tgz#4c69a2f0a65a17bd5a3ca3a38e9a5e7d680cfaba"
-  integrity sha512-XbG9+2wNaEwUn5DlhgN4ogjUYYzvjIsH6gwPvXXoTgfiQqUNq41RNxOqO+lrdpCjlRKtt/Pv7ZgSl7paQ/GUjw==
+"@types/mongodb@3.6.20":
+  version "3.6.20"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.6.20.tgz#b7c5c580644f6364002b649af1c06c3c0454e1d2"
+  integrity sha512-WcdpPJCakFzcWWD9juKoZbRtQxKIMYF/JIAM4JrNHrMcnJL6/a2NWjXxW7fo9hxboxxkg+icff8d7+WIEvKgYQ==
   dependencies:
     "@types/bson" "*"
     "@types/node" "*"
