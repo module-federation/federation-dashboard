@@ -2,8 +2,8 @@ import path from "path";
 import Joi from "@hapi/joi";
 import bus from "../../event-bus";
 import { Collection, MongoClient } from "mongodb";
-import sha1 from "sha1";
-import LRU from "lru-cache";
+
+const crypto = require("crypto");
 import Application, { schema as applicationSchema } from "../application";
 import ApplicationVersion, {
   schema as applicationVersionSchema,
@@ -17,16 +17,6 @@ import Driver from "./driver";
 
 const mongoURL = process.env.MONGO_URL;
 const mongoDB = process.env.MONGO_DB || "fmdashboard";
-
-const options = {
-  max: 5000,
-
-  length: function (n, key) {
-    return n * 2 + key.length;
-  },
-  maxAge: 1000 * 60 * 60,
-};
-const applicationTableCache = new LRU(options);
 
 class MongoDriver<T> {
   constructor(private collection: Collection) {}
@@ -102,9 +92,10 @@ export default class DriverMongoDB implements Driver {
     if (DriverMongoDB.isSetup) {
       return false;
     }
-    let hashedNamespace = sha1(namespace);
-    // mongo can only support a database name of 38 chars
-    hashedNamespace = hashedNamespace.substring(0, 38);
+    let hashedNamespace = crypto
+      .createHash("md5")
+      .update(namespace)
+      .digest("hex");
 
     let connectionSetupResolve;
     this.connectionSetup = new Promise((resolve) => {
@@ -328,12 +319,8 @@ export default class DriverMongoDB implements Driver {
   }
 
   async user_find(id: string): Promise<User> {
-    const cacheKey = id;
-    let user = applicationTableCache.get(cacheKey);
-    if (!user) {
-      user = await this.usersTable.find(id);
-      applicationTableCache.set(cacheKey, user);
-    }
+    let user = await this.usersTable.find(id);
+
     return user;
   }
 
@@ -348,12 +335,10 @@ export default class DriverMongoDB implements Driver {
 
   async user_update(user: User): Promise<Array<User>> {
     Joi.assert(user, userSchema);
-    applicationTableCache.del(user.id);
     return this.usersTable.update({ id: user.id }, user);
   }
 
   async user_delete(id: string): Promise<Array<User>> {
-    applicationTableCache.del(id);
     return this.usersTable.delete(id);
   }
 

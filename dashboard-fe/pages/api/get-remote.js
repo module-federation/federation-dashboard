@@ -8,10 +8,7 @@ export default (req, res) => {
     "Access-Control-Allow-Headers",
     "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
   );
-  res.setHeader(
-    "Cache-Control",
-    "max-age=0, public, s-maxage=300, stale-while-revalidate=59"
-  );
+  res.setHeader("Cache-Control", "no-cache");
 
   if (req.method === "OPTIONS") {
     res.status(200).end();

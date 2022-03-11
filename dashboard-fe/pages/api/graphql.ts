@@ -8,18 +8,8 @@ import VersionManager from "../../src/managers/Version";
 import { privateConfig } from "../../src/config";
 import auth0 from "../../src/auth0";
 import "../../src/webhooks";
-import LRU from "lru-cache";
 import { application } from "express";
 import { MongoClient } from "mongodb";
-
-const options = {
-  max: 500,
-  length: function (n, key) {
-    return n * 2 + key.length;
-  },
-  maxAge: 1000 * 60 * 60,
-};
-const cache = new LRU(options);
 
 const typeDefs = gql`
   scalar Date
@@ -626,8 +616,8 @@ const checkForTokens = async (token) => {
       const settings = await siteSettings.find({}).toArray();
       const foundSettings = settings.find(({ tokens }) => {
         const pluginToken = tokens.find((t) => t.key === "readOnlyToken");
-        if(!pluginToken?.value || !token) {
-          return false
+        if (!pluginToken?.value || !token) {
+          return false;
         }
         return pluginToken?.value === token;
       });
@@ -647,19 +637,13 @@ async function handler(req: any, res: any) {
   console.time("checkForTokens-" + ts);
 
   await runMiddleware(req, res, allowCors);
+
   // @ts-expect-error ts-migrate(2554) FIXME: Expected 1 arguments, but got 0.
   // let session: { noAuth: boolean; user: {} } = false;
   // if (process.env.WITH_AUTH && !req.query.token) {
   //   session = auth0.getSession(req, res);
   // }
-  let user;
-  user = cache.get(req.query.token);
-  if (!user) {
-    user = await checkForTokens(req.query.token || "noToken");
-    if (req.query.token) {
-      cache.set(req.query.token, user);
-    }
-  }
+  let user = await checkForTokens(req.query.token || "noToken");
 
   // if (
   //   !tokens ||
@@ -698,7 +682,7 @@ async function handler(req: any, res: any) {
   //     }
   //   }
   // }
-
+  //
   await runMiddleware(req, res, apolloHandler);
 }
 

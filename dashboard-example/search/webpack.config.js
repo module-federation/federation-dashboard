@@ -70,7 +70,7 @@ module.exports = {
             process.env.VERCEL_URL
               ? "https://federation-dashboard-alpha.vercel.app"
               : "http://localhost:3000"
-          }/api/get-remote?token=d9a72038-a1cd-4069-85e2-d8f56d84372e`,
+          }/api/get-remote?token=29c1064b-79cf-4672-9f6a-07477c531c83`,
         }),
         home: "home",
         utils: "utils",
@@ -84,12 +84,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
-    process.env.VERCEL_GIT_COMMIT_REF === "master"
+    process.env.VERCEL_GIT_COMMIT_REF === "master" || !process.env.VERCEL_URL
       ? new DashboardPlugin({
           publishVersion: require("./package.json").version,
           filename: "dashboard.json",
-          dashboardURL:
-            "https://federation-dashboard-alpha.vercel.app/api/update?token=ca9e136d-0ec1-4f46-9d11-817d24219531",
+          dashboardURL: process.env.VERCEL_URL
+            ? "https://federation-dashboard-alpha.vercel.app/api/update?token=2dabefd7-3207-4c1a-a179-b79fd32346c8"
+            : "http://localhost:3000/api/update?token=2dabefd7-3207-4c1a-a179-b79fd32346c8",
           metadata: {
             baseUrl: process.env.VERCEL_URL
               ? "https://" + process.env.VERCEL_URL

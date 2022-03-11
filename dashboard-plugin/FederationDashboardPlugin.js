@@ -521,6 +521,7 @@ class FederationDashboardPlugin {
 
   postDashboardData(dashData) {
     return new Promise((resolve) => {
+      console.log("this._options.dashboardURL", this._options.dashboardURL);
       fetch(this._options.dashboardURL, {
         method: "POST",
         body: dashData,
@@ -531,10 +532,11 @@ class FederationDashboardPlugin {
       })
         .then((resp) => resp.json())
         .then(resolve)
-        .catch(() => {
+        .catch((e) => {
           console.warn(
             `Error posting data to dashboard URL: ${this._options.dashboardURL}`
           );
+          console.error(e);
           resolve();
         });
     });
