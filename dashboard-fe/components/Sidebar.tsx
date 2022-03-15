@@ -20,7 +20,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import WidgetsIcon from "@material-ui/icons/Widgets";
 import React from "react";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/react-hooks";
 import { observer } from "mobx-react";
 
 import store from "../src/store";

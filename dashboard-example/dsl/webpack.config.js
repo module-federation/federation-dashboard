@@ -81,8 +81,8 @@ module.exports = {
           publishVersion: require("./package.json").version,
           filename: "dashboard.json",
           dashboardURL: process.env.VERCEL_URL
-            ? "https://federation-dashboard-alpha.vercel.app/api/update?token=2dabefd7-3207-4c1a-a179-b79fd32346c8"
-            : "http://localhost:3000/api/update?token=2dabefd7-3207-4c1a-a179-b79fd32346c8",
+            ? "https://federation-dashboard-alpha.vercel.app/api/update?token=c075d425-4328-40b8-b6d0-3f71219dccdd"
+            : "http://localhost:3000/api/update?token=c075d425-4328-40b8-b6d0-3f71219dccdd",
           metadata: {
             baseUrl: process.env.VERCEL_URL
               ? "https://" + process.env.VERCEL_URL

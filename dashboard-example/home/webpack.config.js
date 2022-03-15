@@ -73,7 +73,7 @@ module.exports = {
             process.env.VERCEL_URL
               ? "https://federation-dashboard-alpha.vercel.app"
               : "http://localhost:3000"
-          }/api/get-remote?token=29c1064b-79cf-4672-9f6a-07477c531c83`,
+          }/api/get-remote?token=ab5cf6bd-e25c-44fe-aabf-512414460a3f`,
         }),
         search: clientVersion({
           currentHost: "home",
@@ -82,7 +82,7 @@ module.exports = {
             process.env.VERCEL_URL
               ? "https://federation-dashboard-alpha.vercel.app"
               : "http://localhost:3000"
-          }/api/get-remote?token=29c1064b-79cf-4672-9f6a-07477c531c83`,
+          }/api/get-remote?token=ab5cf6bd-e25c-44fe-aabf-512414460a3f`,
         }),
         nav: clientVersion({
           currentHost: "home",
@@ -91,7 +91,7 @@ module.exports = {
             process.env.VERCEL_URL
               ? "https://federation-dashboard-alpha.vercel.app"
               : "http://localhost:3000"
-          }/api/get-remote?token=29c1064b-79cf-4672-9f6a-07477c531c83`,
+          }/api/get-remote?token=ab5cf6bd-e25c-44fe-aabf-512414460a3f`,
         }),
         utils: clientVersion({
           currentHost: "home",
@@ -100,7 +100,7 @@ module.exports = {
             process.env.VERCEL_URL
               ? "https://federation-dashboard-alpha.vercel.app"
               : "http://localhost:3000"
-          }/api/get-remote?token=29c1064b-79cf-4672-9f6a-07477c531c83`,
+          }/api/get-remote?token=ab5cf6bd-e25c-44fe-aabf-512414460a3f`,
         }),
       },
       exposes: {
@@ -119,8 +119,8 @@ module.exports = {
           publishVersion: require("./package.json").version,
           filename: "dashboard.json",
           dashboardURL: process.env.VERCEL_URL
-            ? "https://federation-dashboard-alpha.vercel.app/api/update?token=2dabefd7-3207-4c1a-a179-b79fd32346c8"
-            : "http://localhost:3000/api/update?token=2dabefd7-3207-4c1a-a179-b79fd32346c8",
+            ? "https://federation-dashboard-alpha.vercel.app/api/update?token=c075d425-4328-40b8-b6d0-3f71219dccdd"
+            : "http://localhost:3000/api/update?token=c075d425-4328-40b8-b6d0-3f71219dccdd",
           versionChangeWebhook: "http://cnn.com/",
           metadata: {
             clientUrl: "http://localhost:3000",
