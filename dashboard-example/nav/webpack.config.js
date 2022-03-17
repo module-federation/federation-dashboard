@@ -1,3 +1,4 @@
+require("dotenv").config({ path: "../.env" });
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const clientVersion = require("../../dashboard-plugin/client-version");
@@ -65,8 +66,11 @@ module.exports = {
         dsl: clientVersion({
           currentHost: "nav",
           remoteName: "dsl",
-          dashboardURL:
-            "https://federation-dashboard-alpha.vercel.app/api/get-remote?token=d9a72038-a1cd-4069-85e2-d8f56d84372e",
+          dashboardURL: `${
+            process.env.VERCEL_URL
+              ? "https://federation-dashboard-alpha.vercel.app"
+              : "http://localhost:3000"
+          }/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
         }),
         search: "search",
         utils: "utils",
@@ -81,12 +85,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
-    process.env.VERCEL_GIT_COMMIT_REF === "master"
+    process.env.VERCEL_GIT_COMMIT_REF === "master" || !process.env.VERCEL_URL
       ? new DashboardPlugin({
           publishVersion: require("./package.json").version,
           filename: "dashboard.json",
-          dashboardURL:
-            "https://federation-dashboard-alpha.vercel.app/api/update?token=ca9e136d-0ec1-4f46-9d11-817d24219531",
+          dashboardURL: process.env.VERCEL_URL
+            ? `https://federation-dashboard-alpha.vercel.app/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`
+            : `http://localhost:3000/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
           versionChangeWebhook: "http://cnn.com/",
           metadata: {
             baseUrl: process.env.VERCEL_URL

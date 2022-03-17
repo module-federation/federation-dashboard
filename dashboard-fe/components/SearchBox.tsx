@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, TextField, alpha } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/react-hooks";
 import { useRouter } from "next/router";
 import { observer } from "mobx-react";
 

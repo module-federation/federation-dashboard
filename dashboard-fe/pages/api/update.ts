@@ -52,8 +52,8 @@ const checkForTokens = async (token) => {
       const settings = await siteSettings.find({}).toArray();
       const foundSettings = settings.find(({ tokens }) => {
         const pluginToken = tokens.find((t) => t.key === "pluginToken");
-        if(!pluginToken?.value || !token) {
-          return false
+        if (!pluginToken?.value || !token) {
+          return false;
         }
         return pluginToken?.value === token;
       });

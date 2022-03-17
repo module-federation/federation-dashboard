@@ -1,7 +1,7 @@
 import { observable, action, autorun, computed } from "mobx";
 import "mobx-react-lite/batchingOptOut";
 import gql from "graphql-tag";
-import ApolloClient from "apollo-boost";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { publicConfig } from "./config";
 import { fetchUser } from "./user";
 
@@ -20,6 +20,7 @@ const defaultOptions = {
 };
 const client = new ApolloClient({
   uri: clientUrl,
+  cache: new InMemoryCache(),
 });
 
 const GET_USER = gql`

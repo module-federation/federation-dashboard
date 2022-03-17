@@ -3,15 +3,12 @@ import { privateConfig } from "../../src/config";
 export default (req, res) => {
   res.setHeader("Access-Control-Allow-Credentials", true);
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS");
+  res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS,POST");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
   );
-  res.setHeader(
-    "Cache-Control",
-    "max-age=0, public, s-maxage=300, stale-while-revalidate=59"
-  );
+  res.setHeader("Cache-Control", "no-cache");
 
   if (req.method === "OPTIONS") {
     res.status(200).end();
