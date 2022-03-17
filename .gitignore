@@ -74,7 +74,7 @@ typings/
 .yarn/install-state.gz
 
 # dotenv environment variables file
-.env
+*.env
 env.json
 .env.test
 
