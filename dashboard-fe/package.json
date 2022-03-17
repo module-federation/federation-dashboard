@@ -33,7 +33,7 @@
     "@apollo/client": "^3.5.0",
     "@apollo/react-hooks": "^4.0.0",
     "@auth0/auth0-react": "1.0.0",
-    "@auth0/nextjs-auth0": "1.5.0",
+    "@auth0/nextjs-auth0": "1.7.0",
     "@emotion/core": "10.0.27",
     "@emotion/react": "11.4.0",
     "@emotion/styled": "10.0.27",
