@@ -1,8 +1,8 @@
+require("dotenv").config({ path: "../.env" });
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
-console.log(process.env.EXTERNAL_URL);
 module.exports = {
   entry: "./src/index",
   mode: "development",
@@ -80,9 +80,11 @@ module.exports = {
       ? new DashboardPlugin({
           publishVersion: require("./package.json").version,
           filename: "dashboard.json",
-          dashboardURL: process.env.VERCEL_URL
-            ? "https://federation-dashboard-alpha.vercel.app/api/update?token=c075d425-4328-40b8-b6d0-3f71219dccdd"
-            : "http://localhost:3000/api/update?token=c075d425-4328-40b8-b6d0-3f71219dccdd",
+          dashboardURL: `${
+            process.env.VERCEL_URL
+              ? "https://federation-dashboard-alpha.vercel.app"
+              : "http://localhost:3000"
+          }/api/update?token=${process.env.DASHBOARD_READ_WRITE}`,
           metadata: {
             baseUrl: process.env.VERCEL_URL
               ? "https://" + process.env.VERCEL_URL

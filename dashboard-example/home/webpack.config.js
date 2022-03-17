@@ -1,3 +1,4 @@
+require("dotenv").config({ path: "../.env" });
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const clientVersion = require("../../dashboard-plugin/client-version");
@@ -73,7 +74,7 @@ module.exports = {
             process.env.VERCEL_URL
               ? "https://federation-dashboard-alpha.vercel.app"
               : "http://localhost:3000"
-          }/api/get-remote?token=ab5cf6bd-e25c-44fe-aabf-512414460a3f`,
+          }/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
         }),
         search: clientVersion({
           currentHost: "home",
@@ -82,7 +83,7 @@ module.exports = {
             process.env.VERCEL_URL
               ? "https://federation-dashboard-alpha.vercel.app"
               : "http://localhost:3000"
-          }/api/get-remote?token=ab5cf6bd-e25c-44fe-aabf-512414460a3f`,
+          }/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
         }),
         nav: clientVersion({
           currentHost: "home",
@@ -91,7 +92,7 @@ module.exports = {
             process.env.VERCEL_URL
               ? "https://federation-dashboard-alpha.vercel.app"
               : "http://localhost:3000"
-          }/api/get-remote?token=ab5cf6bd-e25c-44fe-aabf-512414460a3f`,
+          }/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
         }),
         utils: clientVersion({
           currentHost: "home",
@@ -100,7 +101,7 @@ module.exports = {
             process.env.VERCEL_URL
               ? "https://federation-dashboard-alpha.vercel.app"
               : "http://localhost:3000"
-          }/api/get-remote?token=ab5cf6bd-e25c-44fe-aabf-512414460a3f`,
+          }/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
         }),
       },
       exposes: {
@@ -119,8 +120,8 @@ module.exports = {
           publishVersion: require("./package.json").version,
           filename: "dashboard.json",
           dashboardURL: process.env.VERCEL_URL
-            ? "https://federation-dashboard-alpha.vercel.app/api/update?token=c075d425-4328-40b8-b6d0-3f71219dccdd"
-            : "http://localhost:3000/api/update?token=c075d425-4328-40b8-b6d0-3f71219dccdd",
+            ? "https://federation-dashboard-alpha.vercel.app/api/update?token=c754d13b-a294-462e-b0ef-71d2ad307426"
+            : "http://localhost:3000/api/update?token=c754d13b-a294-462e-b0ef-71d2ad307426",
           versionChangeWebhook: "http://cnn.com/",
           metadata: {
             clientUrl: "http://localhost:3000",
