@@ -52,7 +52,7 @@
     "canvasjs-react-charts": "1.0.5",
     "cli-progress": "3.8.2",
     "closest": "0.0.1",
-    "clsx": "1.1.0",
+    "clsx": "1.1.1",
     "cookie-parser": "1.4.5",
     "cors": "2.8.5",
     "cross-fetch": "3.1.4",
