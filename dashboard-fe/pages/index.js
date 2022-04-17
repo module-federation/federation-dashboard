@@ -7,9 +7,13 @@ import Link from "next/link";
 import { observer } from "mobx-react";
 import { get } from "lodash";
 import dynamic from "next/dynamic";
-import ApplicationsTable from "../components/ApplicationsTable";
-import Layout from "../components/Layout";
 
+const Layout = dynamic(() => import("../components/Layout"), { ssr: false });
+
+const ApplicationsTable = dynamic(
+  () => import("../components/ApplicationsTable"),
+  { ssr: false }
+);
 const ModuleChordChart = dynamic(
   () => import("../components/ModuleChordChart"),
   { ssr: false }

@@ -9,6 +9,7 @@ const store = {};
 export default function withAuth(InnerComponent: FC) {
   if (!publicConfig.WITH_AUTH) {
     const NoAuth = (props: object) => {
+      console.log("showing inner component");
       return <InnerComponent {...props} user={null} />;
     };
     return NoAuth;
@@ -16,7 +17,7 @@ export default function withAuth(InnerComponent: FC) {
 
   const Authenticated = withPageAuthRequired((props) => {
     const { user, error, isLoading } = useUser();
-    return null;
+
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error.message}</div>;
     return (
