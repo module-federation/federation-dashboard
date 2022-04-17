@@ -7,6 +7,8 @@ import ModuleManager from "../../src/managers/Module";
 import VersionManager from "../../src/managers/Version";
 import { privateConfig } from "../../src/config";
 import auth0 from "../../src/auth0";
+import { withApiAuthRequired, getSession } from "@auth0/nextjs-auth0";
+
 import "../../src/webhooks";
 import { application } from "express";
 import { MongoClient } from "mongodb";
@@ -537,7 +539,7 @@ const apolloServer = new ApolloServer({
       if (res.hasValidToken) {
         user = { user: { email: res.hasValidToken } };
       } else {
-        user = auth0.getSession(req, res);
+        user = getSession(req, res);
       }
       if (!user) {
         res.status(401).json({
@@ -557,12 +559,7 @@ const apolloServer = new ApolloServer({
     }
   },
 });
-
-const apolloHandler = apolloServer.start().then(() =>
-  apolloServer.createHandler({
-    path: "/api/graphql",
-  })
-);
+const startedApolloServer = apolloServer.start();
 
 async function runMiddleware(req: any, res: any, fn: any) {
   const callback = await fn;
@@ -592,6 +589,7 @@ const allowCors = async (req: any, res: any, next: any) => {
   );
 
   if (req.method === "OPTIONS") {
+    console.log("options call");
     res.status(200).end();
     return;
   }
@@ -600,7 +598,6 @@ const allowCors = async (req: any, res: any, next: any) => {
 
 const checkForTokens = async (token) => {
   // create fresh connection for when no user exists to setup driver
-  console.log(privateConfig);
   const client = new MongoClient(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -637,7 +634,7 @@ async function handler(req: any, res: any) {
   const ts = Math.random();
   console.time("checkForTokens-" + ts);
 
-  await runMiddleware(req, res, allowCors);
+  // await runMiddleware(req, res, allowCors);
 
   // @ts-expect-error ts-migrate(2554) FIXME: Expected 1 arguments, but got 0.
   // let session: { noAuth: boolean; user: {} } = false;
@@ -645,7 +642,7 @@ async function handler(req: any, res: any) {
   //   session = auth0.getSession(req, res);
   // }
   let user = await checkForTokens(req.query.token || "noToken");
-
+  console.log(user);
   // if (
   //   !tokens ||
   //   req?.headers?.Authorization?.find((token) => tokens.includes(token))
@@ -684,7 +681,13 @@ async function handler(req: any, res: any) {
   //   }
   // }
   //
-  await runMiddleware(req, res, apolloHandler);
+  await startedApolloServer;
+
+  const apolloHandler = apolloServer.createHandler({
+    path: "/api/graphql",
+  });
+
+  return apolloHandler(req, res);
 }
 
 export const config = {

@@ -139,8 +139,8 @@ const store = new Store();
 if (typeof window !== "undefined") {
   autorun(async () => {
     if (publicConfig.WITH_AUTH) {
-      // const user = await fetchUser();
-      // store.setAuthUser(user);
+      const user = await fetchUser();
+      store.setAuthUser(user);
     }
 
     client
