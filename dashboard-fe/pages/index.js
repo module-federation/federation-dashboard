@@ -66,7 +66,7 @@ const useHomeStyles = makeStyles({
 });
 
 const Home = () => {
-  const store = require("../src/store");
+  const store = require("../src/store").default;
   const { data } = useQuery(GET_APPS, {
     variables: {
       environment: store.environment,

@@ -12,6 +12,8 @@ export default function withAuth(InnerComponent: FC) {
       console.log("NI auth");
       return <InnerComponent {...props} user={null} />;
     };
+    NoAuth.getInitialProps = InnerComponent.getInitialProps;
+
     return NoAuth;
   }
 
@@ -53,6 +55,7 @@ export default function withAuth(InnerComponent: FC) {
       </UserProvider>
     );
   };
+  WrappedComponent.getInitialProps = InnerComponent.getInitialProps;
 
   return WrappedComponent;
 }

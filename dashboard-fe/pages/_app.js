@@ -9,6 +9,7 @@ import withAuth from "../components/with-auth";
 
 function MyApp(props) {
   const { Component, pageProps } = props;
+  console.log(pageProps);
   React.useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");
