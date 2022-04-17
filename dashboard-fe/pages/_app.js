@@ -4,7 +4,7 @@ import { ApolloProvider } from "@apollo/client";
 import Head from "next/head";
 import Script from "next/script";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import store from "../src/store";
+
 import withAuth from "../components/with-auth";
 
 function MyApp(props) {
@@ -18,7 +18,7 @@ function MyApp(props) {
   }, []);
 
   return (
-    <ApolloProvider client={store.client}>
+    <>
       <Head>
         <meta
           name="viewport"
@@ -39,10 +39,11 @@ function MyApp(props) {
         gtag('config', 'G-EY5KSYXPTL');`,
         }}
       />
-    </ApolloProvider>
+    </>
   );
 }
+
 MyApp.getInitialProps = async (props) => {
-  return props;
+  return {};
 };
 export default withAuth(MyApp);

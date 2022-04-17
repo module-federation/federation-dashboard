@@ -9,7 +9,6 @@ import { get } from "lodash";
 import dynamic from "next/dynamic";
 import ApplicationsTable from "../components/ApplicationsTable";
 import Layout from "../components/Layout";
-import store from "../src/store";
 
 const ModuleChordChart = dynamic(
   () => import("../components/ModuleChordChart"),
@@ -63,6 +62,7 @@ const useHomeStyles = makeStyles({
 });
 
 const Home = () => {
+  const store = require("../src/store");
   const { data } = useQuery(GET_APPS, {
     variables: {
       environment: store.environment,

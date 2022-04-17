@@ -600,6 +600,7 @@ const allowCors = async (req: any, res: any, next: any) => {
 
 const checkForTokens = async (token) => {
   // create fresh connection for when no user exists to setup driver
+  console.log(privateConfig);
   const client = new MongoClient(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
