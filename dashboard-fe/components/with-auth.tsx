@@ -9,7 +9,7 @@ const store = {};
 export default function withAuth(InnerComponent: FC) {
   if (!publicConfig.WITH_AUTH) {
     const NoAuth = (props: object) => {
-      console.log("showing inner component");
+      console.log("NI auth");
       return <InnerComponent {...props} user={null} />;
     };
     return NoAuth;
@@ -17,7 +17,9 @@ export default function withAuth(InnerComponent: FC) {
 
   const Authenticated = withPageAuthRequired((props) => {
     const { user, error, isLoading } = useUser();
-
+    const store = require("../src/store");
+    console.log(store);
+    console.log("ín auth wrapper");
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error.message}</div>;
     return (
@@ -27,11 +29,30 @@ export default function withAuth(InnerComponent: FC) {
     );
   });
 
-  const WrappedComponent = (props) => (
-    <UserProvider>
-      <Authenticated {...props} />
-    </UserProvider>
-  );
+  const AuthRoute = (props) => {
+    const { user, error, isLoading } = useUser();
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>{error.message}</div>;
+    if (!user && typeof window !== "undefined") {
+      window.location.href = "/api/auth/login";
+      return null;
+    }
+    const store = require("../src/store").default;
+    console.log(store);
+    return (
+      <ApolloProvider client={store.client}>
+        <InnerComponent {...props} user={user} />
+      </ApolloProvider>
+    );
+  };
+
+  const WrappedComponent = (props) => {
+    return (
+      <UserProvider>
+        <AuthRoute {...props} />
+      </UserProvider>
+    );
+  };
 
   return WrappedComponent;
 }
