@@ -1,4 +1,4 @@
-import React, { Component, FC } from "react";
+import React, { FC } from "react";
 import { publicConfig } from "../src/config";
 import { useUser } from "@auth0/nextjs-auth0";
 import { UserProvider } from "@auth0/nextjs-auth0";

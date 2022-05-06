@@ -71,7 +71,7 @@ module.exports = {
             process.env.VERCEL_URL
               ? "https://federation-dashboard-alpha.vercel.app"
               : "http://localhost:3000"
-          }/api/get-remote?token=${process.env.DASHBOARD_WRITE_TOKEN}0`,
+          }/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
         }),
         home: "home",
         utils: "utils",
@@ -93,7 +93,7 @@ module.exports = {
             process.env.VERCEL_URL
               ? "https://federation-dashboard-alpha.vercel.app"
               : "http://localhost:3000"
-          }/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}0`,
+          }/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
           metadata: {
             baseUrl: process.env.VERCEL_URL
               ? "https://" + process.env.VERCEL_URL

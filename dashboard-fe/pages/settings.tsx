@@ -19,7 +19,6 @@ import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { v4 as uuidv4 } from "uuid";
 import Layout from "../components/Layout";
-import store from "../src/store";
 
 const GET_SETTINGS = gql`
   {
