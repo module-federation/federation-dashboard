@@ -74,7 +74,7 @@ module.exports = {
             process.env.VERCEL_URL
               ? "https://federation-dashboard-alpha.vercel.app"
               : "http://localhost:3000"
-          }/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
+          }/api/get-remote?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
         }),
         search: clientVersion({
           currentHost: "home",
@@ -121,7 +121,7 @@ module.exports = {
           filename: "dashboard.json",
           dashboardURL: process.env.VERCEL_URL
             ? "https://federation-dashboard-alpha.vercel.app/api/update?token=c754d13b-a294-462e-b0ef-71d2ad307426"
-            : "http://localhost:3000/api/update?token=c754d13b-a294-462e-b0ef-71d2ad307426",
+            : `http://localhost:3000/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
           versionChangeWebhook: "http://cnn.com/",
           metadata: {
             clientUrl: "http://localhost:3000",

@@ -642,7 +642,7 @@ async function handler(req: any, res: any) {
   //   session = auth0.getSession(req, res);
   // }
   let user = await checkForTokens(req.query.token || "noToken");
-  console.log(user);
+  console.log("user: " + user);
   // if (
   //   !tokens ||
   //   req?.headers?.Authorization?.find((token) => tokens.includes(token))
