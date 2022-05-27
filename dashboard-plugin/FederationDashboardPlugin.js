@@ -519,28 +519,27 @@ class FederationDashboardPlugin {
     );
   }
 
-  postDashboardData(dashData) {
-    return new Promise((resolve) => {
-      console.log("this._options.dashboardURL", this._options.dashboardURL);
-      fetch(this._options.dashboardURL, {
+  async postDashboardData(dashData) {
+    try {
+      const res = await fetch(this._options.dashboardURL, {
         method: "POST",
         body: dashData,
         headers: {
           Accept: "application/json",
           "Content-type": "application/json",
         },
-      })
-        .then((resp) => resp.json())
-        .then(resolve)
-        .catch((e) => {
-          console.warn(
-            `Error posting data to dashboard URL: ${this._options.dashboardURL}`
-          );
-          console.error(e);
-          resolve();
-        });
-    });
+      });
+
+      if (!res.ok) throw new Error(msg);
+    } catch (err) {
+      console.warn(
+        `Error posting data to dashboard URL: ${this._options.dashboardURL}`
+      );
+      console.error(e);
+    }
   }
 }
+
+FederationDashboardPlugin.clientVersion = require("./client-version");
 
 module.exports = FederationDashboardPlugin;
