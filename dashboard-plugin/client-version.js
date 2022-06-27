@@ -60,39 +60,14 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
       Accept: "application/json",
     },
   })
-  .then(function(res){
-    return res.json()
-  })
+  .then((res) => res.json())
   .then(function(data){
-      var metadata;
+      // Here we have data as { name: string, remoteURL: string, version: string }
+      var metadata = [{name: 'baseUrl', value: data.remoteURL}];
       ${injectScript.toString()}
-      if(data && data.groups && data.groups[0] && data.groups[0].applications && data.groups[0].applications[0]) {
-        var currentApp = data.groups[0].applications[0];
-        if (!data.groups[0].applications[0].overrides.length) {
-              metadata = data.groups[0].applications[0].metadata
-          injectScript(document, "script", "federation-dynamic-remote-${remoteName}",data.groups[0].applications[0].metadata).then(function() {
-            resolve(window.${remoteName});
-            metadata = null
-          });
-          return;
-        }
-       currentApp.overrides.map((override) => {
-          var objVersion = override && override.version ? override.version.split('.').join('_') : "";
-         
-          metadata = override.application.metadata
-          return injectScript(
-            document,
-            "script",
-            "federation-dynamic-remote-${remoteName}-" + objVersion,
-            override,
-          ).then(function(){
-           var versionedModule =  "${remoteName}_" + objVersion;
-           resolve(window[versionedModule])
-          })
-        });
-      }
+      return injectScript(document, "script", "federation-dynamic-remote-${remoteName}").then(function() {
+        resolve(window.${remoteName});
+      });
     })
-  }).then((res)=>{
-  return res;
   }).catch(console.error)`;
 };

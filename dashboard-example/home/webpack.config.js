@@ -74,7 +74,7 @@ module.exports = {
             process.env.VERCEL_URL
               ? "https://federation-dashboard-alpha.vercel.app"
               : "http://localhost:3000"
-          }/api/get-remote?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
+          }/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
         }),
         search: clientVersion({
           currentHost: "home",
