@@ -61,7 +61,17 @@ class FederationDashboardPlugin {
           name: PLUGIN_NAME,
           stage: compilation.constructor.PROCESS_ASSETS_STAGE_REPORT,
         },
-        () => this.processWebpackGraph(compilation)
+        () => {
+          let gitSha
+          try {
+            gitSha = require('child_process')
+                .execSync('git rev-parse HEAD')
+                .toString().trim()
+          } catch(e) {
+            console.error(e)
+          }
+          return this.processWebpackGraph(compilation, gitSha)
+        }
       );
     });
 
@@ -170,7 +180,7 @@ class FederationDashboardPlugin {
     if (callback) callback();
   }
 
-  processWebpackGraph(curCompiler, callback) {
+  processWebpackGraph(curCompiler, gitSha, callback) {
     const liveStats = curCompiler.getStats();
     const stats = liveStats.toJson();
     if (this._options.useAST) {
@@ -202,6 +212,7 @@ class FederationDashboardPlugin {
       version: this._options.publishVersion || "1.0.0", // '1.0.0' if not specified
       posted: this._options.posted, // Date.now() if not specified
       group: this._options.group, // 'default' if not specified
+      sha: gitSha,
       modules,
       chunkDependencies,
       functionRemotes: this.allArgumentsUsed,
@@ -217,7 +228,7 @@ class FederationDashboardPlugin {
 
     if (graphData) {
       const dashData = (this._dashData = JSON.stringify(graphData));
-
+      // might not be needed
       // this.writeStatsFiles(stats, dashData);
 
       if (this._options.dashboardURL) {
@@ -269,7 +280,6 @@ class FederationDashboardPlugin {
             new RegExp(`__REMOTE_VERSION__`, "g"),
             cleanVersion
           );
-
           const rewriteTempalteFromMain = codeSource.replace(
             new RegExp(`__REMOTE_VERSION__`, "g"),
             ""
