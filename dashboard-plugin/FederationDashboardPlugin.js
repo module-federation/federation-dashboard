@@ -229,7 +229,7 @@ class FederationDashboardPlugin {
     if (graphData) {
       const dashData = (this._dashData = JSON.stringify(graphData));
       // might not be needed
-      // this.writeStatsFiles(stats, dashData);
+      this.writeStatsFiles(stats, dashData);
 
       if (this._options.dashboardURL) {
         this.postDashboardData(dashData)
@@ -465,7 +465,7 @@ class FederationDashboardPlugin {
   writeStatsFiles(stats, dashData) {
     if (this._options.filename) {
       const hashPath = path.join(stats.outputPath, this._options.filename);
-      if (fs.existsSync(stats.outputPath)) {
+      if (!fs.existsSync(stats.outputPath)) {
         fs.mkdirSync(stats.outputPath);
       }
       fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, () => {});
