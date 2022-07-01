@@ -54,7 +54,7 @@ module.exports = {
       publishVersion: require("./package.json").version,
       dashboardURL: process.env.VERCEL_URL
         ? `https://federation-dashboard-alpha.vercel.app/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`
-        : `http://localhost:3000/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
+        : `http://localhost:3333/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
       filename: "dashboard.json",
       metadata: {
         baseUrl: process.env.VERCEL_URL

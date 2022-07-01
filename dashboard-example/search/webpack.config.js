@@ -70,7 +70,7 @@ module.exports = {
           dashboardURL: `${
             process.env.VERCEL_URL
               ? "https://federation-dashboard-alpha.vercel.app"
-              : "http://localhost:3000"
+              : "http://localhost:3333"
           }/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
         }),
         home: "home",
@@ -85,14 +85,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
-    process.env.VERCEL_GIT_COMMIT_REF === "master" || !process.env.VERCEL_URL
-      ? new DashboardPlugin({
+    new DashboardPlugin({
           publishVersion: require("./package.json").version,
           filename: "dashboard.json",
           dashboardURL: `${
             process.env.VERCEL_URL
               ? "https://federation-dashboard-alpha.vercel.app"
-              : "http://localhost:3000"
+              : "http://localhost:3333"
           }/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
           metadata: {
             baseUrl: process.env.VERCEL_URL
@@ -106,6 +105,5 @@ module.exports = {
               : "http://localhost:3004/remoteEntry.js",
           },
         })
-      : () => {},
   ],
 };
