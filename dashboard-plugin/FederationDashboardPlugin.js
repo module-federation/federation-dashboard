@@ -61,17 +61,7 @@ class FederationDashboardPlugin {
           name: PLUGIN_NAME,
           stage: compilation.constructor.PROCESS_ASSETS_STAGE_REPORT,
         },
-        () => {
-          let gitSha
-          try {
-            gitSha = require('child_process')
-                .execSync('git rev-parse HEAD')
-                .toString().trim()
-          } catch(e) {
-            console.error(e)
-          }
-          return this.processWebpackGraph(compilation, gitSha)
-        }
+        () =>  this.processWebpackGraph(compilation)
       );
     });
 
@@ -180,11 +170,20 @@ class FederationDashboardPlugin {
     if (callback) callback();
   }
 
-  processWebpackGraph(curCompiler, gitSha, callback) {
+  processWebpackGraph(curCompiler, callback) {
     const liveStats = curCompiler.getStats();
     const stats = liveStats.toJson();
     if (this._options.useAST) {
       this.parseModuleAst(curCompiler);
+    }
+
+    let gitSha
+    try {
+      gitSha = require('child_process')
+          .execSync('git rev-parse HEAD')
+          .toString().trim()
+    } catch(e) {
+      console.error(e)
     }
 
     // filter modules
