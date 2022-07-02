@@ -228,7 +228,6 @@ class FederationDashboardPlugin {
 
     if (graphData) {
       const dashData = (this._dashData = JSON.stringify(graphData));
-      // might not be needed
       this.writeStatsFiles(stats, dashData);
 
       if (this._options.dashboardURL) {
