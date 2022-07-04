@@ -66,6 +66,7 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
       var metadata = [{name: 'baseUrl', value: data.remoteURL}];
       ${injectScript.toString()}
       return injectScript(document, "script", "federation-dynamic-remote-${remoteName}").then(function() {
+        console.log(window.${remoteName});
         resolve(window.${remoteName});
       });
     })

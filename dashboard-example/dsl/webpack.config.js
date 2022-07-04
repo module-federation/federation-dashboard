@@ -1,8 +1,20 @@
-require("dotenv").config({ path: "../.env" });
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
+const { readFileSync } = require("fs");
+
+const env = readFileSync(__dirname + "/../.env")
+  .toString("utf-8")
+  .split("\n")
+  .map((v) => v.trim().split("="));
+process.env.DASHBOARD_WRITE_TOKEN = env.find(
+  ([k]) => k === "DASHBOARD_WRITE_TOKEN"
+)[1];
+process.env.DASHBOARD_BASE_URL = env.find(
+  ([k]) => k === "DASHBOARD_BASE_URL"
+)[1];
+
 module.exports = {
   entry: "./src/index",
   mode: "development",
@@ -76,27 +88,17 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
-    process.env.VERCEL_GIT_COMMIT_REF === "master" || !process.env.VERCEL_URL
-      ? new DashboardPlugin({
-          publishVersion: require("./package.json").version,
-          filename: "dashboard.json",
-          dashboardURL: `${
-            process.env.VERCEL_URL
-              ? "https://federation-dashboard-alpha.vercel.app"
-              : "http://localhost:3000"
-          }/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
-          metadata: {
-            baseUrl: process.env.VERCEL_URL
-              ? "https://" + process.env.VERCEL_URL
-              : "http://localhost:3002",
-            source: {
-              url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/dsl",
-            },
-            remote: process.env.VERCEL_URL
-              ? "https://" + process.env.VERCEL_URL + "/remoteEntry.js"
-              : "http://localhost:3002/remoteEntry.js",
-          },
-        })
-      : () => {},
+    new DashboardPlugin({
+      publishVersion: require("./package.json").version,
+      filename: "dashboard.json",
+      dashboardURL: `${process.env.DASHBOARD_BASE_URL}/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
+      metadata: {
+        baseUrl: "http://localhost:3002",
+        source: {
+          url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/dsl",
+        },
+        remote: "http://localhost:3002/remoteEntry.js",
+      },
+    }),
   ],
 };

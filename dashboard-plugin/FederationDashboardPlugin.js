@@ -535,7 +535,7 @@ class FederationDashboardPlugin {
       console.warn(
         `Error posting data to dashboard URL: ${this._options.dashboardURL}`
       );
-      console.error(e);
+      console.error(err);
     }
   }
 }

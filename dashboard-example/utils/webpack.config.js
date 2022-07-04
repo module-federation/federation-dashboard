@@ -1,8 +1,23 @@
-require("dotenv").config({ path: "../.env" });
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
+
+const { readFileSync } = require("fs");
+const tokens = readFileSync(__dirname + "/../.env")
+  .toString("utf-8")
+  .split("\n")
+  .map((v) => v.trim().split("="));
+console.log("TOKENS", tokens);
+process.env.DASHBOARD_READ_TOKEN = tokens.find(
+  ([k]) => k === "DASHBOARD_READ_TOKEN"
+)[1];
+process.env.DASHBOARD_WRITE_TOKEN = tokens.find(
+  ([k]) => k === "DASHBOARD_WRITE_TOKEN"
+)[1];
+process.env.DASHBOARD_BASE_URL = tokens.find(
+  ([k]) => k === "DASHBOARD_BASE_URL"
+)[1];
 
 module.exports = {
   entry: "./src/index",
@@ -47,25 +62,20 @@ module.exports = {
       remotes: {},
       exposes: {
         "./analytics": "./src/analytics",
+        "./foo": "./src/foo",
       },
       shared: require("./package.json").dependencies,
     }),
     new DashboardPlugin({
       publishVersion: require("./package.json").version,
-      dashboardURL: process.env.VERCEL_URL
-        ? `https://federation-dashboard-alpha.vercel.app/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`
-        : `http://localhost:3000/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
+      dashboardURL: `${process.env.DASHBOARD_BASE_URL}/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
       filename: "dashboard.json",
       metadata: {
-        baseUrl: process.env.VERCEL_URL
-          ? "https://" + process.env.VERCEL_URL
-          : "http://localhost:3005",
+        baseUrl: "http://localhost:3005",
         source: {
           url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/utils",
         },
-        remote: process.env.VERCEL_URL
-          ? "https://" + process.env.VERCEL_URL + "/remoteEntry.js"
-          : "http://localhost:3005/remoteEntry.js",
+        remote: "http://localhost:3005/remoteEntry.js",
       },
     }),
   ],
