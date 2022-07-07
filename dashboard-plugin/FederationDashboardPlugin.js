@@ -192,7 +192,7 @@ class FederationDashboardPlugin {
       gitSha = require('child_process')
           .execSync('git rev-parse HEAD')
           .toString().trim()
-    } catch (e) {
+    } catch(e) {
       console.error(e)
     }
 
