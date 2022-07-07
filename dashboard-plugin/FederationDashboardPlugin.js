@@ -61,7 +61,7 @@ class FederationDashboardPlugin {
           name: PLUGIN_NAME,
           stage: compilation.constructor.PROCESS_ASSETS_STAGE_REPORT,
         },
-        () => this.processWebpackGraph(compilation)
+        () =>  this.processWebpackGraph(compilation)
       );
     });
 
@@ -177,6 +177,15 @@ class FederationDashboardPlugin {
       this.parseModuleAst(curCompiler);
     }
 
+    let gitSha
+    try {
+      gitSha = require('child_process')
+          .execSync('git rev-parse HEAD')
+          .toString().trim()
+    } catch(e) {
+      console.error(e)
+    }
+
     // filter modules
     const modules = this.getFilteredModules(stats);
     // get RemoteEntryChunk
@@ -202,6 +211,7 @@ class FederationDashboardPlugin {
       version: this._options.publishVersion || "1.0.0", // '1.0.0' if not specified
       posted: this._options.posted, // Date.now() if not specified
       group: this._options.group, // 'default' if not specified
+      sha: gitSha,
       modules,
       chunkDependencies,
       functionRemotes: this.allArgumentsUsed,
@@ -217,8 +227,7 @@ class FederationDashboardPlugin {
 
     if (graphData) {
       const dashData = (this._dashData = JSON.stringify(graphData));
-
-      // this.writeStatsFiles(stats, dashData);
+      this.writeStatsFiles(stats, dashData);
 
       if (this._options.dashboardURL) {
         this.postDashboardData(dashData)
@@ -269,7 +278,6 @@ class FederationDashboardPlugin {
             new RegExp(`__REMOTE_VERSION__`, "g"),
             cleanVersion
           );
-
           const rewriteTempalteFromMain = codeSource.replace(
             new RegExp(`__REMOTE_VERSION__`, "g"),
             ""
@@ -455,7 +463,7 @@ class FederationDashboardPlugin {
   writeStatsFiles(stats, dashData) {
     if (this._options.filename) {
       const hashPath = path.join(stats.outputPath, this._options.filename);
-      if (fs.existsSync(stats.outputPath)) {
+      if (!fs.existsSync(stats.outputPath)) {
         fs.mkdirSync(stats.outputPath);
       }
       fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, () => {});

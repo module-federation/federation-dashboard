@@ -12,6 +12,8 @@ const convertToGraph = (
     posted,
     group,
     functionRemotes,
+    sha,
+    buildHash
   },
   standalone
 ) => {
@@ -174,6 +176,8 @@ const convertToGraph = (
     version,
     posted,
     group,
+    sha,
+    buildHash
   };
 
   return out;
