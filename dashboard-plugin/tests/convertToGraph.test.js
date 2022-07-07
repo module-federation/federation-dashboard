@@ -1,24 +1,31 @@
 const fs = require("fs");
 const convertToGraph = require("../convertToGraph");
+const mergeGraphs = require('../mergeGraphs')
 
 describe("should convert Plugin data to graph", () => {
-  // I think this test is running against outdated data
-  /*
+  test("should merge sidecar graphs correctly", () => {
+    const host = require(`${__dirname}/mock-data/nextjs-host.json`);
+    const sidecar = require(`${__dirname}/mock-data/nextjs-sidecar.json`);
+    const graph1 = convertToGraph(host);
+    const graph2 = convertToGraph(sidecar);
+    const merged = mergeGraphs(graph1,graph2)
+  })
+
+
   test("should convert raw data to graph", () => {
     const rawData = require(`${__dirname}/mock-data/base-config.json`);
     const graph = convertToGraph(rawData);
 
     expect(graph.consumes.length).toBe(6);
-    expect(graph.dependencies.length).toBe(5);
-    expect(graph.devDependencies.length).toBe(13);
+    expect(graph.dependencies.length).toBe(6);
+    expect(graph.devDependencies.length).toBe(11);
     expect(graph.id).toBe("home");
     expect(graph.name).toBe("home");
     expect(graph.remote).toBe("http://localhost:3001/remoteEntry.js");
     expect(graph.modules.length).toBe(2);
     expect(graph.optionalDependencies.length).toBe(0);
-    expect(graph.overrides.length).toBe(5);
+    expect(graph.overrides.length).toBe(3);
   });
-  */
 
   test("should throw Error topLevelPackage.dependencies are not defined", () => {
     const rawData = require(`${__dirname}/mock-data/failed-dependencies.json`);

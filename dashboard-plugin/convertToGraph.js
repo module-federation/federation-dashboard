@@ -1,25 +1,25 @@
 const { validateParams } = require("./helpers");
 const convertToGraph = (
-  {
-    name,
-    federationRemoteEntry,
-    modules,
-    topLevelPackage,
-    metadata,
-    versionData,
-    environment,
-    version,
-    posted,
-    group,
-    functionRemotes,
-    sha,
-    buildHash
-  },
-  standalone
+    {
+      name,
+      federationRemoteEntry,
+      modules,
+      topLevelPackage,
+      metadata,
+      versionData,
+      environment,
+      version,
+      posted,
+      group,
+      functionRemotes,
+      sha,
+      buildHash
+    },
+    standalone
 ) => {
   validateParams(
-    { federationRemoteEntry, modules, topLevelPackage, metadata },
-    standalone
+      { federationRemoteEntry, modules, topLevelPackage, metadata },
+      standalone
   );
 
   const app = name;
@@ -46,7 +46,7 @@ const convertToGraph = (
         reasons.forEach(({ userRequest, resolvedModule, type }) => {
           if (consumesByName[userRequest]) {
             consumesByName[userRequest].usedIn.add(
-              resolvedModule.replace("./", "")
+                resolvedModule.replace("./", "")
             );
           }
         });
@@ -66,10 +66,10 @@ const convertToGraph = (
   });
 
   const convertDeps = (deps = {}) =>
-    Object.entries(deps).map(([version, name]) => ({
-      name,
-      version: version.replace(`${name}-`, ""),
-    }));
+      Object.entries(deps).map(([version, name]) => ({
+        name,
+        version: version.replace(`${name}-`, ""),
+      }));
   const convertedDeps = {
     dependencies: convertDeps(topLevelPackage.dependencies),
     devDependencies: convertDeps(topLevelPackage.devDependencies),
@@ -89,9 +89,12 @@ const convertToGraph = (
       }
       if (reasons) {
         reasons.forEach(({ module }) => {
-          const moduleMinusExtension = module.replace(".js", "");
-          if (modulesObj[moduleMinusExtension]) {
-            modulesObj[moduleMinusExtension].requires.add(data[2]);
+          // filters out entrypoints
+          if(module) {
+            const moduleMinusExtension = module.replace(".js", "");
+            if (modulesObj[moduleMinusExtension]) {
+              modulesObj[moduleMinusExtension].requires.add(data[2]);
+            }
           }
         });
       }
@@ -120,32 +123,32 @@ const convertToGraph = (
   // TODO move this into the main consumes loop
   if (Array.isArray(functionRemotes)) {
     const dynamicConsumes = Object.values(
-      functionRemotes.reduce((acc, [file, applicationID, name]) => {
-        const cleanName = name.replace("./", "");
-        const objectId = applicationID + "/" + cleanName;
-        const cleanFile = file.replace("./", "");
-        const foundExistingConsume = consumes.find((consumeObj) => {
-          return (
-            consumeObj.applicationID === applicationID &&
-            consumeObj.name === cleanName
-          );
-        });
-        if (foundExistingConsume) {
-          foundExistingConsume.usedIn.add(cleanFile);
+        functionRemotes.reduce((acc, [file, applicationID, name]) => {
+          const cleanName = name.replace("./", "");
+          const objectId = applicationID + "/" + cleanName;
+          const cleanFile = file.replace("./", "");
+          const foundExistingConsume = consumes.find((consumeObj) => {
+            return (
+                consumeObj.applicationID === applicationID &&
+                consumeObj.name === cleanName
+            );
+          });
+          if (foundExistingConsume) {
+            foundExistingConsume.usedIn.add(cleanFile);
+            return acc;
+          }
+          if (acc[objectId]) {
+            acc[objectId].usedIn.add(cleanFile);
+            return acc;
+          }
+          acc[objectId] = {
+            applicationID,
+            name: cleanName,
+            consumingApplicationID: app,
+            usedIn: new Set([cleanFile]),
+          };
           return acc;
-        }
-        if (acc[objectId]) {
-          acc[objectId].usedIn.add(cleanFile);
-          return acc;
-        }
-        acc[objectId] = {
-          applicationID,
-          name: cleanName,
-          consumingApplicationID: app,
-          usedIn: new Set([cleanFile]),
-        };
-        return acc;
-      }, {})
+        }, {})
     );
     consumes.push(...dynamicConsumes);
   }
