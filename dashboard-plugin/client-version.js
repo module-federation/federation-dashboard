@@ -60,13 +60,14 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
       Accept: "application/json",
     },
   })
-  .then((res) => res.json())
+  .then(function(res){
+    return res.json()
+  })
   .then(function(data){
       // Here we have data as { name: string, remoteURL: string, version: string }
       var metadata = [{name: 'baseUrl', value: data.remoteURL}];
       ${injectScript.toString()}
       return injectScript(document, "script", "federation-dynamic-remote-${remoteName}").then(function() {
-        console.log(window.${remoteName});
         resolve(window.${remoteName});
       });
     })
