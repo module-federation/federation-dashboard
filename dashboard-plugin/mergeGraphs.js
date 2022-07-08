@@ -11,7 +11,14 @@ module.exports = (graph1,graph2)=>{
         })
 
         if(existing) {
-            existing.usedIn = Array.from(new Set([...existing.usedIn, ...hostConsumedModule.usedIn]))
+            hostConsumedModule.usedIn.forEach((consumedModule)=>{
+                const alreadyExists = existing.usedIn.find(({file,url})=>{
+                    return consumedModule.file === file && consumedModule.url === url
+                })
+                if(!alreadyExists) {
+                    existing.usedIn.push(consumedModule)
+                }
+            })
         } else {
             graph1.consumes.push(hostConsumedModule);
         }

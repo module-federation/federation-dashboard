@@ -109,7 +109,23 @@
       "applicationID": "checkout"
     }
   ],
-  "consumes": [],
+  "consumes": [
+    {
+      "consumingApplicationID": "home",
+      "applicationID": "checkout",
+      "name": "checkout",
+      "usedIn": [
+        {
+          "file": "pages/checkout.js",
+          "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home/pages/checkout.js"
+        },
+        {
+          "file": "pages/other.js",
+          "url": "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home/pages/checkout.js"
+        }
+      ]
+    }
+  ],
   "modules": [
     {
       "id": "checkout:title",
