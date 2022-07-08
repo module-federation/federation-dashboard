@@ -17,15 +17,14 @@ const DashboardPlugin = require("@module-federation/dashboard-plugin");
 ```js
 plugins: [
   ...new DashboardPlugin({
-    dashboardURL:
-      "https://federation-dashboard-alpha.vercel.app/api/update?token=writeToken",
+    dashboardURL: "https://medusa.codes/api/update?token=writeToken",
   }),
 ];
 ```
 
-This will post the `ModuleFederationPlugin` metrics to the update endpoint at `https://federation-dashboard-alpha.vercel.app/api/update?token=writeToken`.
+This will post the `ModuleFederationPlugin` metrics to the update endpoint at `https://medusa.codes/api/update?token=writeToken`.
 
-**In order to send data to Medusa, you need to create a write token.** It can be configured here: https://federation-dashboard-alpha.vercel.app/settings
+**In order to send data to Medusa, you need to create a write token.** It can be configured here: https://medusa.codes/settings
 
 There are also other options:
 
@@ -44,8 +43,7 @@ Metadata is _optional_ and is specified as an object.
 ```js
 plugins: [
   ...new DashboardPlugin({
-    dashboardURL:
-      "https://federation-dashboard-alpha.vercel.app/api/update?token=writeToken",
+    dashboardURL: "https://medusa.codes/api/update?token=writeToken",
     metadata: {
       source: {
         url: "http://github.com/myorg/myproject/tree/master",
@@ -68,3 +66,67 @@ You can add whatever keys you want to `metadata`, but there are some keys that t
 This is useful when Module Federation is not used, options can be passed that are usually inferred from Module Federation Options
 
 - `name`: the name of the app, must be unique
+
+## Next.js
+
+Next requires its own specific integration due to how Module Federation works on this platform.
+
+```js
+const { withMedusa } = require("@module-federation/dashboard-plugin");
+const withPlugins = require("next-compose-plugins");
+const { withFederatedSidecar } = require("@module-federation/nextjs-ssr");
+
+module.exports = withPlugins(
+  [
+    withFederatedSidecar(
+      {
+        name,
+        filename: "static/chunks/remoteEntry.js",
+        exposes,
+        remotes,
+        shared: {
+          lodash: {
+            import: "lodash",
+            requiredVersion: require("lodash").version,
+            singleton: true,
+          },
+          chakra: {
+            shareKey: "@chakra-ui/react",
+            import: "@chakra-ui/react",
+          },
+          "use-sse": {
+            singleton: true,
+            requiredVersion: false,
+          },
+        },
+      },
+      {
+        experiments: {
+          flushChunks: true,
+          hot: true,
+        },
+      }
+    ),
+    withMedusa({
+      name: "home",
+      publishVersion: require("./package.json").version,
+      filename: "dashboard.json",
+      dashboardURL: `https://medusa.codes/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
+      versionChangeWebhook: "http://cnn.com/",
+      metadata: {
+        clientUrl: "http://localhost:3333",
+        baseUrl: process.env.VERCEL_URL
+          ? "https://" + process.env.VERCEL_URL
+          : "http://localhost:3001",
+        source: {
+          url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home",
+        },
+        remote: process.env.VERCEL_URL
+          ? "https://" + process.env.VERCEL_URL + "/remoteEntry.js"
+          : "http://localhost:3001/remoteEntry.js",
+      },
+    }),
+  ],
+  nextConfig
+);
+```

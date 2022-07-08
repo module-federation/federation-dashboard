@@ -1,33 +1,36 @@
 const fs = require("fs");
 const convertToGraph = require("../convertToGraph");
-const mergeGraphs = require('../mergeGraphs')
+const mergeGraphs = require("../mergeGraphs");
 
 describe("should convert Plugin data to graph", () => {
   test("should merge sidecar graphs correctly", () => {
     const host = require(`${__dirname}/mock-data/nextjs-host.json`);
     const sidecar = require(`${__dirname}/mock-data/nextjs-sidecar.json`);
-    expect(host.consumes.length).toBe(2)
-    expect(sidecar.consumes.length).toBe(1)
-    expect(host.modules.length).toBe(0)
-    expect(sidecar.modules.length).toBe(4)
+    expect(host.consumes.length).toBe(2);
+    expect(sidecar.consumes.length).toBe(1);
+    expect(host.modules.length).toBe(0);
+    expect(sidecar.modules.length).toBe(4);
 
-    const merged = mergeGraphs(host,sidecar)
+    const merged = mergeGraphs(host, sidecar);
 
-    expect(merged.consumes.length).toBe(2)
-    expect(merged.modules.length).toBe(4)
-    const consumeMerge = merged.consumes.find(i=>{
-     return i.consumingApplicationID === 'home' && i.applicationID === 'checkout' && i.name === 'checkout'
-    })
+    expect(merged.consumes.length).toBe(2);
+    expect(merged.modules.length).toBe(4);
+    const consumeMerge = merged.consumes.find((i) => {
+      return (
+        i.consumingApplicationID === "home" &&
+        i.applicationID === "checkout" &&
+        i.name === "checkout"
+      );
+    });
 
-    console.log(consumeMerge)
+    console.log(consumeMerge);
 
-    expect(consumeMerge.usedIn.length).toBe(2)
-    expect(merged.id).toBe('home')
-    expect(merged.name).toBe('home')
-    expect(merged.remote).toBe('http://localhost:3001/remoteEntry.js')
+    expect(consumeMerge.usedIn.length).toBe(2);
+    expect(merged.id).toBe("home");
+    expect(merged.name).toBe("home");
+    expect(merged.remote).toBe("http://localhost:3001/remoteEntry.js");
     expect(merged.overrides.length).toBe(5);
-  })
-
+  });
 
   test("should convert raw data to graph", () => {
     const rawData = require(`${__dirname}/mock-data/base-config.json`);

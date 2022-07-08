@@ -145,11 +145,7 @@
       "id": "checkout:checkout",
       "name": "checkout",
       "applicationID": "checkout",
-      "requires": [
-        "react",
-        "next/head",
-        "next/dynamic"
-      ],
+      "requires": ["react", "next/head", "next/dynamic"],
       "file": "./realPages/checkout"
     },
     {
