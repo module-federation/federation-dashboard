@@ -1,9 +1,22 @@
-require("dotenv").config({ path: "../.env" });
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
-const clientVersion = require("../../dashboard-plugin/client-version");
 const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
+
+const { readFileSync } = require("fs");
+const tokens = readFileSync(__dirname + "/../.env")
+  .toString("utf-8")
+  .split("\n")
+  .map((v) => v.trim().split("="));
+process.env.DASHBOARD_READ_TOKEN = tokens.find(
+  ([k]) => k === "DASHBOARD_READ_TOKEN"
+)[1];
+process.env.DASHBOARD_WRITE_TOKEN = tokens.find(
+  ([k]) => k === "DASHBOARD_WRITE_TOKEN"
+)[1];
+process.env.DASHBOARD_BASE_URL = tokens.find(
+  ([k]) => k === "DASHBOARD_BASE_URL"
+)[1];
 
 module.exports = {
   entry: "./src/index",
@@ -64,14 +77,10 @@ module.exports = {
       filename: "remoteEntry.js",
       remotes: {
         nav: "nav",
-        dsl: clientVersion({
+        dsl: DashboardPlugin.clientVersion({
           currentHost: "search",
           remoteName: "dsl",
-          dashboardURL: `${
-            process.env.VERCEL_URL
-              ? "https://federation-dashboard-alpha.vercel.app"
-              : "http://localhost:3333"
-          }/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
+          dashboardURL: `${process.env.DASHBOARD_BASE_URL}/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
         }),
         home: "home",
         utils: "utils",
@@ -86,24 +95,16 @@ module.exports = {
       template: "./public/index.html",
     }),
     new DashboardPlugin({
-          publishVersion: require("./package.json").version,
-          filename: "dashboard.json",
-          dashboardURL: `${
-            process.env.VERCEL_URL
-              ? "https://federation-dashboard-alpha.vercel.app"
-              : "http://localhost:3333"
-          }/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
-          metadata: {
-            baseUrl: process.env.VERCEL_URL
-              ? "https://" + process.env.VERCEL_URL
-              : "http://localhost:3004",
-            source: {
-              url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search",
-            },
-            remote: process.env.VERCEL_URL
-              ? "https://" + process.env.VERCEL_URL + "/remoteEntry.js"
-              : "http://localhost:3004/remoteEntry.js",
-          },
-        })
+      publishVersion: require("./package.json").version,
+      filename: "dashboard.json",
+      dashboardURL: `${process.env.DASHBOARD_BASE_URL}/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
+      metadata: {
+        baseUrl: "http://localhost:3004",
+        source: {
+          url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/search",
+        },
+        remote: "http://localhost:3004/remoteEntry.js",
+      },
+    }),
   ],
 };

@@ -1,12 +1,26 @@
-require("dotenv").config({ path: "../.env" });
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("@module-federation/dashboard-plugin");
-const clientVersion = require("../../dashboard-plugin/client-version");
+const { readFileSync } = require("fs");
+const tokens = readFileSync(__dirname + "/../.env")
+  .toString("utf-8")
+  .split("\n")
+  .map((v) => v.trim().split("="));
+process.env.DASHBOARD_READ_TOKEN = tokens.find(
+  ([k]) => k === "DASHBOARD_READ_TOKEN"
+)[1];
+process.env.DASHBOARD_WRITE_TOKEN = tokens.find(
+  ([k]) => k === "DASHBOARD_WRITE_TOKEN"
+)[1];
+process.env.DASHBOARD_BASE_URL = tokens.find(
+  ([k]) => k === "DASHBOARD_BASE_URL"
+)[1];
 
 const {
   container: { ModuleFederationPlugin },
 } = require("webpack");
 const path = require("path");
+
+const dashboardURL = `${process.env.DASHBOARD_BASE_URL}/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`;
 
 module.exports = {
   entry: "./src/index",
@@ -67,41 +81,25 @@ module.exports = {
       filename: "remoteEntry.js",
       library: { type: "var", name: "home" },
       remotes: {
-        dsl: clientVersion({
+        dsl: DashboardPlugin.clientVersion({
           currentHost: "home",
           remoteName: "dsl",
-          dashboardURL: `${
-            process.env.VERCEL_URL
-              ? "https://federation-dashboard-alpha.vercel.app"
-              : "http://localhost:3333"
-          }/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
+          dashboardURL,
         }),
-        search: clientVersion({
+        search: DashboardPlugin.clientVersion({
           currentHost: "home",
           remoteName: "search",
-          dashboardURL: `${
-            process.env.VERCEL_URL
-              ? "https://federation-dashboard-alpha.vercel.app"
-              : "http://localhost:3333"
-          }/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
+          dashboardURL,
         }),
-        nav: clientVersion({
+        nav: DashboardPlugin.clientVersion({
           currentHost: "home",
           remoteName: "nav",
-          dashboardURL: `${
-            process.env.VERCEL_URL
-              ? "https://federation-dashboard-alpha.vercel.app"
-              : "http://localhost:3333"
-          }/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
+          dashboardURL,
         }),
-        utils: clientVersion({
+        utils: DashboardPlugin.clientVersion({
           currentHost: "home",
           remoteName: "utils",
-          dashboardURL: `${
-            process.env.VERCEL_URL
-              ? "https://federation-dashboard-alpha.vercel.app"
-              : "http://localhost:3333"
-          }/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
+          dashboardURL,
         }),
       },
       exposes: {
@@ -115,26 +113,19 @@ module.exports = {
       template: "./public/index.html",
       excludeChunks: ["remoteEntry"],
     }),
-
     new DashboardPlugin({
-          publishVersion: require("./package.json").version,
-          filename: "dashboard.json",
-          dashboardURL: process.env.VERCEL_URL
-            ? "https://federation-dashboard-alpha.vercel.app/api/update?token=c754d13b-a294-462e-b0ef-71d2ad307426"
-            : `http://localhost:3333/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
-          versionChangeWebhook: "http://cnn.com/",
-          metadata: {
-            clientUrl: "http://localhost:3333",
-            baseUrl: process.env.VERCEL_URL
-              ? "https://" + process.env.VERCEL_URL
-              : "http://localhost:3001",
-            source: {
-              url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home",
-            },
-            remote: process.env.VERCEL_URL
-              ? "https://" + process.env.VERCEL_URL + "/remoteEntry.js"
-              : "http://localhost:3001/remoteEntry.js",
-          },
-        })
+      publishVersion: require("./package.json").version,
+      filename: "dashboard.json",
+      dashboardURL: `${process.env.DASHBOARD_BASE_URL}/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
+      versionChangeWebhook: "http://cnn.com/",
+      metadata: {
+        clientUrl: process.env.DASHBOARD_BASE_URL,
+        baseUrl: "http://localhost:3001",
+        source: {
+          url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home",
+        },
+        remote: "http://localhost:3001/remoteEntry.js",
+      },
+    }),
   ],
 };

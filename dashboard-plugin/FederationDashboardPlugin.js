@@ -28,8 +28,8 @@ class FederationDashboardPlugin {
    */
   constructor(options) {
     this._options = Object.assign(
-        { debug: false, filename: "dashboard.json", useAST: false, nextjs: false },
-        options
+      { debug: false, filename: "dashboard.json", useAST: false },
+      options
     );
     this._dashData = null;
     this.allArgumentsUsed = [];
@@ -44,9 +44,9 @@ class FederationDashboardPlugin {
     });
     if (FederationPlugin) {
       this.FederationPluginOptions = Object.assign(
-          {},
-          FederationPlugin._options,
-          this._options.standalone || {}
+        {},
+        FederationPlugin._options,
+        this._options.standalone || {}
       );
     } else if (this._options.standalone) {
       this.FederationPluginOptions = this._options.standalone;
@@ -241,8 +241,6 @@ class FederationDashboardPlugin {
       // this.writeStatsFiles(stats, dashData);
       if (this._options.dashboardURL && !this._options.nextjs) {
         this.postDashboardData(dashData)
-            .then(() => {
-            })
             .catch((err) => {
               if (err) {
                 curCompiler.errors.push(err);
@@ -252,7 +250,6 @@ class FederationDashboardPlugin {
             });
       }
       return Promise.resolve().then(() => {
-        // console.log(graphData.consumes,graphData.modules)
         const statsBuf = Buffer.from(dashData || "{}", "utf-8");
 
         const source = {
@@ -289,6 +286,7 @@ class FederationDashboardPlugin {
               new RegExp(`__REMOTE_VERSION__`, "g"),
               cleanVersion
           );
+
           const rewriteTempalteFromMain = codeSource.replace(
               new RegExp(`__REMOTE_VERSION__`, "g"),
               ""
@@ -475,7 +473,6 @@ class FederationDashboardPlugin {
   // This is no longer needed - can be deleted or used for refactoring the asset emitter
   writeStatsFiles(stats, dashData) {
     if (this._options.filename) {
-      console.log(stats);
       const hashPath = path.join(stats.outputPath, this._options.filename);
       if (!fs.existsSync(stats.outputPath)) {
         fs.mkdirSync(stats.outputPath);
