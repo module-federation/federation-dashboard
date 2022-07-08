@@ -66,22 +66,6 @@ class FederationDashboardPlugin {
         },
         () => this.processWebpackGraph(compilation)
       );
-      compiler.hooks.afterEmit.tap(PLUGIN_NAME, () => {
-        const sidecarData = path.join(
-          compiler.options.output.path,
-          "sidecar-" + this._options.filename
-        );
-        const hostData = path.join(
-          compiler.options.output.path,
-          this._options.filename.replace("sidecar-", "")
-        );
-        if (fs.existsSync(sidecarData) && fs.existsSync(hostData)) {
-          fs.writeFileSync(
-            hostData,
-            JSON.stringify(mergeGraphs(require(sidecarData), require(hostData)))
-          );
-        }
-      });
     });
 
     if (this.FederationPluginOptions.name) {
@@ -590,6 +574,23 @@ class NextMedusaPlugin {
       nextjs: true,
     });
     MedusaPlugin.apply(compiler);
+
+    compiler.hooks.afterEmit.tap(PLUGIN_NAME, () => {
+      const sidecarData = path.join(
+          compiler.options.output.path,
+          "sidecar-" + this._options.filename
+      );
+      const hostData = path.join(
+          compiler.options.output.path,
+          this._options.filename.replace("sidecar-", "")
+      );
+      if (fs.existsSync(sidecarData) && fs.existsSync(hostData)) {
+        fs.writeFileSync(
+            hostData,
+            JSON.stringify(mergeGraphs(require(sidecarData), require(hostData)))
+        );
+      }
+    });
 
     compiler.hooks.done.tapAsync("NextMedusaPlugin", (stats, done) => {
       if (fs.existsSync(sidecarData) && fs.existsSync(hostData)) {
