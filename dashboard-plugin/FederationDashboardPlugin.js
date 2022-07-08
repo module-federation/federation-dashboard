@@ -262,7 +262,7 @@ class FederationDashboardPlugin {
           }
         }
         // for versioned remote
-        if (curCompiler.emitAsset && this.FederationPluginOptions.filename) {
+        if (curCompiler.emitAsset && this.FederationPluginOptions.filename && Object.keys(this.FederationPluginOptions.exposes || {}).length !== 0) {
           const remoteEntry = curCompiler.getAsset(
             this.FederationPluginOptions.filename
           );
@@ -367,10 +367,9 @@ class FederationDashboardPlugin {
   buildVendorFederationMap(liveStats) {
     const vendorFederation = {};
     let packageJson;
-    this._webpackContext = liveStats.compilation.options.context;
     try {
-      packageJson = require(path.join(
-        liveStats.compilation.options.context,
+      packageJson = require(this._options.packageJsonPath || path.join(
+         liveStats.compilation.options.context,
         "package.json"
       ));
       this._packageJson = packageJson;
@@ -542,7 +541,7 @@ class FederationDashboardPlugin {
         },
       });
 
-      if (!res.ok) throw new Error(msg);
+      if (!res.ok) throw new Error(res.statusText);
     } catch (err) {
       console.warn(
         `Error posting data to dashboard URL: ${this._options.dashboardURL}`
