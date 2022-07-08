@@ -6,9 +6,9 @@ describe("should convert Plugin data to graph", () => {
   test("should merge sidecar graphs correctly", () => {
     const host = require(`${__dirname}/mock-data/nextjs-host.json`);
     const sidecar = require(`${__dirname}/mock-data/nextjs-sidecar.json`);
-    const graph1 = convertToGraph(host);
-    const graph2 = convertToGraph(sidecar);
-    const merged = mergeGraphs(graph1,graph2)
+    const merged = mergeGraphs(host,sidecar)
+    expect(host.consumes.length).toBe(2)
+    expect(sidecar.consumes.length).toBe(0)
   })
 
 
