@@ -227,7 +227,8 @@ class FederationDashboardPlugin {
 
     if (graphData) {
       const dashData = (this._dashData = JSON.stringify(graphData));
-      this.writeStatsFiles(stats, dashData);
+
+      // this.writeStatsFiles(stats, dashData);
 
       if (this._options.dashboardURL) {
         this.postDashboardData(dashData)
@@ -278,6 +279,7 @@ class FederationDashboardPlugin {
             new RegExp(`__REMOTE_VERSION__`, "g"),
             cleanVersion
           );
+
           const rewriteTempalteFromMain = codeSource.replace(
             new RegExp(`__REMOTE_VERSION__`, "g"),
             ""
@@ -543,7 +545,7 @@ class FederationDashboardPlugin {
       console.warn(
         `Error posting data to dashboard URL: ${this._options.dashboardURL}`
       );
-      console.error(e);
+      console.error(err);
     }
   }
 }
