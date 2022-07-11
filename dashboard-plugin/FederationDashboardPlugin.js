@@ -262,7 +262,11 @@ class FederationDashboardPlugin {
           }
         }
         // for versioned remote
-        if (curCompiler.emitAsset && this.FederationPluginOptions.filename && Object.keys(this.FederationPluginOptions.exposes || {}).length !== 0) {
+        if (
+          curCompiler.emitAsset &&
+          this.FederationPluginOptions.filename &&
+          Object.keys(this.FederationPluginOptions.exposes || {}).length !== 0
+        ) {
           const remoteEntry = curCompiler.getAsset(
             this.FederationPluginOptions.filename
           );
@@ -368,10 +372,8 @@ class FederationDashboardPlugin {
     const vendorFederation = {};
     let packageJson;
     try {
-      packageJson = require(this._options.packageJsonPath || path.join(
-         liveStats.compilation.options.context,
-        "package.json"
-      ));
+      packageJson = require(this._options.packageJsonPath ||
+        path.join(liveStats.compilation.options.context, "package.json"));
       this._packageJson = packageJson;
     } catch (e) {}
 
@@ -576,17 +578,17 @@ class NextMedusaPlugin {
 
     compiler.hooks.afterEmit.tap(PLUGIN_NAME, () => {
       const sidecarData = path.join(
-          compiler.options.output.path,
-          "sidecar-" + this._options.filename
+        compiler.options.output.path,
+        "sidecar-" + this._options.filename
       );
       const hostData = path.join(
-          compiler.options.output.path,
-          this._options.filename.replace("sidecar-", "")
+        compiler.options.output.path,
+        this._options.filename.replace("sidecar-", "")
       );
       if (fs.existsSync(sidecarData) && fs.existsSync(hostData)) {
         fs.writeFileSync(
-            hostData,
-            JSON.stringify(mergeGraphs(require(sidecarData), require(hostData)))
+          hostData,
+          JSON.stringify(mergeGraphs(require(sidecarData), require(hostData)))
         );
       }
     });

@@ -28,13 +28,13 @@ This will post the `ModuleFederationPlugin` metrics to the update endpoint at `h
 
 There are also other options:
 
-| Key            | Description                                                                                 |
-| -------------- |---------------------------------------------------------------------------------------------|
-| dashboardURL   | The URL of the dashboard endpoint.                                                          |
-| metadata       | Any additional metadata you want to apply to this application for use in the dashboard.     |
-| filename       | The file path where the dashboard data.                                                     |
-| standalone     | For use without ModuleFederationPlugin                                                      |
-| publishVersion | Used for versioned remotes. '1.0.0' will be used for each remote if not passed              |
+| Key             | Description                                                                                 |
+| --------------- | ------------------------------------------------------------------------------------------- |
+| dashboardURL    | The URL of the dashboard endpoint.                                                          |
+| metadata        | Any additional metadata you want to apply to this application for use in the dashboard.     |
+| filename        | The file path where the dashboard data.                                                     |
+| standalone      | For use without ModuleFederationPlugin                                                      |
+| publishVersion  | Used for versioned remotes. '1.0.0' will be used for each remote if not passed              |
 | packageJsonPath | custom path to package.json file, helpful if you get a `topLevelPackage.dependencies` error |
 
 ## Metadata
