@@ -3,14 +3,15 @@ const path = require("path");
 const fetch = require("node-fetch");
 const AutomaticVendorFederation = require("@module-federation/automatic-vendor-federation");
 const convertToGraph = require("./convertToGraph");
+const mergeGraphs = require("./mergeGraphs");
 const DefinePlugin = require("webpack/lib/DefinePlugin");
 const parser = require("@babel/parser");
 const generate = require("@babel/generator").default;
 const traverse = require("@babel/traverse").default;
 const { isNode } = require("@babel/types");
 const webpack = require("webpack");
-/** @typedef {import('webpack/lib/Compilation')} Compilation */
-/** @typedef {import('webpack/lib/Compiler')} Compiler */
+/** @typedef {import("webpack/lib/Compilation")} Compilation */
+/** @typedef {import("webpack/lib/Compiler")} Compiler */
 
 /**
  * @typedef FederationDashboardPluginOptions
@@ -44,7 +45,8 @@ class FederationDashboardPlugin {
     if (FederationPlugin) {
       this.FederationPluginOptions = Object.assign(
         {},
-        FederationPlugin._options
+        FederationPlugin._options,
+        this._options.standalone || {}
       );
     } else if (this._options.standalone) {
       this.FederationPluginOptions = this._options.standalone;
@@ -53,6 +55,7 @@ class FederationDashboardPlugin {
         "Dashboard plugin is missing Module Federation or standalone option"
       );
     }
+
     this.FederationPluginOptions.name =
       this.FederationPluginOptions.name.replace("__REMOTE_VERSION__", "");
     compiler.hooks.thisCompilation.tap(PLUGIN_NAME, (compilation) => {
@@ -61,7 +64,7 @@ class FederationDashboardPlugin {
           name: PLUGIN_NAME,
           stage: compilation.constructor.PROCESS_ASSETS_STAGE_REPORT,
         },
-        () =>  this.processWebpackGraph(compilation)
+        () => this.processWebpackGraph(compilation)
       );
     });
 
@@ -177,13 +180,14 @@ class FederationDashboardPlugin {
       this.parseModuleAst(curCompiler);
     }
 
-    let gitSha
+    let gitSha;
     try {
-      gitSha = require('child_process')
-          .execSync('git rev-parse HEAD')
-          .toString().trim()
-    } catch(e) {
-      console.error(e)
+      gitSha = require("child_process")
+        .execSync("git rev-parse HEAD")
+        .toString()
+        .trim();
+    } catch (e) {
+      console.error(e);
     }
 
     // filter modules
@@ -227,19 +231,15 @@ class FederationDashboardPlugin {
 
     if (graphData) {
       const dashData = (this._dashData = JSON.stringify(graphData));
-
       // this.writeStatsFiles(stats, dashData);
-
-      if (this._options.dashboardURL) {
-        this.postDashboardData(dashData)
-          .then(() => {})
-          .catch((err) => {
-            if (err) {
-              curCompiler.errors.push(err);
-              // eslint-disable-next-line promise/no-callback-in-promise
-              throw err;
-            }
-          });
+      if (this._options.dashboardURL && !this._options.nextjs) {
+        this.postDashboardData(dashData).catch((err) => {
+          if (err) {
+            curCompiler.errors.push(err);
+            // eslint-disable-next-line promise/no-callback-in-promise
+            throw err;
+          }
+        });
       }
       return Promise.resolve().then(() => {
         const statsBuf = Buffer.from(dashData || "{}", "utf-8");
@@ -255,7 +255,6 @@ class FederationDashboardPlugin {
         // for dashboard.json
         if (curCompiler.emitAsset && this._options.filename) {
           const asset = curCompiler.getAsset(this._options.filename);
-
           if (asset) {
             curCompiler.updateAsset(this._options.filename, source);
           } else {
@@ -263,7 +262,11 @@ class FederationDashboardPlugin {
           }
         }
         // for versioned remote
-        if (curCompiler.emitAsset && this.FederationPluginOptions.filename) {
+        if (
+          curCompiler.emitAsset &&
+          this.FederationPluginOptions.filename &&
+          Object.keys(this.FederationPluginOptions.exposes || {}).length !== 0
+        ) {
           const remoteEntry = curCompiler.getAsset(
             this.FederationPluginOptions.filename
           );
@@ -368,12 +371,9 @@ class FederationDashboardPlugin {
   buildVendorFederationMap(liveStats) {
     const vendorFederation = {};
     let packageJson;
-    this._webpackContext = liveStats.compilation.options.context;
     try {
-      packageJson = require(path.join(
-        liveStats.compilation.options.context,
-        "package.json"
-      ));
+      packageJson = require(this._options.packageJsonPath ||
+        path.join(liveStats.compilation.options.context, "package.json"));
       this._packageJson = packageJson;
     } catch (e) {}
 
@@ -530,6 +530,9 @@ class FederationDashboardPlugin {
   }
 
   async postDashboardData(dashData) {
+    if (!this._options.dashboardURL) {
+      return Promise.resolve();
+    }
     try {
       const res = await fetch(this._options.dashboardURL, {
         method: "POST",
@@ -540,7 +543,7 @@ class FederationDashboardPlugin {
         },
       });
 
-      if (!res.ok) throw new Error(msg);
+      if (!res.ok) throw new Error(res.statusText);
     } catch (err) {
       console.warn(
         `Error posting data to dashboard URL: ${this._options.dashboardURL}`
@@ -550,6 +553,90 @@ class FederationDashboardPlugin {
   }
 }
 
-FederationDashboardPlugin.clientVersion = require("./client-version");
+class NextMedusaPlugin {
+  constructor(options) {
+    this._options = options;
+  }
+
+  apply(compiler) {
+    const sidecarData = this._options.filename.includes("sidecar")
+      ? path.join(compiler.options.output.path, this._options.filename)
+      : path.join(
+          compiler.options.output.path,
+          "sidecar-" + this._options.filename
+        );
+    const hostData = path.join(
+      compiler.options.output.path,
+      this._options.filename.replace("sidecar-", "")
+    );
+
+    const MedusaPlugin = new FederationDashboardPlugin({
+      ...this._options,
+      nextjs: true,
+    });
+    MedusaPlugin.apply(compiler);
+
+    compiler.hooks.afterEmit.tap(PLUGIN_NAME, () => {
+      const sidecarData = path.join(
+        compiler.options.output.path,
+        "sidecar-" + this._options.filename
+      );
+      const hostData = path.join(
+        compiler.options.output.path,
+        this._options.filename.replace("sidecar-", "")
+      );
+      if (fs.existsSync(sidecarData) && fs.existsSync(hostData)) {
+        fs.writeFileSync(
+          hostData,
+          JSON.stringify(mergeGraphs(require(sidecarData), require(hostData)))
+        );
+      }
+    });
+
+    compiler.hooks.done.tapAsync("NextMedusaPlugin", (stats, done) => {
+      if (fs.existsSync(sidecarData) && fs.existsSync(hostData)) {
+        const dashboardData = fs.readFileSync(hostData, "utf8");
+        MedusaPlugin.postDashboardData(dashboardData).then(done).catch(done);
+      } else {
+        done();
+      }
+    });
+  }
+}
+
+const withMedusa =
+  ({ name, ...medusaConfig }) =>
+  (nextConfig = {}) => {
+    return Object.assign({}, nextConfig, {
+      webpack(config, options) {
+        if (
+          options.nextRuntime !== "edge" &&
+          !options.isServer &&
+          process.env.NODE_ENV === "production"
+        ) {
+          if (!name) {
+            throw new Error(
+              "Medusa needs a name for the app, please ensure plugin options has {name: <appname>}"
+            );
+          }
+          config.plugins.push(
+            new NextMedusaPlugin({
+              standalone: { name },
+              ...medusaConfig,
+            })
+          );
+        }
+
+        if (typeof nextConfig.webpack === "function") {
+          return nextConfig.webpack(config, options);
+        }
+
+        return config;
+      },
+    });
+  };
 
 module.exports = FederationDashboardPlugin;
+module.exports.clientVersion = require("./client-version");
+module.exports.NextMedusaPlugin = NextMedusaPlugin;
+module.exports.withMedusa = withMedusa;

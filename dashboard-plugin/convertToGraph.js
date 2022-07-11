@@ -13,7 +13,7 @@ const convertToGraph = (
     group,
     functionRemotes,
     sha,
-    buildHash
+    buildHash,
   },
   standalone
 ) => {
@@ -89,9 +89,12 @@ const convertToGraph = (
       }
       if (reasons) {
         reasons.forEach(({ module }) => {
-          const moduleMinusExtension = module.replace(".js", "");
-          if (modulesObj[moduleMinusExtension]) {
-            modulesObj[moduleMinusExtension].requires.add(data[2]);
+          // filters out entrypoints
+          if (module) {
+            const moduleMinusExtension = module.replace(".js", "");
+            if (modulesObj[moduleMinusExtension]) {
+              modulesObj[moduleMinusExtension].requires.add(data[2]);
+            }
           }
         });
       }
@@ -177,7 +180,7 @@ const convertToGraph = (
     posted,
     group,
     sha,
-    buildHash
+    buildHash,
   };
 
   return out;
