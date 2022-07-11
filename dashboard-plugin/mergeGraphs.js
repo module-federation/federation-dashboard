@@ -1,27 +1,35 @@
+const mergeWithoutDupe = (source) => source.reduce((acc,item)=>{
+  if(typeof item === 'object') {
+    const isDupe = acc.find((existing)=>{
+      return Object.entries(existing).every(([key,value])=>{
+        return item[key] === value
+      })
+    })
+    if(!isDupe) {
+      acc.push(item)
+    }
+  } else {
+    acc.push(item)
+  }
+  return acc
+},[])
 module.exports = (graph1, graph2) => {
-  //graph1.modules.push(/...graph2.modules);
-  // graphData.consumes.push(...hostData.consumes)
-  // graph1.overrides.push(...graph2.overrides);
-console.log(graph1, graph2)
+  graph1.devDependencies = mergeWithoutDupe([...graph2.devDependencies, ...graph1.devDependencies])
+  graph1.dependencies = mergeWithoutDupe([...graph2.dependencies, ...graph1.dependencies])
   //exposed
   graph2.modules.forEach((hostModules) => {
-
-    // id: 'checkout:buy-button',
-    //     name: 'buy-button',
-    //     applicationID: 'checkout',
-    //     requires: [],
-    //     file: './components/buy-button/buy-button.tsx'
-
     const existing = graph1.modules.find((sidecarModules) => {
       return (
-          hostModules.id === sidecarModules.id &&
-          hostModules.name === sidecarModules.name &&
-          hostModules.file === sidecarModules.file &&
-          hostModules.applicationID === sidecarModules.applicationID
+        hostModules.id === sidecarModules.id &&
+        hostModules.name === sidecarModules.name &&
+        hostModules.file === sidecarModules.file &&
+        hostModules.applicationID === sidecarModules.applicationID
       );
     });
     if (existing) {
-      existing.requires = Array.from(new Set([...existing.requires,...hostModules.requires]))
+      existing.requires = Array.from(
+        new Set([...existing.requires, ...hostModules.requires])
+      );
     } else {
       graph1.modules.push(hostModules);
     }
@@ -37,8 +45,8 @@ console.log(graph1, graph2)
         sidecarOverrides.applicationID === hostOverrides.applicationID
       );
     });
-    if(!existing) {
-        graph1.overrides.push(hostOverrides);
+    if (!existing) {
+      graph1.overrides.push(hostOverrides);
     }
   });
   //consumes

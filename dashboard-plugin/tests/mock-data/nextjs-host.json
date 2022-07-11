@@ -92,6 +92,7 @@
     "remote": "http://localhost:3001/remoteEntry.js"
   },
   "overrides": [
+
     {
       "id": "use-sse",
       "name": "use-sse",
@@ -128,7 +129,15 @@
       ]
     }
   ],
-  "modules": [],
+  "modules": [
+    {
+      "id": "checkout:title",
+      "name": "title",
+      "applicationID": "checkout",
+      "requires": ["lodash"],
+      "file": "./components/exposedTitle.js"
+    }
+  ],
   "version": "0.1.2",
   "sha": "b8f38a52a48df105796e2de656b46cf31d27e05a",
   "buildHash": "c18956b51353e027"

@@ -8,12 +8,13 @@ describe("should convert Plugin data to graph", () => {
     const sidecar = require(`${__dirname}/mock-data/nextjs-sidecar.json`);
     expect(host.consumes.length).toBe(2);
     expect(sidecar.consumes.length).toBe(1);
-    expect(host.modules.length).toBe(0);
+    expect(host.modules.length).toBe(1);
     expect(sidecar.modules.length).toBe(4);
 
     const merged = mergeGraphs(host, sidecar);
-
+return
     expect(merged.consumes.length).toBe(2);
+    console.log(merged.modules)
     expect(merged.modules.length).toBe(4);
     const consumeMerge = merged.consumes.find((i) => {
       return (
@@ -23,8 +24,17 @@ describe("should convert Plugin data to graph", () => {
       );
     });
 
-    console.log(consumeMerge);
+    const modulesMerge = merged.modules.find((i) => {
+      return (
+        i.id === "checkout:title" &&
+        i.name === "title" &&
+        i.applicationID === "checkout"
+      );
+    });
 
+    // console.log(merged.overrides)
+
+    expect(JSON.stringify(modulesMerge.requires)).toBe(JSON.stringify(['lodash','react']))
     expect(consumeMerge.usedIn.length).toBe(2);
     expect(merged.id).toBe("home");
     expect(merged.name).toBe("home");

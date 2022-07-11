@@ -68,8 +68,8 @@
     }
   ],
   "optionalDependencies": [],
-  "id": "checkout",
-  "name": "checkout",
+  "id": "home",
+  "name": "home",
   "remote": "http://localhost:3001/remoteEntry.js",
   "metadata": {
     "clientUrl": "http://localhost:3333",
@@ -131,7 +131,7 @@
       "id": "checkout:title",
       "name": "title",
       "applicationID": "checkout",
-      "requires": [],
+      "requires": ["react"],
       "file": "./components/exposedTitle.js"
     },
     {
