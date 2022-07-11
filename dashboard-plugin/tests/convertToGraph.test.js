@@ -12,9 +12,9 @@ describe("should convert Plugin data to graph", () => {
     expect(sidecar.modules.length).toBe(4);
 
     const merged = mergeGraphs(host, sidecar);
-return
+
     expect(merged.consumes.length).toBe(2);
-    console.log(merged.modules)
+
     expect(merged.modules.length).toBe(4);
     const consumeMerge = merged.consumes.find((i) => {
       return (
