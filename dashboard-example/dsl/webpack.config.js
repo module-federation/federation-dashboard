@@ -8,6 +8,7 @@ const env = readFileSync(__dirname + "/../.env")
   .toString("utf-8")
   .split("\n")
   .map((v) => v.trim().split("="));
+
 process.env.DASHBOARD_WRITE_TOKEN = env.find(
   ([k]) => k === "DASHBOARD_WRITE_TOKEN"
 )[1];
@@ -89,7 +90,7 @@ module.exports = {
       template: "./public/index.html",
     }),
     new DashboardPlugin({
-      publishVersion: require("./package.json").version,
+      versionStrategy: 'gitSha',
       filename: "dashboard.json",
       dashboardURL: `${process.env.DASHBOARD_BASE_URL}/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
       metadata: {

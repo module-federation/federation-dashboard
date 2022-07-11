@@ -10,17 +10,39 @@ const generate = require("@babel/generator").default;
 const traverse = require("@babel/traverse").default;
 const { isNode } = require("@babel/types");
 const webpack = require("webpack");
+const PLUGIN_NAME = "FederationDashboardPlugin";
+
+let gitSha;
+try {
+  gitSha = require("child_process")
+      .execSync("git rev-parse HEAD")
+      .toString()
+      .trim();
+} catch (e) {
+  console.error(e);
+}
+
+const computeVersionStrategy = (arg)=>{
+  if(arg === 'buildHash') {
+    return stats.hash
+  } else if (arg === 'gitSha') {
+    return gitSha
+  } else if (arg) {
+    return arg
+  } else {
+    return gitSha
+  }
+}
+
 /** @typedef {import("webpack/lib/Compilation")} Compilation */
 /** @typedef {import("webpack/lib/Compiler")} Compiler */
+
 
 /**
  * @typedef FederationDashboardPluginOptions
  * @property {string} filename
  * @property {function} reportFunction
  */
-
-const PLUGIN_NAME = "FederationDashboardPlugin";
-
 class FederationDashboardPlugin {
   /**
    *
@@ -180,16 +202,6 @@ class FederationDashboardPlugin {
       this.parseModuleAst(curCompiler);
     }
 
-    let gitSha;
-    try {
-      gitSha = require("child_process")
-        .execSync("git rev-parse HEAD")
-        .toString()
-        .trim();
-    } catch (e) {
-      console.error(e);
-    }
-
     // filter modules
     const modules = this.getFilteredModules(stats);
     // get RemoteEntryChunk
@@ -212,7 +224,7 @@ class FederationDashboardPlugin {
       federationRemoteEntry: RemoteEntryChunk,
       buildHash: stats.hash,
       environment: this._options.environment, // 'development' if not specified
-      version: this._options.publishVersion || "1.0.0", // '1.0.0' if not specified
+      version: computeVersionStrategy(this._options.versionStrategy),
       posted: this._options.posted, // Date.now() if not specified
       group: this._options.group, // 'default' if not specified
       sha: gitSha,

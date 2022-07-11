@@ -29,12 +29,12 @@ This will post the `ModuleFederationPlugin` metrics to the update endpoint at `h
 There are also other options:
 
 | Key             | Description                                                                                 |
-| --------------- | ------------------------------------------------------------------------------------------- |
+|-----------------|---------------------------------------------------------------------------------------------|
 | dashboardURL    | The URL of the dashboard endpoint.                                                          |
 | metadata        | Any additional metadata you want to apply to this application for use in the dashboard.     |
 | filename        | The file path where the dashboard data.                                                     |
 | standalone      | For use without ModuleFederationPlugin                                                      |
-| publishVersion  | Used for versioned remotes. '1.0.0' will be used for each remote if not passed              |
+| versionStrategy | `require('package.json').version` OR `"gitSha"` OR `"buildHash"`                            |
 | packageJsonPath | custom path to package.json file, helpful if you get a `topLevelPackage.dependencies` error |
 
 ## Metadata
@@ -54,6 +54,17 @@ plugins: [
   }),
 ];
 ```
+
+## versionStrategy
+
+There are a few build-in options for versioning automatically
+We Support `gitSha`, `buildHash`, `<custom string>`
+
+**gitSha** uses the git commit hash as the version specifier (default)
+**buildHash** uses the webpacks unique build hash generated for each compile as the specifier
+**custom** some other form of version specification youd like, such as `require("package.json").version`
+
+You must ensure that this value is unique per release sent to medusa as this is how version pining works
 
 You can add whatever keys you want to `metadata`, but there are some keys that the Dashboard will look for and which result in a better experience.
 

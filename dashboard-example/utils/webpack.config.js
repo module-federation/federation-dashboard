@@ -67,7 +67,7 @@ module.exports = {
       shared: require("./package.json").dependencies,
     }),
     new DashboardPlugin({
-      publishVersion: require("./package.json").version,
+      versionStrategy: 'gitSha',
       dashboardURL: `${process.env.DASHBOARD_BASE_URL}/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
       filename: "dashboard.json",
       metadata: {
