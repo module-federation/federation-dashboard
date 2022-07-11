@@ -425,10 +425,8 @@
   dependencies:
     find-package-json "^1.2.0"
 
-"@module-federation/dashboard-plugin@*", "@module-federation/dashboard-plugin@^2.3.0":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@module-federation/dashboard-plugin/-/dashboard-plugin-2.3.1.tgz#0a8fc597fa90f5389e6a5da5a744e3a0e36b0b5d"
-  integrity sha512-Dm+fZv2jwTtCaymJiNtb7Kk+KdYVibDRVu5RJuCesvx47MleoQdVoSRU2o5tpTo4g7csfth2btkInkEfjirWHQ==
+"@module-federation/dashboard-plugin@*", "@module-federation/dashboard-plugin@file:../dashboard-plugin":
+  version "2.4.0"
   dependencies:
     "@babel/generator" "^7.15.4"
     "@babel/parser" "^7.15.5"
@@ -3791,10 +3789,10 @@ serve-static@1.15.0:
     parseurl "~1.3.3"
     send "0.18.0"
 
-serve@13.0.2:
-  version "13.0.2"
-  resolved "https://registry.yarnpkg.com/serve/-/serve-13.0.2.tgz#b19ccb854dfdf3085613cd3a4033c7807aeaf85b"
-  integrity sha512-71R6fKvNgKrqARAag6lYJNnxDzpH7DCNrMuvPY5PLVaC2PDhJsGTj/34o4o4tPWhTuLgEXqvgnAWbATQ9zGZTQ==
+serve@13.0.4:
+  version "13.0.4"
+  resolved "https://registry.yarnpkg.com/serve/-/serve-13.0.4.tgz#fc4466dc84b3e4a6cb622247c85ed8afe4b88820"
+  integrity sha512-Lj8rhXmphJCRQVv5qwu0NQZ2h+0MrRyRJxDZu5y3qLH2i/XY6a0FPj/VmjMUdkJb672MBfE8hJ274PU6JzBd0Q==
   dependencies:
     "@zeit/schemas" "2.6.0"
     ajv "6.12.6"
