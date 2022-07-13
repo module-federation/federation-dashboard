@@ -28,14 +28,14 @@ function injectScript(d, s, id, override) {
       resolve();
     };
 
-    console.log('meta', metadata);
-    const src = metadata.remoteURL.remote
+    console.log("meta", metadata);
+    const src = metadata.remoteURL.remote;
     // const src =
     //   override && override.version
     //     ? baseUrl.value + "/" + override.version + ".remoteEntry.js"
     //     : baseUrl.value + "/remoteEntry.js";
 
-    console.log(src, override)
+    console.log(src, override);
     js.src = src;
 
     js.setAttribute("data-webpack", remoteName.replace("-", "_"));

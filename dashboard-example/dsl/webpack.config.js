@@ -90,7 +90,7 @@ module.exports = {
       template: "./public/index.html",
     }),
     new DashboardPlugin({
-      versionStrategy: 'gitSha',
+      versionStrategy: "gitSha",
       filename: "dashboard.json",
       dashboardURL: `${process.env.DASHBOARD_BASE_URL}/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
       metadata: {

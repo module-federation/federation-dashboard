@@ -53,7 +53,14 @@ function validateParams(
     if (typeof module.reasons === "undefined") {
       throw new Error("module.reasons must be defined");
     }
-    if (typeof module.issuerName === "undefined") {
+
+    if (
+      (["consume-shared-module", "provide-module", "remote-module"].includes(
+        module.moduleType
+      ) ||
+        module.name.includes("container entry")) &&
+      typeof module.issuerName === "undefined"
+    ) {
       throw new Error("module.issuerName must be defined");
     }
   }

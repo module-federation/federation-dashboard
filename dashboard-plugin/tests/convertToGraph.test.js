@@ -34,7 +34,9 @@ describe("should convert Plugin data to graph", () => {
 
     // console.log(merged.overrides)
 
-    expect(JSON.stringify(modulesMerge.requires)).toBe(JSON.stringify(['lodash','react']))
+    expect(JSON.stringify(modulesMerge.requires)).toBe(
+      JSON.stringify(["lodash", "react"])
+    );
     expect(consumeMerge.usedIn.length).toBe(2);
     expect(merged.id).toBe("home");
     expect(merged.name).toBe("home");
@@ -54,6 +56,7 @@ describe("should convert Plugin data to graph", () => {
     expect(graph.remote).toBe("http://localhost:3001/remoteEntry.js");
     expect(graph.modules.length).toBe(2);
     expect(graph.optionalDependencies.length).toBe(0);
+    console.log(graph.overrides)
     expect(graph.overrides.length).toBe(3);
   });
 
