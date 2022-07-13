@@ -240,7 +240,7 @@ const convertToGraph = (
       let version = "";
 
       if(data[3].startsWith('=')) {
-        version = data[4].replace('=','')
+        version = data[3].replace('=','')
       } else {
         [
           convertedDeps.dependencies,
@@ -262,6 +262,7 @@ const convertToGraph = (
       };
     }
   });
+
 
   // TODO move this into the main consumes loop
   if (Array.isArray(functionRemotes)) {
