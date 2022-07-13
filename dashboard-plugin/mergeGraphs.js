@@ -1,21 +1,28 @@
-const mergeWithoutDupe = (source) => source.reduce((acc,item)=>{
-  if(typeof item === 'object') {
-    const isDupe = acc.find((existing)=>{
-      return Object.entries(existing).every(([key,value])=>{
-        return item[key] === value
-      })
-    })
-    if(!isDupe) {
-      acc.push(item)
+const mergeWithoutDupe = (source) =>
+  source.reduce((acc, item) => {
+    if (typeof item === "object") {
+      const isDupe = acc.find((existing) => {
+        return Object.entries(existing).every(([key, value]) => {
+          return item[key] === value;
+        });
+      });
+      if (!isDupe) {
+        acc.push(item);
+      }
+    } else {
+      acc.push(item);
     }
-  } else {
-    acc.push(item)
-  }
-  return acc
-},[])
+    return acc;
+  }, []);
 module.exports = (graph1, graph2) => {
-  graph1.devDependencies = mergeWithoutDupe([...graph2.devDependencies, ...graph1.devDependencies])
-  graph1.dependencies = mergeWithoutDupe([...graph2.dependencies, ...graph1.dependencies])
+  graph1.devDependencies = mergeWithoutDupe([
+    ...graph2.devDependencies,
+    ...graph1.devDependencies,
+  ]);
+  graph1.dependencies = mergeWithoutDupe([
+    ...graph2.dependencies,
+    ...graph1.dependencies,
+  ]);
   //exposed
   graph2.modules.forEach((hostModules) => {
     const existing = graph1.modules.find((sidecarModules) => {

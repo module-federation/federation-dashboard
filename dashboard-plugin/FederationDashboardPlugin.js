@@ -10,6 +10,41 @@ const generate = require("@babel/generator").default;
 const traverse = require("@babel/traverse").default;
 const { isNode } = require("@babel/types");
 const webpack = require("webpack");
+const PLUGIN_NAME = "FederationDashboardPlugin";
+
+let gitSha;
+try {
+  gitSha = require("child_process")
+    .execSync("git rev-parse HEAD")
+    .toString()
+    .trim();
+} catch (e) {
+  console.error(e);
+}
+
+const findPackageJson = (filePath) => {
+  if (filePath.length === 0) {
+    return false;
+  }
+  if (fs.existsSync(path.join(filePath.join(path.sep), "package.json"))) {
+    return require(path.join(filePath.join(path.sep), "package.json"));
+  }
+  filePath.pop();
+  findPackageJson(filePath);
+};
+
+const computeVersionStrategy = (arg) => {
+  if (arg === "buildHash") {
+    return stats.hash;
+  } else if (arg === "gitSha") {
+    return gitSha;
+  } else if (arg) {
+    return arg;
+  } else {
+    return gitSha;
+  }
+};
+
 /** @typedef {import("webpack/lib/Compilation")} Compilation */
 /** @typedef {import("webpack/lib/Compiler")} Compiler */
 
@@ -18,9 +53,6 @@ const webpack = require("webpack");
  * @property {string} filename
  * @property {function} reportFunction
  */
-
-const PLUGIN_NAME = "FederationDashboardPlugin";
-
 class FederationDashboardPlugin {
   /**
    *
@@ -180,18 +212,8 @@ class FederationDashboardPlugin {
       this.parseModuleAst(curCompiler);
     }
 
-    let gitSha;
-    try {
-      gitSha = require("child_process")
-        .execSync("git rev-parse HEAD")
-        .toString()
-        .trim();
-    } catch (e) {
-      console.error(e);
-    }
+    // fs.writeFile('stats.json', JSON.stringify(stats.modules))
 
-    // filter modules
-    const modules = this.getFilteredModules(stats);
     // get RemoteEntryChunk
     const RemoteEntryChunk = this.getRemoteEntryChunk(
       stats,
@@ -212,11 +234,11 @@ class FederationDashboardPlugin {
       federationRemoteEntry: RemoteEntryChunk,
       buildHash: stats.hash,
       environment: this._options.environment, // 'development' if not specified
-      version: this._options.publishVersion || "1.0.0", // '1.0.0' if not specified
+      version: computeVersionStrategy(this._options.versionStrategy),
       posted: this._options.posted, // Date.now() if not specified
       group: this._options.group, // 'default' if not specified
       sha: gitSha,
-      modules,
+      modules: stats.modules,
       chunkDependencies,
       functionRemotes: this.allArgumentsUsed,
     };
@@ -323,20 +345,6 @@ class FederationDashboardPlugin {
     }
   }
 
-  getFilteredModules(stats) {
-    const filteredModules = stats.modules.filter((module) => {
-      const array = [
-        module.name.includes("container entry"),
-        module.name.includes("remote "),
-        module.name.includes("shared module "),
-        module.name.includes("provide module "),
-      ];
-      return array.some((item) => item);
-    });
-
-    return filteredModules;
-  }
-
   getRemoteEntryChunk(stats, FederationPluginOptions) {
     const remoteEntryChunk = stats.chunks.find((chunk) => {
       const specificChunk = chunk.names.find((name) => {
@@ -371,11 +379,12 @@ class FederationDashboardPlugin {
   buildVendorFederationMap(liveStats) {
     const vendorFederation = {};
     let packageJson;
-    try {
-      packageJson = require(this._options.packageJsonPath ||
-        path.join(liveStats.compilation.options.context, "package.json"));
-      this._packageJson = packageJson;
-    } catch (e) {}
+    if (this._options.packageJsonPath) {
+      packageJson = require(this._options.packageJsonPath);
+    } else {
+      const initialPath = liveStats.compilation.options.context.split(path.sep);
+      packageJson = findPackageJson(initialPath);
+    }
 
     if (packageJson) {
       vendorFederation.dependencies = AutomaticVendorFederation({

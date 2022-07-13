@@ -1,9 +1,6 @@
 function injectScript(d, s, id, override) {
   // metadata is passed in since this function is included in the closeure
   //scope as a string
-  var baseUrl = metadata.find(function (o) {
-    return o.name === "baseUrl";
-  });
 
   var remoteName = id.replace("federation-dynamic-remote-", "");
   const promise = new Promise((resolve) => {
@@ -30,10 +27,15 @@ function injectScript(d, s, id, override) {
     js.onload = function () {
       resolve();
     };
-    const src =
-      override && override.version
-        ? baseUrl.value + "/" + override.version + ".remoteEntry.js"
-        : baseUrl.value + "/remoteEntry.js";
+
+    console.log("meta", metadata);
+    const src = metadata.remoteURL.remote;
+    // const src =
+    //   override && override.version
+    //     ? baseUrl.value + "/" + override.version + ".remoteEntry.js"
+    //     : baseUrl.value + "/remoteEntry.js";
+
+    console.log(src, override);
     js.src = src;
 
     js.setAttribute("data-webpack", remoteName.replace("-", "_"));
@@ -65,7 +67,7 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
   })
   .then(function(data){
       // Here we have data as { name: string, remoteURL: string, version: string }
-      var metadata = [{name: 'baseUrl', value: data.remoteURL}];
+      var metadata = data
       ${injectScript.toString()}
       return injectScript(document, "script", "federation-dynamic-remote-${remoteName}").then(function() {
         resolve(window.${remoteName});
