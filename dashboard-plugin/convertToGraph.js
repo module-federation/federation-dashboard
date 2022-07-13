@@ -89,6 +89,7 @@ const convertToGraph = (
           file: file.import[0],
         };
       });
+
     } else if (nameForCondition && nameForCondition.includes("node_modules")) {
       const contextArray = nameForCondition.split(path.sep);
       const afterModule = nameForCondition.split("node_modules/");
