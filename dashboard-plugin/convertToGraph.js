@@ -193,7 +193,12 @@ const convertToGraph = (
         });
       }
       let name, version
-      if(data[3].includes('@')) {
+      if(data[3].startsWith('@')) {
+        const splitInfo = data[3].split('@');
+        splitInfo[0] = '@';
+        name = splitInfo[0] + splitInfo[1]
+        version = splitInfo[2]
+      } else if (data[3].includes('@')) {
         [name,version] = data[3].split('@')
       } else {
         [
@@ -299,7 +304,7 @@ const convertToGraph = (
 
   const sourceUrl = metadata && metadata.source ? metadata.source.url : "";
   const remote = metadata && metadata.remote ? metadata.remote : "";
-
+console.log(overrides)
   const out = {
     ...convertedDeps,
     id: app,
