@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import moment from "moment";
 
-export const dashboardEndpoint = "http://localhost:3000/api/update";
+export const dashboardEndpoint = "http://localhost:3333/update";
 export const dashboardGraphQLEndpoint = "http://localhost:3000/api/graphql";
 
 const RANDOM_FILE_NAMES = [

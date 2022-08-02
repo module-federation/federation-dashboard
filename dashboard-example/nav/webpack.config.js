@@ -80,7 +80,7 @@ module.exports = {
         dsl: DashboardPlugin.clientVersion({
           currentHost: "nav",
           remoteName: "dsl",
-          dashboardURL: `${process.env.DASHBOARD_BASE_URL}/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
+          dashboardURL: `${process.env.DASHBOARD_BASE_URL}/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
         }),
         search: "search",
         utils: "utils",
@@ -98,7 +98,7 @@ module.exports = {
     new DashboardPlugin({
       versionStrategy: "gitSha",
       filename: "dashboard.json",
-      dashboardURL: `${process.env.DASHBOARD_BASE_URL}/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
+      dashboardURL: `${process.env.DASHBOARD_BASE_URL}/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
       versionChangeWebhook: "http://cnn.com/",
       metadata: {
         baseUrl: "http://localhost:3003",

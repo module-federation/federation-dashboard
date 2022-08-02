@@ -20,7 +20,7 @@ const {
 } = require("webpack");
 const path = require("path");
 
-const dashboardURL = `${process.env.DASHBOARD_BASE_URL}/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`;
+const dashboardURL = `${process.env.DASHBOARD_BASE_URL}/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`;
 
 module.exports = {
   entry: "./src/index",
@@ -116,7 +116,7 @@ module.exports = {
     new DashboardPlugin({
       versionStrategy: "gitSha",
       filename: "dashboard.json",
-      dashboardURL: `${process.env.DASHBOARD_BASE_URL}/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
+      dashboardURL: `${process.env.DASHBOARD_BASE_URL}/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
       versionChangeWebhook: "http://cnn.com/",
       metadata: {
         clientUrl: process.env.DASHBOARD_BASE_URL,

@@ -80,7 +80,7 @@ module.exports = {
         dsl: DashboardPlugin.clientVersion({
           currentHost: "search",
           remoteName: "dsl",
-          dashboardURL: `${process.env.DASHBOARD_BASE_URL}/api/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
+          dashboardURL: `${process.env.DASHBOARD_BASE_URL}/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
         }),
         home: "home",
         utils: "utils",
@@ -97,7 +97,7 @@ module.exports = {
     new DashboardPlugin({
       versionStrategy: "gitSha",
       filename: "dashboard.json",
-      dashboardURL: `${process.env.DASHBOARD_BASE_URL}/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
+      dashboardURL: `${process.env.DASHBOARD_BASE_URL}/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
       metadata: {
         baseUrl: "http://localhost:3004",
         source: {

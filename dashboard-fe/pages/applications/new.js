@@ -170,7 +170,7 @@ const NewApp = () => {
       `new DashboardPlugin(`,
       Template.indent([
         `publishVersion: require("./package.json").version`,
-        `dashboardURL: "https://federation-dashboard-alpha.vercel.app/api/update?token={writeToken}"`,
+        `dashboardURL: "https://api.medusa.codes/update?token={writeToken}"`,
         `name: "${watch("name")}",`,
         `metadata: {`,
         Template.indent([`remote: "http://localhost:3001/remoteEntry.js",`]),
