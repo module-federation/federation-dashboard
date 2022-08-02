@@ -45,6 +45,27 @@ const computeVersionStrategy = (stats, arg) => {
   }
 };
 
+class AddRuntimeRequiremetToPromiseExternal {
+  apply(compiler) {
+    compiler.hooks.compilation.tap(
+      "AddRuntimeRequiremetToPromiseExternal",
+      (compilation) => {
+        const RuntimeGlobals = compiler.webpack.RuntimeGlobals;
+        if (compilation.outputOptions.trustedTypes) {
+          compilation.hooks.additionalModuleRuntimeRequirements.tap(
+            "AddRuntimeRequiremetToPromiseExternal",
+            (module, set, context) => {
+              if (module.externalType === "promise") {
+                set.add(RuntimeGlobals.loadScript);
+              }
+            }
+          );
+        }
+      }
+    );
+  }
+}
+
 /** @typedef {import("webpack/lib/Compilation")} Compilation */
 /** @typedef {import("webpack/lib/Compiler")} Compiler */
 
@@ -71,6 +92,7 @@ class FederationDashboardPlugin {
    * @param {Compiler} compiler
    */
   apply(compiler) {
+    new AddRuntimeRequiremetToPromiseExternal().apply(compiler);
     const FederationPlugin = compiler.options.plugins.find((plugin) => {
       return plugin.constructor.name === "ModuleFederationPlugin";
     });
@@ -292,7 +314,11 @@ class FederationDashboardPlugin {
           const remoteEntry = curCompiler.getAsset(
             this.FederationPluginOptions.filename
           );
-          const cleanVersion = "_" + graphData.version.split(".").join("_");
+          let cleanVersion = "_" + rawData.version.toString()
+
+          if(typeof rawData.version === 'string') {
+             cleanVersion = "_" + rawData.version.split(".").join("_");
+          }
           let codeSource;
           if (!remoteEntry.source._value && remoteEntry.source.source) {
             codeSource = remoteEntry.source.source();
@@ -539,6 +565,7 @@ class FederationDashboardPlugin {
   }
 
   async postDashboardData(dashData) {
+    console.log(this._options.dashboardURL)
     if (!this._options.dashboardURL) {
       return Promise.resolve();
     }

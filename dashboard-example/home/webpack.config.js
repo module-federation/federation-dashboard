@@ -114,7 +114,7 @@ module.exports = {
       excludeChunks: ["remoteEntry"],
     }),
     new DashboardPlugin({
-      versionStrategy: "gitSha",
+      versionStrategy: Date.now(),
       filename: "dashboard.json",
       dashboardURL: `${process.env.DASHBOARD_BASE_URL}/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
       versionChangeWebhook: "http://cnn.com/",

@@ -76,14 +76,27 @@ module.exports = {
       library: { type: "var", name: "search__REMOTE_VERSION__" },
       filename: "remoteEntry.js",
       remotes: {
-        nav: "nav",
+        nav:  DashboardPlugin.clientVersion({
+          currentHost: "search",
+          remoteName: "nav",
+          dashboardURL: `${process.env.DASHBOARD_BASE_URL}/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
+        }),
         dsl: DashboardPlugin.clientVersion({
           currentHost: "search",
           remoteName: "dsl",
           dashboardURL: `${process.env.DASHBOARD_BASE_URL}/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
         }),
-        home: "home",
-        utils: "utils",
+
+        home: DashboardPlugin.clientVersion({
+          currentHost: "search",
+          remoteName: "home",
+          dashboardURL: `${process.env.DASHBOARD_BASE_URL}/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
+        }),
+        utils: DashboardPlugin.clientVersion({
+          currentHost: "search",
+          remoteName: "utils",
+          dashboardURL: `${process.env.DASHBOARD_BASE_URL}/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
+        }),
       },
       exposes: {
         "./SearchList": "./src/SearchList",
@@ -95,7 +108,7 @@ module.exports = {
       template: "./public/index.html",
     }),
     new DashboardPlugin({
-      versionStrategy: "gitSha",
+      versionStrategy: Date.now(),
       filename: "dashboard.json",
       dashboardURL: `${process.env.DASHBOARD_BASE_URL}/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
       metadata: {

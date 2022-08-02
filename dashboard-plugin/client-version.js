@@ -11,31 +11,28 @@ function injectScript(d, s, id, override) {
         var remoteAndVersion = remoteName.split("-");
 
         return resolve(
-          window[remoteAndVersion[0] + "_" + remoteAndVersion[1]] ||
-            window.pendingRemote[
-              remoteAndVersion[0] + "_" + remoteAndVersion[1]
-            ]
+          metadata
         );
       } else if (window[remoteName]) {
-        return resolve(window[remoteName]);
+        return resolve(metadata);
       } else {
-        return resolve(window.pendingRemote[remoteName]);
+        return resolve(metadata);
       }
     }
     js = d.createElement(s);
     js.id = id;
     js.onload = function () {
-      resolve();
+      resolve(metadata);
     };
 
     console.log("meta", metadata);
-    const src = metadata.remoteURL.remote;
+    let src = metadata.remoteURL + '/'+ metadata.version + '.remoteEntry.js';
     // const src =
     //   override && override.version
     //     ? baseUrl.value + "/" + override.version + ".remoteEntry.js"
     //     : baseUrl.value + "/remoteEntry.js";
-
     console.log(src, override);
+
     js.src = src;
 
     js.setAttribute("data-webpack", remoteName.replace("-", "_"));
@@ -44,13 +41,11 @@ function injectScript(d, s, id, override) {
   if (!window.pendingRemote) {
     window.pendingRemote = {};
   }
-  if (override && override.version) {
-    var remoteAndVersion = remoteName.split("-");
+
+    var remoteAndVersion = [remoteName,metadata.version]
     window.pendingRemote[remoteAndVersion[0] + "_" + remoteAndVersion[1]] =
       promise;
-  } else {
-    window.pendingRemote[remoteName] = promise;
-  }
+
   return promise;
 }
 
@@ -66,12 +61,35 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
     return res.json()
   })
   .then(function(data){
-      // Here we have data as { name: string, remoteURL: string, version: string }
-      var metadata = data
-      ${injectScript.toString()}
-      return injectScript(document, "script", "federation-dynamic-remote-${remoteName}").then(function() {
-        resolve(window.${remoteName});
-      });
+  var name = data.name + "_" + data.version;
+  var filename = data.version + '.remoteEntry.js';
+  var url = new URL(filename, data.remoteURL)
+  
+  console.log("${dashboardURL}&currentHost=${currentHost}&remoteName=${remoteName}", {
+  data,
+  name,
+  filename
+  });
+  new Promise(function (resolve, reject) {
+          if (typeof window[name] !== 'undefined') return resolve();
+          __webpack_require__.l(
+            url.href,
+            function (event) {
+              if (typeof window[name] !== 'undefined') return resolve();
+              var errorType = event && (event.type === 'load' ? 'missing' : event.type);
+              var realSrc = event && event.target && event.target.src;
+              __webpack_error__.message =
+                'Loading script failed.\\n(' + errorType + ': ' + realSrc + ')';
+              __webpack_error__.name = 'ScriptExternalLoadError';
+              __webpack_error__.type = errorType;
+              __webpack_error__.request = realSrc;
+              reject(__webpack_error__);
+            },
+            name,
+          );
+        }).then(function () {
+       resolve(window[name])
+        }).catch(reject)
     })
-  }).catch(console.error)`;
+  })`;
 };
