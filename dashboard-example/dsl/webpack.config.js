@@ -27,7 +27,6 @@ module.exports = {
     filename: "[name].[contenthash].js",
     chunkFilename: "[name].[contenthash].js",
     publicPath: `auto`,
-    uniqueName: `dsl.${require("./package.json").version}`,
   },
   cache: false,
   module: {

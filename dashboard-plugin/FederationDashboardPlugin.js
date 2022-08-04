@@ -92,6 +92,7 @@ class FederationDashboardPlugin {
    * @param {Compiler} compiler
    */
   apply(compiler) {
+    compiler.options.output.uniqueName = 'v'+ Date.now();
     new AddRuntimeRequiremetToPromiseExternal().apply(compiler);
     const FederationPlugin = compiler.options.plugins.find((plugin) => {
       return plugin.constructor.name === "ModuleFederationPlugin";
