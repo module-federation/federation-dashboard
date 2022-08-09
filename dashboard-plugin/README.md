@@ -17,12 +17,12 @@ const DashboardPlugin = require("@module-federation/dashboard-plugin");
 ```js
 plugins: [
   ...new DashboardPlugin({
-    dashboardURL: "https://www.medusa.codes/update?token=writeToken",
+    dashboardURL: "https://api.medusa.codes/update?token=writeToken",
   }),
 ];
 ```
 
-This will post the `ModuleFederationPlugin` metrics to the update endpoint at `https://www.medusa.codes/update?token=writeToken`.
+This will post the `ModuleFederationPlugin` metrics to the update endpoint at `https://api.medusa.codes/update?token=writeToken`.
 
 **In order to send data to Medusa, you need to create a write token.** It can be configured here: https://www.medusa.codes/settings
 
