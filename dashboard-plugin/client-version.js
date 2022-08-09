@@ -14,12 +14,7 @@ module.exports = ({currentHost, remoteName, dashboardURL}) => {
         var name = data.name + "_" + data.version;
         var filename = data.version + '.remoteEntry.js';
         var url = new URL(filename, data.remoteURL)
-
-        console.log("${dashboardURL}&currentHost=${currentHost}&remoteName=${remoteName}", {
-          data,
-          name,
-          filename
-        });
+        
         new Promise(function (resolve, reject) {
           if (typeof window[name] !== 'undefined') return resolve();
           __webpack_require__.l(
