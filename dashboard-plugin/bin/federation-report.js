@@ -1,5 +1,5 @@
 /* TODO: We need to figure out a new way to do this because the server is currently
-looking for version information in the /api/update call where we send `environment` and `version`
+looking for version information in the /update call where we send `environment` and `version`
 in the payload. I'm hoping we don't need to do this at all now. 
 
 In the new model you can just do:

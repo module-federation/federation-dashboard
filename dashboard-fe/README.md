@@ -44,7 +44,7 @@ Add the `DashboardPlugin` to the `plugins` array.
 ```js
 plugins: [
   ...new DashboardPlugin({
-    dashboardURL: "http://localhost:3000/api/update",
+    dashboardURL: "http://localhost:3333/update",
   }),
 ];
 ```
@@ -53,7 +53,7 @@ More information on the plugin is [available on NPM](https://www.npmjs.com/packa
 
 ## API
 
-There are two endpoints. The primary GraphQL endpoint is on `/api/graphql`. And the upload endpoint for the plugin is in `/api/update`.
+There are two endpoints. The primary GraphQL endpoint is on `/api/graphql`. And the upload endpoint for the plugin is in `/update`.
 
 ## Developing
 

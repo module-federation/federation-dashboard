@@ -33,7 +33,7 @@ const findPackageJson = (filePath) => {
   findPackageJson(filePath);
 };
 
-const computeVersionStrategy = (arg) => {
+const computeVersionStrategy = (stats, arg) => {
   if (arg === "buildHash") {
     return stats.hash;
   } else if (arg === "gitSha") {
@@ -44,6 +44,27 @@ const computeVersionStrategy = (arg) => {
     return gitSha;
   }
 };
+
+class AddRuntimeRequiremetToPromiseExternal {
+  apply(compiler) {
+    compiler.hooks.compilation.tap(
+      "AddRuntimeRequiremetToPromiseExternal",
+      (compilation) => {
+        const RuntimeGlobals = compiler.webpack.RuntimeGlobals;
+        if (compilation.outputOptions.trustedTypes) {
+          compilation.hooks.additionalModuleRuntimeRequirements.tap(
+            "AddRuntimeRequiremetToPromiseExternal",
+            (module, set, context) => {
+              if (module.externalType === "promise") {
+                set.add(RuntimeGlobals.loadScript);
+              }
+            }
+          );
+        }
+      }
+    );
+  }
+}
 
 /** @typedef {import("webpack/lib/Compilation")} Compilation */
 /** @typedef {import("webpack/lib/Compiler")} Compiler */
@@ -71,6 +92,8 @@ class FederationDashboardPlugin {
    * @param {Compiler} compiler
    */
   apply(compiler) {
+    compiler.options.output.uniqueName = "v" + Date.now();
+    new AddRuntimeRequiremetToPromiseExternal().apply(compiler);
     const FederationPlugin = compiler.options.plugins.find((plugin) => {
       return plugin.constructor.name === "ModuleFederationPlugin";
     });
@@ -234,7 +257,7 @@ class FederationDashboardPlugin {
       federationRemoteEntry: RemoteEntryChunk,
       buildHash: stats.hash,
       environment: this._options.environment, // 'development' if not specified
-      version: computeVersionStrategy(this._options.versionStrategy),
+      version: computeVersionStrategy(stats, this._options.versionStrategy),
       posted: this._options.posted, // Date.now() if not specified
       group: this._options.group, // 'default' if not specified
       sha: gitSha,
@@ -292,7 +315,11 @@ class FederationDashboardPlugin {
           const remoteEntry = curCompiler.getAsset(
             this.FederationPluginOptions.filename
           );
-          const cleanVersion = "_" + graphData.version.split(".").join("_");
+          let cleanVersion = "_" + rawData.version.toString();
+
+          if (typeof rawData.version === "string") {
+            cleanVersion = "_" + rawData.version.split(".").join("_");
+          }
           let codeSource;
           if (!remoteEntry.source._value && remoteEntry.source.source) {
             codeSource = remoteEntry.source.source();
@@ -539,6 +566,7 @@ class FederationDashboardPlugin {
   }
 
   async postDashboardData(dashData) {
+    console.log(this._options.dashboardURL);
     if (!this._options.dashboardURL) {
       return Promise.resolve();
     }

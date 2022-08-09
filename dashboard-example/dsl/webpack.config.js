@@ -27,7 +27,6 @@ module.exports = {
     filename: "[name].[contenthash].js",
     chunkFilename: "[name].[contenthash].js",
     publicPath: `auto`,
-    uniqueName: `dsl.${require("./package.json").version}`,
   },
   cache: false,
   module: {
@@ -90,9 +89,9 @@ module.exports = {
       template: "./public/index.html",
     }),
     new DashboardPlugin({
-      versionStrategy: "gitSha",
+      versionStrategy: "red",
       filename: "dashboard.json",
-      dashboardURL: `${process.env.DASHBOARD_BASE_URL}/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
+      dashboardURL: `${process.env.DASHBOARD_BASE_URL}/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
       metadata: {
         baseUrl: "http://localhost:3002",
         source: {

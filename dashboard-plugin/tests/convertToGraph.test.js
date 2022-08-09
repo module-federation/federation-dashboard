@@ -56,7 +56,7 @@ describe("should convert Plugin data to graph", () => {
     expect(graph.remote).toBe("http://localhost:3001/remoteEntry.js");
     expect(graph.modules.length).toBe(2);
     expect(graph.optionalDependencies.length).toBe(0);
-    console.log(graph.overrides)
+    console.log(graph.overrides);
     expect(graph.overrides.length).toBe(3);
   });
 
