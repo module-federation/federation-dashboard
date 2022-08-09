@@ -58,7 +58,7 @@ And add the plugin to the `plugins` array and alter the parameters to suit.
 ```js
 new DashboardPlugin({
   filename: "dashboard.json",
-  dashboardURL: "http://localhost:3000/api/update",
+  dashboardURL: "http://localhost:3333/update",
   metadata: {
     baseUrl: "http://localhost:3002",
     source: {
@@ -69,10 +69,10 @@ new DashboardPlugin({
 });
 ```
 
-Neither `filename` nor `dashboardURL` are required. It's up to you how and when to invoke this plugin and how to store that data and send it to the dashboard. The `/api/update` endpoint just takes a JSON payload 'as-is'. To post the `dashboard.json` data manually use a `curl` request like this:
+Neither `filename` nor `dashboardURL` are required. It's up to you how and when to invoke this plugin and how to store that data and send it to the dashboard. The `/update` endpoint just takes a JSON payload 'as-is'. To post the `dashboard.json` data manually use a `curl` request like this:
 
 ```shell script
-> curl "http://localhost:3000/api/update" -X POST \
+> curl "http://localhost:3333/update" -X POST \
   -d @dashboard-example/utils/dist/dashboard.json \
   -H "Content-type: application/json"
 ```

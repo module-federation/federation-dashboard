@@ -17,12 +17,12 @@ const DashboardPlugin = require("@module-federation/dashboard-plugin");
 ```js
 plugins: [
   ...new DashboardPlugin({
-    dashboardURL: "https://www.medusa.codes/api/update?token=writeToken",
+    dashboardURL: "https://api.medusa.codes/update?token=writeToken",
   }),
 ];
 ```
 
-This will post the `ModuleFederationPlugin` metrics to the update endpoint at `https://www.medusa.codes/api/update?token=writeToken`.
+This will post the `ModuleFederationPlugin` metrics to the update endpoint at `https://api.medusa.codes/update?token=writeToken`.
 
 **In order to send data to Medusa, you need to create a write token.** It can be configured here: https://www.medusa.codes/settings
 
@@ -44,7 +44,7 @@ Metadata is _optional_ and is specified as an object.
 ```js
 plugins: [
   ...new DashboardPlugin({
-    dashboardURL: "https://www.medusa.codes/api/update?token=writeToken",
+    dashboardURL: "https://api.medusa.codes/update?token=writeToken",
     metadata: {
       source: {
         url: "http://github.com/myorg/myproject/tree/master",
@@ -123,10 +123,10 @@ module.exports = withPlugins(
       name: "home",
       publishVersion: require("./package.json").version,
       filename: "dashboard.json",
-      dashboardURL: `https://www.medusa.codes/api/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
+      dashboardURL: `https://api.medusa.codes/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
       versionChangeWebhook: "http://cnn.com/",
       metadata: {
-        clientUrl: "http://localhost:3333",
+        clientUrl: "https://localhost:3000",
         baseUrl: process.env.VERCEL_URL
           ? "https://" + process.env.VERCEL_URL
           : "http://localhost:3001",
