@@ -92,7 +92,7 @@ class FederationDashboardPlugin {
    * @param {Compiler} compiler
    */
   apply(compiler) {
-    compiler.options.output.uniqueName = 'v'+ Date.now();
+    compiler.options.output.uniqueName = "v" + Date.now();
     new AddRuntimeRequiremetToPromiseExternal().apply(compiler);
     const FederationPlugin = compiler.options.plugins.find((plugin) => {
       return plugin.constructor.name === "ModuleFederationPlugin";
@@ -257,7 +257,7 @@ class FederationDashboardPlugin {
       federationRemoteEntry: RemoteEntryChunk,
       buildHash: stats.hash,
       environment: this._options.environment, // 'development' if not specified
-      version: computeVersionStrategy(stats,this._options.versionStrategy),
+      version: computeVersionStrategy(stats, this._options.versionStrategy),
       posted: this._options.posted, // Date.now() if not specified
       group: this._options.group, // 'default' if not specified
       sha: gitSha,
@@ -315,10 +315,10 @@ class FederationDashboardPlugin {
           const remoteEntry = curCompiler.getAsset(
             this.FederationPluginOptions.filename
           );
-          let cleanVersion = "_" + rawData.version.toString()
+          let cleanVersion = "_" + rawData.version.toString();
 
-          if(typeof rawData.version === 'string') {
-             cleanVersion = "_" + rawData.version.split(".").join("_");
+          if (typeof rawData.version === "string") {
+            cleanVersion = "_" + rawData.version.split(".").join("_");
           }
           let codeSource;
           if (!remoteEntry.source._value && remoteEntry.source.source) {
@@ -566,7 +566,7 @@ class FederationDashboardPlugin {
   }
 
   async postDashboardData(dashData) {
-    console.log(this._options.dashboardURL)
+    console.log(this._options.dashboardURL);
     if (!this._options.dashboardURL) {
       return Promise.resolve();
     }

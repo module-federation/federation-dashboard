@@ -89,7 +89,6 @@ const convertToGraph = (
           file: file.import[0],
         };
       });
-
     } else if (nameForCondition && nameForCondition.includes("node_modules")) {
       const contextArray = nameForCondition.split(path.sep);
       const afterModule = nameForCondition.split("node_modules/");
@@ -166,13 +165,10 @@ const convertToGraph = (
     optionalDependencies: convertDeps(topLevelPackage.optionalDependencies),
   };
 
-
-
   modules.forEach((mod) => {
-    const { identifier, issuerName, reasons, moduleType } = mod
+    const { identifier, issuerName, reasons, moduleType } = mod;
 
-
-    if(moduleType === "provide-module") {
+    if (moduleType === "provide-module") {
       const data = identifier.split(" ");
       if (issuerName) {
         // This is a hack
@@ -192,21 +188,21 @@ const convertToGraph = (
           }
         });
       }
-      let name, version
-      if(data[3].startsWith('@')) {
-        const splitInfo = data[3].split('@');
-        splitInfo[0] = '@';
-        name = splitInfo[0] + splitInfo[1]
-        version = splitInfo[2]
-      } else if (data[3].includes('@')) {
-        [name,version] = data[3].split('@')
+      let name, version;
+      if (data[3].startsWith("@")) {
+        const splitInfo = data[3].split("@");
+        splitInfo[0] = "@";
+        name = splitInfo[0] + splitInfo[1];
+        version = splitInfo[2];
+      } else if (data[3].includes("@")) {
+        [name, version] = data[3].split("@");
       } else {
         [
           convertedDeps.dependencies,
           convertedDeps.devDependencies,
           convertedDeps.optionalDependencies,
         ].forEach((deps) => {
-          const dep = deps.find(({name}) => name === data[2]);
+          const dep = deps.find(({ name }) => name === data[2]);
           if (dep) {
             version = dep.version;
           }
@@ -244,15 +240,15 @@ const convertToGraph = (
       }
       let version = "";
 
-      if(data[3].startsWith('=')) {
-        version = data[3].replace('=','')
+      if (data[3].startsWith("=")) {
+        version = data[3].replace("=", "");
       } else {
         [
           convertedDeps.dependencies,
           convertedDeps.devDependencies,
           convertedDeps.optionalDependencies,
         ].forEach((deps) => {
-          const dep = deps.find(({name}) => name === data[2]);
+          const dep = deps.find(({ name }) => name === data[2]);
           if (dep) {
             version = dep.version;
           }
@@ -267,7 +263,6 @@ const convertToGraph = (
       };
     }
   });
-
 
   // TODO move this into the main consumes loop
   if (Array.isArray(functionRemotes)) {
@@ -304,7 +299,7 @@ const convertToGraph = (
 
   const sourceUrl = metadata && metadata.source ? metadata.source.url : "";
   const remote = metadata && metadata.remote ? metadata.remote : "";
-console.log(overrides)
+
   const out = {
     ...convertedDeps,
     id: app,

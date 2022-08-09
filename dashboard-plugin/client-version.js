@@ -1,4 +1,4 @@
-module.exports = ({currentHost, remoteName, dashboardURL}) => {
+module.exports = ({ currentHost, remoteName, dashboardURL }) => {
   //language=JS
   return `promise new Promise((resolve, reject) => {
     fetch("${dashboardURL}&currentHost=${currentHost}&remoteName=${remoteName}", {

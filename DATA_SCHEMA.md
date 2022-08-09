@@ -1,6 +1,7 @@
 # Medusa Plugin Data Schema
 
 A dependency like this is one thats used and found in the webpack graph
+
 ```json
  {
       "name": "@ant-design/icons",
@@ -11,6 +12,7 @@ A dependency like this is one thats used and found in the webpack graph
 ```
 
 one like this is found in the package.json file, but was not actually used in the webpack final build graph
+
 ```json
   {
       "name": "antd",
@@ -18,7 +20,8 @@ one like this is found in the package.json file, but was not actually used in th
     },
 ```
 
-The whole schema as current 
+The whole schema as current
+
 ```json
 {
   "dependencies": [
@@ -229,19 +232,14 @@ The whole schema as current
       "id": "home:ProductCarousel",
       "name": "ProductCarousel",
       "applicationID": "home",
-      "requires": [
-        "react",
-        "antd"
-      ],
+      "requires": ["react", "antd"],
       "file": "./src/ProductCarousel"
     },
     {
       "id": "home:HeroImage",
       "name": "HeroImage",
       "applicationID": "home",
-      "requires": [
-        "react"
-      ],
+      "requires": ["react"],
       "file": "./src/HeroImage"
     }
   ],
@@ -251,6 +249,6 @@ The whole schema as current
 }
 ```
 
-
 ## Ideal Schema
+
 TBD?
