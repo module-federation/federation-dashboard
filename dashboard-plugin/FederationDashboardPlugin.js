@@ -39,7 +39,7 @@ const computeVersionStrategy = (stats, arg) => {
   } else if (arg === "gitSha") {
     return gitSha;
   } else if (arg) {
-    return arg;
+    return arg.toString();
   } else {
     return gitSha;
   }
