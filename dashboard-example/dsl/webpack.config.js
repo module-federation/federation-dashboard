@@ -73,8 +73,7 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "dsl__REMOTE_VERSION__",
-      library: { type: "var", name: "dsl__REMOTE_VERSION__" },
+      name: "dsl",
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
@@ -89,7 +88,7 @@ module.exports = {
       template: "./public/index.html",
     }),
     new DashboardPlugin({
-      versionStrategy: "red",
+      versionStrategy: "yellow",
       filename: "dashboard.json",
       dashboardURL: `${process.env.DASHBOARD_BASE_URL}/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
       metadata: {

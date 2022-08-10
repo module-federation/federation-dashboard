@@ -16,6 +16,7 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
         var url = new URL(filename, data.remoteURL)
         
         new Promise(function (resolve, reject) {
+          var __webpack_error__ = new Error()
           if (typeof window[name] !== 'undefined') return resolve();
           __webpack_require__.l(
             url.href,

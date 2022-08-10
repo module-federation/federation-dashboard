@@ -79,7 +79,7 @@ class FederationDashboardPlugin {
    *
    * @param {FederationDashboardPluginOptions} options
    */
-  constructor(options) {
+  constructor(options,other) {
     this._options = Object.assign(
       { debug: false, filename: "dashboard.json", useAST: false },
       options
@@ -94,15 +94,56 @@ class FederationDashboardPlugin {
   apply(compiler) {
     compiler.options.output.uniqueName = "v" + Date.now();
     new AddRuntimeRequiremetToPromiseExternal().apply(compiler);
+
     const FederationPlugin = compiler.options.plugins.find((plugin) => {
       return plugin.constructor.name === "ModuleFederationPlugin";
     });
+
     if (FederationPlugin) {
+
+
+
       this.FederationPluginOptions = Object.assign(
         {},
         FederationPlugin._options,
         this._options.standalone || {}
       );
+
+      // if (FederationPlugin._options.name) {
+      //   FederationPlugin._options.name =
+      //     FederationPlugin._options.name + "__REMOTE_VERSION__";
+      // }
+      // if (
+      //   FederationPlugin._options.library &&
+      //   FederationPlugin._options.library.name &&
+      //   !FederationPlugin._options.library.name.includes("__REMOTE_VERSION__")
+      // ) {
+      //   FederationPlugin._options.library.name =
+      //     FederationPlugin._options.library.name + "__REMOTE_VERSION__";
+      // }
+
+      const versionedMFContainerConfig = {
+        ...FederationPlugin._options,
+        name: FederationPlugin._options.name + '__REMOTE_VERSION__',
+      }
+
+      if(versionedMFContainerConfig.library) {
+        versionedMFContainerConfig.library = {
+            ...FederationPlugin._options.library,
+            name: FederationPlugin._options.name + '__REMOTE_VERSION__',
+        }
+      }
+
+      if(versionedMFContainerConfig.filename) {
+        const remoteFileName = path.basename(versionedMFContainerConfig.filename)
+        const filenameWithVersionPlaceholder = versionedMFContainerConfig.filename.replace(remoteFileName, '__REMOTE_VERSION__' + remoteFileName)
+        versionedMFContainerConfig.filename = filenameWithVersionPlaceholder
+      }
+      this.versionedMFContainerConfig = versionedMFContainerConfig
+
+        new compiler.webpack.container.ModuleFederationPlugin(versionedMFContainerConfig).apply(compiler)
+
+
     } else if (this._options.standalone) {
       this.FederationPluginOptions = this._options.standalone;
     } else {
@@ -566,7 +607,6 @@ class FederationDashboardPlugin {
   }
 
   async postDashboardData(dashData) {
-    console.log(this._options.dashboardURL);
     if (!this._options.dashboardURL) {
       return Promise.resolve();
     }
