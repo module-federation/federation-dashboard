@@ -79,7 +79,7 @@ class FederationDashboardPlugin {
    *
    * @param {FederationDashboardPluginOptions} options
    */
-  constructor(options,other) {
+  constructor(options, other) {
     this._options = Object.assign(
       { debug: false, filename: "dashboard.json", useAST: false },
       options
@@ -100,9 +100,6 @@ class FederationDashboardPlugin {
     });
 
     if (FederationPlugin) {
-
-
-
       this.FederationPluginOptions = Object.assign(
         {},
         FederationPlugin._options,
@@ -124,26 +121,32 @@ class FederationDashboardPlugin {
 
       const versionedMFContainerConfig = {
         ...FederationPlugin._options,
-        name: FederationPlugin._options.name + '__REMOTE_VERSION__',
-      }
+        name: FederationPlugin._options.name + "__REMOTE_VERSION__",
+      };
 
-      if(versionedMFContainerConfig.library) {
+      if (versionedMFContainerConfig.library) {
         versionedMFContainerConfig.library = {
-            ...FederationPlugin._options.library,
-            name: FederationPlugin._options.name + '__REMOTE_VERSION__',
-        }
+          ...FederationPlugin._options.library,
+          name: FederationPlugin._options.name + "__REMOTE_VERSION__",
+        };
       }
 
-      if(versionedMFContainerConfig.filename) {
-        const remoteFileName = path.basename(versionedMFContainerConfig.filename)
-        const filenameWithVersionPlaceholder = versionedMFContainerConfig.filename.replace(remoteFileName, '__REMOTE_VERSION__' + remoteFileName)
-        versionedMFContainerConfig.filename = filenameWithVersionPlaceholder
+      if (versionedMFContainerConfig.filename) {
+        const remoteFileName = path.basename(
+          versionedMFContainerConfig.filename
+        );
+        const filenameWithVersionPlaceholder =
+          versionedMFContainerConfig.filename.replace(
+            remoteFileName,
+            "__REMOTE_VERSION__" + remoteFileName
+          );
+        versionedMFContainerConfig.filename = filenameWithVersionPlaceholder;
       }
-      this.versionedMFContainerConfig = versionedMFContainerConfig
+      this.versionedMFContainerConfig = versionedMFContainerConfig;
 
-        new compiler.webpack.container.ModuleFederationPlugin(versionedMFContainerConfig).apply(compiler)
-
-
+      new compiler.webpack.container.ModuleFederationPlugin(
+        versionedMFContainerConfig
+      ).apply(compiler);
     } else if (this._options.standalone) {
       this.FederationPluginOptions = this._options.standalone;
     } else {
@@ -354,8 +357,9 @@ class FederationDashboardPlugin {
           Object.keys(this.FederationPluginOptions.exposes || {}).length !== 0
         ) {
           const remoteEntry = curCompiler.getAsset(
-            this.FederationPluginOptions.filename
+            this.versionedMFContainerConfig.filename
           );
+
           let cleanVersion = "_" + rawData.version.toString();
 
           if (typeof rawData.version === "string") {
@@ -373,31 +377,32 @@ class FederationDashboardPlugin {
             cleanVersion
           );
 
-          const rewriteTempalteFromMain = codeSource.replace(
-            new RegExp(`__REMOTE_VERSION__`, "g"),
-            ""
-          );
+          // const rewriteTempalteFromMain = codeSource.replace(
+          //   new RegExp(`__REMOTE_VERSION__`, "g"),
+          //   ""
+          // );
 
           const remoteEntryBuffer = Buffer.from(newSource, "utf-8");
-          const originalRemoteEntryBuffer = Buffer.from(
-            rewriteTempalteFromMain,
-            "utf-8"
-          );
+          // const originalRemoteEntryBuffer = Buffer.from(
+          //   rewriteTempalteFromMain,
+          //   "utf-8"
+          // );
 
           const remoteEntrySource = new webpack.sources.RawSource(
             remoteEntryBuffer
           );
 
-          const originalRemoteEntrySource = new webpack.sources.RawSource(
-            originalRemoteEntryBuffer
-          );
+          // const originalRemoteEntrySource = new webpack.sources.RawSource(
+          //   originalRemoteEntryBuffer
+          // );
 
           if (remoteEntry && graphData.version) {
-            curCompiler.updateAsset(
-              this.FederationPluginOptions.filename,
-              originalRemoteEntrySource
-            );
-
+            // curCompiler.updateAsset(
+            //   this.FederationPluginOptions.filename,
+            //   originalRemoteEntrySource
+            // );
+            // remove the placeholder container
+            curCompiler.deleteAsset(this.versionedMFContainerConfig.filename);
             curCompiler.emitAsset(
               [graphData.version, this.FederationPluginOptions.filename].join(
                 "."

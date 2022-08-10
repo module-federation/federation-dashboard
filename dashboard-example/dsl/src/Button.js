@@ -8,7 +8,7 @@ console.log(
 // green
 // blue
 const MyButton = ({ children }) => (
-  <Button primary style={{ background: "yellow" }}>
+  <Button primary style={{ background: "pink" }}>
     {children}
   </Button>
 );
