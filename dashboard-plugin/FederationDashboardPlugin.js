@@ -106,19 +106,6 @@ class FederationDashboardPlugin {
         this._options.standalone || {}
       );
 
-      // if (FederationPlugin._options.name) {
-      //   FederationPlugin._options.name =
-      //     FederationPlugin._options.name + "__REMOTE_VERSION__";
-      // }
-      // if (
-      //   FederationPlugin._options.library &&
-      //   FederationPlugin._options.library.name &&
-      //   !FederationPlugin._options.library.name.includes("__REMOTE_VERSION__")
-      // ) {
-      //   FederationPlugin._options.library.name =
-      //     FederationPlugin._options.library.name + "__REMOTE_VERSION__";
-      // }
-
       const versionedMFContainerConfig = {
         ...FederationPlugin._options,
         name: FederationPlugin._options.name + "__REMOTE_VERSION__",
