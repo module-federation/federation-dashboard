@@ -161,7 +161,7 @@ class FederationDashboardPlugin {
       compilation.hooks.processAssets.tapPromise(
         {
           name: PLUGIN_NAME,
-          stage: compilation.constructor.PROCESS_ASSETS_STAGE_REPORT,
+          stage: compilation.constructor.PROCESS_ASSETS_STAGE_OPTIMIZE,
         },
         () => this.processWebpackGraph(compilation)
       );
@@ -377,32 +377,16 @@ class FederationDashboardPlugin {
             cleanVersion
           );
 
-          // const rewriteTempalteFromMain = codeSource.replace(
-          //   new RegExp(`__REMOTE_VERSION__`, "g"),
-          //   ""
-          // );
-
           const remoteEntryBuffer = Buffer.from(newSource, "utf-8");
-          // const originalRemoteEntryBuffer = Buffer.from(
-          //   rewriteTempalteFromMain,
-          //   "utf-8"
-          // );
 
           const remoteEntrySource = new webpack.sources.RawSource(
             remoteEntryBuffer
           );
 
-          // const originalRemoteEntrySource = new webpack.sources.RawSource(
-          //   originalRemoteEntryBuffer
-          // );
-
           if (remoteEntry && graphData.version) {
-            // curCompiler.updateAsset(
-            //   this.FederationPluginOptions.filename,
-            //   originalRemoteEntrySource
-            // );
             // remove the placeholder container
             curCompiler.deleteAsset(this.versionedMFContainerConfig.filename);
+            // write a new file, with a clean remote entry
             curCompiler.emitAsset(
               [graphData.version, this.FederationPluginOptions.filename].join(
                 "."
