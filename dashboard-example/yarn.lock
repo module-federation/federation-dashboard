@@ -426,7 +426,7 @@
     find-package-json "^1.2.0"
 
 "@module-federation/dashboard-plugin@*", "@module-federation/dashboard-plugin@file:../dashboard-plugin":
-  version "2.5.0"
+  version "2.6.3"
   dependencies:
     "@babel/generator" "^7.15.4"
     "@babel/parser" "^7.15.5"

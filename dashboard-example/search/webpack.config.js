@@ -72,11 +72,10 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "search__REMOTE_VERSION__",
-      library: { type: "var", name: "search__REMOTE_VERSION__" },
+      name: "search",
       filename: "remoteEntry.js",
       remotes: {
-        nav:  DashboardPlugin.clientVersion({
+        nav: DashboardPlugin.clientVersion({
           currentHost: "search",
           remoteName: "nav",
           dashboardURL: `${process.env.DASHBOARD_BASE_URL}/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`,
