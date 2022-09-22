@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "type": "object",
+  "cli": "nx",
+  "title": "Native Federation build executor",
+  "properties": {
+    "baseUrl": {
+      "type": "string",
+      "description": "Remote entry base url"
+    }
+  }
+}
