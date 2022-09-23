@@ -124,7 +124,6 @@ module.exports = withPlugins(
       publishVersion: require("./package.json").version,
       filename: "dashboard.json",
       dashboardURL: `https://api.medusa.codes/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
-      versionChangeWebhook: "http://cnn.com/",
       metadata: {
         clientUrl: "https://localhost:3000",
         baseUrl: process.env.VERCEL_URL

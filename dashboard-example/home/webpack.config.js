@@ -116,7 +116,6 @@ module.exports = {
       versionStrategy: Date.now(),
       filename: "dashboard.json",
       dashboardURL: `${process.env.DASHBOARD_BASE_URL}/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
-      versionChangeWebhook: "http://cnn.com/",
       metadata: {
         clientUrl: process.env.DASHBOARD_BASE_URL,
         baseUrl: "http://localhost:3001",

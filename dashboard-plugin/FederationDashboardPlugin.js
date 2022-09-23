@@ -57,6 +57,7 @@ class AddRuntimeRequiremetToPromiseExternal {
             (module, set, context) => {
               if (module.externalType === "promise") {
                 set.add(RuntimeGlobals.loadScript);
+                set.add(RuntimeGlobals.require);
               }
             }
           );
