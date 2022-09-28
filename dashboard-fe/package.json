@@ -116,7 +116,7 @@
     "node-inline-worker": "1.0.0",
     "prettier": "2.4.0",
     "regenerator-runtime": "0.13.9",
-    "typescript": "4.4.2",
+    "typescript": "4.8.4",
     "webpack": "5.61.0",
     "webpack-bundle-analyzer": "4.4.2",
     "webpack-merge": "5.8.0"
