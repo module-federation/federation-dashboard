@@ -53,7 +53,7 @@
     "concurrently": "7.4.0",
     "cypress": "^10.7.0",
     "esbuild": "0.15.7",
-    "eslint": "~8.15.0",
+    "eslint": "8.26.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-cypress": "^2.10.3",
     "eslint-plugin-import": "2.26.0",
