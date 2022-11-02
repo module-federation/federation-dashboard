@@ -8,9 +8,6 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "dashboard-example",
-      "dashboard-example/*",
-      "dashboard-fe",
       "dashboard-plugin"
     ]
   },
@@ -30,11 +27,10 @@
   },
   "scripts": {
     "submodules": "git pull --recurse-submodules",
-    "release": "changeset publish && yarn workspace @module-federation/dashboard run docker:build && yarn workspace @module-federation/dashboard run docker:push",
+    "release": "changeset publish",
     "prettier": "prettier --write \"**/*.{js,json,md,ts,tsx}\"",
     "wipe": "find . -name \"node_modules\" -exec rm -rf '{}' +\nfind . -name \"yarn.lock\" -exec rm -rf '{}' +",
     "prettier:check": "prettier --list-different \"**/*.{js,json,md,ts,tsx}\"",
-    "postinstall": "concurrently \"cd dashboard-plugin; yarn link\" \"cd dashboard-example; yarn link @module-federation/dashboard-plugin\" -m=1"
   },
   "volta": {
     "node": "14.17.6",
