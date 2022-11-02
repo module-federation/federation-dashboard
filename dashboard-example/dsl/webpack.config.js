@@ -74,7 +74,6 @@ module.exports = {
   plugins: [
     new ModuleFederationPlugin({
       name: "dsl__REMOTE_VERSION__",
-      library: { type: "var", name: "dsl__REMOTE_VERSION__" },
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
