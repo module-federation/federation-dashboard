@@ -3,7 +3,7 @@
   "changelog": "@changesets/cli/changelog",
   "commit": false,
   "linked": [
-    ["@module-federation/dashboard", "@module-federation/dashboard-plugin"]
+    ["@module-federation/dashboard-plugin"]
   ],
   "access": "public",
   "baseBranch": "master",
