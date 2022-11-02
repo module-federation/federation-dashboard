@@ -39,6 +39,7 @@ const convertToGraph = (
     functionRemotes,
     sha,
     buildHash,
+    remotes
   },
   standalone
 ) => {
@@ -60,9 +61,20 @@ const convertToGraph = (
     if (moduleType === "remote-module") {
       if (data.length === 4) {
         const name = data[3].replace("./", "");
+        const remoteApplicationAlias = data[2].replace("webpack/container/reference/", "");
+        const remoteFromPluginOptions = remotes[remoteApplicationAlias];
+        let remoteGlobal = remoteApplicationAlias;
+        if(typeof remoteFromPluginOptions === "string" &&
+          !remoteFromPluginOptions.startsWith('external ') &&
+          !remoteFromPluginOptions.startsWith('promise ') &&
+          !remoteFromPluginOptions.startsWith('internal ') &&
+          remoteFromPluginOptions.includes('@')) {
+          remoteGlobal = remoteFromPluginOptions.split('@')[0];
+        }
+
         const consume = {
           consumingApplicationID: app,
-          applicationID: data[2].replace("webpack/container/reference/", ""),
+          applicationID: remoteGlobal,
           name,
           usedIn: new Set(),
         };
@@ -91,7 +103,7 @@ const convertToGraph = (
       });
     } else if (nameForCondition && nameForCondition.includes("node_modules")) {
       const contextArray = nameForCondition.split(path.sep);
-      const afterModule = nameForCondition.split("node_modules/");
+      const afterModule = nameForCondition.split("node_modules" + path.sep);
 
       const search = afterModule[1] && afterModule[1].startsWith("@") ? 3 : 2;
       contextArray.splice(contextArray.indexOf("node_modules") + search);

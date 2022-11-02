@@ -79,8 +79,9 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "home",
       filename: "remoteEntry.js",
-      library: { type: "var", name: "home" },
       remotes: {
+        // dsl: "myDSL@http://things.com/remotes/dsl/remoteEntry.js",
+
         dsl: DashboardPlugin.clientVersion({
           currentHost: "home",
           remoteName: "dsl",

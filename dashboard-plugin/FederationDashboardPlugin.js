@@ -235,7 +235,7 @@ class FederationDashboardPlugin {
       this.parseModuleAst(curCompiler);
     }
 
-    // fs.writeFile('stats.json', JSON.stringify(stats.modules))
+    // fs.writeFileSync('stats.json', JSON.stringify(stats, null, 2))
 
     // get RemoteEntryChunk
     const RemoteEntryChunk = this.getRemoteEntryChunk(
@@ -251,6 +251,7 @@ class FederationDashboardPlugin {
 
     const rawData = {
       name: this.FederationPluginOptions.name,
+      remotes: this.FederationPluginOptions.remotes,
       metadata: this._options.metadata || {},
       topLevelPackage: vendorFederation || {},
       publicPath: stats.publicPath,
