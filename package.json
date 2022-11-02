@@ -30,7 +30,7 @@
     "release": "changeset publish",
     "prettier": "prettier --write \"**/*.{js,json,md,ts,tsx}\"",
     "wipe": "find . -name \"node_modules\" -exec rm -rf '{}' +\nfind . -name \"yarn.lock\" -exec rm -rf '{}' +",
-    "prettier:check": "prettier --list-different \"**/*.{js,json,md,ts,tsx}\"",
+    "prettier:check": "prettier --list-different \"**/*.{js,json,md,ts,tsx}\""
   },
   "volta": {
     "node": "14.17.6",
