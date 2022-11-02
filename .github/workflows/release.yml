@@ -34,21 +34,6 @@ jobs:
 
       - run: yarn
 
-      - name: Docker Login
-        run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        env:
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-
-      - name: Perform builds
-        env:
-          AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
-          AUTH0_SECRET_B64: ${{ secrets.AUTH0_SECRET_B64 }}
-        run: |-
-          rm -fr dashboard-fe/node_modules
-          yarn workspace @module-federation/dashboard run docker:build:ci
-          yarn workspace @module-federation/dashboard run docker:push
-
       - name: Create Release or Publish
         uses: changesets/action@master
         with:
