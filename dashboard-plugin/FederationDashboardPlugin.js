@@ -81,7 +81,7 @@ class FederationDashboardPlugin {
    */
   constructor(options) {
     this._options = Object.assign(
-      { debug: false, filename: "dashboard.json", useAST: false },
+      { debug: false, filename: "dashboard.json", useAST: false, fetchClient: false },
       options
     );
     this._dashData = null;
@@ -125,6 +125,7 @@ class FederationDashboardPlugin {
 
     if (this.FederationPluginOptions.name) {
       new DefinePlugin({
+        'process.env.dashboardUrl': JSON.stringify(this._options.dashboardUrl),
         "process.CURRENT_HOST": JSON.stringify(
           this.FederationPluginOptions.name
         ),
@@ -567,12 +568,17 @@ class FederationDashboardPlugin {
   }
 
   async postDashboardData(dashData) {
-    console.log(this._options.dashboardURL);
     if (!this._options.dashboardURL) {
       return Promise.resolve();
     }
+    let client;
+    if(this._options.fetchClient) {
+      client = this._options.fetchClient
+    } else {
+      client = fetch;
+    }
     try {
-      const res = await fetch(this._options.dashboardURL, {
+      const res = await client(this._options.dashboardURL, {
         method: "POST",
         body: dashData,
         headers: {
