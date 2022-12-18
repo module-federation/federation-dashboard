@@ -36,7 +36,7 @@
     "@module-federation/automatic-vendor-federation": "^1.2.1",
     "deepmerge": "^4.2.2",
     "flatted": "^3.0.0",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^3.0.0"
   },
   "peerDependencies": {
     "webpack": "^5.40.0",
