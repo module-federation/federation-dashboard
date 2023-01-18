@@ -50,7 +50,7 @@ class AddRuntimeRequiremetToPromiseExternal {
     compiler.hooks.compilation.tap(
       "AddRuntimeRequiremetToPromiseExternal",
       (compilation) => {
-        const RuntimeGlobals = compiler.webpack.RuntimeGlobals;
+        const { RuntimeGlobals } = compiler.webpack;
         if (compilation.outputOptions.trustedTypes) {
           compilation.hooks.additionalModuleRuntimeRequirements.tap(
             "AddRuntimeRequiremetToPromiseExternal",
@@ -81,7 +81,7 @@ class FederationDashboardPlugin {
    */
   constructor(options) {
     this._options = Object.assign(
-      { debug: false, filename: "dashboard.json", useAST: false },
+      { debug: false, filename: "dashboard.json", useAST: false, fetchClient: false },
       options
     );
     this._dashData = null;
@@ -92,11 +92,9 @@ class FederationDashboardPlugin {
    * @param {Compiler} compiler
    */
   apply(compiler) {
-    compiler.options.output.uniqueName = "v" + Date.now();
+    compiler.options.output.uniqueName = `v${Date.now()}`;
     new AddRuntimeRequiremetToPromiseExternal().apply(compiler);
-    const FederationPlugin = compiler.options.plugins.find((plugin) => {
-      return plugin.constructor.name === "ModuleFederationPlugin";
-    });
+    const FederationPlugin = compiler.options.plugins.find((plugin) => plugin.constructor.name === "ModuleFederationPlugin");
     if (FederationPlugin) {
       this.FederationPluginOptions = Object.assign(
         {},
@@ -125,6 +123,7 @@ class FederationDashboardPlugin {
 
     if (this.FederationPluginOptions.name) {
       new DefinePlugin({
+        'process.dashboardURL': JSON.stringify(this._options.dashboardURL),
         "process.CURRENT_HOST": JSON.stringify(
           this.FederationPluginOptions.name
         ),
@@ -140,23 +139,13 @@ class FederationDashboardPlugin {
       // Explore each module within the chunk (built inputs):
       chunk.getModules().forEach((module) => {
         // Loop through all the dependencies that has the named export that we are looking for
-        const matchedNamedExports = module.dependencies.filter((dep) => {
-          return dep.name === "federateComponent";
-        });
+        const matchedNamedExports = module.dependencies.filter((dep) => dep.name === "federateComponent");
 
-        if (matchedNamedExports.length > 0) {
-          // we know that this module exported the function we care about
-          // now we need to know how many times this function is invoked in the source code
-          // along with all the arguments of it
-
-          // these modules could be a combination of multiple source files, so we need to traverse
-          // through its fileDependencies
-          if (module.resource) {
-            filePaths.push({
-              resource: module.resource,
-              file: module.resourceResolveData.relativePath,
-            });
-          }
+        if (matchedNamedExports.length > 0 && module.resource) {
+          filePaths.push({
+            resource: module.resource,
+            file: module.resourceResolveData.relativePath,
+          });
         }
       });
 
@@ -174,20 +163,18 @@ class FederationDashboardPlugin {
            * More node types are documented here: https://babeljs.io/docs/en/babel-types#api
            */
           CallExpression: (path) => {
-            const node = path.node;
+            const { node } = path;
             const { callee, arguments: args } = node;
 
             if (callee.loc.identifierName === "federateComponent") {
-              const argsAreStrings = args.every((arg) => {
-                return arg.type === "StringLiteral";
-              });
+              const argsAreStrings = args.every((arg) => arg.type === "StringLiteral");
               if (!argsAreStrings) {
                 return;
               }
               const argsValue = [file];
 
               // we collect the JS representation of each argument used in this function call
-              for (let i = 0; i < args.length; i += 1) {
+              for (let i = 0; i < args.length; i++) {
                 const a = args[i];
                 let { code } = generate(a);
 
@@ -201,12 +188,12 @@ class FederationDashboardPlugin {
                 // If the value is a Node, that means it was a variable name
                 // There is no easy way to resolve the variable real value, so we just skip any function calls
                 // that has variable as its args
-                if (!isNode(value)) {
-                  argsValue.push(value);
-                } else {
+                if (isNode(value)) {
                   // by breaking out of the loop here,
                   // we also prevent this args to be pushed to `allArgumentsUsed`
                   break;
+                } else {
+                  argsValue.push(value);
                 }
 
                 if (i === args.length - 1) {
@@ -277,7 +264,7 @@ class FederationDashboardPlugin {
 
     if (graphData) {
       const dashData = (this._dashData = JSON.stringify(graphData));
-      // this.writeStatsFiles(stats, dashData);
+      this.writeStatsFiles(stats, dashData);
       if (this._options.dashboardURL && !this._options.nextjs) {
         this.postDashboardData(dashData).catch((err) => {
           if (err) {
@@ -316,11 +303,8 @@ class FederationDashboardPlugin {
           const remoteEntry = curCompiler.getAsset(
             this.FederationPluginOptions.filename
           );
-          let cleanVersion = "_" + rawData.version.toString();
+          const cleanVersion = typeof rawData.version === "string" ? `_${rawData.version.split(".").join("_")}` : `_${rawData.version.toString()}`;
 
-          if (typeof rawData.version === "string") {
-            cleanVersion = "_" + rawData.version.split(".").join("_");
-          }
           let codeSource;
           if (!remoteEntry.source._value && remoteEntry.source.source) {
             codeSource = remoteEntry.source.source();
@@ -374,18 +358,13 @@ class FederationDashboardPlugin {
   }
 
   getRemoteEntryChunk(stats, FederationPluginOptions) {
-    const remoteEntryChunk = stats.chunks.find((chunk) => {
-      const specificChunk = chunk.names.find((name) => {
-        return name === FederationPluginOptions.name;
-      });
-      return specificChunk;
-    });
-
-    return remoteEntryChunk;
+    
+    return stats.chunks.find((chunk) => chunk.names.find((name) => name === FederationPluginOptions.name));
   }
 
   getChunkDependencies(validChunkArray) {
-    const chunkDependencies = validChunkArray.reduce((acc, chunk) => {
+    
+    return validChunkArray.reduce((acc, chunk) => {
       const subset = chunk.getAllReferencedChunks();
       const stringifiableChunk = Array.from(subset).map((sub) => {
         const cleanSet = Object.getOwnPropertyNames(sub).reduce((acc, key) => {
@@ -400,8 +379,6 @@ class FederationDashboardPlugin {
         [chunk.id]: stringifiableChunk,
       });
     }, {});
-
-    return chunkDependencies;
   }
 
   buildVendorFederationMap(liveStats) {
@@ -445,7 +422,7 @@ class FederationDashboardPlugin {
   }
 
   mapToObjectRec(m) {
-    let lo = {};
+    const lo = {};
     for (let [key, value] of Object.entries(m)) {
       if (value instanceof Map && value.size > 0) {
         lo[key] = this.mapToObjectRec(value);
@@ -567,12 +544,12 @@ class FederationDashboardPlugin {
   }
 
   async postDashboardData(dashData) {
-    console.log(this._options.dashboardURL);
     if (!this._options.dashboardURL) {
       return Promise.resolve();
     }
+    const client = this._options.fetchClient ? this._options.fetchClient : fetch;
     try {
-      const res = await fetch(this._options.dashboardURL, {
+      const res = await client(this._options.dashboardURL, {
         method: "POST",
         body: dashData,
         headers: {
@@ -601,7 +578,7 @@ class NextMedusaPlugin {
       ? path.join(compiler.options.output.path, this._options.filename)
       : path.join(
           compiler.options.output.path,
-          "sidecar-" + this._options.filename
+          `sidecar-${this._options.filename}`
         );
     const hostData = path.join(
       compiler.options.output.path,
@@ -617,7 +594,7 @@ class NextMedusaPlugin {
     compiler.hooks.afterEmit.tap(PLUGIN_NAME, () => {
       const sidecarData = path.join(
         compiler.options.output.path,
-        "sidecar-" + this._options.filename
+        `sidecar-${this._options.filename}`
       );
       const hostData = path.join(
         compiler.options.output.path,
@@ -644,35 +621,33 @@ class NextMedusaPlugin {
 
 const withMedusa =
   ({ name, ...medusaConfig }) =>
-  (nextConfig = {}) => {
-    return Object.assign({}, nextConfig, {
-      webpack(config, options) {
-        if (
-          options.nextRuntime !== "edge" &&
-          !options.isServer &&
-          process.env.NODE_ENV === "production"
-        ) {
-          if (!name) {
-            throw new Error(
-              "Medusa needs a name for the app, please ensure plugin options has {name: <appname>}"
-            );
-          }
-          config.plugins.push(
-            new NextMedusaPlugin({
-              standalone: { name },
-              ...medusaConfig,
-            })
+  (nextConfig = {}) => Object.assign({}, nextConfig, {
+    webpack(config, options) {
+      if (
+        options.nextRuntime !== "edge" &&
+        !options.isServer &&
+        process.env.NODE_ENV === "production"
+      ) {
+        if (!name) {
+          throw new Error(
+            "Medusa needs a name for the app, please ensure plugin options has {name: <appname>}"
           );
         }
+        config.plugins.push(
+          new NextMedusaPlugin({
+            standalone: { name },
+            ...medusaConfig,
+          })
+        );
+      }
 
-        if (typeof nextConfig.webpack === "function") {
-          return nextConfig.webpack(config, options);
-        }
+      if (typeof nextConfig.webpack === "function") {
+        return nextConfig.webpack(config, options);
+      }
 
-        return config;
-      },
-    });
-  };
+      return config;
+    },
+  });
 
 module.exports = FederationDashboardPlugin;
 module.exports.clientVersion = require("./client-version");

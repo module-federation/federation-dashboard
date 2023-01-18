@@ -39,7 +39,6 @@ const convertToGraph = (
     functionRemotes,
     sha,
     buildHash,
-    remotes
   },
   standalone
 ) => {
@@ -48,7 +47,6 @@ const convertToGraph = (
     standalone
   );
 
-  const app = name;
   const overrides = {};
   const consumes = [];
   const consumesByName = {};
@@ -58,26 +56,21 @@ const convertToGraph = (
   modules.forEach((mod) => {
     const { identifier, reasons, moduleType, nameForCondition, size } = mod;
     const data = identifier.split(" ");
+
     if (moduleType === "remote-module") {
       if (data.length === 4) {
         const name = data[3].replace("./", "");
-        const remoteApplicationAlias = data[2].replace("webpack/container/reference/", "");
-        const remoteFromPluginOptions = remotes[remoteApplicationAlias];
-        let remoteGlobal = remoteApplicationAlias;
-        if(typeof remoteFromPluginOptions === "string" &&
-          !remoteFromPluginOptions.startsWith('external ') &&
-          !remoteFromPluginOptions.startsWith('promise ') &&
-          !remoteFromPluginOptions.startsWith('internal ') &&
-          remoteFromPluginOptions.includes('@')) {
-          remoteGlobal = remoteFromPluginOptions.split('@')[0];
+        let applicationID = data[2].replace("webpack/container/reference/", "")
+        if(applicationID.includes("?")){
+           applicationID = new URLSearchParams(applicationID.split('?')[1]).get('remoteName');
         }
-
         const consume = {
-          consumingApplicationID: app,
-          applicationID: remoteGlobal,
+          consumingApplicationID: name,
+          applicationID,
           name,
           usedIn: new Set(),
         };
+
         consumes.push(consume);
         consumesByName[nameForCondition] = consume;
       }
@@ -94,25 +87,25 @@ const convertToGraph = (
       JSON.parse(data[3]).forEach(([prefixedName, file]) => {
         const name = prefixedName.replace("./", "");
         modulesObj[file.import[0]] = {
-          id: `${app}:${name}`,
+          id: `${name}:${name}`,
           name,
-          applicationID: app,
+          applicationID: name,
           requires: new Set(),
           file: file.import[0],
         };
       });
     } else if (nameForCondition && nameForCondition.includes("node_modules")) {
       const contextArray = nameForCondition.split(path.sep);
-      const afterModule = nameForCondition.split("node_modules" + path.sep);
+      const afterModule = nameForCondition.split("node_modules/");
 
       const search = afterModule[1] && afterModule[1].startsWith("@") ? 3 : 2;
       contextArray.splice(contextArray.indexOf("node_modules") + search);
 
-      let context = contextArray.join(path.sep);
-      let npmModule = contextArray[contextArray.indexOf("node_modules") + 1];
+      const context = contextArray.join(path.sep);
+      const npmModule = contextArray[contextArray.indexOf("node_modules") + 1];
 
-      let packageJsonFile = path.join(context, "package.json");
-      let packageJson = JSON.parse(fs.readFileSync(packageJsonFile, "UTF-8"));
+      const packageJsonFile = path.join(context, "package.json");
+      const packageJson = JSON.parse(fs.readFileSync(packageJsonFile, "UTF-8"));
 
       const existingPackage = npmModules.get(packageJson.name);
       if (existingPackage) {
@@ -126,11 +119,10 @@ const convertToGraph = (
         };
         if (existingReference) {
           Object.assign(existingReference, data);
-          npmModules.set(packageJson.name, existingPackage);
         } else {
           existingPackage[packageJson.version] = data;
-          npmModules.set(packageJson.name, existingPackage);
         }
+        npmModules.set(packageJson.name, existingPackage);
       } else {
         const newDep = {
           [packageJson.version]: {
@@ -138,7 +130,7 @@ const convertToGraph = (
             version: packageJson.version,
             homepage: packageJson.homepage,
             license: getLicenses(packageJson),
-            size: size,
+            size,
           },
         };
         npmModules.set(packageJson.name, newDep);
@@ -152,9 +144,7 @@ const convertToGraph = (
 
       const versionVal = version.replace(`${name}-`, "");
       if (dataFromGraph) {
-        const foundInGraph = Object.values(dataFromGraph).find((depData) => {
-          return depData.version.startsWith(versionVal);
-        });
+        const foundInGraph = Object.values(dataFromGraph).find((depData) => depData.version.startsWith(versionVal));
 
         if (foundInGraph) {
           const { name, version, license, size } = foundInGraph;
@@ -200,7 +190,8 @@ const convertToGraph = (
           }
         });
       }
-      let name, version;
+      let name;
+      let version;
       if (data[3].startsWith("@")) {
         const splitInfo = data[3].split("@");
         splitInfo[0] = "@";
@@ -223,57 +214,58 @@ const convertToGraph = (
 
       overrides[name] = {
         id: name,
-        name: name,
+        name,
         version,
         location: name,
-        applicationID: app,
+        applicationID: name,
       };
     }
 
-    if (moduleType === "consume-shared-module") {
-      const data = identifier.split("|");
-      if (issuerName) {
-        // This is a hack
-        const issuerNameMinusExtension = issuerName.replace(".js", "");
-        if (modulesObj[issuerNameMinusExtension]) {
-          modulesObj[issuerNameMinusExtension].requires.add(data[2]);
+    if (moduleType !== "consume-shared-module") {
+      return;
+    }
+    const data = identifier.split("|");
+    if (issuerName) {
+      // This is a hack
+      const issuerNameMinusExtension = issuerName.replace(".js", "");
+      if (modulesObj[issuerNameMinusExtension]) {
+        modulesObj[issuerNameMinusExtension].requires.add(data[2]);
+      }
+    }
+    if (reasons) {
+      reasons.forEach(({ module }) => {
+        // filters out entrypoints
+        if (module) {
+          const moduleMinusExtension = module.replace(".js", "");
+          if (modulesObj[moduleMinusExtension]) {
+            modulesObj[moduleMinusExtension].requires.add(data[2]);
+          }
         }
-      }
-      if (reasons) {
-        reasons.forEach(({ module }) => {
-          // filters out entrypoints
-          if (module) {
-            const moduleMinusExtension = module.replace(".js", "");
-            if (modulesObj[moduleMinusExtension]) {
-              modulesObj[moduleMinusExtension].requires.add(data[2]);
-            }
-          }
-        });
-      }
-      let version = "";
-
-      if (data[3].startsWith("=")) {
-        version = data[3].replace("=", "");
-      } else {
-        [
-          convertedDeps.dependencies,
-          convertedDeps.devDependencies,
-          convertedDeps.optionalDependencies,
-        ].forEach((deps) => {
-          const dep = deps.find(({ name }) => name === data[2]);
-          if (dep) {
-            version = dep.version;
-          }
-        });
-      }
-      overrides[data[2]] = {
-        id: data[2],
-        name: data[2],
-        version,
-        location: data[2],
-        applicationID: app,
-      };
+      });
     }
+    let version = "";
+
+    if (data[3].startsWith("=")) {
+      version = data[3].replace("=", "");
+    } else {
+      [
+        convertedDeps.dependencies,
+        convertedDeps.devDependencies,
+        convertedDeps.optionalDependencies,
+      ].forEach((deps) => {
+        const dep = deps.find(({ name }) => name === data[2]);
+        if (dep) {
+          version = dep.version;
+        }
+      });
+    }
+    overrides[data[2]] = {
+      id: data[2],
+      name: data[2],
+      version,
+      location: data[2],
+      applicationID: name,
+    };
   });
 
   // TODO move this into the main consumes loop
@@ -281,14 +273,12 @@ const convertToGraph = (
     const dynamicConsumes = Object.values(
       functionRemotes.reduce((acc, [file, applicationID, name]) => {
         const cleanName = name.replace("./", "");
-        const objectId = applicationID + "/" + cleanName;
+        const objectId = `${applicationID}/${cleanName}`;
         const cleanFile = file.replace("./", "");
-        const foundExistingConsume = consumes.find((consumeObj) => {
-          return (
-            consumeObj.applicationID === applicationID &&
-            consumeObj.name === cleanName
-          );
-        });
+        const foundExistingConsume = consumes.find((consumeObj) => (
+          consumeObj.applicationID === applicationID &&
+          consumeObj.name === cleanName
+        ));
         if (foundExistingConsume) {
           foundExistingConsume.usedIn.add(cleanFile);
           return acc;
@@ -300,7 +290,7 @@ const convertToGraph = (
         acc[objectId] = {
           applicationID,
           name: cleanName,
-          consumingApplicationID: app,
+          consumingApplicationID: name,
           usedIn: new Set([cleanFile]),
         };
         return acc;
@@ -312,10 +302,10 @@ const convertToGraph = (
   const sourceUrl = metadata && metadata.source ? metadata.source.url : "";
   const remote = metadata && metadata.remote ? metadata.remote : "";
 
-  const out = {
+  return {
     ...convertedDeps,
-    id: app,
-    name: app,
+    id: name,
+    name,
     remote,
     metadata,
     versionData,
@@ -338,8 +328,6 @@ const convertToGraph = (
     sha,
     buildHash,
   };
-
-  return out;
 };
 
 module.exports = convertToGraph;
