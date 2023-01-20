@@ -1,6 +1,6 @@
 {
   "name": "@module-federation/dashboard-plugin",
-  "version": "2.6.5",
+  "version": "2.7.0",
   "main": "FederationDashboardPlugin.js",
   "bin": "bin/federation-report.js",
   "license": "Apache-2.0",
