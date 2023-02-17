@@ -33,7 +33,7 @@
     "prettier:check": "prettier --list-different \"**/*.{js,json,md,ts,tsx}\""
   },
   "volta": {
-    "node": "14.17.6",
+    "node": "14.21.3",
     "yarn": "1.22.17"
   },
   "contributors": [
