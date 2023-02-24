@@ -400,11 +400,11 @@ class FederationDashboardPlugin {
       }
       fs.writeFileSync(hashPath, dashData, { encoding: "utf-8" });
     }
-    // if (this._options.debug) {
+    if (this._options.debug) {
     console.log(
       path.join(stats.outputPath, this.FederationPluginOptions.filename)
     );
-    // }
+    }
     let file
 
     try {
@@ -465,7 +465,6 @@ class FederationDashboardPlugin {
   }
 
   async postDashboardData(dashData) {
-    console.log('should post to dashboard')
     if (!this._options.dashboardURL) {
       return Promise.resolve();
     }
@@ -490,53 +489,6 @@ class FederationDashboardPlugin {
   }
 }
 
-class NextMedusaPlugin {
-  constructor(options) {
-    this._options = options;
-  }
-
-  apply(compiler) {
-    if(compiler.name === 'ChildFederationPlugin') return
-
-
-    const MedusaPlugin = new FederationDashboardPlugin({
-      ...this._options,
-    });
-    MedusaPlugin.apply(compiler);
-    console.log('compiler name', compiler.name)
-
-return
-    compiler.hooks.done.tap(PLUGIN_NAME, () => {
-      const sidecarData = path.join(
-        compiler.options.output.path,
-        `child-dashboard.json`
-      );
-      const hostData = path.join(
-        compiler.options.output.path,
-        'dashboard.json'
-      );
-      console.log('sidecar data',sidecarData);
-      console.log('host data', hostData);
-      if (fs.existsSync(sidecarData) && fs.existsSync(hostData)) {
-        console.log('will write merged files');
-        fs.writeFileSync(
-          hostData,
-          JSON.stringify(mergeGraphs(require(sidecarData), require(hostData)))
-        );
-      }
-    });
-
-    compiler.hooks.afterDone.tap("NextMedusaPlugin", (stats, done) => {
-      if (fs.existsSync(sidecarData) && fs.existsSync(hostData)) {
-        const dashboardData = fs.readFileSync(hostData, "utf8");
-        MedusaPlugin.postDashboardData(dashboardData).then(done).catch(done);
-      } else {
-        done();
-      }
-    });
-  }
-}
 
 module.exports = FederationDashboardPlugin;
 module.exports.clientVersion = require("./client-version");
-module.exports.NextMedusaPlugin = NextMedusaPlugin;
