@@ -5,10 +5,6 @@ const AutomaticVendorFederation = require("@module-federation/automatic-vendor-f
 const convertToGraph = require("./convertToGraph");
 const mergeGraphs = require("./mergeGraphs");
 const DefinePlugin = require("webpack/lib/DefinePlugin");
-const parser = require("@babel/parser");
-const generate = require("@babel/generator").default;
-const traverse = require("@babel/traverse").default;
-const { isNode } = require("@babel/types");
 const webpack = require("webpack");
 const PLUGIN_NAME = "FederationDashboardPlugin";
 
