@@ -81,7 +81,7 @@ class FederationDashboardPlugin {
    */
   constructor(options) {
     this._options = Object.assign(
-      { debug: false, filename: "dashboard.json", useAST: false, fetchClient: false },
+      { debug: false, filename: "dashboard.json", fetchClient: false },
       options
     );
     this._dashData = null;
