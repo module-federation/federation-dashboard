@@ -7,8 +7,6 @@ module.exports = ({fetchClient, currentHost, remoteName, dashboardURL})=> new Pr
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        return null
         const name = `${data.name}_${data.version}`;
         const filename = `${data.version}.remoteEntry.js`;
         const url = new URL(filename, data.remoteURL);
