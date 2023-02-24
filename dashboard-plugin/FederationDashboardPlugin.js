@@ -93,8 +93,11 @@ class FederationDashboardPlugin {
    */
   apply(compiler) {
     compiler.options.output.uniqueName = `v${Date.now()}`;
+
     new AddRuntimeRequiremetToPromiseExternal().apply(compiler);
-    const FederationPlugin = compiler.options.plugins.find((plugin) => plugin.constructor.name === "ModuleFederationPlugin");
+    const FederationPlugin = compiler.options.plugins.find((plugin) => {
+      return plugin.constructor.name === "ModuleFederationPlugin" || plugin.constructor.name === "NextFederationPlugin";
+    });
     if (FederationPlugin) {
       this.FederationPluginOptions = Object.assign(
         {},
@@ -117,7 +120,9 @@ class FederationDashboardPlugin {
           name: PLUGIN_NAME,
           stage: compilation.constructor.PROCESS_ASSETS_STAGE_REPORT,
         },
-        () => this.processWebpackGraph(compilation)
+        (assets) => {
+          return this.processWebpackGraph(compilation, assets);
+        }
       );
     });
 
@@ -131,98 +136,10 @@ class FederationDashboardPlugin {
     }
   }
 
-  parseModuleAst(compilation, callback) {
-    const filePaths = [];
-    const allArgumentsUsed = [];
-    // Explore each chunk (build output):
-    compilation.chunks.forEach((chunk) => {
-      // Explore each module within the chunk (built inputs):
-      chunk.getModules().forEach((module) => {
-        // Loop through all the dependencies that has the named export that we are looking for
-        const matchedNamedExports = module.dependencies.filter((dep) => dep.name === "federateComponent");
 
-        if (matchedNamedExports.length > 0 && module.resource) {
-          filePaths.push({
-            resource: module.resource,
-            file: module.resourceResolveData.relativePath,
-          });
-        }
-      });
-
-      filePaths.forEach(({ resource, file }) => {
-        const sourceCode = fs.readFileSync(resource).toString("utf-8");
-        const ast = parser.parse(sourceCode, {
-          sourceType: "unambiguous",
-          plugins: ["jsx", "typescript"],
-        });
-
-        // traverse the abstract syntax tree
-        traverse(ast, {
-          /**
-           * We want to run a function depending on a found nodeType
-           * More node types are documented here: https://babeljs.io/docs/en/babel-types#api
-           */
-          CallExpression: (path) => {
-            const { node } = path;
-            const { callee, arguments: args } = node;
-
-            if (callee.loc.identifierName === "federateComponent") {
-              const argsAreStrings = args.every((arg) => arg.type === "StringLiteral");
-              if (!argsAreStrings) {
-                return;
-              }
-              const argsValue = [file];
-
-              // we collect the JS representation of each argument used in this function call
-              for (let i = 0; i < args.length; i++) {
-                const a = args[i];
-                let { code } = generate(a);
-
-                if (code.startsWith("{")) {
-                  // wrap it in parentheses, so when it's eval-ed, it is eval-ed correctly into an JS object
-                  code = `(${code})`;
-                }
-
-                const value = eval(code);
-
-                // If the value is a Node, that means it was a variable name
-                // There is no easy way to resolve the variable real value, so we just skip any function calls
-                // that has variable as its args
-                if (isNode(value)) {
-                  // by breaking out of the loop here,
-                  // we also prevent this args to be pushed to `allArgumentsUsed`
-                  break;
-                } else {
-                  argsValue.push(value);
-                }
-
-                if (i === args.length - 1) {
-                  // push to the top level array
-                  allArgumentsUsed.push(argsValue);
-                }
-              }
-            }
-          },
-        });
-      });
-    });
-    const uniqueArgs = allArgumentsUsed.reduce((acc, current) => {
-      const id = current.join("|");
-      acc[id] = current;
-      return acc;
-    }, {});
-    this.allArgumentsUsed = Object.values(uniqueArgs);
-    if (callback) callback();
-  }
-
-  processWebpackGraph(curCompiler, callback) {
+  processWebpackGraph(curCompiler, assets) {
     const liveStats = curCompiler.getStats();
     const stats = liveStats.toJson();
-    if (this._options.useAST) {
-      this.parseModuleAst(curCompiler);
-    }
-
-    // fs.writeFileSync('stats.json', JSON.stringify(stats, null, 2))
 
     // get RemoteEntryChunk
     const RemoteEntryChunk = this.getRemoteEntryChunk(
@@ -233,9 +150,10 @@ class FederationDashboardPlugin {
       liveStats,
       this.FederationPluginOptions
     );
+
+
     const chunkDependencies = this.getChunkDependencies(validChunkArray);
     const vendorFederation = this.buildVendorFederationMap(liveStats);
-
     const rawData = {
       name: this.FederationPluginOptions.name,
       remotes: this.FederationPluginOptions.remotes,
@@ -262,9 +180,10 @@ class FederationDashboardPlugin {
       console.warn(err);
     }
 
+
     if (graphData) {
       const dashData = (this._dashData = JSON.stringify(graphData));
-      this.writeStatsFiles(stats, dashData);
+
       if (this._options.dashboardURL && !this._options.nextjs) {
         this.postDashboardData(dashData).catch((err) => {
           if (err) {
@@ -274,6 +193,7 @@ class FederationDashboardPlugin {
           }
         });
       }
+
       return Promise.resolve().then(() => {
         const statsBuf = Buffer.from(dashData || "{}", "utf-8");
 
@@ -294,6 +214,7 @@ class FederationDashboardPlugin {
             curCompiler.emitAsset(this._options.filename, source);
           }
         }
+
         // for versioned remote
         if (
           curCompiler.emitAsset &&
@@ -303,8 +224,10 @@ class FederationDashboardPlugin {
           const remoteEntry = curCompiler.getAsset(
             this.FederationPluginOptions.filename
           );
+          if(!remoteEntry) {
+            return Promise.resolve();
+          }
           const cleanVersion = typeof rawData.version === "string" ? `_${rawData.version.split(".").join("_")}` : `_${rawData.version.toString()}`;
-
           let codeSource;
           if (!remoteEntry.source._value && remoteEntry.source.source) {
             codeSource = remoteEntry.source.source();
@@ -337,33 +260,30 @@ class FederationDashboardPlugin {
           );
 
           if (remoteEntry && graphData.version) {
+            const basename = path.basename(this.FederationPluginOptions.filename)
+            const bustedName = this.FederationPluginOptions.filename.replace(basename, [graphData.version, basename].join("."));
             curCompiler.updateAsset(
               this.FederationPluginOptions.filename,
               originalRemoteEntrySource
             );
 
             curCompiler.emitAsset(
-              [graphData.version, this.FederationPluginOptions.filename].join(
-                "."
-              ),
+              bustedName,
               remoteEntrySource
             );
           }
-        }
-        if (callback) {
-          return void callback();
         }
       });
     }
   }
 
   getRemoteEntryChunk(stats, FederationPluginOptions) {
-    
+
     return stats.chunks.find((chunk) => chunk.names.find((name) => name === FederationPluginOptions.name));
   }
 
   getChunkDependencies(validChunkArray) {
-    
+
     return validChunkArray.reduce((acc, chunk) => {
       const subset = chunk.getAllReferencedChunks();
       const stringifiableChunk = Array.from(subset).map((sub) => {
@@ -476,63 +396,68 @@ class FederationDashboardPlugin {
   }
 
   // This is no longer needed - can be deleted or used for refactoring the asset emitter
-  writeStatsFiles(stats, dashData) {
+  writeStatsFiles(stats, dashData, assets) {
     if (this._options.filename) {
       const hashPath = path.join(stats.outputPath, this._options.filename);
       if (!fs.existsSync(stats.outputPath)) {
-        fs.mkdirSync(stats.outputPath);
+        fs.mkdirSync(stats.outputPath, { recursive: true })
       }
-      fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, () => {});
+      fs.writeFileSync(hashPath, dashData, { encoding: "utf-8" });
     }
-    if (this._options.debug) {
-      console.log(
-        path.join(stats.outputPath, this.FederationPluginOptions.filename)
-      );
-    }
-    const file = fs.readFileSync(
+    // if (this._options.debug) {
+    console.log(
       path.join(stats.outputPath, this.FederationPluginOptions.filename)
     );
-    const { version } = JSON.parse(dashData);
-    if (!version) {
-      throw new Error("no version provided, cannot version remote");
-    }
-    if (this._options.debug) {
-      console.log(
-        path.join(
-          stats.outputPath,
-          version,
-          this.FederationPluginOptions.filename
-        )
-      );
-    }
-    fs.mkdir(
-      path.join(stats.outputPath, version),
-      { recursive: true },
-      (err) => {
-        if (err) throw err;
-        fs.writeFile(
+    // }
+    let file
+
+    try {
+      file = assets[this.FederationPluginOptions.filename]._value
+
+      const { version } = JSON.parse(dashData);
+      if (!version) {
+        throw new Error("no version provided, cannot version remote");
+      }
+      if (this._options.debug) {
+        console.log(
           path.join(
             stats.outputPath,
             version,
             this.FederationPluginOptions.filename
-          ),
-          file,
-          (err) => {
-            if (this._options.debug) {
-              console.trace(err);
-              console.log(
-                "wrote versioned remote",
-                path.join(
-                  stats.outputPath,
-                  version,
-                  this.FederationPluginOptions.filename
-                )
-              );
-            }
-          }
+          )
         );
       }
-    );
+      fs.mkdir(
+        path.join(stats.outputPath, version),
+        { recursive: true },
+        (err) => {
+          if (err) throw err;
+          fs.writeFile(
+            path.join(
+              stats.outputPath,
+              version,
+              this.FederationPluginOptions.filename
+            ),
+            file,
+            (err) => {
+              if (this._options.debug) {
+                console.trace(err);
+                console.log(
+                  "wrote versioned remote",
+                  path.join(
+                    stats.outputPath,
+                    version,
+                    this.FederationPluginOptions.filename
+                  )
+                );
+              }
+            }
+          );
+        }
+      );
+    } catch(e) {
+      console.log(e)
+    }
 
     const statsPath = path.join(stats.outputPath, "stats.json");
     fs.writeFile(
@@ -544,6 +469,7 @@ class FederationDashboardPlugin {
   }
 
   async postDashboardData(dashData) {
+    console.log('should post to dashboard')
     if (!this._options.dashboardURL) {
       return Promise.resolve();
     }
@@ -574,33 +500,29 @@ class NextMedusaPlugin {
   }
 
   apply(compiler) {
-    const sidecarData = this._options.filename.includes("sidecar")
-      ? path.join(compiler.options.output.path, this._options.filename)
-      : path.join(
-          compiler.options.output.path,
-          `sidecar-${this._options.filename}`
-        );
-    const hostData = path.join(
-      compiler.options.output.path,
-      this._options.filename.replace("sidecar-", "")
-    );
+    if(compiler.name === 'ChildFederationPlugin') return
+
 
     const MedusaPlugin = new FederationDashboardPlugin({
       ...this._options,
-      nextjs: true,
     });
     MedusaPlugin.apply(compiler);
+    console.log('compiler name', compiler.name)
 
-    compiler.hooks.afterEmit.tap(PLUGIN_NAME, () => {
+return
+    compiler.hooks.done.tap(PLUGIN_NAME, () => {
       const sidecarData = path.join(
         compiler.options.output.path,
-        `sidecar-${this._options.filename}`
+        `child-dashboard.json`
       );
       const hostData = path.join(
         compiler.options.output.path,
-        this._options.filename.replace("sidecar-", "")
+        'dashboard.json'
       );
+      console.log('sidecar data',sidecarData);
+      console.log('host data', hostData);
       if (fs.existsSync(sidecarData) && fs.existsSync(hostData)) {
+        console.log('will write merged files');
         fs.writeFileSync(
           hostData,
           JSON.stringify(mergeGraphs(require(sidecarData), require(hostData)))
@@ -608,7 +530,7 @@ class NextMedusaPlugin {
       }
     });
 
-    compiler.hooks.done.tapAsync("NextMedusaPlugin", (stats, done) => {
+    compiler.hooks.afterDone.tap("NextMedusaPlugin", (stats, done) => {
       if (fs.existsSync(sidecarData) && fs.existsSync(hostData)) {
         const dashboardData = fs.readFileSync(hostData, "utf8");
         MedusaPlugin.postDashboardData(dashboardData).then(done).catch(done);
@@ -619,37 +541,6 @@ class NextMedusaPlugin {
   }
 }
 
-const withMedusa =
-  ({ name, ...medusaConfig }) =>
-  (nextConfig = {}) => Object.assign({}, nextConfig, {
-    webpack(config, options) {
-      if (
-        options.nextRuntime !== "edge" &&
-        !options.isServer &&
-        process.env.NODE_ENV === "production"
-      ) {
-        if (!name) {
-          throw new Error(
-            "Medusa needs a name for the app, please ensure plugin options has {name: <appname>}"
-          );
-        }
-        config.plugins.push(
-          new NextMedusaPlugin({
-            standalone: { name },
-            ...medusaConfig,
-          })
-        );
-      }
-
-      if (typeof nextConfig.webpack === "function") {
-        return nextConfig.webpack(config, options);
-      }
-
-      return config;
-    },
-  });
-
 module.exports = FederationDashboardPlugin;
 module.exports.clientVersion = require("./client-version");
 module.exports.NextMedusaPlugin = NextMedusaPlugin;
-module.exports.withMedusa = withMedusa;

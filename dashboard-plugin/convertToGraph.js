@@ -62,7 +62,14 @@ const convertToGraph = (
         const name = data[3].replace("./", "");
         let applicationID = data[2].replace("webpack/container/reference/", "")
         if(applicationID.includes("?")){
-           applicationID = new URLSearchParams(applicationID.split('?')[1]).get('remoteName');
+          const params = new URLSearchParams(applicationID.split('?')[1]);
+          const remoteReference = params.get("remoteName") || params.get("remote");
+          if(remoteReference && remoteReference.includes("@")) {
+            const [global] = remoteReference.split('@')
+            applicationID = global
+          } else {
+            applicationID = remoteReference
+          }
         }
         const consume = {
           consumingApplicationID: name,
