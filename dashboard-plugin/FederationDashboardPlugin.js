@@ -76,6 +76,7 @@ class FederationDashboardPlugin {
    * @param {FederationDashboardPluginOptions} options
    */
   constructor(options) {
+    console.log("constructing federation dashboard", options)
     this._options = Object.assign(
       { debug: false, filename: "dashboard.json", fetchClient: false },
       options
@@ -94,6 +95,13 @@ class FederationDashboardPlugin {
     const FederationPlugin = compiler.options.plugins.find((plugin) => {
       return plugin.constructor.name === "ModuleFederationPlugin" || plugin.constructor.name === "NextFederationPlugin";
     });
+
+    if(compiler.name) {
+      console.log('what plugin got')
+      compiler.options.plugins.map((plugin) => {
+        console.log(plugin.constructor.name)
+      })
+    }
     if (FederationPlugin) {
       this.FederationPluginOptions = Object.assign(
         {},
@@ -122,7 +130,7 @@ class FederationDashboardPlugin {
       );
     });
 
-    if (this.FederationPluginOptions.name) {
+    if (this.FederationPluginOptions.name && compiler.name !== "ChildFederationPlugin") {
       new DefinePlugin({
         'process.dashboardURL': JSON.stringify(this._options.dashboardURL),
         "process.CURRENT_HOST": JSON.stringify(
@@ -205,8 +213,10 @@ class FederationDashboardPlugin {
         if (curCompiler.emitAsset && this._options.filename) {
           const asset = curCompiler.getAsset(this._options.filename);
           if (asset) {
+            console.log("updateAsset", this._options.filename);
             curCompiler.updateAsset(this._options.filename, source);
           } else {
+            console.log("emitAsset", this._options.filename);
             curCompiler.emitAsset(this._options.filename, source);
           }
         }
@@ -489,6 +499,60 @@ class FederationDashboardPlugin {
   }
 }
 
+class NextMedusaPlugin {
+  constructor(options) {
+    console.log('medusa plugin constructor', options);
+    this._options = options;
+  }
+
+  apply(compiler) {
+    if(!(compiler.options.name === 'client' || compiler.options.name === 'server' || compiler.name === "ChildFederationPlugin")) {
+      console.log('not applying medusa plugin', compiler.options.name, compiler.name);
+      return
+    } else {
+      console.log('applying medusa plugin', compiler.options.name, compiler.name);
+    }
+    const filename = (compiler.name === "ChildFederationPlugin") ? "dashboard-child.json" : "dashboard.json";
+
+    new FederationDashboardPlugin({
+      ...this._options,
+      filename:compiler.options.name +'-'+filename,
+      nextjs: true,
+    }).apply(compiler);
+
+
+    return
+    compiler.hooks.done.tap(PLUGIN_NAME, () => {
+      const sidecarData = path.join(
+        compiler.options.output.path,
+        `child-dashboard.json`
+      );
+      const hostData = path.join(
+        compiler.options.output.path,
+        'dashboard.json'
+      );
+      console.log('sidecar data',sidecarData);
+      console.log('host data', hostData);
+      if (fs.existsSync(sidecarData) && fs.existsSync(hostData)) {
+        console.log('will write merged files');
+        fs.writeFileSync(
+          hostData,
+          JSON.stringify(mergeGraphs(require(sidecarData), require(hostData)))
+        );
+      }
+    });
+
+    compiler.hooks.afterDone.tap("NextMedusaPlugin", (stats, done) => {
+      if (fs.existsSync(sidecarData) && fs.existsSync(hostData)) {
+        const dashboardData = fs.readFileSync(hostData, "utf8");
+        MedusaPlugin.postDashboardData(dashboardData).then(done).catch(done);
+      } else {
+        done();
+      }
+    });
+  }
+}
 
 module.exports = FederationDashboardPlugin;
 module.exports.clientVersion = require("./client-version");
+module.exports.NextMedusaPlugin = NextMedusaPlugin;

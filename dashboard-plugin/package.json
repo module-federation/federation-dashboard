@@ -26,11 +26,14 @@
     "medusa-delegate.js",
     "convertToGraph.js",
     "mergeGraphs.js",
+    "index.d.ts",
+    "postDashboardData.js",
     "client-version.js",
     "LICENSE"
   ],
   "dependencies": {
     "@module-federation/automatic-vendor-federation": "^1.2.1",
+    "@module-federation/utilities": "^1.3.0",
     "node-fetch": "^2.6.0"
   },
   "peerDependencies": {

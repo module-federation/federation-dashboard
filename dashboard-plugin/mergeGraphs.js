@@ -14,15 +14,44 @@ const mergeWithoutDupe = (source) =>
     }
     return acc;
   }, []);
+
+function mergeArrays(arr1, arr2) {
+  const merged = {};
+
+  // Merge arr1 into merged
+  arr1.forEach(obj => {
+    const key = obj.name + obj.version;
+    if (!merged[key]) {
+      merged[key] = obj;
+    }
+  });
+
+  // Merge arr2 into merged
+  arr2.forEach(obj => {
+    const key = obj.name + obj.version;
+    if (!merged[key]) {
+      merged[key] = obj;
+    }
+  });
+
+  // Convert merged object to array
+  const result = [];
+  Object.keys(merged).forEach(key => {
+    result.push(merged[key]);
+  });
+
+  return result;
+}
+
 module.exports = (graph1, graph2) => {
-  graph1.devDependencies = mergeWithoutDupe([
-    ...graph2.devDependencies,
-    ...graph1.devDependencies,
-  ]);
-  graph1.dependencies = mergeWithoutDupe([
-    ...graph2.dependencies,
-    ...graph1.dependencies,
-  ]);
+  graph1.devDependencies = mergeArrays(
+    graph2.devDependencies,
+    graph1.devDependencies,
+  );
+  graph1.dependencies = mergeArrays(
+    graph2.dependencies,
+    graph1.dependencies,
+  );
   //exposed
   graph2.modules.forEach((hostModules) => {
     const existing = graph1.modules.find((sidecarModules) => {
