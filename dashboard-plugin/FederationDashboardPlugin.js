@@ -96,12 +96,12 @@ class FederationDashboardPlugin {
       return plugin.constructor.name === "ModuleFederationPlugin" || plugin.constructor.name === "NextFederationPlugin";
     });
 
-    if(compiler.name) {
-      console.log('what plugin got')
-      compiler.options.plugins.map((plugin) => {
-        console.log(plugin.constructor.name)
-      })
-    }
+    // if(compiler.name) {
+    //   console.log('what plugin got')
+    //   compiler.options.plugins.map((plugin) => {
+    //     console.log(plugin.constructor.name)
+    //   })
+    // }
     if (FederationPlugin) {
       this.FederationPluginOptions = Object.assign(
         {},
@@ -133,7 +133,7 @@ class FederationDashboardPlugin {
     if (this.FederationPluginOptions.name && compiler.name !== "ChildFederationPlugin") {
       new DefinePlugin({
         'process.dashboardURL': JSON.stringify(this._options.dashboardURL),
-        "process.CURRENT_HOST": JSON.stringify(
+        "process.env.CURRENT_HOST": JSON.stringify(
           this.FederationPluginOptions.name
         ),
       }).apply(compiler);
