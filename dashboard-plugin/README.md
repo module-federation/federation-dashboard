@@ -47,7 +47,7 @@ plugins: [
     dashboardURL: "https://api.medusa.codes/update?token=writeToken",
     metadata: {
      // baseurl is needed in order for medusa to know where to find the remoteEntry.js file
-      baseUrl: 'http://localhost:3001/_next/static/chunks/',
+      baseUrl: 'http://localhost:3001/assets/',
       source: {
         url: "http://github.com/myorg/myproject/tree/master"
       },
