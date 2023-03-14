@@ -27,7 +27,7 @@
     "medusa-client.js",
     "convertToGraph.js",
     "mergeGraphs.js",
-    "index.d.ts",
+    "*.d.ts",
     "postDashboardData.js",
     "client-version.js",
     "LICENSE"
