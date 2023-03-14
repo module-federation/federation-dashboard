@@ -76,13 +76,15 @@ class FederationDashboardPlugin {
    * @param {FederationDashboardPluginOptions} options
    */
   constructor(options) {
-    console.log("constructing federation dashboard", options)
     this._options = Object.assign(
       { debug: false, filename: "dashboard.json", fetchClient: false },
       options
     );
     this._dashData = null;
     this.allArgumentsUsed = [];
+    if(this._options.debug){
+      console.log("constructing federation dashboard", options)
+    }
   }
 
   /**
@@ -96,12 +98,6 @@ class FederationDashboardPlugin {
       return plugin.constructor.name === "ModuleFederationPlugin" || plugin.constructor.name === "NextFederationPlugin";
     });
 
-    // if(compiler.name) {
-    //   console.log('what plugin got')
-    //   compiler.options.plugins.map((plugin) => {
-    //     console.log(plugin.constructor.name)
-    //   })
-    // }
     if (FederationPlugin) {
       this.FederationPluginOptions = Object.assign(
         {},
@@ -213,10 +209,14 @@ class FederationDashboardPlugin {
         if (curCompiler.emitAsset && this._options.filename) {
           const asset = curCompiler.getAsset(this._options.filename);
           if (asset) {
-            console.log("updateAsset", this._options.filename);
+            if(this._options.debug) {
+              console.log("updateAsset", this._options.filename);
+            }
             curCompiler.updateAsset(this._options.filename, source);
           } else {
-            console.log("emitAsset", this._options.filename);
+            if(this._options.debug) {
+              console.log("emitAsset", this._options.filename);
+            }
             curCompiler.emitAsset(this._options.filename, source);
           }
         }
@@ -501,8 +501,10 @@ class FederationDashboardPlugin {
 
 class NextMedusaPlugin {
   constructor(options) {
-    console.log('medusa plugin constructor', options);
     this._options = options;
+    if(this._options.debug) {
+      console.log('medusa plugin constructor', options);
+    }
   }
 
   apply(compiler) {
