@@ -10,7 +10,7 @@ const fs = require("fs");
  */
 function getLicenses(packageJson) {
   if (packageJson.licenses && packageJson.licenses instanceof Array) {
-    return packageJson.licenses.map((license) => license.type).join(", ");
+    return packageJson.licenses.map(license => license.type).join(", ");
   } else if (packageJson.licenses) {
     // TODO: Refactor this to reduce duplicate code. Note "licenses" vs "license".
     return (
@@ -38,7 +38,7 @@ const convertToGraph = (
     group,
     functionRemotes,
     sha,
-    buildHash,
+    buildHash
   },
   standalone
 ) => {
@@ -53,29 +53,30 @@ const convertToGraph = (
   const modulesObj = {};
   const npmModules = new Map();
 
-  modules.forEach((mod) => {
+  modules.forEach(mod => {
     const { identifier, reasons, moduleType, nameForCondition, size } = mod;
     const data = identifier.split(" ");
 
     if (moduleType === "remote-module") {
       if (data.length === 4) {
         const name = data[3].replace("./", "");
-        let applicationID = data[2].replace("webpack/container/reference/", "")
-        if(applicationID.includes("?")){
-          const params = new URLSearchParams(applicationID.split('?')[1]);
-          const remoteReference = params.get("remoteName") || params.get("remote");
-          if(remoteReference && remoteReference.includes("@")) {
-            const [global] = remoteReference.split('@')
-            applicationID = global
+        let applicationID = data[2].replace("webpack/container/reference/", "");
+        if (applicationID.includes("?")) {
+          const params = new URLSearchParams(applicationID.split("?")[1]);
+          const remoteReference =
+            params.get("remoteName") || params.get("remote");
+          if (remoteReference && remoteReference.includes("@")) {
+            const [global] = remoteReference.split("@");
+            applicationID = global;
           } else {
-            applicationID = remoteReference
+            applicationID = remoteReference;
           }
         }
         const consume = {
           consumingApplicationID: name,
           applicationID,
           name,
-          usedIn: new Set(),
+          usedIn: new Set()
         };
 
         consumes.push(consume);
@@ -98,7 +99,7 @@ const convertToGraph = (
           name,
           applicationID: name,
           requires: new Set(),
-          file: file.import[0],
+          file: file.import[0]
         };
       });
     } else if (nameForCondition && nameForCondition.includes("node_modules")) {
@@ -122,7 +123,7 @@ const convertToGraph = (
           version: packageJson.version,
           homepage: packageJson.homepage,
           license: getLicenses(packageJson),
-          size: ((existingReference && existingReference.size) || 0) + size,
+          size: ((existingReference && existingReference.size) || 0) + size
         };
         if (existingReference) {
           Object.assign(existingReference, data);
@@ -137,8 +138,8 @@ const convertToGraph = (
             version: packageJson.version,
             homepage: packageJson.homepage,
             license: getLicenses(packageJson),
-            size,
-          },
+            size
+          }
         };
         npmModules.set(packageJson.name, newDep);
       }
@@ -151,7 +152,9 @@ const convertToGraph = (
 
       const versionVal = version.replace(`${name}-`, "");
       if (dataFromGraph) {
-        const foundInGraph = Object.values(dataFromGraph).find((depData) => depData.version.startsWith(versionVal));
+        const foundInGraph = Object.values(dataFromGraph).find(depData =>
+          depData.version.startsWith(versionVal)
+        );
 
         if (foundInGraph) {
           const { name, version, license, size } = foundInGraph;
@@ -159,22 +162,22 @@ const convertToGraph = (
             name,
             version,
             license,
-            size,
+            size
           };
         }
       }
       return {
         name,
-        version: versionVal,
+        version: versionVal
       };
     });
   const convertedDeps = {
     dependencies: convertDeps(topLevelPackage.dependencies),
     devDependencies: convertDeps(topLevelPackage.devDependencies),
-    optionalDependencies: convertDeps(topLevelPackage.optionalDependencies),
+    optionalDependencies: convertDeps(topLevelPackage.optionalDependencies)
   };
 
-  modules.forEach((mod) => {
+  modules.forEach(mod => {
     const { identifier, issuerName, reasons, moduleType } = mod;
 
     if (moduleType === "provide-module") {
@@ -210,8 +213,8 @@ const convertToGraph = (
         [
           convertedDeps.dependencies,
           convertedDeps.devDependencies,
-          convertedDeps.optionalDependencies,
-        ].forEach((deps) => {
+          convertedDeps.optionalDependencies
+        ].forEach(deps => {
           const dep = deps.find(({ name }) => name === data[2]);
           if (dep) {
             version = dep.version;
@@ -224,7 +227,7 @@ const convertToGraph = (
         name,
         version,
         location: name,
-        applicationID: name,
+        applicationID: name
       };
     }
 
@@ -258,8 +261,8 @@ const convertToGraph = (
       [
         convertedDeps.dependencies,
         convertedDeps.devDependencies,
-        convertedDeps.optionalDependencies,
-      ].forEach((deps) => {
+        convertedDeps.optionalDependencies
+      ].forEach(deps => {
         const dep = deps.find(({ name }) => name === data[2]);
         if (dep) {
           version = dep.version;
@@ -271,7 +274,7 @@ const convertToGraph = (
       name: data[2],
       version,
       location: data[2],
-      applicationID: name,
+      applicationID: name
     };
   });
 
@@ -282,10 +285,11 @@ const convertToGraph = (
         const cleanName = name.replace("./", "");
         const objectId = `${applicationID}/${cleanName}`;
         const cleanFile = file.replace("./", "");
-        const foundExistingConsume = consumes.find((consumeObj) => (
-          consumeObj.applicationID === applicationID &&
-          consumeObj.name === cleanName
-        ));
+        const foundExistingConsume = consumes.find(
+          consumeObj =>
+            consumeObj.applicationID === applicationID &&
+            consumeObj.name === cleanName
+        );
         if (foundExistingConsume) {
           foundExistingConsume.usedIn.add(cleanFile);
           return acc;
@@ -298,7 +302,7 @@ const convertToGraph = (
           applicationID,
           name: cleanName,
           consumingApplicationID: name,
-          usedIn: new Set([cleanFile]),
+          usedIn: new Set([cleanFile])
         };
         return acc;
       }, {})
@@ -317,23 +321,23 @@ const convertToGraph = (
     metadata,
     versionData,
     overrides: Object.values(overrides),
-    consumes: consumes.map((con) => ({
+    consumes: consumes.map(con => ({
       ...con,
-      usedIn: Array.from(con.usedIn.values()).map((file) => ({
+      usedIn: Array.from(con.usedIn.values()).map(file => ({
         file,
-        url: `${sourceUrl}/${file}`,
-      })),
+        url: `${sourceUrl}/${file}`
+      }))
     })),
-    modules: Object.values(modulesObj).map((mod) => ({
+    modules: Object.values(modulesObj).map(mod => ({
       ...mod,
-      requires: Array.from(mod.requires.values()),
+      requires: Array.from(mod.requires.values())
     })),
     environment,
     version,
     posted,
     group,
     sha,
-    buildHash,
+    buildHash
   };
 };
 

@@ -1,5 +1,5 @@
 const fetch = require("node-fetch");
-async function postDashboardData({data, headers}) {
+async function postDashboardData({ data, headers }) {
   const client = this._options.fetchClient ? this._options.fetchClient : fetch;
   try {
     const res = await client(this._options.dashboardURL, {
@@ -8,8 +8,8 @@ async function postDashboardData({data, headers}) {
       headers: {
         Accept: "application/json",
         "Content-type": "application/json",
-        ...headers,
-      },
+        ...headers
+      }
     });
 
     if (!res.ok) throw new Error(res.statusText);

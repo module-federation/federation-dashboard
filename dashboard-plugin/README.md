@@ -17,8 +17,8 @@ const DashboardPlugin = require("@module-federation/dashboard-plugin");
 ```js
 plugins: [
   ...new DashboardPlugin({
-    dashboardURL: "https://api.medusa.codes/update?token=writeToken",
-  }),
+    dashboardURL: "https://api.medusa.codes/update?token=writeToken"
+  })
 ];
 ```
 
@@ -47,11 +47,11 @@ plugins: [
     dashboardURL: "https://api.medusa.codes/update?token=writeToken",
     metadata: {
       source: {
-        url: "http://github.com/myorg/myproject/tree/master",
+        url: "http://github.com/myorg/myproject/tree/master"
       },
-      remote: "http://localhost:8081/remoteEntry.js",
-    },
-  }),
+      remote: "http://localhost:8081/remoteEntry.js"
+    }
+  })
 ];
 ```
 
@@ -100,28 +100,28 @@ module.exports = withPlugins(
           lodash: {
             import: "lodash",
             requiredVersion: require("lodash").version,
-            singleton: true,
+            singleton: true
           },
           chakra: {
             shareKey: "@chakra-ui/react",
-            import: "@chakra-ui/react",
+            import: "@chakra-ui/react"
           },
           "use-sse": {
             singleton: true,
-            requiredVersion: false,
-          },
-        },
+            requiredVersion: false
+          }
+        }
       },
       {
         experiments: {
           flushChunks: true,
-          hot: true,
-        },
+          hot: true
+        }
       }
     ),
     withMedusa({
       name: "home",
-      
+
       publishVersion: require("./package.json").version,
       filename: "dashboard.json",
       dashboardURL: `https://api.medusa.codes/update?token=${process.env.DASHBOARD_WRITE_TOKEN}`,
@@ -131,13 +131,14 @@ module.exports = withPlugins(
           ? "https://" + process.env.VERCEL_URL
           : "http://localhost:3001",
         source: {
-          url: "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home",
+          url:
+            "https://github.com/module-federation/federation-dashboard/tree/master/dashboard-example/home"
         },
         remote: process.env.VERCEL_URL
           ? "https://" + process.env.VERCEL_URL + "/remoteEntry.js"
-          : "http://localhost:3001/remoteEntry.js",
-      },
-    }),
+          : "http://localhost:3001/remoteEntry.js"
+      }
+    })
   ],
   nextConfig
 );

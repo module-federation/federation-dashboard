@@ -1,7 +1,7 @@
-const mergeWithoutDupe = (source) =>
+const mergeWithoutDupe = source =>
   source.reduce((acc, item) => {
     if (typeof item === "object") {
-      const isDupe = acc.find((existing) => {
+      const isDupe = acc.find(existing => {
         return Object.entries(existing).every(([key, value]) => {
           return item[key] === value;
         });
@@ -46,15 +46,12 @@ function mergeArrays(arr1, arr2) {
 module.exports = (graph1, graph2) => {
   graph1.devDependencies = mergeArrays(
     graph2.devDependencies,
-    graph1.devDependencies,
+    graph1.devDependencies
   );
-  graph1.dependencies = mergeArrays(
-    graph2.dependencies,
-    graph1.dependencies,
-  );
+  graph1.dependencies = mergeArrays(graph2.dependencies, graph1.dependencies);
   //exposed
-  graph2.modules.forEach((hostModules) => {
-    const existing = graph1.modules.find((sidecarModules) => {
+  graph2.modules.forEach(hostModules => {
+    const existing = graph1.modules.find(sidecarModules => {
       return (
         hostModules.id === sidecarModules.id &&
         hostModules.name === sidecarModules.name &&
@@ -71,8 +68,8 @@ module.exports = (graph1, graph2) => {
     }
   });
   //shares
-  graph2.overrides.forEach((hostOverrides) => {
-    const existing = graph1.overrides.find((sidecarOverrides) => {
+  graph2.overrides.forEach(hostOverrides => {
+    const existing = graph1.overrides.find(sidecarOverrides => {
       return (
         sidecarOverrides.id === hostOverrides.id &&
         sidecarOverrides.name === hostOverrides.name &&
@@ -86,8 +83,8 @@ module.exports = (graph1, graph2) => {
     }
   });
   //consumes
-  graph2.consumes.forEach((hostConsumedModule) => {
-    const existing = graph1.consumes.find((sidecarConsumedModule) => {
+  graph2.consumes.forEach(hostConsumedModule => {
+    const existing = graph1.consumes.find(sidecarConsumedModule => {
       return (
         sidecarConsumedModule.consumingApplicationID ===
           hostConsumedModule.consumingApplicationID &&
@@ -98,7 +95,7 @@ module.exports = (graph1, graph2) => {
     });
 
     if (existing) {
-      hostConsumedModule.usedIn.forEach((consumedModule) => {
+      hostConsumedModule.usedIn.forEach(consumedModule => {
         const alreadyExists = existing.usedIn.find(({ file, url }) => {
           return consumedModule.file === file && consumedModule.url === url;
         });
