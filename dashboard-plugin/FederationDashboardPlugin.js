@@ -508,10 +508,12 @@ class NextMedusaPlugin {
   }
 
   apply(compiler) {
-    if(!(compiler.options.name === 'client' || compiler.options.name === 'server' || compiler.name === "ChildFederationPlugin")) {
-      console.log('not applying medusa plugin', compiler.options.name, compiler.name);
+    if (!(compiler.options.name === 'client' || compiler.options.name === 'server' || compiler.name === "ChildFederationPlugin")) {
+      if(this._options.debug) {
+        console.log('not applying medusa plugin', compiler.options.name, compiler.name);
+      }
       return
-    } else {
+    } else if(this._options.debug) {
       console.log('applying medusa plugin', compiler.options.name, compiler.name);
     }
     const filename = (compiler.name === "ChildFederationPlugin") ? "dashboard-child.json" : "dashboard.json";
