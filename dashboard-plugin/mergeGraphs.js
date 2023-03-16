@@ -44,69 +44,79 @@ function mergeArrays(arr1, arr2) {
 }
 
 module.exports = (graph1, graph2) => {
-  graph1.devDependencies = mergeArrays(
-    graph2.devDependencies,
-    graph1.devDependencies
-  );
-  graph1.dependencies = mergeArrays(graph2.dependencies, graph1.dependencies);
-  //exposed
-  graph2.modules.forEach(hostModules => {
-    const existing = graph1.modules.find(sidecarModules => {
-      return (
-        hostModules.id === sidecarModules.id &&
-        hostModules.name === sidecarModules.name &&
-        hostModules.file === sidecarModules.file &&
-        hostModules.applicationID === sidecarModules.applicationID
-      );
-    });
-    if (existing) {
-      existing.requires = Array.from(
-        new Set([...existing.requires, ...hostModules.requires])
-      );
-    } else {
-      graph1.modules.push(hostModules);
-    }
-  });
-  //shares
-  graph2.overrides.forEach(hostOverrides => {
-    const existing = graph1.overrides.find(sidecarOverrides => {
-      return (
-        sidecarOverrides.id === hostOverrides.id &&
-        sidecarOverrides.name === hostOverrides.name &&
-        sidecarOverrides.version === hostOverrides.version &&
-        sidecarOverrides.location === hostOverrides.location &&
-        sidecarOverrides.applicationID === hostOverrides.applicationID
-      );
-    });
-    if (!existing) {
-      graph1.overrides.push(hostOverrides);
-    }
-  });
-  //consumes
-  graph2.consumes.forEach(hostConsumedModule => {
-    const existing = graph1.consumes.find(sidecarConsumedModule => {
-      return (
-        sidecarConsumedModule.consumingApplicationID ===
-          hostConsumedModule.consumingApplicationID &&
-        sidecarConsumedModule.applicationID ===
-          hostConsumedModule.applicationID &&
-        sidecarConsumedModule.name === hostConsumedModule.name
-      );
-    });
-
-    if (existing) {
-      hostConsumedModule.usedIn.forEach(consumedModule => {
-        const alreadyExists = existing.usedIn.find(({ file, url }) => {
-          return consumedModule.file === file && consumedModule.url === url;
-        });
-        if (!alreadyExists) {
-          existing.usedIn.push(consumedModule);
-        }
+  if(graph2 && graph2.devDependencies) {
+    graph1.devDependencies = mergeArrays(
+      graph2.devDependencies,
+      graph1.devDependencies
+    );
+  }
+  if(graph2 && graph2.dependencies) {
+    graph1.dependencies = mergeArrays(graph2.dependencies, graph1.dependencies);
+  }
+  if(graph2 && graph2.modules) {
+    //exposed
+    graph2.modules.forEach(hostModules => {
+      const existing = graph1.modules.find(sidecarModules => {
+        return (
+          hostModules.id === sidecarModules.id &&
+          hostModules.name === sidecarModules.name &&
+          hostModules.file === sidecarModules.file &&
+          hostModules.applicationID === sidecarModules.applicationID
+        );
       });
-    } else {
-      graph1.consumes.push(hostConsumedModule);
-    }
-  });
+      if (existing) {
+        existing.requires = Array.from(
+          new Set([...existing.requires, ...hostModules.requires])
+        );
+      } else {
+        graph1.modules.push(hostModules);
+      }
+    });
+  }
+  if(graph2 && graph2.overrides) {
+    //shares
+    graph2.overrides.forEach(hostOverrides => {
+      const existing = graph1.overrides.find(sidecarOverrides => {
+        return (
+          sidecarOverrides.id === hostOverrides.id &&
+          sidecarOverrides.name === hostOverrides.name &&
+          sidecarOverrides.version === hostOverrides.version &&
+          sidecarOverrides.location === hostOverrides.location &&
+          sidecarOverrides.applicationID === hostOverrides.applicationID
+        );
+      });
+      if (!existing) {
+        graph1.overrides.push(hostOverrides);
+      }
+    });
+  }
+  if(graph2 && graph2.consumes) {
+    //consumes
+    graph2.consumes.forEach(hostConsumedModule => {
+      const existing = graph1.consumes.find(sidecarConsumedModule => {
+        return (
+          sidecarConsumedModule.consumingApplicationID ===
+          hostConsumedModule.consumingApplicationID &&
+          sidecarConsumedModule.applicationID ===
+          hostConsumedModule.applicationID &&
+          sidecarConsumedModule.name === hostConsumedModule.name
+        );
+      });
+
+      if (existing) {
+        hostConsumedModule.usedIn.forEach(consumedModule => {
+          const alreadyExists = existing.usedIn.find(({file, url}) => {
+            return consumedModule.file === file && consumedModule.url === url;
+          });
+          if (!alreadyExists) {
+            existing.usedIn.push(consumedModule);
+          }
+        });
+      } else {
+        graph1.consumes.push(hostConsumedModule);
+      }
+    });
+  }
 
   return graph1;
 };
