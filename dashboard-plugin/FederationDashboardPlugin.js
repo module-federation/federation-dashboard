@@ -23,7 +23,11 @@ const findPackageJson = filePath => {
     return false;
   }
   if (fs.existsSync(path.join(filePath.join(path.sep), "package.json"))) {
-    return require(path.join(filePath.join(path.sep), "package.json"));
+    try {
+      return require(path.join(filePath.join(path.sep), "package.json"));
+    } catch (e) {
+
+    }
   }
   filePath.pop();
   findPackageJson(filePath);
@@ -46,7 +50,7 @@ class AddRuntimeRequiremetToPromiseExternal {
     compiler.hooks.compilation.tap(
       "AddRuntimeRequiremetToPromiseExternal",
       compilation => {
-        const { RuntimeGlobals } = compiler.webpack;
+        const {RuntimeGlobals} = compiler.webpack;
         if (compilation.outputOptions.trustedTypes) {
           compilation.hooks.additionalModuleRuntimeRequirements.tap(
             "AddRuntimeRequiremetToPromiseExternal",
@@ -63,6 +67,7 @@ class AddRuntimeRequiremetToPromiseExternal {
 }
 
 /** @typedef {import("webpack/lib/Compilation")} Compilation */
+
 /** @typedef {import("webpack/lib/Compiler")} Compiler */
 
 /**
@@ -77,7 +82,7 @@ class FederationDashboardPlugin {
    */
   constructor(options) {
     this._options = Object.assign(
-      { debug: false, filename: "dashboard.json", fetchClient: false },
+      {debug: false, filename: "dashboard.json", fetchClient: false},
       options
     );
     this._dashData = null;
@@ -305,7 +310,7 @@ class FederationDashboardPlugin {
       const stringifiableChunk = Array.from(subset).map(sub => {
         const cleanSet = Object.getOwnPropertyNames(sub).reduce((acc, key) => {
           if (key === "_groups") return acc;
-          return Object.assign(acc, { [key]: sub[key] });
+          return Object.assign(acc, {[key]: sub[key]});
         }, {});
 
         return this.mapToObjectRec(cleanSet);
@@ -398,11 +403,11 @@ class FederationDashboardPlugin {
           if (reason.userRequest) {
             try {
               // grab user required package.json
-              const subsetPackage = require(reason.userRequest +
-                "/package.json");
+              const subsetPackage = require(path.join(reason.userRequest, "package.json"));
 
               directReasons.add(subsetPackage);
-            } catch (e) {}
+            } catch (e) {
+            }
           }
         });
       }
@@ -416,9 +421,9 @@ class FederationDashboardPlugin {
     if (this._options.filename) {
       const hashPath = path.join(stats.outputPath, this._options.filename);
       if (!fs.existsSync(stats.outputPath)) {
-        fs.mkdirSync(stats.outputPath, { recursive: true });
+        fs.mkdirSync(stats.outputPath, {recursive: true});
       }
-      fs.writeFileSync(hashPath, dashData, { encoding: "utf-8" });
+      fs.writeFileSync(hashPath, dashData, {encoding: "utf-8"});
     }
     if (this._options.debug) {
       console.log(
@@ -430,7 +435,7 @@ class FederationDashboardPlugin {
     try {
       file = assets[this.FederationPluginOptions.filename]._value;
 
-      const { version } = JSON.parse(dashData);
+      const {version} = JSON.parse(dashData);
       if (!version) {
         throw new Error("no version provided, cannot version remote");
       }
@@ -445,7 +450,7 @@ class FederationDashboardPlugin {
       }
       fs.mkdir(
         path.join(stats.outputPath, version),
-        { recursive: true },
+        {recursive: true},
         err => {
           if (err) throw err;
           fs.writeFile(
@@ -479,8 +484,9 @@ class FederationDashboardPlugin {
     fs.writeFile(
       statsPath,
       JSON.stringify(stats),
-      { encoding: "utf-8" },
-      () => {}
+      {encoding: "utf-8"},
+      () => {
+      }
     );
   }
 
