@@ -113,35 +113,38 @@ const convertToGraph = (
       const npmModule = contextArray[contextArray.indexOf("node_modules") + 1];
 
       const packageJsonFile = path.join(context, "package.json");
-      const packageJson = JSON.parse(fs.readFileSync(packageJsonFile, "UTF-8"));
+      // if the package.json file exists, we can use it to get the name and version
+      if(!fs.existsSync(packageJsonFile)) {
+        const packageJson = JSON.parse(fs.readFileSync(packageJsonFile, "UTF-8"));
 
-      const existingPackage = npmModules.get(packageJson.name);
-      if (existingPackage) {
-        const existingReference = existingPackage[packageJson.version];
-        const data = {
-          name: packageJson.name,
-          version: packageJson.version,
-          homepage: packageJson.homepage,
-          license: getLicenses(packageJson),
-          size: ((existingReference && existingReference.size) || 0) + size
-        };
-        if (existingReference) {
-          Object.assign(existingReference, data);
-        } else {
-          existingPackage[packageJson.version] = data;
-        }
-        npmModules.set(packageJson.name, existingPackage);
-      } else {
-        const newDep = {
-          [packageJson.version]: {
+        const existingPackage = npmModules.get(packageJson.name);
+        if (existingPackage) {
+          const existingReference = existingPackage[packageJson.version];
+          const data = {
             name: packageJson.name,
             version: packageJson.version,
             homepage: packageJson.homepage,
             license: getLicenses(packageJson),
-            size
+            size: ((existingReference && existingReference.size) || 0) + size
+          };
+          if (existingReference) {
+            Object.assign(existingReference, data);
+          } else {
+            existingPackage[packageJson.version] = data;
           }
-        };
-        npmModules.set(packageJson.name, newDep);
+          npmModules.set(packageJson.name, existingPackage);
+        } else {
+          const newDep = {
+            [packageJson.version]: {
+              name: packageJson.name,
+              version: packageJson.version,
+              homepage: packageJson.homepage,
+              license: getLicenses(packageJson),
+              size
+            }
+          };
+          npmModules.set(packageJson.name, newDep);
+        }
       }
     }
   });
