@@ -29,6 +29,7 @@ const findPackageJson = filePath => {
 
     }
   }
+
   filePath.pop();
   findPackageJson(filePath);
 };
