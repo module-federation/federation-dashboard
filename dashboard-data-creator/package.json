@@ -7,7 +7,7 @@
     "big": "ts-node big.ts"
   },
   "dependencies": {
-    "commander": "^7.0.0",
+    "commander": "^11.0.0",
     "moment": "^2.27.0",
     "node-fetch": "^2.6.0",
     "ts-node": "^9.0.0",
