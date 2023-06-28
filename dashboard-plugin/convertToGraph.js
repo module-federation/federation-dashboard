@@ -96,13 +96,12 @@ const convertToGraph = (
       });
     } else if (nameForCondition && nameForCondition.includes("node_modules")) {
       const contextArray = nameForCondition.split(path.sep);
-      const afterModule = nameForCondition.split("node_modules/");
+      const afterModule = nameForCondition.split("node_modules" + path.sep);
 
       const search = afterModule[1] && afterModule[1].startsWith("@") ? 3 : 2;
       contextArray.splice(contextArray.indexOf("node_modules") + search);
 
       const context = contextArray.join(path.sep);
-      const npmModule = contextArray[contextArray.indexOf("node_modules") + 1];
 
       const packageJsonFile = path.join(context, "package.json");
       const packageJson = JSON.parse(fs.readFileSync(packageJsonFile, "UTF-8"));
