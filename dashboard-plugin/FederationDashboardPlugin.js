@@ -264,7 +264,6 @@ class FederationDashboardPlugin {
 
     if (graphData) {
       const dashData = (this._dashData = JSON.stringify(graphData));
-      this.writeStatsFiles(stats, dashData);
       if (this._options.dashboardURL && !this._options.nextjs) {
         this.postDashboardData(dashData).catch((err) => {
           if (err) {
@@ -473,74 +472,6 @@ class FederationDashboardPlugin {
     });
 
     return Array.from(directReasons);
-  }
-
-  // This is no longer needed - can be deleted or used for refactoring the asset emitter
-  writeStatsFiles(stats, dashData) {
-    if (this._options.filename) {
-      const hashPath = path.join(stats.outputPath, this._options.filename);
-      if (!fs.existsSync(stats.outputPath)) {
-        fs.mkdirSync(stats.outputPath);
-      }
-      fs.writeFile(hashPath, dashData, { encoding: "utf-8" }, () => {});
-    }
-    if (this._options.debug) {
-      console.log(
-        path.join(stats.outputPath, this.FederationPluginOptions.filename)
-      );
-    }
-    const file = fs.readFileSync(
-      path.join(stats.outputPath, this.FederationPluginOptions.filename)
-    );
-    const { version } = JSON.parse(dashData);
-    if (!version) {
-      throw new Error("no version provided, cannot version remote");
-    }
-    if (this._options.debug) {
-      console.log(
-        path.join(
-          stats.outputPath,
-          version,
-          this.FederationPluginOptions.filename
-        )
-      );
-    }
-    fs.mkdir(
-      path.join(stats.outputPath, version),
-      { recursive: true },
-      (err) => {
-        if (err) throw err;
-        fs.writeFile(
-          path.join(
-            stats.outputPath,
-            version,
-            this.FederationPluginOptions.filename
-          ),
-          file,
-          (err) => {
-            if (this._options.debug) {
-              console.trace(err);
-              console.log(
-                "wrote versioned remote",
-                path.join(
-                  stats.outputPath,
-                  version,
-                  this.FederationPluginOptions.filename
-                )
-              );
-            }
-          }
-        );
-      }
-    );
-
-    const statsPath = path.join(stats.outputPath, "stats.json");
-    fs.writeFile(
-      statsPath,
-      JSON.stringify(stats),
-      { encoding: "utf-8" },
-      () => {}
-    );
   }
 
   async postDashboardData(dashData) {
