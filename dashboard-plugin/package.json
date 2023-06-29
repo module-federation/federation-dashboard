@@ -1,6 +1,6 @@
 {
   "name": "@module-federation/dashboard-plugin",
-  "version": "2.7.0",
+  "version": "2.7.3",
   "main": "FederationDashboardPlugin.js",
   "bin": "bin/federation-report.js",
   "license": "Apache-2.0",
@@ -26,6 +26,7 @@
     "convertToGraph.js",
     "mergeGraphs.js",
     "client-version.js",
+    "medusa-delegate.js",
     "LICENSE"
   ],
   "dependencies": {
