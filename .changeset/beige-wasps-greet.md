@@ -1,5 +1,5 @@
 ---
-"@module-federation/dashboard": minor
+"@module-federation/dashboard-plugin": minor
 "@module-federation/dashboard-plugin": minor
 ---
 

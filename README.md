@@ -35,7 +35,7 @@ Step 3:
 Globally install and launch the dashboard:
 
 ```shell script
-> npm install -g @module-federation/dashboard
+> npm install -g @module-federation/dashboard-plugin
 > mfdash
 ```
 
