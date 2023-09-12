@@ -5,16 +5,18 @@ module.exports = ({
   fallbackEntryURL,
   fallbackRemoteVar,
   dashboardTimeout,
+  enableCacheBuster,
 }) => {
-  fallbackRemoteVar = fallbackRemoteVar || remoteName;
-  fallbackEntryURL = fallbackEntryURL || '';
+  fallbackRemoteVar = fallbackRemoteVar || remoteName
+  fallbackEntryURL = fallbackEntryURL || ''
+  enableCacheBuster = enableCacheBuster || false
   if (!dashboardTimeout) {
-    dashboardTimeout = -1;
+      dashboardTimeout = -1
   }
   if (typeof dashboardTimeout !== 'number' || isNaN(dashboardTimeout)) {
-    throw new Error('Invalid dashboardTimeout');
+      throw new Error('Invalid dashboardTimeout')
   }
-  //language=JS
+  // language=JS
   return `promise new Promise((resolve, reject) => {
     var timeoutSignal;
     let timeoutId = null;
@@ -71,10 +73,16 @@ module.exports = ({
           .catch(reject);
       })
       .catch(function (error) {
-        var fallbackEntryURL = '${fallbackEntryURL}';
-        if (!fallbackEntryURL) return Promise.reject(error);
-        var name = '${fallbackRemoteVar}';
-        var url = new URL(fallbackEntryURL);
+          var fallbackEntryURL = '${fallbackEntryURL}';
+          if (!fallbackEntryURL) return Promise.reject(error);
+          var name = '${fallbackRemoteVar}';
+          var url = new URL(fallbackEntryURL);
+          
+          // Generate a unique timestamp or random value and append it as a query parameter
+          if (${enableCacheBuster}) {
+              var cacheBuster = Date.now(); // You can use a timestamp
+              url.searchParams.append('cacheBuster', cacheBuster);
+          }
 
         new Promise(function (resolve, reject) {
           var __webpack_error__ = new Error();
@@ -100,5 +108,5 @@ module.exports = ({
           })
           .catch(reject);
       });
-  });`;
-};
+  });`
+}
