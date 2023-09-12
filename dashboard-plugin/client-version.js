@@ -73,15 +73,15 @@ module.exports = ({
           .catch(reject);
       })
       .catch(function (error) {
-          var fallbackEntryURL = '${fallbackEntryURL}';
-          if (!fallbackEntryURL) return Promise.reject(error);
-          var name = '${fallbackRemoteVar}';
-          var url = new URL(fallbackEntryURL);
-          
-          if (${fallbackEnableCacheBuster}) {
-            var cacheBuster = Date.now();
-            url.searchParams.append('cacheBuster', cacheBuster);
-          }
+        var fallbackEntryURL = '${fallbackEntryURL}';
+        if (!fallbackEntryURL) return Promise.reject(error);
+        var name = '${fallbackRemoteVar}';
+        var url = new URL(fallbackEntryURL);
+        
+        if (${fallbackEnableCacheBuster}) {
+          var cacheBuster = Date.now();
+          url.searchParams.append('cacheBuster', cacheBuster);
+        }
 
         new Promise(function (resolve, reject) {
           var __webpack_error__ = new Error();
