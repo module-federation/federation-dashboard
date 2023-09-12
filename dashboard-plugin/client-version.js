@@ -5,11 +5,11 @@ module.exports = ({
   fallbackEntryURL,
   fallbackRemoteVar,
   dashboardTimeout,
-  fallbackEnableCacheBuser ,
+  fallbackEnableCacheBuster,
 }) => {
   fallbackRemoteVar = fallbackRemoteVar || remoteName;
   fallbackEntryURL = fallbackEntryURL || '';
-  fallbackEnableCacheBuser  = fallbackEnableCacheBuser || false;
+  fallbackEnableCacheBuster  = fallbackEnableCacheBuster || false;
   if (!dashboardTimeout) {
     dashboardTimeout = -1;
   }
@@ -78,9 +78,8 @@ module.exports = ({
           var name = '${fallbackRemoteVar}';
           var url = new URL(fallbackEntryURL);
           
-          // Generate a unique timestamp or random value and append it as a query parameter
-          if (${enableCacheBuster}) {
-            var cacheBuster = Date.now(); // You can use a timestamp
+          if (${fallbackEnableCacheBuster}) {
+            var cacheBuster = Date.now();
             url.searchParams.append('cacheBuster', cacheBuster);
           }
 
