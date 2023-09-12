@@ -5,18 +5,18 @@ module.exports = ({
   fallbackEntryURL,
   fallbackRemoteVar,
   dashboardTimeout,
-  enableCacheBuster,
+  fallbackEnableCacheBuser ,
 }) => {
-  fallbackRemoteVar = fallbackRemoteVar || remoteName
-  fallbackEntryURL = fallbackEntryURL || ''
-  enableCacheBuster = enableCacheBuster || false
+  fallbackRemoteVar = fallbackRemoteVar || remoteName;
+  fallbackEntryURL = fallbackEntryURL || '';
+  fallbackEnableCacheBuser  = fallbackEnableCacheBuser || false;
   if (!dashboardTimeout) {
-      dashboardTimeout = -1
+    dashboardTimeout = -1;
   }
   if (typeof dashboardTimeout !== 'number' || isNaN(dashboardTimeout)) {
-      throw new Error('Invalid dashboardTimeout')
+    throw new Error('Invalid dashboardTimeout');
   }
-  // language=JS
+  //language=JS
   return `promise new Promise((resolve, reject) => {
     var timeoutSignal;
     let timeoutId = null;
@@ -80,8 +80,8 @@ module.exports = ({
           
           // Generate a unique timestamp or random value and append it as a query parameter
           if (${enableCacheBuster}) {
-              var cacheBuster = Date.now(); // You can use a timestamp
-              url.searchParams.append('cacheBuster', cacheBuster);
+            var cacheBuster = Date.now(); // You can use a timestamp
+            url.searchParams.append('cacheBuster', cacheBuster);
           }
 
         new Promise(function (resolve, reject) {
@@ -108,5 +108,5 @@ module.exports = ({
           })
           .catch(reject);
       });
-  });`
-}
+  });`;
+};
