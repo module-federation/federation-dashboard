@@ -10,6 +10,7 @@ The project is using changesets to manage the versioning, so you need to create 
 
 ```bash
 yarn changeset
+yarn changeset version
 ```
 
 After providing the necessary information, a changeset file will be created in the `.changeset` folder, you need to commit this file with your changes.
