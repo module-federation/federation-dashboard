@@ -5,9 +5,11 @@ module.exports = ({
   fallbackEntryURL,
   fallbackRemoteVar,
   dashboardTimeout,
+  fallbackEnableCacheBuster,
 }) => {
   fallbackRemoteVar = fallbackRemoteVar || remoteName;
   fallbackEntryURL = fallbackEntryURL || '';
+  fallbackEnableCacheBuster  = fallbackEnableCacheBuster || false;
   if (!dashboardTimeout) {
     dashboardTimeout = -1;
   }
@@ -75,6 +77,11 @@ module.exports = ({
         if (!fallbackEntryURL) return Promise.reject(error);
         var name = '${fallbackRemoteVar}';
         var url = new URL(fallbackEntryURL);
+        
+        if (${fallbackEnableCacheBuster}) {
+          var cacheBuster = Date.now();
+          url.searchParams.append('cacheBuster', cacheBuster);
+        }
 
         new Promise(function (resolve, reject) {
           var __webpack_error__ = new Error();
