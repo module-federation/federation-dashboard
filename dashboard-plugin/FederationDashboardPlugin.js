@@ -51,7 +51,7 @@ class AddRuntimeRequiremetToPromiseExternal {
     compiler.hooks.compilation.tap(
       "AddRuntimeRequiremetToPromiseExternal",
       compilation => {
-        const {RuntimeGlobals} = compiler.webpack;
+        const { RuntimeGlobals } = compiler.webpack;
         if (compilation.outputOptions.trustedTypes) {
           compilation.hooks.additionalModuleRuntimeRequirements.tap(
             "AddRuntimeRequiremetToPromiseExternal",
@@ -83,7 +83,7 @@ class FederationDashboardPlugin {
    */
   constructor(options) {
     this._options = Object.assign(
-      {debug: false, filename: "dashboard.json", fetchClient: false},
+      { debug: false, filename: "dashboard.json", fetchClient: false },
       options
     );
     this._dashData = null;
@@ -125,6 +125,7 @@ class FederationDashboardPlugin {
       "__REMOTE_VERSION__",
       ""
     );
+
     compiler.hooks.thisCompilation.tap(PLUGIN_NAME, compilation => {
       compilation.hooks.processAssets.tapPromise(
         {
@@ -248,6 +249,7 @@ class FederationDashboardPlugin {
             typeof rawData.version === "string"
               ? `_${rawData.version.split(".").join("_")}`
               : `_${rawData.version.toString()}`;
+
           let codeSource;
           if (!remoteEntry.source._value && remoteEntry.source.source) {
             codeSource = remoteEntry.source.source();
@@ -311,7 +313,7 @@ class FederationDashboardPlugin {
       const stringifiableChunk = Array.from(subset).map(sub => {
         const cleanSet = Object.getOwnPropertyNames(sub).reduce((acc, key) => {
           if (key === "_groups") return acc;
-          return Object.assign(acc, {[key]: sub[key]});
+          return Object.assign(acc, { [key]: sub[key] });
         }, {});
 
         return this.mapToObjectRec(cleanSet);
@@ -422,9 +424,9 @@ class FederationDashboardPlugin {
     if (this._options.filename) {
       const hashPath = path.join(stats.outputPath, this._options.filename);
       if (!fs.existsSync(stats.outputPath)) {
-        fs.mkdirSync(stats.outputPath, {recursive: true});
+        fs.mkdirSync(stats.outputPath, { recursive: true });
       }
-      fs.writeFileSync(hashPath, dashData, {encoding: "utf-8"});
+      fs.writeFileSync(hashPath, dashData, { encoding: "utf-8" });
     }
     if (this._options.debug) {
       console.log(
@@ -436,7 +438,7 @@ class FederationDashboardPlugin {
     try {
       file = assets[this.FederationPluginOptions.filename]._value;
 
-      const {version} = JSON.parse(dashData);
+      const { version } = JSON.parse(dashData);
       if (!version) {
         throw new Error("no version provided, cannot version remote");
       }
@@ -451,7 +453,7 @@ class FederationDashboardPlugin {
       }
       fs.mkdir(
         path.join(stats.outputPath, version),
-        {recursive: true},
+        { recursive: true },
         err => {
           if (err) throw err;
           fs.writeFile(
@@ -485,16 +487,26 @@ class FederationDashboardPlugin {
     fs.writeFile(
       statsPath,
       JSON.stringify(stats),
-      {encoding: "utf-8"},
+      { encoding: "utf-8" },
       () => {
       }
     );
   }
+}
 
+class NextMedusaPlugin {
+  constructor(options) {
+    this._options = options;
+    if (this._options.debug) {
+      console.log("NextMedusaPlugin constructor", options);
+    }
+  }
   async postDashboardData(dashData) {
+
     if (!this._options.dashboardURL) {
       return Promise.resolve();
     }
+
     const client = this._options.fetchClient
       ? this._options.fetchClient
       : fetch;
@@ -509,20 +521,13 @@ class FederationDashboardPlugin {
       });
 
       if (!res.ok) throw new Error(res.statusText);
+  
+      return res
     } catch (err) {
       console.warn(
         `Error posting data to dashboard URL: ${this._options.dashboardURL}`
       );
       console.error(err);
-    }
-  }
-}
-
-class NextMedusaPlugin {
-  constructor(options) {
-    this._options = options;
-    if (this._options.debug) {
-      console.log("medusa plugin constructor", options);
     }
   }
 
@@ -560,37 +565,32 @@ class NextMedusaPlugin {
       nextjs: true
     }).apply(compiler);
 
-    return;
+    const hostData = path.join(
+      compiler.options.output.path,
+      compiler.options.name + "-" + filename
+    );
     compiler.hooks.done.tap(PLUGIN_NAME, () => {
-      const sidecarData = path.join(
-        compiler.options.output.path,
-        `child-dashboard.json`
-      );
-      const hostData = path.join(
-        compiler.options.output.path,
-        "dashboard.json"
-      );
-      console.log("sidecar data", sidecarData);
-      console.log("host data", hostData);
-      if (fs.existsSync(sidecarData) && fs.existsSync(hostData)) {
-        console.log("will write merged files");
+      if (fs.existsSync(hostData)) {
         fs.writeFileSync(
           hostData,
-          JSON.stringify(mergeGraphs(require(sidecarData), require(hostData)))
+          JSON.stringify(require(hostData))
         );
       }
     });
 
-    compiler.hooks.afterDone.tap("NextMedusaPlugin", (stats, done) => {
-      if (fs.existsSync(sidecarData) && fs.existsSync(hostData)) {
+    compiler.hooks.afterDone.tap("NextMedusaPlugin", (stats) => {
+      if (fs.existsSync(hostData)) {
         const dashboardData = fs.readFileSync(hostData, "utf8");
-        MedusaPlugin.postDashboardData(dashboardData)
-          .then(done)
-          .catch(done);
-      } else {
-        done();
+        this.postDashboardData(dashboardData)
+          .then(() => {
+            console.info('Data has been successfully sent to the dashboard')
+          })
+          .catch((error) => {
+            console.error('Failed to send data to the dashboard:', error)
+          });
       }
     });
+
   }
 }
 
