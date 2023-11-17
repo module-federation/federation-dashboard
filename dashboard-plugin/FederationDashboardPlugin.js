@@ -196,14 +196,18 @@ class FederationDashboardPlugin {
     if (graphData) {
       const dashData = (this._dashData = JSON.stringify(graphData));
 
-      if (this._options.dashboardURL && !this._options.nextjs) {
-        this.postDashboardData(dashData).catch(err => {
-          if (err) {
-            curCompiler.errors.push(err);
-            // eslint-disable-next-line promise/no-callback-in-promise
-            throw err;
-          }
-        });
+      if (this._options.skipPost) {
+        console.info('Skipping post to dashboard')
+      } else {
+        if (this._options.dashboardURL && !this._options.nextjs) {
+          this.postDashboardData(dashData).catch(err => {
+            if (err) {
+              curCompiler.errors.push(err);
+              // eslint-disable-next-line promise/no-callback-in-promise
+              throw err;
+            }
+          });
+        }
       }
 
       return Promise.resolve().then(() => {
@@ -521,7 +525,7 @@ class NextMedusaPlugin {
       });
 
       if (!res.ok) throw new Error(res.statusText);
-  
+
       return res
     } catch (err) {
       console.warn(
@@ -581,13 +585,17 @@ class NextMedusaPlugin {
     compiler.hooks.afterDone.tap("NextMedusaPlugin", (stats) => {
       if (fs.existsSync(hostData)) {
         const dashboardData = fs.readFileSync(hostData, "utf8");
-        this.postDashboardData(dashboardData)
-          .then(() => {
-            console.info('Data has been successfully sent to the dashboard')
-          })
-          .catch((error) => {
-            console.error('Failed to send data to the dashboard:', error)
-          });
+        if (this._options.skipPost) {
+          console.info('Skipping post to dashboard')
+        } else {
+          this.postDashboardData(dashboardData)
+            .then(() => {
+              console.info('Data has been successfully sent to the dashboard')
+            })
+            .catch((error) => {
+              console.error('Failed to send data to the dashboard:', error)
+            });
+        }
       }
     });
 
