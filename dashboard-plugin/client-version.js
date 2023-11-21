@@ -1,4 +1,4 @@
-module.exports = ({ currentHost, remoteName, dashboardURL }) => {
+module.exports = ({ currentHost, remoteName, dashboardURL, remoteBasePath }) => {
   //language=JS
   return `promise new Promise((resolve, reject) => {
     fetch("${dashboardURL}&currentHost=${currentHost}&remoteName=${remoteName}", {
@@ -13,8 +13,9 @@ module.exports = ({ currentHost, remoteName, dashboardURL }) => {
       .then(function (data) {
         var name = data.name + "_" + data.version;
         var filename = data.version + '.remoteEntry.js';
-        var url = new URL(filename, data.remoteURL)
-        
+        var path = \`${remoteBasePath}/\${filename}\`.replace(/\\/\\/+/g, '/');
+        var url = new URL(path, data.remoteURL);
+
         new Promise(function (resolve, reject) {
           var __webpack_error__ = new Error()
           if (typeof window[name] !== 'undefined') return resolve();
