@@ -18,16 +18,14 @@ try {
   console.error(e);
 }
 
-const findPackageJson = filePath => {
+const findPackageJson = (filePath) => {
   if (filePath.length === 0) {
     return false;
   }
   if (fs.existsSync(path.join(filePath.join(path.sep), "package.json"))) {
     try {
       return require(path.join(filePath.join(path.sep), "package.json"));
-    } catch (e) {
-
-    }
+    } catch (e) {}
   }
 
   filePath.pop();
@@ -50,7 +48,7 @@ class AddRuntimeRequiremetToPromiseExternal {
   apply(compiler) {
     compiler.hooks.compilation.tap(
       "AddRuntimeRequiremetToPromiseExternal",
-      compilation => {
+      (compilation) => {
         const { RuntimeGlobals } = compiler.webpack;
         if (compilation.outputOptions.trustedTypes) {
           compilation.hooks.additionalModuleRuntimeRequirements.tap(
@@ -100,7 +98,7 @@ class FederationDashboardPlugin {
     compiler.options.output.uniqueName = `v${Date.now()}`;
 
     new AddRuntimeRequiremetToPromiseExternal().apply(compiler);
-    const FederationPlugin = compiler.options.plugins.find(plugin => {
+    const FederationPlugin = compiler.options.plugins.find((plugin) => {
       return (
         plugin.constructor.name === "ModuleFederationPlugin" ||
         plugin.constructor.name === "NextFederationPlugin"
@@ -121,18 +119,16 @@ class FederationDashboardPlugin {
       );
     }
 
-    this.FederationPluginOptions.name = this.FederationPluginOptions.name.replace(
-      "__REMOTE_VERSION__",
-      ""
-    );
+    this.FederationPluginOptions.name =
+      this.FederationPluginOptions.name.replace("__REMOTE_VERSION__", "");
 
-    compiler.hooks.thisCompilation.tap(PLUGIN_NAME, compilation => {
+    compiler.hooks.thisCompilation.tap(PLUGIN_NAME, (compilation) => {
       compilation.hooks.processAssets.tapPromise(
         {
           name: PLUGIN_NAME,
-          stage: compilation.constructor.PROCESS_ASSETS_STAGE_REPORT
+          stage: compilation.constructor.PROCESS_ASSETS_STAGE_REPORT,
         },
-        assets => {
+        (assets) => {
           return this.processWebpackGraph(compilation, assets);
         }
       );
@@ -146,7 +142,7 @@ class FederationDashboardPlugin {
         "process.dashboardURL": JSON.stringify(this._options.dashboardURL),
         "process.env.CURRENT_HOST": JSON.stringify(
           this.FederationPluginOptions.name
-        )
+        ),
       }).apply(compiler);
     }
   }
@@ -182,7 +178,7 @@ class FederationDashboardPlugin {
       sha: gitSha,
       modules: stats.modules,
       chunkDependencies,
-      functionRemotes: this.allArgumentsUsed
+      functionRemotes: this.allArgumentsUsed,
     };
 
     let graphData = null;
@@ -196,18 +192,14 @@ class FederationDashboardPlugin {
     if (graphData) {
       const dashData = (this._dashData = JSON.stringify(graphData));
 
-      if (this._options.skipPost) {
-        console.info('Skipping post to dashboard')
-      } else {
-        if (this._options.dashboardURL && !this._options.nextjs) {
-          this.postDashboardData(dashData).catch(err => {
-            if (err) {
-              curCompiler.errors.push(err);
-              // eslint-disable-next-line promise/no-callback-in-promise
-              throw err;
-            }
-          });
-        }
+      if (this._options.dashboardURL && !this._options.nextjs) {
+        this.postDashboardData(dashData).catch((err) => {
+          if (err) {
+            curCompiler.errors.push(err);
+            // eslint-disable-next-line promise/no-callback-in-promise
+            throw err;
+          }
+        });
       }
 
       return Promise.resolve().then(() => {
@@ -219,7 +211,7 @@ class FederationDashboardPlugin {
           },
           size() {
             return statsBuf.length;
-          }
+          },
         };
         // for dashboard.json
         if (curCompiler.emitAsset && this._options.filename) {
@@ -306,15 +298,15 @@ class FederationDashboardPlugin {
   }
 
   getRemoteEntryChunk(stats, FederationPluginOptions) {
-    return stats.chunks.find(chunk =>
-      chunk.names.find(name => name === FederationPluginOptions.name)
+    return stats.chunks.find((chunk) =>
+      chunk.names.find((name) => name === FederationPluginOptions.name)
     );
   }
 
   getChunkDependencies(validChunkArray) {
     return validChunkArray.reduce((acc, chunk) => {
       const subset = chunk.getAllReferencedChunks();
-      const stringifiableChunk = Array.from(subset).map(sub => {
+      const stringifiableChunk = Array.from(subset).map((sub) => {
         const cleanSet = Object.getOwnPropertyNames(sub).reduce((acc, key) => {
           if (key === "_groups") return acc;
           return Object.assign(acc, { [key]: sub[key] });
@@ -324,7 +316,7 @@ class FederationDashboardPlugin {
       });
 
       return Object.assign(acc, {
-        [chunk.id]: stringifiableChunk
+        [chunk.id]: stringifiableChunk,
       });
     }, {});
   }
@@ -346,7 +338,7 @@ class FederationDashboardPlugin {
         packageJson,
         // subPackages: this.directReasons(modules),
         shareFrom: ["dependencies"],
-        ignorePatchversion: false
+        ignorePatchversion: false,
       });
       vendorFederation.devDependencies = AutomaticVendorFederation({
         exclude: [],
@@ -354,7 +346,7 @@ class FederationDashboardPlugin {
         packageJson,
         // subPackages: this.directReasons(modules),
         shareFrom: ["devDependencies"],
-        ignorePatchversion: false
+        ignorePatchversion: false,
       });
       vendorFederation.optionalDependencies = AutomaticVendorFederation({
         exclude: [],
@@ -362,7 +354,7 @@ class FederationDashboardPlugin {
         packageJson,
         // subPackages: this.directReasons(modules),
         shareFrom: ["optionalDependencies"],
-        ignorePatchversion: false
+        ignorePatchversion: false,
       });
     }
 
@@ -392,7 +384,7 @@ class FederationDashboardPlugin {
       ? namedChunkRefs.getAllReferencedChunks()
       : [];
 
-    AllReferencedChunksByRemote.forEach(chunk => {
+    AllReferencedChunksByRemote.forEach((chunk) => {
       if (chunk.id !== FederationPluginOptions.name) {
         validChunkArray.push(chunk);
       }
@@ -404,17 +396,19 @@ class FederationDashboardPlugin {
   directReasons(modules) {
     const directReasons = new Set();
 
-    modules.forEach(module => {
+    modules.forEach((module) => {
       if (module.reasons) {
-        module.reasons.forEach(reason => {
+        module.reasons.forEach((reason) => {
           if (reason.userRequest) {
             try {
               // grab user required package.json
-              const subsetPackage = require(path.join(reason.userRequest, "package.json"));
+              const subsetPackage = require(path.join(
+                reason.userRequest,
+                "package.json"
+              ));
 
               directReasons.add(subsetPackage);
-            } catch (e) {
-            }
+            } catch (e) {}
           }
         });
       }
@@ -458,7 +452,7 @@ class FederationDashboardPlugin {
       fs.mkdir(
         path.join(stats.outputPath, version),
         { recursive: true },
-        err => {
+        (err) => {
           if (err) throw err;
           fs.writeFile(
             path.join(
@@ -467,7 +461,7 @@ class FederationDashboardPlugin {
               this.FederationPluginOptions.filename
             ),
             file,
-            err => {
+            (err) => {
               if (this._options.debug) {
                 console.trace(err);
                 console.log(
@@ -492,8 +486,7 @@ class FederationDashboardPlugin {
       statsPath,
       JSON.stringify(stats),
       { encoding: "utf-8" },
-      () => {
-      }
+      () => {}
     );
   }
 }
@@ -506,7 +499,6 @@ class NextMedusaPlugin {
     }
   }
   async postDashboardData(dashData) {
-
     if (!this._options.dashboardURL) {
       return Promise.resolve();
     }
@@ -520,13 +512,13 @@ class NextMedusaPlugin {
         body: dashData,
         headers: {
           Accept: "application/json",
-          "Content-type": "application/json"
-        }
+          "Content-type": "application/json",
+        },
       });
 
       if (!res.ok) throw new Error(res.statusText);
 
-      return res
+      return res;
     } catch (err) {
       console.warn(
         `Error posting data to dashboard URL: ${this._options.dashboardURL}`
@@ -566,7 +558,7 @@ class NextMedusaPlugin {
     new FederationDashboardPlugin({
       ...this._options,
       filename: compiler.options.name + "-" + filename,
-      nextjs: true
+      nextjs: true,
     }).apply(compiler);
 
     const hostData = path.join(
@@ -575,10 +567,7 @@ class NextMedusaPlugin {
     );
     compiler.hooks.done.tap(PLUGIN_NAME, () => {
       if (fs.existsSync(hostData)) {
-        fs.writeFileSync(
-          hostData,
-          JSON.stringify(require(hostData))
-        );
+        fs.writeFileSync(hostData, JSON.stringify(require(hostData)));
       }
     });
 
@@ -586,19 +575,18 @@ class NextMedusaPlugin {
       if (fs.existsSync(hostData)) {
         const dashboardData = fs.readFileSync(hostData, "utf8");
         if (this._options.skipPost) {
-          console.info('Skipping post to dashboard')
+          console.info("Skipping post to dashboard");
         } else {
           this.postDashboardData(dashboardData)
             .then(() => {
-              console.info('Data has been successfully sent to the dashboard')
+              console.info("Data has been successfully sent to the dashboard");
             })
             .catch((error) => {
-              console.error('Failed to send data to the dashboard:', error)
+              console.error("Failed to send data to the dashboard:", error);
             });
         }
       }
     });
-
   }
 }
 
